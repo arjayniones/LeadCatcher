@@ -16,14 +16,7 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         
         view.backgroundColor =  .yellow
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .red
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 100
-        tableView.register(securityTableViewCell.self, forCellReuseIdentifier: "cell")
-        view.addSubview(tableView)
-        
+       
         edgesForExtendedLayout = []
         
         view.setNeedsUpdateConstraints()

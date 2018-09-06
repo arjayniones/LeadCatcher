@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         view.backgroundColor =  .yellow
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .white
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(settingsTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -60,7 +60,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
 }
 
 class settingsTableViewCell: UITableViewCell {
-    let textSample:String = "the quick brown fox jumps over the lazy dog. \nthe quick brown fox jumps over the lazy dog. the quick brown fox jumps over the lazy dog. the quick brown fox jumps over the lazy dog \nthe quick brown fox jumps over the lazy dog."
+    let textSample:String = "Security"
     let label = UILabel()
     
     var didSetupContraints = false
@@ -79,7 +79,7 @@ class settingsTableViewCell: UITableViewCell {
         if !didSetupContraints {
             
             label.snp.makeConstraints { make in
-                make.edges.equalTo(contentView).inset(UIEdgeInsetsMake(10, 10, 10, 0))
+                make.edges.equalTo(contentView).inset(UIEdgeInsetsMake(10, 20, 10, 0))
             }
             didSetupContraints = true
         }
