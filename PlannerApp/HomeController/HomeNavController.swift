@@ -10,8 +10,11 @@ import UIKit
 
 class HomeNavController: BaseNavigationController {
 
+    let controller = Sample()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.pushViewController(controller, animated: true)
 
         // Do any additional setup after loading the view.
     }
