@@ -21,6 +21,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
 //    let contactNavController: BaseNavigationController
 //    let toDoListNavController: BaseNavigationController
 //    let addNoteNavController: BaseNavigationController
+    let settingsNavController: BaseNavigationController
     
     var activeNavViewController: BaseNavigationController
     
@@ -34,6 +35,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     required init() {
         homeNavController = HomeNavController()
+        settingsNavController = SettingsNavController()
         
         activeNavViewController = homeNavController
         
@@ -105,6 +107,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         }
         
         activeTabColor()
+        updateActiveTab()
     }
     
     func updateActiveTab() {
@@ -115,6 +118,9 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         case .home:
             view.insertSubview(homeNavController.view, at: 0)
             activeNavViewController = homeNavController
+        case .addMore:
+            view.insertSubview(settingsNavController.view, at: 0)
+            break
         default:
             break
         }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C7C490E21410F8200DBD4A3 /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C490D21410F8200DBD4A3 /* ChangePassword.swift */; };
+		0C7C491021410F9B00DBD4A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C490F21410F9B00DBD4A3 /* SettingsViewController.swift */; };
+		0C7C4913214114DC00DBD4A3 /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C4912214114DC00DBD4A3 /* SecurityViewController.swift */; };
+		0C7C4915214119C400DBD4A3 /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C4914214119C400DBD4A3 /* SettingsNavViewController.swift */; };
 		248B837C2140B29D00119D9D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B837B2140B29D00119D9D /* AppDelegate.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B83862140B29D00119D9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 248B83842140B29D00119D9D /* LaunchScreen.storyboard */; };
@@ -22,6 +26,10 @@
 
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
+		0C7C490D21410F8200DBD4A3 /* ChangePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
+		0C7C490F21410F9B00DBD4A3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		0C7C4912214114DC00DBD4A3 /* SecurityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
+		0C7C4914214119C400DBD4A3 /* SettingsNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -50,6 +58,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C7C490A21410EB900DBD4A3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C7C490B21410F0900DBD4A3 /* Settings */,
+				248B83932140BA5900119D9D /* HomeController */,
+				248B838D2140B53F00119D9D /* BaseController */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C7C490B21410F0900DBD4A3 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0C7C49112141133D00DBD4A3 /* Security */,
+				0C7C490C21410F1B00DBD4A3 /* ChangePassword */,
+				0C7C490F21410F9B00DBD4A3 /* SettingsViewController.swift */,
+				0C7C4914214119C400DBD4A3 /* SettingsNavViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0C7C490C21410F1B00DBD4A3 /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				0C7C490D21410F8200DBD4A3 /* ChangePassword.swift */,
+			);
+			path = ChangePassword;
+			sourceTree = "<group>";
+		};
+		0C7C49112141133D00DBD4A3 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				0C7C4912214114DC00DBD4A3 /* SecurityViewController.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
 		248B836F2140B29D00119D9D = {
 			isa = PBXGroup;
 			children = (
@@ -71,9 +116,9 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				24D55FB821410A7A001140C1 /* Services */,
+				0C7C490A21410EB900DBD4A3 /* Views */,
 				248B83982141012B00119D9D /* Utils */,
-				248B83932140BA5900119D9D /* HomeController */,
-				248B838D2140B53F00119D9D /* BaseController */,
 				248B837B2140B29D00119D9D /* AppDelegate.swift */,
 				248B83822140B29D00119D9D /* Assets.xcassets */,
 				248B83842140B29D00119D9D /* LaunchScreen.storyboard */,
@@ -104,7 +149,6 @@
 		248B83982141012B00119D9D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				24D55FB821410A7A001140C1 /* Services */,
 				248B83992141014600119D9D /* ActionButton.swift */,
 			);
 			path = Utils;
@@ -254,9 +298,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				248B83952140BA8D00119D9D /* HomeNavController.swift in Sources */,
+				0C7C490E21410F8200DBD4A3 /* ChangePassword.swift in Sources */,
 				248B837C2140B29D00119D9D /* AppDelegate.swift in Sources */,
+				0C7C491021410F9B00DBD4A3 /* SettingsViewController.swift in Sources */,
+				0C7C4913214114DC00DBD4A3 /* SecurityViewController.swift in Sources */,
 				24D55FB7214107B8001140C1 /* SampleController.swift in Sources */,
 				248B838F2140B55D00119D9D /* BaseViewController.swift in Sources */,
+				0C7C4915214119C400DBD4A3 /* SettingsNavViewController.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
 				248B83972140C46900119D9D /* sample.swift in Sources */,
 				248B83922140B5DC00119D9D /* BaseNavigationController.swift in Sources */,
