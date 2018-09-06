@@ -30,12 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.backgroundColor = .white
         
-        SessionService.onLogout(performAlways: true) { self.window?.rootViewController = SampleController() }
+        SessionService.onLogout(performAlways: true) { self.window?.rootViewController = LoginViewController() }
 
         if SessionService.isLoggedIn {
             fn()
         } else {
-            window?.rootViewController = SampleController()
+            window?.rootViewController = LoginViewController()
         }
         
         window?.makeKeyAndVisible()

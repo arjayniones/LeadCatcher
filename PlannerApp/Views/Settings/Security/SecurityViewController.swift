@@ -16,8 +16,7 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         
         view.backgroundColor =  .yellow
-        
-        
+       
         edgesForExtendedLayout = []
         
         view.setNeedsUpdateConstraints()

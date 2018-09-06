@@ -10,12 +10,13 @@ import UIKit
 
 class HomeNavController: BaseNavigationController {
 
-    let controller = Sample()
+    let controller = UIViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.pushViewController(controller, animated: true)
-
+        navigationBar.isTranslucent = false;
+        navigationBar.barTintColor = .white;
+        navigationBar.backgroundColor = .red
+        pushViewController(controller, animated: true)
         // Do any additional setup after loading the view.
     }
 
