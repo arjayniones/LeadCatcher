@@ -98,6 +98,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             break
         case addMoreButton:
             self.activeTab = .addMore
+            SessionService.logout()
             break
             
         default:
