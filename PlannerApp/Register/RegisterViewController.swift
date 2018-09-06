@@ -1,22 +1,18 @@
 //
-//  HomeNavController.swift
+//  RegisterViewController.swift
 //  PlannerApp
 //
-//  Created by Alkuino Robert John Matias on 06/09/2018.
+//  Created by Lim Ai Zhi on 06/09/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
 import UIKit
 
-class HomeNavController: BaseNavigationController {
+class RegisterViewController: UIViewController {
 
-    let controller = LoginViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.isTranslucent = false;
-        navigationBar.barTintColor = .white;
-        navigationBar.backgroundColor = .red
-        pushViewController(controller, animated: true)
+
         // Do any additional setup after loading the view.
     }
 

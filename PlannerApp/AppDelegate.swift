@@ -8,6 +8,7 @@
 
 import UIKit
 import Neon
+import SnapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !requireLogin {
             fn()
         } else {
-            window?.rootViewController = BaseViewController()
+            window?.rootViewController = LoginViewController()
         }
         
         window?.makeKeyAndVisible()

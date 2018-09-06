@@ -84,8 +84,9 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        activeTabColor(.home)
+        activeNavViewController.present(LoginViewController(), animated: true, completion: nil)
+        //activeNavViewController.modalPresentationStyle = UIModalPresentationStyle.formSheet;
+        //activeTabColor(.home)
         
     }
     
@@ -109,6 +110,10 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         case .home:
             view.insertSubview(homeNavController.view, at: 0)
             activeNavViewController = homeNavController
+//        case .contact:
+//            view.insertSubview(RegisterViewController1 at: 1);
+//            activeNavViewController =
+            
         default:
             break
         }
