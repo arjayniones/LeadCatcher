@@ -14,4 +14,18 @@ class SessionService {
         return false
     }
     
+    private static var logoutCallbacks: [(performAlways: Bool, fn: () -> ())] = []
+    
+    
+    static func logout() {
+        for (_, fn) in logoutCallbacks {
+            fn()
+        }
+        
+        logoutCallbacks = logoutCallbacks.filter { (performAlways, _) in performAlways }
+    }
+    
+    static func onLogout(performAlways: Bool = false, fn: @escaping () -> ()) {
+        logoutCallbacks.append((performAlways, fn))
+    }
 }

@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.backgroundColor = .white
         
+        SessionService.onLogout(performAlways: true) { self.window?.rootViewController = SampleController() }
+
         if SessionService.isLoggedIn {
             fn()
         } else {
