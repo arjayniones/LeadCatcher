@@ -23,6 +23,8 @@ class Sample: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.register(sampleTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
+        edgesForExtendedLayout = []
+        
         view.setNeedsUpdateConstraints()
         
     }

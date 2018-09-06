@@ -24,11 +24,13 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     var activeNavViewController: BaseNavigationController
     
-    let homeButton = UIButton()
-    let contactButton = UIButton()
-    let addNoteButton = UIButton()
-    let todoListButton = UIButton()
-    let addMoreButton = UIButton()
+    let homeButton = ActionButton()
+    let contactButton = ActionButton()
+    let addNoteButton = ActionButton()
+    let todoListButton = ActionButton()
+    let addMoreButton = ActionButton()
+    
+    var activeTab:ActiveTab = .home
     
     required init() {
         homeNavController = HomeNavController()
@@ -46,47 +48,32 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         super.viewDidLoad()
         
         addChildViewController(homeNavController)
-        
         view.insertSubview(homeNavController.view, at: 0)
         
         tabView.frame = CGRect(x: 0, y: view.height - 50, width: view.width, height: 50)
         tabView.backgroundColor = .white
         self.view.addSubview(tabView)
         
-        homeButton.setTitle("🏠", for: UIControlState())
-        homeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        homeButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(homeButton)
         
-        contactButton.setTitle("🏠", for: UIControlState())
-        contactButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        contactButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        contactButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(contactButton)
         
-        addNoteButton.setTitle("🏠", for: UIControlState())
-        addNoteButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        addNoteButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        addNoteButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addNoteButton)
         
-        todoListButton.setTitle("🏠", for: UIControlState())
-        todoListButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        todoListButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        todoListButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(todoListButton)
         
-        addMoreButton.setTitle("🏠", for: UIControlState())
-        addMoreButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        addMoreButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        addMoreButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addMoreButton)
+        
+        self.activeTabColor()
     }
     
     override func viewDidLayoutSubviews() {
         tabView.groupInCenter(group: .horizontal, views: [homeButton,contactButton,addNoteButton,todoListButton,addMoreButton], padding: 0, width: view.width/5, height: 50)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        activeTabColor(.home)
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -94,18 +81,36 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func homeButtonPressed() {
+    @objc func tabButtonPressed(sender:UIButton) {
+        switch sender {
+        case homeButton:
+            self.activeTab = .home
+            break
+        case contactButton:
+            self.activeTab = .contact
+            break
+        case addNoteButton:
+            self.activeTab = .addNote
+            break
+        case todoListButton:
+            self.activeTab = .todoList
+            break
+        case addMoreButton:
+            self.activeTab = .addMore
+            break
+            
+        default:
+            break
+        }
         
+        activeTabColor()
     }
     
-    @objc func profileButtonPressed() {
-    }
-    
-    func updateActiveTab(_ side:ActiveTab) {
+    func updateActiveTab() {
         
         activeNavViewController.view.removeFromSuperview()
         
-        switch side {
+        switch self.activeTab {
         case .home:
             view.insertSubview(homeNavController.view, at: 0)
             activeNavViewController = homeNavController
@@ -114,21 +119,34 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         }
     }
     
+    func activeTabColor() {
+        homeButton.isActive = false
+        contactButton.isActive = false
+        addNoteButton.isActive = false
+        todoListButton.isActive = false
+        addMoreButton.isActive = false
+        
+        switch self.activeTab {
+        case .home:
+            homeButton.isActive = true
+        case .contact:
+            contactButton.isActive = true
+        case .addNote:
+            addNoteButton.isActive = true
+        case .todoList:
+            todoListButton.isActive = true
+        case .addMore:
+            addMoreButton.isActive = true
+        }
+        
+    }
+    
     func hideTabBar() {
         tabView.isHidden = true
     }
     
     func showTabBar() {
         tabView.isHidden = false
-    }
-    
-    func activeTabColor(_ side:ActiveTab) {
-        switch side {
-        case .home:
-            homeButton.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-        default:
-            break
-        }
     }
 }
 
