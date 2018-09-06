@@ -13,10 +13,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        prepareAndExecute(requireLogin: true) {
+            
+            
+        }
+        
         return true
+    }
+    
+    private func prepareAndExecute(requireLogin: Bool, fn: () -> ()) {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        window?.backgroundColor = .white
+        
+        if !requireLogin {
+            fn()
+        } else {
+            window?.rootViewController = BaseViewController()
+        }
+        
+        window?.makeKeyAndVisible()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
