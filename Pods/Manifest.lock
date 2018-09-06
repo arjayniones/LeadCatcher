@@ -1,0 +1,28 @@
+PODS:
+  - Neon (0.4.0)
+  - ObjectMapper (3.3.0)
+  - SnapKit (4.0.0)
+  - SwiftyUserDefaults (3.0.1)
+
+DEPENDENCIES:
+  - Neon
+  - ObjectMapper (~> 3.3)
+  - SnapKit
+  - SwiftyUserDefaults
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Neon
+    - ObjectMapper
+    - SnapKit
+    - SwiftyUserDefaults
+
+SPEC CHECKSUMS:
+  Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
+
+PODFILE CHECKSUM: 7d13c83d3ed56268dfcaf958a1fc4117c5816806
+
+COCOAPODS: 1.5.3
