@@ -10,13 +10,17 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    let loginUsernameField = UILabel()
-    let passwordField = UILabel()
+    let loginUsernameField = UITextField()
+    let passwordField = UITextField()
     
-    let button = UIButton()
+    let loginButton = UIButton()
+    let signUpButton = UIButton()
+    
     let labelBottomRight = UILabel();
     let labelBottomLeft = UILabel();
     let viewTest = UIView();
+    let bottomBorderLoginID = UIView();
+    let bottomBorderPassword = UIView();
     
     var didSetupConstraints = false
     
@@ -24,24 +28,37 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
 //        edgesForExtendedLayout=[];
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
         
-        loginUsernameField.layer.borderWidth = 1
-        loginUsernameField.backgroundColor = .black
-        loginUsernameField.layer.borderColor = UIColor.black.cgColor
+        loginUsernameField.placeholder = "Login ID";
+        loginUsernameField.font = UIFont(name: "SFTextPro-Regular", size: 17)
+        loginUsernameField.textAlignment = NSTextAlignment.left
         view.addSubview(loginUsernameField)
         
-        passwordField.layer.borderWidth = 1
-        passwordField.backgroundColor = .green
-        passwordField.layer.borderColor = UIColor.black.cgColor
+        passwordField.placeholder = "Password";
+        passwordField.font = UIFont(name: "SFTextPro-Regular", size: 17)
+        passwordField.textAlignment = NSTextAlignment.left
         view.addSubview(passwordField)
         
-        button.setTitle("Login", for: .normal)
-        button.setTitleColor(.green, for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth   =    1
-        button.backgroundColor = .blue
-        view.addSubview(button)
+        loginButton.setTitle("Login", for: .normal)
+        loginButton.titleLabel?.font = UIFont(name: "SFProText-Bold", size: 17)
+        loginButton.setTitleColor(.white, for: .normal)
+        loginButton.layer.borderWidth   =    1
+        loginButton.backgroundColor = CommonColor.buttonBlackColor;
+        view.addSubview(loginButton)
+        
+        bottomBorderLoginID.backgroundColor = UIColor.lightGray;
+        bottomBorderPassword.backgroundColor = UIColor.lightGray;
+        
+        loginUsernameField.addSubview(bottomBorderLoginID);
+        passwordField.addSubview(bottomBorderPassword);
+        
+        signUpButton.setTitle("Sign Up", for: .normal);
+        signUpButton.setTitleColor(.white, for: .normal);
+        signUpButton.titleLabel?.font = UIFont(name: "SFProText-Bold", size: 17);
+        signUpButton.backgroundColor = CommonColor.buttonBlackColor;
+        signUpButton.addTarget(self, action: #selector(signUpButtonTap(_:)), for: .touchUpInside);
+        view.addSubview(signUpButton);
         
         labelBottomRight.text = "Testing";
         labelBottomRight.textColor = .black;
@@ -54,6 +71,8 @@ class LoginViewController: UIViewController {
         viewTest.backgroundColor = .black;
         view.addSubview(viewTest);
         
+        
+        view.setNeedsUpdateConstraints()
         
     }
 
@@ -75,9 +94,16 @@ class LoginViewController: UIViewController {
         if !didSetupConstraints {
             loginUsernameField.snp.makeConstraints { make in
                 
-                make.top.equalTo(view).inset(100)
+                make.top.equalTo(view).inset(150)
                 make.left.right.equalTo(view).inset(10)
                 make.height.equalTo(40)
+            }
+            
+            bottomBorderLoginID.snp.makeConstraints{
+                make in
+                make.top.equalTo(loginUsernameField.snp.bottom);
+                make.height.equalTo(1);
+                make.left.right.equalTo(loginUsernameField).inset(0)
             }
             
             passwordField.snp.makeConstraints { make in
@@ -87,12 +113,27 @@ class LoginViewController: UIViewController {
                 make.height.equalTo(40)
             }
             
-            button.snp.makeConstraints { make in
+            bottomBorderPassword.snp.makeConstraints{
+                make in
+                make.top.equalTo(passwordField.snp.bottom);
+                make.height.equalTo(1);
+                make.left.right.equalTo(passwordField).inset(0)
+            }
+            
+            loginButton.snp.makeConstraints { make in
                 
                 make.top.equalTo(passwordField.snp.bottom).offset(30)
                 make.width.equalTo(view.snp.width).multipliedBy(0.3)
                 make.height.equalTo(40)
                 make.centerX.equalTo(passwordField.snp.centerX)
+            }
+            
+            signUpButton.snp.makeConstraints{
+                make in
+                make.top.equalTo(loginButton.snp.bottom).offset(30);
+                make.width.equalTo(view.snp.width).multipliedBy(0.3);
+                make.height.equalTo(40);
+                make.centerX.equalTo(passwordField.snp.centerX);
             }
             
             labelBottomRight.snp.makeConstraints{ make in
@@ -120,6 +161,13 @@ class LoginViewController: UIViewController {
         
         
         super.updateViewConstraints()
+    }
+    
+    @objc func signUpButtonTap(_ sender : UIButton)
+    {
+        let vc = RegisterViewController();
+        self.present(vc, animated: true, completion: nil)
+        
     }
     
 
