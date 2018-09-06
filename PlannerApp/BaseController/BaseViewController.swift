@@ -72,6 +72,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         self.activeTabColor()
     }
     
+    
     override func viewDidLayoutSubviews() {
         tabView.groupInCenter(group: .horizontal, views: [homeButton,contactButton,addNoteButton,todoListButton,addMoreButton], padding: 0, width: view.width/5, height: 50)
     }

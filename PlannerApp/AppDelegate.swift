@@ -17,23 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        prepareAndExecute(requireLogin: true) {
+        prepareAndExecute() {
             
-            
+            self.window?.rootViewController = BaseViewController()
         }
         
         return true
     }
     
-    private func prepareAndExecute(requireLogin: Bool, fn: () -> ()) {
+    private func prepareAndExecute(fn: () -> ()) {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         window?.backgroundColor = .white
         
-        if !requireLogin {
+        if SessionService.isLoggedIn {
             fn()
         } else {
-            window?.rootViewController = BaseViewController()
+            window?.rootViewController = SampleController()
         }
         
         window?.makeKeyAndVisible()
