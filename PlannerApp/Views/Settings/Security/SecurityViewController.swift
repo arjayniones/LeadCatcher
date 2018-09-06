@@ -1,27 +1,30 @@
 //
-//  LoginViewController.swift
+//  SecurityViewController.swift
 //  PlannerApp
 //
-//  Created by Alkuino Robert John Matias on 06/09/2018.
+//  Created by Niones Arjay Orcullo on 06/09/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
+
 import UIKit
 
-class Sample: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor =  .yellow
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .red
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.register(sampleTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(securityTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
+        
+        edgesForExtendedLayout = []
         
         view.setNeedsUpdateConstraints()
         
@@ -33,14 +36,14 @@ class Sample: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         super.updateViewConstraints()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! sampleTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! securityTableViewCell
         
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
@@ -56,7 +59,7 @@ class Sample: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
 }
 
- class sampleTableViewCell: UITableViewCell {
+class securityTableViewCell: UITableViewCell {
     let textSample:String = "the quick brown fox jumps over the lazy dog. \nthe quick brown fox jumps over the lazy dog. the quick brown fox jumps over the lazy dog. the quick brown fox jumps over the lazy dog \nthe quick brown fox jumps over the lazy dog."
     let label = UILabel()
     
@@ -88,4 +91,5 @@ class Sample: UIViewController,UITableViewDelegate,UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 

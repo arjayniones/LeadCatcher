@@ -45,6 +45,7 @@ class LoginViewController: UIViewController {
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.layer.borderWidth   =    1
         loginButton.backgroundColor = CommonColor.buttonBlackColor;
+        loginButton.addTarget(self, action: #selector(loginButtonTouched), for: .touchUpInside)
         view.addSubview(loginButton)
         
         bottomBorderLoginID.backgroundColor = UIColor.lightGray;
@@ -74,6 +75,10 @@ class LoginViewController: UIViewController {
         
         view.setNeedsUpdateConstraints()
         
+    }
+    
+    @objc func loginButtonTouched() {
+        self.present(BaseViewController(), animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
