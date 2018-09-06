@@ -12,28 +12,30 @@ import SwiftyUserDefaults
 class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     enum ActiveTab: Equatable {
-        case rightTab,leftTab
+        case home,contact,addNote,todoList,addMore
     }
     
     let tabView = UIView()
     
     let homeNavController: BaseNavigationController
-    let profileNavController: BaseNavigationController
+//    let contactNavController: BaseNavigationController
+//    let toDoListNavController: BaseNavigationController
+//    let addNoteNavController: BaseNavigationController
+    
     var activeNavViewController: BaseNavigationController
     
-    let feedButton = UIButton()
-    let cameraButton = UIButton()
-    let profileButton = UIButton()
-    
+    let homeButton = UIButton()
+    let contactButton = UIButton()
+    let addNoteButton = UIButton()
+    let todoListButton = UIButton()
+    let addMoreButton = UIButton()
     
     required init() {
-        feedNavController = FeedNavViewController()
-        profileNavController = ProfileNavViewController()
+        homeNavController = HomeNavController()
         
-        activeNavViewController = feedNavController
+        activeNavViewController = homeNavController
         
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,38 +45,47 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChildViewController(feedNavController)
-        addChildViewController(profileNavController)
+        addChildViewController(homeNavController)
         
-        view.insertSubview(feedNavController.view, at: 0)
+        view.insertSubview(homeNavController.view, at: 0)
         
         tabView.frame = CGRect(x: 0, y: view.height - 50, width: view.width, height: 50)
         tabView.backgroundColor = .white
         self.view.addSubview(tabView)
         
-        feedButton.setTitle("🏠", for: UIControlState())
-        feedButton.titleLabel?.font = UIFont.ofSize(fontSize: 30, withType: .bold)
-        feedButton.addTarget(self, action: #selector(feedButtonPressed), for: .touchUpInside)
-        tabView.addSubview(feedButton)
+        homeButton.setTitle("🏠", for: UIControlState())
+        homeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        tabView.addSubview(homeButton)
         
-        cameraButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCameraButton)))
-        cameraButton.addTarget(self, action: #selector(touchStartCameraButton), for: [.touchDown])
-        cameraButton.addTarget(self, action: #selector(touchEndCameraButton), for: [.touchUpInside, .touchUpOutside, .touchCancel])
-        tabView.addSubview(cameraButton)
+        contactButton.setTitle("🏠", for: UIControlState())
+        contactButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        contactButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        tabView.addSubview(contactButton)
         
-        profileButton.setTitle("🙎🏻‍♂️", for: UIControlState())
-        profileButton.titleLabel?.font = UIFont.ofSize(fontSize: 30, withType: .bold)
-        profileButton.addTarget(self, action: #selector(profileButtonPressed), for: .touchUpInside)
-        tabView.addSubview(profileButton)
+        addNoteButton.setTitle("🏠", for: UIControlState())
+        addNoteButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        addNoteButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        tabView.addSubview(addNoteButton)
+        
+        todoListButton.setTitle("🏠", for: UIControlState())
+        todoListButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        todoListButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        tabView.addSubview(todoListButton)
+        
+        addMoreButton.setTitle("🏠", for: UIControlState())
+        addMoreButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        addMoreButton.addTarget(self, action: #selector(homeButtonPressed), for: .touchUpInside)
+        tabView.addSubview(addMoreButton)
     }
     
     override func viewDidLayoutSubviews() {
-        tabView.groupInCenter(group: .horizontal, views: [feedButton,cameraButton,profileButton], padding: 0, width: view.width/3, height: 50)
+        tabView.groupInCenter(group: .horizontal, views: [homeButton,contactButton,addNoteButton,todoListButton,addMoreButton], padding: 0, width: view.width/5, height: 50)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        activeTabColor(.leftTab)
+        activeTabColor(.home)
         
     }
     
@@ -83,9 +94,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func feedButtonPressed() {
-        activeTabColor(.leftTab)
-        updateActiveTab(.leftTab)
+    @objc func homeButtonPressed() {
+        
     }
     
     @objc func profileButtonPressed() {
@@ -96,12 +106,11 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         activeNavViewController.view.removeFromSuperview()
         
         switch side {
-        case .leftTab:
-            view.insertSubview(feedNavController.view, at: 0)
-            activeNavViewController = feedNavController
-        case .rightTab:
-            view.insertSubview(profileNavController.view, at: 0)
-            activeNavViewController = profileNavController
+        case .home:
+            view.insertSubview(homeNavController.view, at: 0)
+            activeNavViewController = homeNavController
+        default:
+            break
         }
     }
     
@@ -114,17 +123,11 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     }
     
     func activeTabColor(_ side:ActiveTab) {
-        feedButton.isHidden = false
-        profileButton.isHidden = false
-        tabView.isHidden = false
-        
         switch side {
-        case .leftTab:
-            feedButton.backgroundColor = UIColor("#ffb378").withAlphaComponent(0.5)
-            profileButton.backgroundColor = .clear
-        case .rightTab:
-            profileButton.backgroundColor = UIColor("#ffb378").withAlphaComponent(0.5)
-            feedButton.backgroundColor = .clear
+        case .home:
+            homeButton.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        default:
+            break
         }
     }
 }
