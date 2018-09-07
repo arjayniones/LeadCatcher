@@ -127,6 +127,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             break
         case .addMore:
             view.insertSubview(settingsNavController.view, at: 0)
+            print("addmore")
             break
         default:
             break
