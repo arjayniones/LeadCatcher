@@ -18,6 +18,7 @@ class RealmStore {
      
      - parameter model: object (Model)
      */
+
     static func add(model: Object) {
         let store = try! Realm()
         try! RealmStore.write {

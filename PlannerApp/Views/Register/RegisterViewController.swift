@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyUserDefaults
 class RegisterViewController: UIViewController {
 
     let continueButton = UIButton();
@@ -45,18 +45,23 @@ class RegisterViewController: UIViewController {
         naviBar.addSubview(backButton);
         
         loginIDTextField.placeholder = "Login ID";
-        loginIDTextField.font = UIFont(name: "SFProText-Regular", size: 17);
+        loginIDTextField.font = CommonFontType.sfProTextRegular;
         loginIDTextField.textAlignment = NSTextAlignment.left;
+        loginIDTextField.autocorrectionType = UITextAutocorrectionType.no;
         view.addSubview(loginIDTextField);
         
-        passwordTextField.placeholder = "Password";
+        passwordTextField.placeholder = "Passcode";
         passwordTextField.font = CommonFontType.sfProTextRegular;
         passwordTextField.textAlignment = NSTextAlignment.left;
+        passwordTextField.keyboardType = .numberPad;
+        passwordTextField.isSecureTextEntry = true;
         view.addSubview(passwordTextField);
 //
-        confirmPasswordTextField.placeholder = "Confirm Password";
+        confirmPasswordTextField.placeholder = "Confirm Passcode";
         confirmPasswordTextField.font = CommonFontType.sfProTextRegular;
         confirmPasswordTextField.textAlignment = NSTextAlignment.left;
+        confirmPasswordTextField.keyboardType = .numberPad;
+        confirmPasswordTextField.isSecureTextEntry = true;
         view.addSubview(confirmPasswordTextField);
 //
         bottomBorder1.backgroundColor = UIColor.lightGray;
@@ -163,12 +168,52 @@ class RegisterViewController: UIViewController {
     // MARK: - selector
     @objc func navigateToDashBoard()
     {
-        self.present(BaseViewController(), animated: true, completion: nil)
+        let result = self.checkEmptyText();
+        
+        if result != "Success"
+        {
+            let controller = UIAlertController.alertControllerWithTitle(title: "Warning", message: result);
+            present(controller, animated: false, completion: nil);
+        }
+        else
+        {
+            let data = UserModel().newInstance();
+            data.U_Username = self.loginIDTextField.text!;
+            data.U_Password = self.passwordTextField.text!;
+            data.add()
+            
+            self.present(BaseViewController(), animated: true, completion: nil);
+        }
+        
     }
     
     @objc func backToSignInVC()
     {
         self.dismiss(animated: true, completion: nil);
+    }
+    
+    func checkEmptyText()->String
+    {
+        if self.loginIDTextField.text?.count == 0
+        {
+            return "Login ID cannot empty";
+        }
+        else if self.passwordTextField.text?.count == 0
+        {
+            return "Passcode cannot empty";
+        }
+        else if self.confirmPasswordTextField.text?.count == 0
+        {
+            return "Confirm passcode cannot empty";
+        }
+        else if self.passwordTextField.text != self.confirmPasswordTextField.text
+        {
+            return "Password not match";
+        }
+        else
+        {
+            return "Success";
+        }
     }
     
     /*
