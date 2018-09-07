@@ -85,7 +85,7 @@ class Model: Object, Mappable {
 
 extension Model {
     
-    class func object<T:Model>(type: T.Type, id: Int) -> T? {
+    class func object<T:Model>(type: T.Type, id: UUID) -> T? {
         return RealmStore.models(type: T.self).filter("id == '\(id)'").first
     }
 }
