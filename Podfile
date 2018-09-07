@@ -11,4 +11,6 @@ pod 'ObjectMapper', '~> 3.3'
 pod 'SnapKit'
 pod 'Neon'
 pod 'SwiftyUserDefaults'
+pod 'Alamofire', '~> 4.7'
+pod 'RealmSwift'
 end

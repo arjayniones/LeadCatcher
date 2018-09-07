@@ -11,6 +11,15 @@
 		0C7C491021410F9B00DBD4A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C490F21410F9B00DBD4A3 /* SettingsViewController.swift */; };
 		0C7C4913214114DC00DBD4A3 /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C4912214114DC00DBD4A3 /* SecurityViewController.swift */; };
 		0C7C4915214119C400DBD4A3 /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C4914214119C400DBD4A3 /* SettingsNavViewController.swift */; };
+		2450D380214209FA00F5F61F /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D37F214209FA00F5F61F /* RealmStore.swift */; };
+		2450D38321420A7400F5F61F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38221420A7400F5F61F /* Model.swift */; };
+		2450D38621420AEC00F5F61F /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38521420AEC00F5F61F /* Networking.swift */; };
+		2450D38921420B4000F5F61F /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38821420B4000F5F61F /* StoreManager.swift */; };
+		2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38A21420DD600F5F61F /* ServiceManager.swift */; };
+		2450D38E2142106200F5F61F /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38D2142106200F5F61F /* DateExtension.swift */; };
+		2450D390214212E600F5F61F /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38F214212E600F5F61F /* SampleModel.swift */; };
+		2450D392214212F800F5F61F /* SampleModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D391214212F800F5F61F /* SampleModel2.swift */; };
+		2450D3942142143100F5F61F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D3932142143100F5F61F /* Utils.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B83862140B29D00119D9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 248B83842140B29D00119D9D /* LaunchScreen.storyboard */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
@@ -38,6 +47,15 @@
 		0C7C490F21410F9B00DBD4A3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		0C7C4912214114DC00DBD4A3 /* SecurityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
 		0C7C4914214119C400DBD4A3 /* SettingsNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
+		2450D37F214209FA00F5F61F /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
+		2450D38221420A7400F5F61F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		2450D38521420AEC00F5F61F /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		2450D38821420B4000F5F61F /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		2450D38A21420DD600F5F61F /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		2450D38D2142106200F5F61F /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		2450D38F214212E600F5F61F /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
+		2450D391214212F800F5F61F /* SampleModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel2.swift; sourceTree = "<group>"; };
+		2450D3932142143100F5F61F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,6 +131,60 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
+		2450D37D214209C500F5F61F /* RealmManager */ = {
+			isa = PBXGroup;
+			children = (
+				2450D38721420B2B00F5F61F /* DataManager */,
+				2450D38421420AD400F5F61F /* Networking */,
+				2450D38121420A6600F5F61F /* Models */,
+				2450D37E214209E000F5F61F /* Realm */,
+			);
+			path = RealmManager;
+			sourceTree = "<group>";
+		};
+		2450D37E214209E000F5F61F /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				2450D37F214209FA00F5F61F /* RealmStore.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		2450D38121420A6600F5F61F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2450D38221420A7400F5F61F /* Model.swift */,
+				2450D38F214212E600F5F61F /* SampleModel.swift */,
+				2450D391214212F800F5F61F /* SampleModel2.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2450D38421420AD400F5F61F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2450D38521420AEC00F5F61F /* Networking.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2450D38721420B2B00F5F61F /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				2450D38821420B4000F5F61F /* StoreManager.swift */,
+				2450D38A21420DD600F5F61F /* ServiceManager.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		2450D38C2142105000F5F61F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2450D38D2142106200F5F61F /* DateExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		248B836F2140B29D00119D9D = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +206,8 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				2450D38C2142105000F5F61F /* Extensions */,
+				2450D37D214209C500F5F61F /* RealmManager */,
 				D6715DA621411BC500957E86 /* Color */,
 				D6715D8D2140FA7500957E86 /* Font */,
 				24D55FB821410A7A001140C1 /* Services */,
@@ -151,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				248B83992141014600119D9D /* ActionButton.swift */,
+				2450D3932142143100F5F61F /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -319,15 +394,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 			);
@@ -362,19 +443,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
+				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
+				2450D392214212F800F5F61F /* SampleModel2.swift in Sources */,
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
+				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
+				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
+				2450D38321420A7400F5F61F /* Model.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
 				0C7C490E21410F8200DBD4A3 /* ChangePassword.swift in Sources */,
 				0C7C491021410F9B00DBD4A3 /* SettingsViewController.swift in Sources */,
+				2450D3942142143100F5F61F /* Utils.swift in Sources */,
 				0C7C4913214114DC00DBD4A3 /* SecurityViewController.swift in Sources */,
 				0C7C4915214119C400DBD4A3 /* SettingsNavViewController.swift in Sources */,
+				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
+				2450D390214212E600F5F61F /* SampleModel.swift in Sources */,
+				2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
