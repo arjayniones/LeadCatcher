@@ -61,18 +61,6 @@ class LoginViewController: UIViewController {
         signUpButton.addTarget(self, action: #selector(signUpButtonTap(_:)), for: .touchUpInside);
         view.addSubview(signUpButton);
         
-        labelBottomRight.text = "Testing";
-        labelBottomRight.textColor = .black;
-        view.addSubview(labelBottomRight);
-        
-        labelBottomLeft.text = "Testing";
-        labelBottomLeft.textColor = .black;
-        view.addSubview(labelBottomLeft);
-        
-        viewTest.backgroundColor = .black;
-        view.addSubview(viewTest);
-        
-        
         view.setNeedsUpdateConstraints()
         
     }
@@ -140,26 +128,6 @@ class LoginViewController: UIViewController {
                 make.height.equalTo(40);
                 make.centerX.equalTo(passwordField.snp.centerX);
             }
-            
-            labelBottomRight.snp.makeConstraints{ make in
-                make.bottom.equalTo(view).inset(40 + 10);
-                make.right.equalTo(view).inset(10);
-            }
-            
-            labelBottomLeft.snp.makeConstraints{ make in
-                make.bottom.equalTo(view).inset(40 + 10);
-                make.left.equalTo(view).inset(10);
-            }
-            
-            viewTest.snp.makeConstraints{
-                make in
-                make.height.equalTo(60);
-                make.width.equalTo(60);
-                make.bottom.equalTo(labelBottomLeft.snp.top).offset(-10);
-                make.left.equalTo(labelBottomLeft.snp.left)
-                //make.left.greaterThanOrEqualTo(labelBottomLeft);
-            }
-            
             
             didSetupConstraints = true
         }

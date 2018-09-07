@@ -48,7 +48,9 @@ class RegisterViewController: UIViewController {
         bottomBorder3.backgroundColor = UIColor.lightGray;
         confirmPasswordTextField.addSubview(bottomBorder3);
         
-        continueButton.backgroundColor = UIColor(red: 74/255.0, green: 75/255.0, blue: 75/255.0, alpha: 1);
+        continueButton.backgroundColor = CommonColor.buttonBlackColor;
+        continueButton.titleLabel?.font = CommonFontType.sfProTextBold;
+        
         // Do any additional setup after loading the view.
         view.setNeedsUpdateConstraints()
     }
