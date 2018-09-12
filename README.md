@@ -1,7 +1,9 @@
-To fetch data in database
+#To fetch data in database
+
 RealmStore.model(YourModel.self).filter("username = 'user' and password = 'pass'")
 
 #To add or insert an object in database
+
 let username = YourModel() // created model that override the protocol Model.swift
 user.id = "your id"
 user.add()
