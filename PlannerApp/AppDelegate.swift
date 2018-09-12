@@ -17,30 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        
-//        let data = SampleModel()
-//        data.username = "Alkuino"
-//        data.id = uuid()
-//        data.created_at = Date().toRFC3339String()
-//        data.updated_at = Date().toRFC3339String()
-//
-//        let data2 = SampleModel2()
-//        data2.id = uuid()
-//        data.created_at = Date().toRFC3339String()
-//        data.updated_at = Date().toRFC3339String()
-//        data2.username = "robertjohn"
-//        data2.lastname = "robertjohn"
-//
-//        data.lastname.append(data2)
-//
-//        RealmStore.add(model: data)
-        
-//        if let update = RealmStore.model(type: UserModel.self, id: "1234fdfa") {
-//            try! RealmStore.write {
-//                update.username = "sample"
-//            }
-//        }
-        
         prepareAndExecute() {
             
             self.window?.rootViewController = BaseViewController()

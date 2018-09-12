@@ -75,6 +75,11 @@ class LoginViewController: UIViewController {
         view.setNeedsUpdateConstraints();
         self.queryUserTable(checkType: "ViewLoad");
         
+        if let wow = RealmStore.model(type: SampleModel.self, query: "id = '6f08a081-dbdb-41ad-b61a-3c51e6859a4c'") {
+            print(wow)
+            RealmStore.delete(model: wow)
+        }
+        
     }
     
     @objc func loginButtonTouched() {
@@ -181,7 +186,7 @@ class LoginViewController: UIViewController {
         {
             resultUserList = realm.objects(UserModel.self).filter("U_Username = %@ AND U_Password = %@",self.loginUsernameField.text!, self.passwordField.text!);
         }
-    
+        
         if resultUserList.count > 0
         {
             self.loginButton.isEnabled = true;

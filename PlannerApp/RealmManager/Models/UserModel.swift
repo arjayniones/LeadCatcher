@@ -26,9 +26,9 @@ class UserModel: Model {
     func newInstance() -> UserModel {
         let userInfo = UserModel()
         userInfo.id = uuid()
-        userInfo.created_at = Date().toRFC3339String()
-        userInfo.updated_at = Date().toRFC3339String()
-        userInfo.deleted_at = ""
+        userInfo.created_at = Date()
+        userInfo.updated_at = Date()
+        userInfo.deleted_at = nil
         
         return userInfo
     }
