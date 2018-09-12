@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
 //        RealmStore.add(model: data)
         
-//        if let update = RealmStore.model(type: SampleModel.self, id: "1234fdfa") {
+//        if let update = RealmStore.model(type: UserModel.self, id: "1234fdfa") {
 //            try! RealmStore.write {
 //                update.username = "sample"
 //            }

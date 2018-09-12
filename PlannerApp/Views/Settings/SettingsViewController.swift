@@ -12,8 +12,9 @@ import UIKit
 class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
     let securityVC = SecurityViewController()
+    let settingsModel = SettingsViewModel()
     
-     let settingsLabels = SettingsViewModel.getSettingsLabels() // model
+     let settingsLabels = SettingsViewModel.getSettingsLabels() // model with get settings label func
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +82,10 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         if indexPath.row == 0 {
         navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
+        }
+        else if indexPath.row == 10{
+            SessionService.logout()
+            
         }
     }
 }

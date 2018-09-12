@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 
 class SettingsViewModel {
@@ -27,7 +28,14 @@ class SettingsViewModel {
         return labelNames
         
     }
+    
+    
+    
+    
 }
+
+
+
 
 
 struct SettingsLabels {

@@ -97,7 +97,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             break
         case todoListButton:
             self.activeTab = .todoList
-            SessionService.logout()
+            //SessionService.logout()
             break
         case addMoreButton:
             self.activeTab = .addMore

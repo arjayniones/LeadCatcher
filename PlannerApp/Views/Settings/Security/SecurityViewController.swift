@@ -12,8 +12,9 @@ import UIKit
 class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
    
-    let securityLabels = SecurityViewModel.getSecurityLabels() // model
+    let securityLabels = SecurityViewModel.getSecurityLabels() // model with getlabel func
     let changePasscodeVC = ChangePasscodeViewController()
+    let securityModel = SecurityViewModel() //model
     
     
     override func viewDidLoad() {
@@ -30,8 +31,6 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
          view.addSubview(tableView)
         
         view.setNeedsUpdateConstraints()
-        
-        
         
         
     }
@@ -70,7 +69,7 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             //here is programatically switch make to the table view
             let switchView = UISwitch(frame: .zero)
-            switchView.setOn(false, animated: true)
+            switchView.setOn(securityModel.checkTouchIDUpdate(), animated: true)
             switchView.tag = indexPath.row // for detect which row switch Changed
             switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
             cell.accessoryView = switchView
@@ -102,6 +101,11 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         print("table row switch Changed \(sender.tag)")
         print("The switch is \(sender.isOn ? "ON" : "OFF")")
+        
+        
+        SecurityViewModel.enableTouchID(bool:sender.isOn)
+        
+       
     }
     
     
