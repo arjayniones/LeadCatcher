@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func loginButtonTouched() {
-        //Defaults[.SessionIsLoggedIn] = false
+        //Defaults[.isLoggedIn] = false
         
         let loginTextCheck = UserViewModel.textFieldIsEmpty(text: self.loginUsernameField.text!, textTag: self.loginUsernameField.tag);
         let passcodeTextCheck = UserViewModel.textFieldIsEmpty(text: self.passwordField.text!, textTag: self.passwordField.tag);
@@ -194,11 +194,20 @@ class LoginViewController: UIViewController {
             
             if resultUserList[0].U_EnableTouchID == true && checkType == "ViewLoad"
             {
-                authenticationWithTouchID();
+                authenticationWithTouchID(id: "", completion: {
+                    result in
+                    
+                    if result == "Success"
+                    {
+                        self.present(BaseViewController(), animated: true, completion: nil);
+                    }
+                    
+                })
             }
             
             if checkType == "LoginClick"
             {
+                Defaults[.SessionUserId] = resultUserList[0].id;
                 self.present(BaseViewController(), animated: true, completion: nil);
             }
             else

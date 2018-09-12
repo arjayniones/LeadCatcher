@@ -178,8 +178,11 @@ class RegisterViewController: UIViewController {
         }
         else
         {
-            if UserViewModel.insertDataUserModel(loginID: self.loginIDTextField.text!, passcode: self.passwordTextField.text!)
+            let userId = UserViewModel.insertDataUserModel(loginID: self.loginIDTextField.text!, passcode: self.passwordTextField.text!);
+            
+            if userId.count > 0
             {
+                Defaults[.SessionUserId] = userId;
                 self.present(BaseViewController(), animated: true, completion: nil);
             }
         }

@@ -9,6 +9,7 @@
 import Foundation
 import LocalAuthentication
 import RealmSwift
+import SwiftyUserDefaults
 
 class UserViewModel{
     
@@ -33,13 +34,14 @@ class UserViewModel{
         }
     }
     
-    class func insertDataUserModel(loginID:String, passcode:String)->Bool
+    class func insertDataUserModel(loginID:String, passcode:String)->String
     {
         let data = UserModel().newInstance();
         data.U_Username = loginID;
         data.U_Password = passcode;
         data.add();
-        return true;
+        
+        return data.id;
     }
     
     // MARK: - text field checking
@@ -84,7 +86,7 @@ class UserViewModel{
 }
 
 extension LoginViewController{
-    func authenticationWithTouchID() {
+    func authenticationWithTouchID(id:String, completion:@escaping (_ value:String)->Void) {
         let localAuthenticationContext = LAContext()
         localAuthenticationContext.localizedFallbackTitle = "Use Passcode"
         
@@ -97,9 +99,10 @@ extension LoginViewController{
                 
                 if success {
                     //TODO: User authenticated successfully, take appropriate action
-//                    let vc = RegisterViewController();
-//                    self.present(vc, animated: true, completion: nil);
-                    self.present(BaseViewController(), animated: true, completion: nil);
+                    let resultUserList = UserViewModel.queryUserTable(checkType: "ViewLoad", loginID: "", passcode: "");
+                    Defaults[.SessionUserId] = resultUserList[0].id;
+                    completion("Success")
+                    //self.present(BaseViewController(), animated: true, completion: nil);
                 } else {
                     //TODO: User did not authenticate successfully, look at error and take appropriate action
                     guard let error = evaluateError else {
