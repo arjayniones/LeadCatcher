@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5C2148AF9B007687EB /* SecurityViewController.swift */; };
+		24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5D2148AF9B007687EB /* SecurityViewModel.swift */; };
+		24140A692148AF9B007687EB /* SecurityNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5E2148AF9B007687EB /* SecurityNavViewController.swift */; };
+		24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5F2148AF9B007687EB /* SettingsViewModel.swift */; };
+		24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */; };
+		24140A6C2148AF9B007687EB /* ChangePasscodeNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A622148AF9B007687EB /* ChangePasscodeNavViewController.swift */; };
+		24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A632148AF9B007687EB /* SettingsNavViewController.swift */; };
+		24140A6E2148AF9B007687EB /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A652148AF9B007687EB /* ChangePassword.swift */; };
+		24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A662148AF9B007687EB /* SettingsViewController.swift */; };
 		2450D380214209FA00F5F61F /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D37F214209FA00F5F61F /* RealmStore.swift */; };
 		2450D38321420A7400F5F61F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38221420A7400F5F61F /* Model.swift */; };
 		2450D38621420AEC00F5F61F /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38521420AEC00F5F61F /* Networking.swift */; };
@@ -42,6 +51,15 @@
 
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
+		24140A5C2148AF9B007687EB /* SecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
+		24140A5D2148AF9B007687EB /* SecurityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
+		24140A5E2148AF9B007687EB /* SecurityNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityNavViewController.swift; sourceTree = "<group>"; };
+		24140A5F2148AF9B007687EB /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasscodeViewController.swift; sourceTree = "<group>"; };
+		24140A622148AF9B007687EB /* ChangePasscodeNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasscodeNavViewController.swift; sourceTree = "<group>"; };
+		24140A632148AF9B007687EB /* SettingsNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
+		24140A652148AF9B007687EB /* ChangePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
+		24140A662148AF9B007687EB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2450D37F214209FA00F5F61F /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		2450D38221420A7400F5F61F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2450D38521420AEC00F5F61F /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -94,12 +112,53 @@
 		0C7C490A21410EB900DBD4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24140A5A2148AF9B007687EB /* Settings */,
 				D6715D8C2140DE9C00957E86 /* Register */,
 				D6715D8B2140DE8700957E86 /* Login */,
 				D6715DB02141218900957E86 /* HomeController */,
 				D6715DAB2141213C00957E86 /* BaseController */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		24140A5A2148AF9B007687EB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				24140A5B2148AF9B007687EB /* Security */,
+				24140A5F2148AF9B007687EB /* SettingsViewModel.swift */,
+				24140A602148AF9B007687EB /* ChangePasscode */,
+				24140A632148AF9B007687EB /* SettingsNavViewController.swift */,
+				24140A642148AF9B007687EB /* ChangePassword */,
+				24140A662148AF9B007687EB /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		24140A5B2148AF9B007687EB /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				24140A5C2148AF9B007687EB /* SecurityViewController.swift */,
+				24140A5D2148AF9B007687EB /* SecurityViewModel.swift */,
+				24140A5E2148AF9B007687EB /* SecurityNavViewController.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		24140A602148AF9B007687EB /* ChangePasscode */ = {
+			isa = PBXGroup;
+			children = (
+				24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */,
+				24140A622148AF9B007687EB /* ChangePasscodeNavViewController.swift */,
+			);
+			path = ChangePasscode;
+			sourceTree = "<group>";
+		};
+		24140A642148AF9B007687EB /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				24140A652148AF9B007687EB /* ChangePassword.swift */,
+			);
+			path = ChangePassword;
 			sourceTree = "<group>";
 		};
 		2450D37D214209C500F5F61F /* RealmManager */ = {
@@ -420,17 +479,26 @@
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
 				2450D392214212F800F5F61F /* SampleModel2.swift in Sources */,
+				24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */,
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
+				24140A692148AF9B007687EB /* SecurityNavViewController.swift in Sources */,
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
+				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
+				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
+				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
+				24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
+				24140A6C2148AF9B007687EB /* ChangePasscodeNavViewController.swift in Sources */,
+				24140A6E2148AF9B007687EB /* ChangePassword.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
+				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
