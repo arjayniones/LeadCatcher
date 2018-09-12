@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
+
+extension DefaultsKeys {
+    static let SessionIsLoggedIn = DefaultsKey<Bool>("session_is_loggedin")}
 
 class SessionService {
 
     static var isLoggedIn: Bool {
-        return false
+        return Defaults[.SessionIsLoggedIn]
     }
     
     private static var logoutCallbacks: [(performAlways: Bool, fn: () -> ())] = []

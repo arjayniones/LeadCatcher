@@ -30,6 +30,9 @@
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
 		735165380657D3B189D33234 /* Pods_PlannerApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EE6281404B932663E52096 /* Pods_PlannerApp.framework */; };
+		D60A199A21422DF4008246FE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199921422DF4008246FE /* UserModel.swift */; };
+		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
+		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
 		D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D872140C82E00957E86 /* LoginViewController.swift */; };
 		D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D892140DD8000957E86 /* RegisterViewController.swift */; };
 		D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6715D8F2140FBA800957E86 /* SF-Pro-Text-Light.otf */; };
@@ -75,6 +78,9 @@
 		24D55FB921410A8D001140C1 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.debug.xcconfig"; sourceTree = "<group>"; };
 		86EE6281404B932663E52096 /* Pods_PlannerApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlannerApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D60A199921422DF4008246FE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
+		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		D6715D872140C82E00957E86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6715D892140DD8000957E86 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D6715D8F2140FBA800957E86 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
@@ -95,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */,
 				735165380657D3B189D33234 /* Pods_PlannerApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +146,7 @@
 				2450D38221420A7400F5F61F /* Model.swift */,
 				2450D38F214212E600F5F61F /* SampleModel.swift */,
 				2450D391214212F800F5F61F /* SampleModel2.swift */,
+				D60A199921422DF4008246FE /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -248,6 +256,7 @@
 		248B83982141012B00119D9D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D60A199B21423282008246FE /* UIAlertController+Convenience.swift */,
 				248B83992141014600119D9D /* ActionButton.swift */,
 				2450D3932142143100F5F61F /* Utils.swift */,
 			);
@@ -331,6 +340,7 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D60A199D21426253008246FE /* LocalAuthentication.framework */,
 				86EE6281404B932663E52096 /* Pods_PlannerApp.framework */,
 			);
 			name = Frameworks;
@@ -466,6 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
 				2450D3A521427CB800F5F61F /* SettingsViewModel.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
@@ -480,6 +491,7 @@
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
+				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
