@@ -11,6 +11,7 @@ import UIKit
 class HomeNavController: BaseNavigationController {
 
     let controller = UIViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.isTranslucent = false;

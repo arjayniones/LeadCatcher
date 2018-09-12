@@ -199,6 +199,7 @@ class LoginViewController: UIViewController {
             
             if checkType == "LoginClick"
             {
+                Defaults[.SessionUserId] = resultUserList.first?.id
                 self.present(BaseViewController(), animated: true, completion: nil);
             }
             else
