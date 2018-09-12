@@ -196,7 +196,7 @@ class LoginViewController: UIViewController {
             {
                 authenticationWithTouchID(id: "", completion: {
                     result in
-                    
+                    // testing save password
                     if result == "Success"
                     {
                         self.present(BaseViewController(), animated: true, completion: nil);
