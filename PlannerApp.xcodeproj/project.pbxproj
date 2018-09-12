@@ -124,12 +124,12 @@
 		24140A5A2148AF9B007687EB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				24140A5B2148AF9B007687EB /* Security */,
 				24140A5F2148AF9B007687EB /* SettingsViewModel.swift */,
-				24140A602148AF9B007687EB /* ChangePasscode */,
-				24140A632148AF9B007687EB /* SettingsNavViewController.swift */,
-				24140A642148AF9B007687EB /* ChangePassword */,
 				24140A662148AF9B007687EB /* SettingsViewController.swift */,
+				24140A632148AF9B007687EB /* SettingsNavViewController.swift */,
+				24140A5B2148AF9B007687EB /* Security */,
+				24140A602148AF9B007687EB /* ChangePasscode */,
+				24140A642148AF9B007687EB /* ChangePassword */,
 			);
 			path = Settings;
 			sourceTree = "<group>";

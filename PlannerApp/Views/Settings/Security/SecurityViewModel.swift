@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 
 class SecurityViewModel {
@@ -16,6 +17,23 @@ class SecurityViewModel {
             SecurityLabels(labelName: "Change Passcode")
         ] 
         return labelNames
+    }
+    
+    static func enableTouchID(bool:Bool) {
+
+        if let update = RealmStore.model(type: UserModel.self, id: Defaults[.SessionUserId]!) {
+            try! RealmStore.write {
+                update.U_EnableTouchID = bool
+            }
+        }
+    }
+    
+     func checkTouchIDUpdate() -> Bool{
+        if let update = RealmStore.model(type: UserModel.self, id: Defaults[.SessionUserId]!) {
+              return update.U_EnableTouchID
+        }
+            
+            return false
     }
 }
 
