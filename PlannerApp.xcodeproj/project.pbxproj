@@ -13,6 +13,7 @@
 		24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */; };
 		24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A632148AF9B007687EB /* SettingsNavViewController.swift */; };
 		24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A662148AF9B007687EB /* SettingsViewController.swift */; };
+		242717D821491150001792BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242717D721491150001792BD /* HomeViewController.swift */; };
 		2450D380214209FA00F5F61F /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D37F214209FA00F5F61F /* RealmStore.swift */; };
 		2450D38321420A7400F5F61F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38221420A7400F5F61F /* Model.swift */; };
 		2450D38621420AEC00F5F61F /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38521420AEC00F5F61F /* Networking.swift */; };
@@ -55,6 +56,7 @@
 		24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasscodeViewController.swift; sourceTree = "<group>"; };
 		24140A632148AF9B007687EB /* SettingsNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
 		24140A662148AF9B007687EB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		242717D721491150001792BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2450D37F214209FA00F5F61F /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		2450D38221420A7400F5F61F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2450D38521420AEC00F5F61F /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		0C7C490A21410EB900DBD4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				242717D9214912CC001792BD /* Contacts */,
 				24140A5A2148AF9B007687EB /* Settings */,
 				D6715D8C2140DE9C00957E86 /* Register */,
 				D6715D8B2140DE8700957E86 /* Login */,
@@ -145,6 +148,13 @@
 				24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */,
 			);
 			path = ChangePasscode;
+			sourceTree = "<group>";
+		};
+		242717D9214912CC001792BD /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		2450D37D214209C500F5F61F /* RealmManager */ = {
@@ -317,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				D6715DB12141218900957E86 /* HomeNavController.swift */,
+				242717D721491150001792BD /* HomeViewController.swift */,
 			);
 			name = HomeController;
 			path = PlannerApp/Views/HomeController;
@@ -480,6 +491,7 @@
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
+				242717D821491150001792BD /* HomeViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
