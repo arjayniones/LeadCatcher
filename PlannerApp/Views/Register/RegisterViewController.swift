@@ -168,7 +168,8 @@ class RegisterViewController: UIViewController {
     // MARK: - selector
     @objc func navigateToDashBoard()
     {
-        let result = self.checkEmptyText();
+
+        let result = UserViewModel.checkTextFieldIsEmpty(textField1: self.loginIDTextField.text!, textField2: self.passwordTextField.text!, textField3: self.confirmPasswordTextField.text!);
         
         if result != "Success"
         {
@@ -177,12 +178,10 @@ class RegisterViewController: UIViewController {
         }
         else
         {
-            let data = UserModel().newInstance();
-            data.U_Username = self.loginIDTextField.text!;
-            data.U_Password = self.passwordTextField.text!;
-            data.add()
-            
-            self.present(BaseViewController(), animated: true, completion: nil);
+            if UserViewModel.insertDataUserModel(loginID: self.loginIDTextField.text!, passcode: self.passwordTextField.text!)
+            {
+                self.present(BaseViewController(), animated: true, completion: nil);
+            }
         }
         
     }
@@ -190,30 +189,6 @@ class RegisterViewController: UIViewController {
     @objc func backToSignInVC()
     {
         self.dismiss(animated: true, completion: nil);
-    }
-    
-    func checkEmptyText()->String
-    {
-        if self.loginIDTextField.text?.count == 0
-        {
-            return "Login ID cannot empty";
-        }
-        else if self.passwordTextField.text?.count == 0
-        {
-            return "Passcode cannot empty";
-        }
-        else if self.confirmPasswordTextField.text?.count == 0
-        {
-            return "Confirm passcode cannot empty";
-        }
-        else if self.passwordTextField.text != self.confirmPasswordTextField.text
-        {
-            return "Password not match";
-        }
-        else
-        {
-            return "Success";
-        }
     }
     
     /*
