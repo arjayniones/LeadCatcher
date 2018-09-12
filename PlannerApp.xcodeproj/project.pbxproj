@@ -33,6 +33,7 @@
 		D60A199A21422DF4008246FE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199921422DF4008246FE /* UserModel.swift */; };
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
 		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
+		D639EACF2148B7980053894C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D639EACE2148B7980053894C /* UserViewModel.swift */; };
 		D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D872140C82E00957E86 /* LoginViewController.swift */; };
 		D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D892140DD8000957E86 /* RegisterViewController.swift */; };
 		D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6715D8F2140FBA800957E86 /* SF-Pro-Text-Light.otf */; };
@@ -81,6 +82,7 @@
 		D60A199921422DF4008246FE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
 		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		D639EACE2148B7980053894C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		D6715D872140C82E00957E86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6715D892140DD8000957E86 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D6715D8F2140FBA800957E86 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				D6715D8B2140DE8700957E86 /* Login */,
 				D6715DB02141218900957E86 /* HomeController */,
 				D6715DAB2141213C00957E86 /* BaseController */,
+				D639EACE2148B7980053894C /* UserViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
+				D639EACF2148B7980053894C /* UserViewModel.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
 				2450D390214212E600F5F61F /* SampleModel.swift in Sources */,

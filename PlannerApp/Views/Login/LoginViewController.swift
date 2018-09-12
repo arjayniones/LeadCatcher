@@ -35,19 +35,21 @@ class LoginViewController: UIViewController {
         
 //        edgesForExtendedLayout=[];
         view.backgroundColor = .white
-//        let realm = try! Realm()
-//        print(realm.configuration.fileURL!);
+        let realm = try! Realm()
+        print(realm.configuration.fileURL!);
         
         loginUsernameField.placeholder = "Login ID";
         loginUsernameField.font = CommonFontType.sfProTextRegular;
         loginUsernameField.autocorrectionType = UITextAutocorrectionType.no;
         loginUsernameField.textAlignment = NSTextAlignment.left;
+        loginUsernameField.tag = 0;
         view.addSubview(loginUsernameField)
         
         passwordField.placeholder = "Passcode";
         passwordField.font = CommonFontType.sfProTextRegular;
         passwordField.textAlignment = NSTextAlignment.left
         passwordField.isSecureTextEntry = true;
+        passwordField.tag = 1;
         passwordField.keyboardType = UIKeyboardType.numberPad;
         view.addSubview(passwordField)
         
@@ -80,15 +82,26 @@ class LoginViewController: UIViewController {
     @objc func loginButtonTouched() {
         //Defaults[.SessionIsLoggedIn] = false
         
-        let result = self.checkEmptyText();
+        let loginTextCheck = UserViewModel.textFieldIsEmpty(text: self.loginUsernameField.text!, textTag: self.loginUsernameField.tag);
+        let passcodeTextCheck = UserViewModel.textFieldIsEmpty(text: self.passwordField.text!, textTag: self.passwordField.tag);
         
-        if result == "Success"
+        if loginTextCheck == "" && passcodeTextCheck == ""
         {
             self.queryUserTable(checkType: "LoginClick");
         }
         else
         {
-            let controller = UIAlertController.alertControllerWithTitle(title: "Warning", message: result);
+            var msg = "";
+            if loginTextCheck.count > 0
+            {
+                msg = loginTextCheck;
+            }
+            else
+            {
+                msg = passcodeTextCheck;
+            }
+            
+            let controller = UIAlertController.alertControllerWithTitle(title: "Warning", message: msg);
             present(controller, animated: true, completion: nil);
         }
         
@@ -172,22 +185,14 @@ class LoginViewController: UIViewController {
     func queryUserTable(checkType:String)
     {
         
-        let realm = try! Realm();
-        if checkType == "ViewLoad" {
-            resultUserList = realm.objects(UserModel.self);
-            print(resultUserList);
-        }
-        else
-        {
-            resultUserList = realm.objects(UserModel.self).filter("U_Username = %@ AND U_Password = %@",self.loginUsernameField.text!, self.passwordField.text!);
-        }
-    
+        resultUserList = UserViewModel.queryUserTable(checkType: checkType, loginID: self.loginUsernameField.text!, passcode: self.passwordField.text!);
+        
         if resultUserList.count > 0
         {
             self.loginButton.isEnabled = true;
             self.signUpButton.isHidden = true;
             
-            if resultUserList[0].U_EnableTouchID == true
+            if resultUserList[0].U_EnableTouchID == true && checkType == "ViewLoad"
             {
                 authenticationWithTouchID();
             }
@@ -220,23 +225,6 @@ class LoginViewController: UIViewController {
         
     }
     
-    func checkEmptyText()->String
-    {
-        if self.loginUsernameField.text?.count == 0
-        {
-            return "Login ID cannot empty";
-        }
-        else if self.passwordField.text?.count == 0
-        {
-            return "Passcode cannot empty";
-        }
-        else
-        {
-            return "Success";
-        }
-        
-    }
-    
     /*
     // MARK: - Navigation
 
@@ -249,113 +237,4 @@ class LoginViewController: UIViewController {
 
 }
 
-extension LoginViewController{
-    func authenticationWithTouchID() {
-        let localAuthenticationContext = LAContext()
-        localAuthenticationContext.localizedFallbackTitle = "Use Passcode"
-        
-        var authError: NSError?
-        let reasonString = "To access the secure data"
-        
-        if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-            
-            localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString) { success, evaluateError in
-                
-                if success {
-                    //TODO: User authenticated successfully, take appropriate action
-                    let vc = RegisterViewController();
-                    self.present(vc, animated: true, completion: nil);
-                } else {
-                    //TODO: User did not authenticate successfully, look at error and take appropriate action
-                    guard let error = evaluateError else {
-                        return
-                    }
-                    
-                    print(self.evaluateAuthenticationPolicyMessageForLA(errorCode: error._code))
-                    
-                    //TODO: If you have choosen the 'Fallback authentication mechanism selected' (LAError.userFallback). Handle gracefully
-                    
-                }
-            }
-        } else {
-            
-            guard let error = authError else {
-                return
-            }
-            //TODO: Show appropriate alert if biometry/TouchID/FaceID is lockout or not enrolled
-            print(self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
-        }
-    }
-    
-    func evaluatePolicyFailErrorMessageForLA(errorCode: Int) -> String {
-        var message = ""
-        if #available(iOS 11.0, macOS 10.13, *) {
-            switch errorCode {
-            case LAError.biometryNotAvailable.rawValue:
-                message = "Authentication could not start because the device does not support biometric authentication."
-                
-            case LAError.biometryLockout.rawValue:
-                message = "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times."
-                
-            case LAError.biometryNotEnrolled.rawValue:
-                message = "Authentication could not start because the user has not enrolled in biometric authentication."
-                
-            default:
-                message = "Did not find error code on LAError object"
-            }
-        } else {
-            switch errorCode {
-            case LAError.touchIDLockout.rawValue:
-                message = "Too many failed attempts."
-                
-            case LAError.touchIDNotAvailable.rawValue:
-                message = "TouchID is not available on the device"
-                
-            case LAError.touchIDNotEnrolled.rawValue:
-                message = "TouchID is not enrolled on the device"
-                
-            default:
-                message = "Did not find error code on LAError object"
-            }
-        }
-        
-        return message;
-    }
-    
-    func evaluateAuthenticationPolicyMessageForLA(errorCode: Int) -> String {
-        
-        var message = ""
-        
-        switch errorCode {
-            
-        case LAError.authenticationFailed.rawValue:
-            message = "The user failed to provide valid credentials"
-            
-        case LAError.appCancel.rawValue:
-            message = "Authentication was cancelled by application"
-            
-        case LAError.invalidContext.rawValue:
-            message = "The context is invalid"
-            
-        case LAError.notInteractive.rawValue:
-            message = "Not interactive"
-            
-        case LAError.passcodeNotSet.rawValue:
-            message = "Passcode is not set on the device"
-            
-        case LAError.systemCancel.rawValue:
-            message = "Authentication was cancelled by the system"
-            
-        case LAError.userCancel.rawValue:
-            message = "The user did cancel"
-            
-        case LAError.userFallback.rawValue:
-            message = "The user chose to use the fallback"
-            
-        default:
-            message = evaluatePolicyFailErrorMessageForLA(errorCode: errorCode)
-        }
-        
-        return message
-    }
-}
+
