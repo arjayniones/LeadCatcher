@@ -29,6 +29,8 @@ class SessionService {
             fn()
         }
         
+        Defaults[.SessionUserId] = nil
+        
         logoutCallbacks = logoutCallbacks.filter { (performAlways, _) in performAlways }
     }
     

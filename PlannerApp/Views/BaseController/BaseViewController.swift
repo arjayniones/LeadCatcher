@@ -97,7 +97,6 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             break
         case todoListButton:
             self.activeTab = .todoList
-            //SessionService.logout()
             break
         case addMoreButton:
             self.activeTab = .addMore
@@ -123,11 +122,10 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
 //            view.insertSubview(RegisterViewController1 at: 1);
 //            activeNavViewController =
         case .todoList:
-            SessionService.logout()
             break
         case .addMore:
             view.insertSubview(settingsNavController.view, at: 0)
-            print("addmore")
+            activeNavViewController = settingsNavController
             break
         default:
             break

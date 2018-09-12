@@ -42,13 +42,13 @@ class RealmStore {
      Get object with id (primary key)
      
      - parameter type: Object type
-     - parameter id:   id (primary key)
+     - query:   any string
      
      - returns: Object (Model)
      */
-    static func model<T: Object>(type: T.Type, id: UUID) -> T? {
+    static func model<T: Object>(type: T.Type, query: String) -> T? {
         let store = try! Realm()
-        if let model:T = store.objects(T.self).filter("id == '\(id)'").sorted(byKeyPath: "created_at", ascending: false).first {
+        if let model:T = store.objects(T.self).filter(query).first {
             return  model
         }
         return nil

@@ -8,6 +8,7 @@
 
 
 import UIKit
+import SwiftyUserDefaults
 
 class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
@@ -84,9 +85,23 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
         }
         else if indexPath.row == 10{
-            SessionService.logout()
+           
+            popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
             
         }
+    }
+    
+    func popUpLogOut(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default,handler: { val in
+            SessionService.logout()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+        
+        
     }
 }
 

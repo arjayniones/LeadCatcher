@@ -24,9 +24,9 @@ public enum ObjectChanged {
 class Model: Object, Mappable {
     
     @objc dynamic var id : UUID = ""
-    @objc dynamic var created_at  : String?
-    @objc dynamic var updated_at  : String?
-    @objc dynamic var deleted_at  : String?
+    @objc dynamic var created_at  : Date?
+    @objc dynamic var updated_at  : Date?
+    @objc dynamic var deleted_at  : Date?
     
     override static func primaryKey() -> String? {
         return "id"

@@ -8,11 +8,12 @@
 
 import UIKit
 import LocalAuthentication
+import SwiftyUserDefaults
 
 class ChangePasscodeViewController: UIViewController {
 
-    let oldPassCodeField = UITextField()
     let newPassCodeField = UITextField()
+    let confirmPassCodeField = UITextField()
     
     let updateButton = UIButton()
     
@@ -21,20 +22,24 @@ class ChangePasscodeViewController: UIViewController {
     
     var didSetupConstraints = false
     
-    
+    var passcodeModel = ChangePasscodeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        oldPassCodeField.placeholder = "Old Passcode";
-        oldPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
-        oldPassCodeField.textAlignment = NSTextAlignment.left
-        view.addSubview(oldPassCodeField)
-        
         newPassCodeField.placeholder = "New Passcode";
         newPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
         newPassCodeField.textAlignment = NSTextAlignment.left
+        newPassCodeField.isSecureTextEntry = true
+        
         view.addSubview(newPassCodeField)
+        
+        confirmPassCodeField.placeholder = "Confirm Passcode";
+        confirmPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
+        confirmPassCodeField.textAlignment = NSTextAlignment.left
+        confirmPassCodeField.isSecureTextEntry = true
+       
+        view.addSubview(confirmPassCodeField)
         
         updateButton.setTitle("Update", for: .normal)
         updateButton.titleLabel?.font = UIFont(name: "SFProText-Bold", size: 17)
@@ -46,11 +51,16 @@ class ChangePasscodeViewController: UIViewController {
         
         bottomBorderOldPass.backgroundColor = UIColor.lightGray;
         bottomBorderNewPass.backgroundColor = UIColor.lightGray;
-        oldPassCodeField.addSubview(bottomBorderOldPass);
-        newPassCodeField.addSubview(bottomBorderNewPass);
+        newPassCodeField.addSubview(bottomBorderOldPass);
+        confirmPassCodeField.addSubview(bottomBorderNewPass);
         
         view.setNeedsUpdateConstraints()
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        newPassCodeField.text = ""
+        confirmPassCodeField.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,16 +69,33 @@ class ChangePasscodeViewController: UIViewController {
     }
     
     @objc func updateButtonTouched() {
-        self.present(BaseViewController(), animated: true, completion: nil)
+        //self.present(BaseViewController(), animated: true, completion: nil)
         
         //change passcode to new and go back/dismiss
+        guard let newPass = newPassCodeField.text else {
+            //put validation
+            
+            return
+        }
+        
+        if newPass == confirmPassCodeField.text {
+            //show pop up changed successfully
+            if passcodeModel.changePasscode(passcode: newPass) {
+                self.popUpSuccess(title: "Changed Successfully", message: "The passcode has updated successfully")
+            }
+            
+        }
+        else{
+            //message not matched pop up here
+            popUpNotMatched(title: "Not Matched", message: "The passcode you enter did not match. Please try again.")
+        }
     }
     
     
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
-            oldPassCodeField.snp.makeConstraints { make in
+            newPassCodeField.snp.makeConstraints { make in
                 
                 make.top.equalTo(view).inset(150)
                 make.left.right.equalTo(view).inset(10)
@@ -77,31 +104,31 @@ class ChangePasscodeViewController: UIViewController {
             
             bottomBorderOldPass.snp.makeConstraints{
                 make in
-                make.top.equalTo(oldPassCodeField.snp.bottom);
+                make.top.equalTo(newPassCodeField.snp.bottom);
                 make.height.equalTo(1);
-                make.left.right.equalTo(oldPassCodeField).inset(0)
+                make.left.right.equalTo(newPassCodeField).inset(0)
             }
             
-            newPassCodeField.snp.makeConstraints { make in
+            confirmPassCodeField.snp.makeConstraints { make in
                 
-                make.top.equalTo(oldPassCodeField.snp.bottom).offset(30)
+                make.top.equalTo(newPassCodeField.snp.bottom).offset(30)
                 make.left.right.equalTo(view).inset(10)
                 make.height.equalTo(40)
             }
             
             bottomBorderNewPass.snp.makeConstraints{
                 make in
-                make.top.equalTo(newPassCodeField.snp.bottom);
+                make.top.equalTo(confirmPassCodeField.snp.bottom);
                 make.height.equalTo(1);
-                make.left.right.equalTo(newPassCodeField).inset(0)
+                make.left.right.equalTo(confirmPassCodeField).inset(0)
             }
             
             updateButton.snp.makeConstraints { make in
                 
-                make.top.equalTo(newPassCodeField.snp.bottom).offset(30)
+                make.top.equalTo(confirmPassCodeField.snp.bottom).offset(30)
                 make.width.equalTo(view.snp.width).multipliedBy(0.3)
                 make.height.equalTo(40)
-                make.centerX.equalTo(newPassCodeField.snp.centerX)
+                make.centerX.equalTo(confirmPassCodeField.snp.centerX)
             }
            
             
@@ -110,9 +137,47 @@ class ChangePasscodeViewController: UIViewController {
            
         }
         
-        
         super.updateViewConstraints()
     }
     
+    func popUpSuccess(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: { val in
+            SessionService.logout()
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+ 
+        
+    }
+    
+    func popUpNotMatched(title: String, message: String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        
+        //self.newPassCodeField.text = ""
+        self.confirmPassCodeField.text = ""
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+
+}
+
+class ChangePasscodeViewModel {
+    
+    func changePasscode(passcode:String) -> Bool {
+        
+        if let userModel = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'") {
+            try! RealmStore.write {
+                userModel.U_Password = passcode
+            }
+            return true
+        }
+        return false
+        
+    }
 }
