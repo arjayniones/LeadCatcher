@@ -17,13 +17,13 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     let tabView = UIView()
     
-    let homeNavController: BaseNavigationController
+    fileprivate var homeNavController: BaseNavigationController
 //    let contactNavController: BaseNavigationController
 //    let toDoListNavController: BaseNavigationController
 //    let addNoteNavController: BaseNavigationController
-    let settingsNavController: BaseNavigationController
+    fileprivate var settingsNavController: BaseNavigationController
     
-    var activeNavViewController: BaseNavigationController
+    fileprivate var activeNavViewController: BaseNavigationController
     
     let homeButton = ActionButton()
     let contactButton = ActionButton()
@@ -71,12 +71,19 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         addMoreButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addMoreButton)
         
+        activeTabColor()
+        
         SessionService.onLogout(performAlways: true) {
             self.resetTabController()
         }
     }
     
     func resetTabController() {
+        //====== Reset controllers
+        homeNavController = HomeNavController()
+        settingsNavController = SettingsNavController()
+        // ======
+        
         self.activeNavViewController.view.removeFromSuperview()
         self.view.insertSubview(self.homeNavController.view, at: 0)
         self.activeNavViewController = self.homeNavController
@@ -109,18 +116,23 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     @objc func tabButtonPressed(sender:UIButton) {
         switch sender {
         case homeButton:
+            self.resetEachController(newTab: .home, oldTab: self.activeTab)
             self.activeTab = .home
             break
         case contactButton:
+            self.resetEachController(newTab: .contact, oldTab: self.activeTab)
             self.activeTab = .contact
             break
         case addNoteButton:
+            self.resetEachController(newTab: .addNote, oldTab: self.activeTab)
             self.activeTab = .addNote
             break
         case todoListButton:
+            self.resetEachController(newTab: .todoList, oldTab: self.activeTab)
             self.activeTab = .todoList
             break
         case addMoreButton:
+            self.resetEachController(newTab: .addMore, oldTab: self.activeTab)
             self.activeTab = .addMore
             break
             
@@ -130,6 +142,11 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         
         activeTabColor()
         updateActiveTab()
+    }
+    func resetEachController(newTab:ActiveTab ,oldTab:ActiveTab) {
+        if newTab == oldTab {
+            self.activeNavViewController.popToRootViewController(animated: true)
+        }
     }
     
     func updateActiveTab() {
