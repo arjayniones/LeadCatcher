@@ -57,6 +57,7 @@ class ChangePasscodeViewController: ViewControllerProtocol,NativeNavbar {
         
         view.setNeedsUpdateConstraints()
 
+         self.hideKeyboardWhenTappedAround();
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -183,3 +184,5 @@ class ChangePasscodeViewModel {
         
     }
 }
+
+
