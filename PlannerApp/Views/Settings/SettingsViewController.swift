@@ -10,7 +10,7 @@
 import UIKit
 import SwiftyUserDefaults
 
-class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource {
+class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
     let settingsModel = SettingsViewModel()
     
@@ -20,8 +20,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        view.backgroundColor =  .yellow
+        title = "Settings"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
@@ -30,14 +29,11 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
-        edgesForExtendedLayout = []
-        
         view.setNeedsUpdateConstraints()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        updateNavbarAppear()
         tableView.reloadData()
     }
     

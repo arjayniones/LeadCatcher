@@ -95,7 +95,6 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         checkToLogin()
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

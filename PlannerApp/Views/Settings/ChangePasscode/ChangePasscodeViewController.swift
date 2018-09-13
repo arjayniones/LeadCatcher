@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 import SwiftyUserDefaults
 
-class ChangePasscodeViewController: ViewControllerProtocol {
+class ChangePasscodeViewController: ViewControllerProtocol,NativeNavbar {
 
     let newPassCodeField = UITextField()
     let confirmPassCodeField = UITextField()
@@ -60,6 +60,7 @@ class ChangePasscodeViewController: ViewControllerProtocol {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        updateNavbarAppear()
         newPassCodeField.text = ""
         confirmPassCodeField.text = ""
     }

@@ -8,12 +8,15 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController,NativeNavbar {
     
     let calendarView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Dashboard"
+        
         view.backgroundColor = .yellow
         
         calendarView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/2)
@@ -21,6 +24,10 @@ class HomeViewController: UIViewController {
         view.addSubview(calendarView)
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateNavbarAppear()
     }
 
     override func didReceiveMemoryWarning() {

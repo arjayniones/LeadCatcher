@@ -9,7 +9,7 @@
 
 import UIKit
 
-class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource {
+class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,NativeNavbar {
     let tableView = UITableView()
    
     let securityLabels = SecurityViewModel.getSecurityLabels() // model with getlabel func
@@ -18,7 +18,6 @@ class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         view.backgroundColor =  .yellow
         tableView.delegate = self
@@ -35,6 +34,7 @@ class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        updateNavbarAppear()
         tableView.reloadData()
     }
     
