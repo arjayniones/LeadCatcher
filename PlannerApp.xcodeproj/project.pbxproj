@@ -116,7 +116,6 @@
 				D6715D8B2140DE8700957E86 /* Login */,
 				D6715DB02141218900957E86 /* HomeController */,
 				D6715DAB2141213C00957E86 /* BaseController */,
-				D639EACE2148B7980053894C /* UserViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,6 +277,7 @@
 		D6715D8B2140DE8700957E86 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D639EACE2148B7980053894C /* UserViewModel.swift */,
 				D6715D872140C82E00957E86 /* LoginViewController.swift */,
 			);
 			path = Login;

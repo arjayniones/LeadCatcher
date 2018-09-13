@@ -17,11 +17,12 @@ extension DefaultsKeys {
 class SessionService {
 
     static var isLoggedIn: Bool {
-        return Defaults[.SessionUserId] != nil
+        // azlim : modify this to prevent auto login
+        //return Defaults[.SessionUserId] != nil
+        return false;
     }
     
     private static var logoutCallbacks: [(performAlways: Bool, fn: () -> ())] = []
-    
     
     static func logout() {
         for (_, fn) in logoutCallbacks {
