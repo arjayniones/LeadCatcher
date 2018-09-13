@@ -11,15 +11,12 @@ import SwiftyUserDefaults
 
 extension DefaultsKeys {
     static let SessionUserId = DefaultsKey<UUID?>("session_user_id")
-    
 }
 
 class SessionService {
 
     static var isLoggedIn: Bool {
-        // azlim : modify this to prevent auto login
-        //return Defaults[.SessionUserId] != nil
-        return false;
+        return Defaults[.SessionUserId] != nil
     }
     
     private static var logoutCallbacks: [(performAlways: Bool, fn: () -> ())] = []

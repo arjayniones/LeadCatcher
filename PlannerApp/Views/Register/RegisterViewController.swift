@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
-class RegisterViewController: UIViewController {
+class RegisterViewController: ViewControllerProtocol {
 
     let continueButton = UIButton();
     let backButton = UIButton();
@@ -20,8 +20,6 @@ class RegisterViewController: UIViewController {
     let bottomBorder3 = UIView();
     let naviBar = UIView();
     let titleLabel = UILabel();
-    
-    var didSetupConstraints = false;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,7 +181,7 @@ class RegisterViewController: UIViewController {
             if userId.count > 0
             {
                 Defaults[.SessionUserId] = userId;
-                self.present(BaseViewController(), animated: true, completion: nil);
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         }
         
@@ -193,15 +191,4 @@ class RegisterViewController: UIViewController {
     {
         self.dismiss(animated: true, completion: nil);
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

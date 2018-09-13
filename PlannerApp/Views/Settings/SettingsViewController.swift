@@ -10,12 +10,13 @@
 import UIKit
 import SwiftyUserDefaults
 
-class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
     let securityVC = SecurityViewController()
     let settingsModel = SettingsViewModel()
     
      let settingsLabels = SettingsViewModel.getSettingsLabels() // model with get settings label func
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,18 +41,18 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
+    
     override func updateViewConstraints() {
-//        tableView.snp.makeConstraints { make in
-//            make.edges.equalTo(view)
-//        }
         
-        
-        //setting up the tableview constraints
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        if !didSetupConstraints {
+            
+            tableView.snp.makeConstraints { make in
+                make.top.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
+            }
+            
+            didSetupConstraints = true
+        }
         
         super.updateViewConstraints()
     }
@@ -64,7 +65,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
-         cell.textLabel?.text = settingsLabels[indexPath.row].labelName
+        cell.textLabel?.text = settingsLabels[indexPath.row].labelName
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
@@ -100,42 +101,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         
-        
-        
     }
 }
-
-//class settingsTableViewCell: UITableViewCell {
-//    let textSample:String = "Security"
-//    let label = UILabel()
-//
-//    var didSetupContraints = false
-//
-//    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//
-//        label.text = textSample
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byWordWrapping
-//        contentView.addSubview(label)
-//
-//    }
-//
-//    override func updateConstraints() {
-//        if !didSetupContraints {
-//
-//            label.snp.makeConstraints { make in
-//                make.edges.equalTo(contentView).inset(UIEdgeInsetsMake(10, 20, 10, 0))
-//            }
-//            didSetupContraints = true
-//        }
-//
-//        super.updateConstraints()
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
 
 

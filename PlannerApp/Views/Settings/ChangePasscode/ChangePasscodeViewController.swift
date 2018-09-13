@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 import SwiftyUserDefaults
 
-class ChangePasscodeViewController: UIViewController {
+class ChangePasscodeViewController: ViewControllerProtocol {
 
     let newPassCodeField = UITextField()
     let confirmPassCodeField = UITextField()
@@ -20,9 +20,8 @@ class ChangePasscodeViewController: UIViewController {
     let bottomBorderOldPass = UIView();
     let bottomBorderNewPass = UIView();
     
-    var didSetupConstraints = false
-    
     var passcodeModel = ChangePasscodeViewModel()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

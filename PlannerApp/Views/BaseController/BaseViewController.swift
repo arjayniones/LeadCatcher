@@ -74,9 +74,21 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         self.activeTabColor()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        checkToLogin()
+    }
+    
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         tabView.groupInCenter(group: .horizontal, views: [homeButton,contactButton,addNoteButton,todoListButton,addMoreButton], padding: 0, width: view.width/5, height: 50)
+    }
+    
+    func checkToLogin() {
+        if !SessionService.isLoggedIn {
+            self.present(LoginViewController(), animated: false, completion: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -130,6 +142,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         default:
             break
         }
+        
+        checkToLogin()
     }
     
     func activeTabColor() {
@@ -160,6 +174,12 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     func showTabBar() {
         tabView.isHidden = false
+    }
+}
+
+extension UIViewController {
+    var tabController: BaseViewController? {
+        return navigationController?.parent as? BaseViewController
     }
 }
 

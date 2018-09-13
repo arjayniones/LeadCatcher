@@ -9,7 +9,7 @@
 
 import UIKit
 
-class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
    
     let securityLabels = SecurityViewModel.getSecurityLabels() // model with getlabel func
@@ -39,16 +39,17 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tableView.reloadData()
     }
     override func updateViewConstraints() {
-//        tableView.snp.makeConstraints { make in
-//            make.edges.equalTo(view)
-//        }
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        
-        tableView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        if !didSetupConstraints {
+            tableView.translatesAutoresizingMaskIntoConstraints = false
+            tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
+            
+            tableView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
+            tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+            tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+            
+            didSetupConstraints = true
+        }
         
         super.updateViewConstraints()
     }
