@@ -30,6 +30,7 @@ class ChangePasscodeViewController: ViewControllerProtocol {
         newPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
         newPassCodeField.textAlignment = NSTextAlignment.left
         newPassCodeField.isSecureTextEntry = true
+        newPassCodeField.keyboardType = UIKeyboardType.numberPad;
         
         view.addSubview(newPassCodeField)
         
@@ -37,6 +38,7 @@ class ChangePasscodeViewController: ViewControllerProtocol {
         confirmPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
         confirmPassCodeField.textAlignment = NSTextAlignment.left
         confirmPassCodeField.isSecureTextEntry = true
+        confirmPassCodeField.keyboardType = UIKeyboardType.numberPad;
        
         view.addSubview(confirmPassCodeField)
         
