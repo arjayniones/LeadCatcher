@@ -71,6 +71,16 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         addMoreButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addMoreButton)
         
+        SessionService.onLogout(performAlways: true) {
+            self.resetTabController()
+        }
+    }
+    
+    func resetTabController() {
+        self.activeNavViewController.view.removeFromSuperview()
+        self.view.insertSubview(self.homeNavController.view, at: 0)
+        self.activeNavViewController = self.homeNavController
+        self.activeTab = .home
         self.activeTabColor()
     }
     
