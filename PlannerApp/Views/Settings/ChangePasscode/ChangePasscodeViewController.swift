@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 import SwiftyUserDefaults
 
-class ChangePasscodeViewController: ViewControllerProtocol,NativeNavbar {
+class ChangePasscodeViewController: ViewControllerProtocol,LargeNativeNavbar {
 
     let newPassCodeField = UITextField()
     let confirmPassCodeField = UITextField()
@@ -26,6 +26,7 @@ class ChangePasscodeViewController: ViewControllerProtocol,NativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+         title = "Change Passcode"
         newPassCodeField.placeholder = "New Passcode";
         newPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
         newPassCodeField.textAlignment = NSTextAlignment.left

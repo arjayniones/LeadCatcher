@@ -9,7 +9,7 @@
 
 import UIKit
 
-class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,NativeNavbar {
+class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
    
     let securityLabels = SecurityViewModel.getSecurityLabels() // model with getlabel func
@@ -18,6 +18,8 @@ class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+         title = "Security"
         
         view.backgroundColor =  .yellow
         tableView.delegate = self
