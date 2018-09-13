@@ -35,8 +35,6 @@ class LoginViewController: ViewControllerProtocol {
 //        edgesForExtendedLayout=[];
         self.hideKeyboardWhenTappedAround();
         view.backgroundColor = .white
-        let realm = try! Realm()
-        print(realm.configuration.fileURL!);
         
         loginUsernameField.placeholder = "Login ID";
         loginUsernameField.font = CommonFontType.sfProTextRegular;
@@ -76,10 +74,6 @@ class LoginViewController: ViewControllerProtocol {
         
         view.setNeedsUpdateConstraints();
         self.queryUserTable(checkType: "ViewLoad");
-        
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
         
     }
     
@@ -204,6 +198,7 @@ class LoginViewController: ViewControllerProtocol {
         // if viewdidload then checktype will be "ViewLoad"
         // if click login button then checktype will be "LoginClick"
         resultUserList = UserViewModel.queryUserTable(checkType: checkType, loginID: self.loginUsernameField.text!, passcode: self.passwordField.text!);
+        print(resultUserList)
         
         if resultUserList.count > 0
         {
@@ -256,16 +251,6 @@ class LoginViewController: ViewControllerProtocol {
         }
         
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
