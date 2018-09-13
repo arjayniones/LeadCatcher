@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import RealmSwift
 import LocalAuthentication
 
-class LoginViewController: UIViewController {
+class LoginViewController: ViewControllerProtocol {
 
     let loginUsernameField = UITextField()
     let passwordField = UITextField()
@@ -26,7 +26,6 @@ class LoginViewController: UIViewController {
     let bottomBorderPassword = UIView();
     let hideSignUpBtn:Bool = false;
     
-    var didSetupConstraints = false;
     var resultUserList:Results<UserModel>!;
     let localAuthenticationContext = LAContext();
     
@@ -218,7 +217,12 @@ class LoginViewController: UIViewController {
                     result in
                     if result == "Success"
                     {
-                        self.present(BaseViewController(), animated: true, completion: nil);
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: false, completion: nil)
+                        }
+//                        self.present(BaseViewController(), animated: true, completion: nil);
+                        
+//                        self.dismiss(animated: true, completion: nil)
                     }
                     
                 })
@@ -227,7 +231,8 @@ class LoginViewController: UIViewController {
             if checkType == "LoginClick"
             {
                 Defaults[.SessionUserId] = resultUserList[0].id;
-                self.present(BaseViewController(), animated: true, completion: nil);
+//                self.present(BaseViewController(), animated: true, completion: nil);
+                self.dismiss(animated: true, completion: nil)
             }
             else
             {

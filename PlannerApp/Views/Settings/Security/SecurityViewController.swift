@@ -9,11 +9,10 @@
 
 import UIKit
 
-class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
    
     let securityLabels = SecurityViewModel.getSecurityLabels() // model with getlabel func
-    let changePasscodeVC = ChangePasscodeViewController()
     let securityModel = SecurityViewModel() //model
     
     
@@ -38,17 +37,16 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
+    
     override func updateViewConstraints() {
-//        tableView.snp.makeConstraints { make in
-//            make.edges.equalTo(view)
-//        }
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        
-        tableView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        if !didSetupConstraints {
+            tableView.snp.makeConstraints { make in
+                make.edges.equalTo(view)
+            }
+            
+            didSetupConstraints = true
+        }
         
         super.updateViewConstraints()
     }
@@ -61,7 +59,6 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "securityCell", for: indexPath)
-        print(securityLabels[indexPath.row].labelName)
         cell.textLabel?.text = securityLabels[indexPath.row].labelName
         
         if indexPath.row == 0 {
@@ -93,6 +90,7 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 1 {
+            let changePasscodeVC = ChangePasscodeViewController()
             navigationController?.pushViewController(changePasscodeVC, animated: true)
         }
     }
@@ -110,39 +108,4 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
 }
-
-//class securityTableViewCell: UITableViewCell {
-//
-//    let label = UILabel()
-//
-//    var didSetupContraints = false
-//
-//    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//
-//
-//        label.text =
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byWordWrapping
-//        contentView.addSubview(label)
-//
-//    }
-//
-//    override func updateConstraints() {
-//        if !didSetupContraints {
-//
-//            label.snp.makeConstraints { make in
-//                make.edges.equalTo(contentView).inset(UIEdgeInsetsMake(10, 10, 10, 0))
-//            }
-//            didSetupContraints = true
-//        }
-//
-//        super.updateConstraints()
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
-
 

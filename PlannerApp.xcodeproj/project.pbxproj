@@ -27,6 +27,7 @@
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
+		24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */; };
 		735165380657D3B189D33234 /* Pods_PlannerApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EE6281404B932663E52096 /* Pods_PlannerApp.framework */; };
 		D60A199A21422DF4008246FE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199921422DF4008246FE /* UserModel.swift */; };
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
@@ -73,6 +74,7 @@
 		248B83872140B29D00119D9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		248B83992141014600119D9D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		24D55FB921410A8D001140C1 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
+		24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
 		2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.debug.xcconfig"; sourceTree = "<group>"; };
 		86EE6281404B932663E52096 /* Pods_PlannerApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlannerApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D60A199921422DF4008246FE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				2450D38D2142106200F5F61F /* DateExtension.swift */,
+				24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
+				24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				242717D821491150001792BD /* HomeViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,

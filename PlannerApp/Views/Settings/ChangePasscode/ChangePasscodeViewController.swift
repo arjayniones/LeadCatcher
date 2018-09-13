@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 import SwiftyUserDefaults
 
-class ChangePasscodeViewController: UIViewController {
+class ChangePasscodeViewController: ViewControllerProtocol {
 
     let newPassCodeField = UITextField()
     let confirmPassCodeField = UITextField()
@@ -20,9 +20,8 @@ class ChangePasscodeViewController: UIViewController {
     let bottomBorderOldPass = UIView();
     let bottomBorderNewPass = UIView();
     
-    var didSetupConstraints = false
-    
     var passcodeModel = ChangePasscodeViewModel()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +30,7 @@ class ChangePasscodeViewController: UIViewController {
         newPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
         newPassCodeField.textAlignment = NSTextAlignment.left
         newPassCodeField.isSecureTextEntry = true
+        newPassCodeField.keyboardType = UIKeyboardType.numberPad;
         
         view.addSubview(newPassCodeField)
         
@@ -38,6 +38,7 @@ class ChangePasscodeViewController: UIViewController {
         confirmPassCodeField.font = UIFont(name: "SFTextPro-Regular", size: 17)
         confirmPassCodeField.textAlignment = NSTextAlignment.left
         confirmPassCodeField.isSecureTextEntry = true
+        confirmPassCodeField.keyboardType = UIKeyboardType.numberPad;
        
         view.addSubview(confirmPassCodeField)
         

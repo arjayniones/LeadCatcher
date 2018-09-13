@@ -26,19 +26,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func prepareAndExecute(fn: () -> ()) {
-        window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        window?.backgroundColor = .white
+        self.window?.backgroundColor = .white
         
-        SessionService.onLogout(performAlways: true) { self.window?.rootViewController = LoginViewController() }
-
-        if SessionService.isLoggedIn {
-            fn()
-        } else {
-            window?.rootViewController = LoginViewController()
+        SessionService.onLogout(performAlways: true) {
+            self.window?.rootViewController?.present(LoginViewController(), animated: true, completion: nil)
         }
         
-        window?.makeKeyAndVisible()
+        fn()
+        
+        self.window?.makeKeyAndVisible()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
