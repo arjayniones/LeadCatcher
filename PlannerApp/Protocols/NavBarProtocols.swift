@@ -17,6 +17,7 @@ extension NativeNavbar where Self: UIViewController {
     func updateNavbarAppear() {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.titleTextAttributes = [
@@ -44,6 +45,7 @@ extension LargeNativeNavbar where Self: UIViewController {
     func updateNavbarAppear() {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         
