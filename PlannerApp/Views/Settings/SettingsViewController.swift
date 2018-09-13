@@ -12,7 +12,6 @@ import SwiftyUserDefaults
 
 class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let tableView = UITableView()
-    let securityVC = SecurityViewController()
     let settingsModel = SettingsViewModel()
     
      let settingsLabels = SettingsViewModel.getSettingsLabels() // model with get settings label func
@@ -82,10 +81,10 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-        navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
+            let securityVC = SecurityViewController()
+            self.navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
         }
         else if indexPath.row == 10{
-           
             popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
             
         }

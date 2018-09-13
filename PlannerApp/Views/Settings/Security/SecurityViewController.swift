@@ -13,7 +13,6 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     let tableView = UITableView()
    
     let securityLabels = SecurityViewModel.getSecurityLabels() // model with getlabel func
-    let changePasscodeVC = ChangePasscodeViewController()
     let securityModel = SecurityViewModel() //model
     
     
@@ -43,6 +42,8 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //            make.edges.equalTo(view)
 //        }
         
+        
+        //change to snapkit
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         
@@ -93,6 +94,7 @@ class SecurityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 1 {
+            let changePasscodeVC = ChangePasscodeViewController()
             navigationController?.pushViewController(changePasscodeVC, animated: true)
         }
     }
