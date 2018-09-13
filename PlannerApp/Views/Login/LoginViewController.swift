@@ -198,8 +198,12 @@ class LoginViewController: ViewControllerProtocol {
                     // testing save password
                     if result == "Success"
                     {
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: false, completion: nil)
+                        }
 //                        self.present(BaseViewController(), animated: true, completion: nil);
-                        self.dismiss(animated: true, completion: nil)
+                        
+//                        self.dismiss(animated: true, completion: nil)
                     }
                     
                 })
