@@ -24,7 +24,7 @@ class RegisterViewController: ViewControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white;
-        
+        self.hideKeyboardWhenTappedAround();
         naviBar.backgroundColor = CommonColor.naviBarBlackColor;
         view.addSubview(naviBar);
         
@@ -166,18 +166,22 @@ class RegisterViewController: ViewControllerProtocol {
     // MARK: - selector
     @objc func navigateToDashBoard()
     {
-
+        // return msg if one of the textfield is empty
+        // return "Success" if all of the textfield filled
         let result = UserViewModel.checkTextFieldIsEmpty(textField1: self.loginIDTextField.text!, textField2: self.passwordTextField.text!, textField3: self.confirmPasswordTextField.text!);
         
         if result != "Success"
         {
+            // show alert message
             let controller = UIAlertController.alertControllerWithTitle(title: "Warning", message: result);
             present(controller, animated: false, completion: nil);
         }
         else
         {
+            // insert user into realm usermodel
             let userId = UserViewModel.insertDataUserModel(loginID: self.loginIDTextField.text!, passcode: self.passwordTextField.text!);
             
+            //make sure UUID success generated
             if userId.count > 0
             {
                 Defaults[.SessionUserId] = userId;

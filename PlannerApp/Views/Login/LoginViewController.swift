@@ -33,6 +33,7 @@ class LoginViewController: ViewControllerProtocol {
         super.viewDidLoad()
         
 //        edgesForExtendedLayout=[];
+        self.hideKeyboardWhenTappedAround();
         view.backgroundColor = .white
         let realm = try! Realm()
         print(realm.configuration.fileURL!);
@@ -78,14 +79,29 @@ class LoginViewController: ViewControllerProtocol {
         
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        
+    }
+    
     @objc func loginButtonTouched() {
+        
         //Defaults[.isLoggedIn] = false
         
+        if resultUserList.count == 0
+        {
+            let controller = UIAlertController.alertControllerWithTitle(title: "Warning", message: "No user found. Please proceed to sign up");
+            present(controller, animated: true, completion: nil);
+        }
+        
+        // return alert msg if textfield is empty
+        // return "" if textfield is filled
         let loginTextCheck = UserViewModel.textFieldIsEmpty(text: self.loginUsernameField.text!, textTag: self.loginUsernameField.tag);
         let passcodeTextCheck = UserViewModel.textFieldIsEmpty(text: self.passwordField.text!, textTag: self.passwordField.tag);
         
         if loginTextCheck == "" && passcodeTextCheck == ""
         {
+            // loginTextCheck and passCodeTextCheck = "" mean both textfield is not empty
+            // if one of them is != "" then mean one of the textfield is empty.
             self.queryUserTable(checkType: "LoginClick");
         }
         else
@@ -103,6 +119,7 @@ class LoginViewController: ViewControllerProtocol {
             let controller = UIAlertController.alertControllerWithTitle(title: "Warning", message: msg);
             present(controller, animated: true, completion: nil);
         }
+ 
         
     }
 
@@ -183,7 +200,9 @@ class LoginViewController: ViewControllerProtocol {
     // MARK: - Query Realm
     func queryUserTable(checkType:String)
     {
-        
+        // checkType is used for diff viewload or user click login button
+        // if viewdidload then checktype will be "ViewLoad"
+        // if click login button then checktype will be "LoginClick"
         resultUserList = UserViewModel.queryUserTable(checkType: checkType, loginID: self.loginUsernameField.text!, passcode: self.passwordField.text!);
         
         if resultUserList.count > 0
@@ -193,13 +212,17 @@ class LoginViewController: ViewControllerProtocol {
             
             if resultUserList[0].U_EnableTouchID == true && checkType == "ViewLoad"
             {
+                // call out touch id verification
                 authenticationWithTouchID(id: "", completion: {
                     result in
-                    // testing save password
                     if result == "Success"
                     {
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: false, completion: nil)
+                        }
 //                        self.present(BaseViewController(), animated: true, completion: nil);
-                        self.dismiss(animated: true, completion: nil)
+                        
+//                        self.dismiss(animated: true, completion: nil)
                     }
                     
                 })
@@ -221,7 +244,6 @@ class LoginViewController: ViewControllerProtocol {
         {
             if checkType == "ViewLoad"
             {
-                self.loginButton.isEnabled = false;
                 self.signUpButton.isHidden = false;
             }
             else
