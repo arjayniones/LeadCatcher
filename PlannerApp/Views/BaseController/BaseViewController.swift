@@ -56,18 +56,23 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         tabView.backgroundColor = .white
         self.view.addSubview(tabView)
         
+        homeButton.setImage(UIImage(named:"home-icon"), for: .normal)
         homeButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(homeButton)
         
+        contactButton.setImage(UIImage(named:"profile-icon"), for: .normal)
         contactButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(contactButton)
         
+        addNoteButton.setImage(UIImage(named:"plus-icon"), for: .normal)
         addNoteButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addNoteButton)
         
+        todoListButton.setImage(UIImage(named:"book-icon"), for: .normal)
         todoListButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(todoListButton)
         
+        addMoreButton.setImage(UIImage(named:"more-icon"), for: .normal)
         addMoreButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addMoreButton)
         

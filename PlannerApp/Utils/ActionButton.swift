@@ -20,7 +20,6 @@ class ActionButton: UIButton {
     override init (frame: CGRect) {
         super.init(frame: frame)
         
-        setTitle("🏠", for: UIControlState())
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
     }
     
