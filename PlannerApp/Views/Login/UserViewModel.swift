@@ -19,21 +19,24 @@ class UserViewModel{
     }
     
     // MARK: - Query Realm
+    // query UserTable data and return is realmresults
+    // checkType = "ViewLoad" will call when viewDidLoad
+    // "LoginClick" will only when user click login button
     class func queryUserTable(checkType:String, loginID:String, passcode:String)->Results<UserModel>
     {
         let realm = try! Realm();
         if checkType == "ViewLoad" {
-            //resultUserList = realm.objects(UserModel.self);
-            //print(resultUserList);
+            // used to define UserTable is empty or not
             return realm.objects(UserModel.self);
         }
         else
         {
+            // used to verify user info correct or not
             return realm.objects(UserModel.self).filter("U_Username = %@ AND U_Password = %@",loginID, passcode);
-            //resultUserList = realm.objects(UserModel.self).filter("U_Username = %@ AND U_Password = %@",self.loginUsernameField.text!, self.passwordField.text!);
         }
     }
     
+    //insert user data into user table and return usertable UDID in string
     class func insertDataUserModel(loginID:String, passcode:String)->String
     {
         let data = UserModel().newInstance();
@@ -45,6 +48,7 @@ class UserViewModel{
     }
     
     // MARK: - text field checking
+    // for loginVC and return alert message in string
     class func textFieldIsEmpty(text:String, textTag:Int)->String
     {
         if text.count == 0 && textTag == 0 {
@@ -60,6 +64,7 @@ class UserViewModel{
         }
     }
     
+    // text field checking for signUpVC and return alert message in string
     class func checkTextFieldIsEmpty(textField1:String, textField2:String, textField3:String)->String
     {
         if textField1.count == 0 {
@@ -84,6 +89,8 @@ class UserViewModel{
     }
     
 }
+
+// MARK: - Extension for LoginVC and UIVC
 
 extension LoginViewController{
     func authenticationWithTouchID(id:String, completion:@escaping (_ value:String)->Void) {
