@@ -62,7 +62,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         cell.textLabel?.text = contactNameLabels[indexPath.row].contactName
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
-        cell.updateConstraintsIfNeeded()
+        //cell.updateConstraintsIfNeeded()
         
         return cell
     }
