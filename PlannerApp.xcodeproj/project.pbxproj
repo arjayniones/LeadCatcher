@@ -34,6 +34,8 @@
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
 		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
 		D639EACF2148B7980053894C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D639EACE2148B7980053894C /* UserViewModel.swift */; };
+		D66E10CE215081D7005625BF /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E10CD215081D7005625BF /* ContactModel.swift */; };
+		D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E10CF2150C2E2005625BF /* ContactViewModel.swift */; };
 		D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D872140C82E00957E86 /* LoginViewController.swift */; };
 		D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D892140DD8000957E86 /* RegisterViewController.swift */; };
 		D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6715D8F2140FBA800957E86 /* SF-Pro-Text-Light.otf */; };
@@ -83,6 +85,8 @@
 		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
 		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		D639EACE2148B7980053894C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		D66E10CD215081D7005625BF /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		D66E10CF2150C2E2005625BF /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		D6715D872140C82E00957E86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6715D892140DD8000957E86 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D6715D8F2140FBA800957E86 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				24140A632148AF9B007687EB /* SettingsNavViewController.swift */,
 				24140A5B2148AF9B007687EB /* Security */,
 				24140A602148AF9B007687EB /* ChangePasscode */,
+				D66E10CF2150C2E2005625BF /* ContactViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 				2450D38F214212E600F5F61F /* SampleModel.swift */,
 				2450D391214212F800F5F61F /* SampleModel2.swift */,
 				D60A199921422DF4008246FE /* UserModel.swift */,
+				D66E10CD215081D7005625BF /* ContactModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -487,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
+				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
 				2450D392214212F800F5F61F /* SampleModel2.swift in Sources */,
@@ -496,6 +503,7 @@
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
+				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
