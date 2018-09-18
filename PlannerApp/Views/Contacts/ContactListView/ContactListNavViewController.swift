@@ -1,16 +1,17 @@
 //
-//  TodoListNavViewController.swift
+//  ContactListNavViewController.swift
 //  PlannerApp
 //
-//  Created by Alkuino Robert John Matias on 18/09/2018.
+//  Created by Niones Arjay Orcullo on 18/09/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class TodoListNavViewController: BaseNavigationController {
+class ContactListNavViewController: BaseNavigationController {
     
-    let controller = TodoListViewController()
+    let controller = ContactListViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
