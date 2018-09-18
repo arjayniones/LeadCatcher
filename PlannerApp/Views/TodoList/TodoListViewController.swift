@@ -1,5 +1,5 @@
 //
-//  TodoListNavViewController.swift
+//  TodoListViewController.swift
 //  PlannerApp
 //
 //  Created by Alkuino Robert John Matias on 18/09/2018.
@@ -8,23 +8,18 @@
 
 import UIKit
 
-class TodoListNavViewController: BaseNavigationController {
-    
-    let controller = TodoListViewController()
-    
+class TodoListViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.pushViewController(controller, animated: true)
-        
+
+        view.backgroundColor = .green
         // Do any additional setup after loading the view.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
+
 }

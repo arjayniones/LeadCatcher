@@ -19,8 +19,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     fileprivate var homeNavController: BaseNavigationController
     fileprivate var contactNavController: BaseNavigationController
-    fileprivate let toDoListNavController: BaseNavigationController
-//    let addNoteNavController: BaseNavigationController
+    fileprivate var addNoteNavController: BaseNavigationController
+    fileprivate var toDoListNavController: BaseNavigationController
     fileprivate var settingsNavController: BaseNavigationController
     
     fileprivate var activeNavViewController: BaseNavigationController
@@ -37,6 +37,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         homeNavController = HomeNavController()
         settingsNavController = SettingsNavController()
         contactNavController = ContactListNavViewController()
+        addNoteNavController = AddNoteNavViewController()
         toDoListNavController = TodoListNavViewController()
         
         activeNavViewController = homeNavController
@@ -89,6 +90,9 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         //====== Reset controllers
         homeNavController = HomeNavController()
         settingsNavController = SettingsNavController()
+        contactNavController = ContactListNavViewController()
+        addNoteNavController = AddNoteNavViewController()
+        toDoListNavController = TodoListNavViewController()
         // ======
         
         self.activeNavViewController.view.removeFromSuperview()
@@ -164,8 +168,12 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             view.insertSubview(homeNavController.view, at: 0)
             activeNavViewController = homeNavController
         case .contact:
-            view.insertSubview(contactNavController.view, at: 1);
+            view.insertSubview(contactNavController.view, at: 0);
             activeNavViewController = contactNavController
+        case .addNote:
+            view.insertSubview(addNoteNavController.view, at: 0)
+            activeNavViewController = addNoteNavController
+            break
         case .todoList:
             view.insertSubview(toDoListNavController.view, at: 0)
             activeNavViewController = toDoListNavController
@@ -173,8 +181,6 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         case .addMore:
             view.insertSubview(settingsNavController.view, at: 0)
             activeNavViewController = settingsNavController
-            break
-        default:
             break
         }
         

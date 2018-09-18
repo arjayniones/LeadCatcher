@@ -78,7 +78,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         //func to navigate to contact details view
         
        
-        }
+    }
     
 }
    
