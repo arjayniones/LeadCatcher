@@ -18,8 +18,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     let tabView = UIView()
     
     fileprivate var homeNavController: BaseNavigationController
-//    let contactNavController: BaseNavigationController
-//    let toDoListNavController: BaseNavigationController
+    fileprivate var contactNavController: BaseNavigationController
+    fileprivate let toDoListNavController: BaseNavigationController
 //    let addNoteNavController: BaseNavigationController
     fileprivate var settingsNavController: BaseNavigationController
     
@@ -36,6 +36,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     required init() {
         homeNavController = HomeNavController()
         settingsNavController = SettingsNavController()
+        contactNavController = ContactListNavViewController()
+        toDoListNavController = TodoListNavViewController()
         
         activeNavViewController = homeNavController
         
@@ -161,10 +163,12 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         case .home:
             view.insertSubview(homeNavController.view, at: 0)
             activeNavViewController = homeNavController
-//        case .contact:
-//            view.insertSubview(RegisterViewController1 at: 1);
-//            activeNavViewController =
+        case .contact:
+            view.insertSubview(contactNavController.view, at: 1);
+            activeNavViewController = contactNavController
         case .todoList:
+            view.insertSubview(toDoListNavController.view, at: 0)
+            activeNavViewController = toDoListNavController
             break
         case .addMore:
             view.insertSubview(settingsNavController.view, at: 0)

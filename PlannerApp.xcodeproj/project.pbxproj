@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */; };
+		0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D121509C3C0028750B /* ContactListViewController.swift */; };
+		0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D321509CA80028750B /* ContactListViewModel.swift */; };
+		0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */; };
+		0CBFA0DA2150C1810028750B /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */; };
 		24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5C2148AF9B007687EB /* SecurityViewController.swift */; };
 		24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5D2148AF9B007687EB /* SecurityViewModel.swift */; };
 		24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5F2148AF9B007687EB /* SettingsViewModel.swift */; };
@@ -24,6 +29,10 @@
 		2450D392214212F800F5F61F /* SampleModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D391214212F800F5F61F /* SampleModel2.swift */; };
 		2450D3942142143100F5F61F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D3932142143100F5F61F /* Utils.swift */; };
 		2450D3AC21427D2400F5F61F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2450D3AB21427D2400F5F61F /* LaunchScreen.storyboard */; };
+		2455FBBB21508E8D00881541 /* DetailsTodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBBA21508E8D00881541 /* DetailsTodoListViewController.swift */; };
+		2455FBBD21508EA700881541 /* DetailsTodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBBC21508EA700881541 /* DetailsTodoListViewModel.swift */; };
+		2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBBE2150956100881541 /* TodoListNavViewController.swift */; };
+		2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBC021509B4E00881541 /* DetailsTodoTableViewCell.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
@@ -54,6 +63,11 @@
 
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
+		0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListNavViewController.swift; sourceTree = "<group>"; };
+		0CBFA0D121509C3C0028750B /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
+		0CBFA0D321509CA80028750B /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
+		0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewModel.swift; sourceTree = "<group>"; };
+		0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		24140A5C2148AF9B007687EB /* SecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
 		24140A5D2148AF9B007687EB /* SecurityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
 		24140A5F2148AF9B007687EB /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -71,6 +85,10 @@
 		2450D391214212F800F5F61F /* SampleModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel2.swift; sourceTree = "<group>"; };
 		2450D3932142143100F5F61F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		2450D3AB21427D2400F5F61F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2455FBBA21508E8D00881541 /* DetailsTodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTodoListViewController.swift; sourceTree = "<group>"; };
+		2455FBBC21508EA700881541 /* DetailsTodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTodoListViewModel.swift; sourceTree = "<group>"; };
+		2455FBBE2150956100881541 /* TodoListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListNavViewController.swift; sourceTree = "<group>"; };
+		2455FBC021509B4E00881541 /* DetailsTodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTodoTableViewCell.swift; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,7 +136,8 @@
 		0C7C490A21410EB900DBD4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				242717D9214912CC001792BD /* Contacts */,
+				0CBFA0CE215098FF0028750B /* Contacts */,
+				2455FBB921508E5A00881541 /* TodoList */,
 				24140A5A2148AF9B007687EB /* Settings */,
 				D6715D8C2140DE9C00957E86 /* Register */,
 				D6715D8B2140DE8700957E86 /* Login */,
@@ -126,6 +145,34 @@
 				D6715DAB2141213C00957E86 /* BaseController */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0CBFA0CE215098FF0028750B /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				0CBFA0D62150AC470028750B /* ContactListDetailsView */,
+				0CBFA0D52150AC2E0028750B /* ContactListView */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		0CBFA0D52150AC2E0028750B /* ContactListView */ = {
+			isa = PBXGroup;
+			children = (
+				0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */,
+				0CBFA0D121509C3C0028750B /* ContactListViewController.swift */,
+				0CBFA0D321509CA80028750B /* ContactListViewModel.swift */,
+			);
+			path = ContactListView;
+			sourceTree = "<group>";
+		};
+		0CBFA0D62150AC470028750B /* ContactListDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
+				0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */,
+			);
+			path = ContactListDetailsView;
 			sourceTree = "<group>";
 		};
 		24140A5A2148AF9B007687EB /* Settings */ = {
@@ -156,13 +203,6 @@
 				24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */,
 			);
 			path = ChangePasscode;
-			sourceTree = "<group>";
-		};
-		242717D9214912CC001792BD /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Contacts;
 			sourceTree = "<group>";
 		};
 		2450D37D214209C500F5F61F /* RealmManager */ = {
@@ -219,6 +259,17 @@
 				2450D38D2142106200F5F61F /* DateExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2455FBB921508E5A00881541 /* TodoList */ = {
+			isa = PBXGroup;
+			children = (
+				2455FBBA21508E8D00881541 /* DetailsTodoListViewController.swift */,
+				2455FBBC21508EA700881541 /* DetailsTodoListViewModel.swift */,
+				2455FBBE2150956100881541 /* TodoListNavViewController.swift */,
+				2455FBC021509B4E00881541 /* DetailsTodoTableViewCell.swift */,
+			);
+			path = TodoList;
 			sourceTree = "<group>";
 		};
 		248B836F2140B29D00119D9D = {
@@ -492,9 +543,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2455FBBD21508EA700881541 /* DetailsTodoListViewModel.swift in Sources */,
 				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
+				2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
+				0CBFA0DA2150C1810028750B /* ContactDetailsViewController.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
 				2450D392214212F800F5F61F /* SampleModel2.swift in Sources */,
 				24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */,
@@ -502,14 +556,17 @@
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
+				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
 				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
+				0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */,
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */,
+				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
@@ -523,8 +580,11 @@
 				D639EACF2148B7980053894C /* UserViewModel.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
+				2455FBBB21508E8D00881541 /* DetailsTodoListViewController.swift in Sources */,
 				2450D390214212E600F5F61F /* SampleModel.swift in Sources */,
 				2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */,
+				0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */,
+				0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
