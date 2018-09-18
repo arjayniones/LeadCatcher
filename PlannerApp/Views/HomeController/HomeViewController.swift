@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class HomeViewController: UIViewController,NativeNavbar {
     
@@ -16,6 +17,9 @@ class HomeViewController: UIViewController,NativeNavbar {
         super.viewDidLoad()
         
         title = "Dashboard"
+        
+        let store = try! Realm();
+        print(store.configuration.fileURL);
         
         view.backgroundColor = .yellow
         
