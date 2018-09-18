@@ -19,7 +19,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     fileprivate var homeNavController: BaseNavigationController
     fileprivate var contactNavController: BaseNavigationController
-//    let toDoListNavController: BaseNavigationController
+    fileprivate let toDoListNavController: BaseNavigationController
 //    let addNoteNavController: BaseNavigationController
     fileprivate var settingsNavController: BaseNavigationController
     
@@ -37,6 +37,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         homeNavController = HomeNavController()
         settingsNavController = SettingsNavController()
         contactNavController = ContactListNavViewController()
+        toDoListNavController = TodoListNavViewController()
         
         activeNavViewController = homeNavController
         
@@ -166,6 +167,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             view.insertSubview(contactNavController.view, at: 1);
             activeNavViewController = contactNavController
         case .todoList:
+            view.insertSubview(toDoListNavController.view, at: 0)
+            activeNavViewController = toDoListNavController
             break
         case .addMore:
             view.insertSubview(settingsNavController.view, at: 0)
