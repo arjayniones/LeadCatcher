@@ -13,7 +13,12 @@ class DetailsTodoTableViewCell: UITableViewCell {
     fileprivate var didSetupContraints = false
     fileprivate let iconImage = UIImageView()
     fileprivate let labelTitle = UILabel()
-    fileprivate let nextIcon = UIImageView()
+    
+    fileprivate let nextIcon:UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "next-icon")
+        return imageView
+    }()
     
     var leftIcon:String = "" {
         didSet {
@@ -21,24 +26,23 @@ class DetailsTodoTableViewCell: UITableViewCell {
         }
     }
     
-    var rightIcon:String = "" {
+    var title:String = "" {
         didSet {
-            iconImage.image = UIImage(named: rightIcon)
+            labelTitle.text = title
         }
     }
+    
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        iconImage.backgroundColor = .red
-        addSubview(iconImage)
+        contentView.addSubview(iconImage)
         
-        labelTitle.font = UIFont.ofSize(fontSize: 15, withType: .bold)
-        labelTitle.text = "Alert date time"
-        addSubview(labelTitle)
+        labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
+        labelTitle.textColor = .lightGray
+        contentView.addSubview(labelTitle)
         
-        addSubview(nextIcon)
-        
+        contentView.addSubview(nextIcon)
         
         needsUpdateConstraints()
         setNeedsUpdateConstraints()
@@ -53,21 +57,21 @@ class DetailsTodoTableViewCell: UITableViewCell {
         if !didSetupContraints {
             
             iconImage.snp.makeConstraints { make in
-                make.width.height.equalTo(50)
-                make.left.top.bottom.equalTo(self).offset(10)
+                make.width.height.equalTo(32)
+                make.left.top.bottom.equalTo(contentView).inset(10)
             }
             
             labelTitle.snp.makeConstraints { make in
                 make.left.equalTo(iconImage.snp.right).offset(10)
                 make.right.equalTo(nextIcon.snp.left).offset(10)
-            }
-            
-            nextIcon.snp.makeConstraints { make in
-                make.width.height.equalTo(20)
                 make.centerY.equalTo(iconImage.snp.centerY)
             }
             
-            
+            nextIcon.snp.makeConstraints { make in
+                make.width.height.equalTo(15)
+                make.right.equalTo(contentView).inset(10)
+                make.centerY.equalTo(iconImage.snp.centerY)
+            }
             
             didSetupContraints = true
         }

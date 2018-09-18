@@ -20,7 +20,7 @@ class ActionButton: UIButton {
     override init (frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
     }
     
     required init?(coder aDecoder: NSCoder) {
