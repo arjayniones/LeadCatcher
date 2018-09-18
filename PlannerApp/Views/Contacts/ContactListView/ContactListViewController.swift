@@ -62,7 +62,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         cell.textLabel?.text = contactNameLabels[indexPath.row].contactName
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
-        cell.updateConstraintsIfNeeded()
+        //cell.updateConstraintsIfNeeded()
         
         return cell
     }
@@ -77,7 +77,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //func to navigate to contact details view
         
-       
+        let contactsDetailsVC = ContactDetailsViewController()
+        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
     }
     
 }
