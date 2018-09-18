@@ -9,6 +9,7 @@
 
 import UIKit
 import SwiftyUserDefaults
+import Contacts
 
 class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
@@ -81,6 +82,10 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             let securityVC = SecurityViewController()
             self.navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
         }
+        else if indexPath.row == 5
+        {
+            self.getTheContact();
+        }
         else if indexPath.row == 10{
             popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
             
@@ -96,6 +101,48 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    // MARK: - import phonebook
+    func getTheContact()
+    {
+        let store = CNContactStore();
+        store.requestAccess(for: .contacts) { granted, error in
+            guard granted else {
+                DispatchQueue.main.async {
+                    self.presentSettingsActionSheet();
+                }
+                return
+            }
+            
+            // get the contacts
+            
+            var contacts = [CNContact]();
+            
+            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactEmailAddressesKey, CNContactBirthdayKey, CNContactImageDataKey, CNContactPhoneNumbersKey] as [Any]
+            
+            let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor]);
+            do {
+                try store.enumerateContacts(with: request) { contact, stop in
+                    contacts.append(contact);
+                }
+            } catch {
+                print(error);
+            }
+            
+            // do something with the contacts array
+            ContactViewModel.processUserContact(contacts:contacts);
+        }
+    }
+    
+    func presentSettingsActionSheet() {
+        let alert = UIAlertController(title: "Permission to Contacts", message: "This app needs access to contacts in order to ...", preferredStyle: .actionSheet);
+        alert.addAction(UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            let url = URL(string: UIApplicationOpenSettingsURLString)!;
+            UIApplication.shared.open(url);
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel));
+        present(alert, animated: true);
     }
 }
 

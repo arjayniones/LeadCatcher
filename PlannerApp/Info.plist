@@ -34,6 +34,8 @@
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key>NSContactsUsageDescription</key>
+	<string>To access contact</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-Pro-Text-Semibold.otf</string>
