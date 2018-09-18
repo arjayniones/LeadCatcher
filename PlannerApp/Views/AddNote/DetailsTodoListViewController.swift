@@ -71,7 +71,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if data.title == "Notes" {
             self.present(NotesViewController(), animated: true, completion: nil)
         } else if data.alertOptions.count != 0 {
-            
+            self.taskTypeSheetPressed(data: data)
         }
     }
     
@@ -89,7 +89,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
-    @objc func taskTypeSheetPressed(data:AddTodoViewObject){
+    func taskTypeSheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)
         
         for title in data.alertOptions {
