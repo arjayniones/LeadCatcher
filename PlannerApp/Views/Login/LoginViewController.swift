@@ -37,14 +37,14 @@ class LoginViewController: ViewControllerProtocol {
         view.backgroundColor = .white
         
         loginUsernameField.placeholder = "Login ID";
-        loginUsernameField.font = CommonFontType.sfProTextRegular;
+        loginUsernameField.font = UIFont.ofSize(fontSize: 17, withType: .regular);
         loginUsernameField.autocorrectionType = UITextAutocorrectionType.no;
         loginUsernameField.textAlignment = NSTextAlignment.left;
         loginUsernameField.tag = 0;
         view.addSubview(loginUsernameField)
         
         passwordField.placeholder = "Passcode";
-        passwordField.font = CommonFontType.sfProTextRegular;
+        passwordField.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         passwordField.textAlignment = NSTextAlignment.left
         passwordField.isSecureTextEntry = true;
         passwordField.tag = 1;
@@ -52,7 +52,7 @@ class LoginViewController: ViewControllerProtocol {
         view.addSubview(passwordField)
         
         loginButton.setTitle("Login", for: .normal)
-        loginButton.titleLabel?.font = CommonFontType.sfProTextBold;
+        loginButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.layer.borderWidth   =    1
         loginButton.backgroundColor = CommonColor.buttonBlackColor;
@@ -67,7 +67,7 @@ class LoginViewController: ViewControllerProtocol {
         
         signUpButton.setTitle("Sign Up", for: .normal);
         signUpButton.setTitleColor(.white, for: .normal);
-        signUpButton.titleLabel?.font = CommonFontType.sfProTextBold;
+        signUpButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         signUpButton.backgroundColor = CommonColor.buttonBlackColor;
         signUpButton.addTarget(self, action: #selector(signUpButtonTap(_:)), for: .touchUpInside);
         view.addSubview(signUpButton);

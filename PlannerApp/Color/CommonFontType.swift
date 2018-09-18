@@ -8,7 +8,19 @@
 
 import UIKit
 
-class CommonFontType {
-    static let sfProTextBold:UIFont = UIFont(name: "SFProText-Bold", size: 17)!;
-    static let sfProTextRegular:UIFont = UIFont(name: "SFProText-Regular", size: 17)!;
+public enum CommonFontType: String {
+    case regular = "Regular"
+    case bold = "Bold"
+}
+
+public extension UIFont {
+    
+    public class func ofSize(fontSize: CGFloat, withType type: CommonFontType) -> UIFont {
+        
+        switch type {
+        case .regular: return UIFont(name: "SFProText-Regular", size: fontSize)!
+        case .bold: return UIFont(name: "SFProText-Bold", size: fontSize)!
+        }
+    }
+    
 }

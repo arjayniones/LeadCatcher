@@ -21,7 +21,7 @@ extension NativeNavbar where Self: UIViewController {
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.font: CommonFontType.sfProTextBold,
+            NSAttributedStringKey.font: UIFont.ofSize(fontSize: 17, withType: .bold),
             NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor,
         ]
         
@@ -58,7 +58,7 @@ extension LargeNativeNavbar where Self: UIViewController {
             navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor]
         } else {
             navigationController?.navigationBar.titleTextAttributes = [
-                NSAttributedStringKey.font: CommonFontType.sfProTextBold,
+                NSAttributedStringKey.font: UIFont.ofSize(fontSize: 17, withType: .bold),
                 NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor,
             ]
         }

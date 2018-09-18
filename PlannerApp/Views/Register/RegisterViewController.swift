@@ -30,33 +30,33 @@ class RegisterViewController: ViewControllerProtocol {
         
         titleLabel.text = "Sign Up";
         titleLabel.textAlignment = NSTextAlignment.center;
-        titleLabel.font = CommonFontType.sfProTextBold;
+        titleLabel.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         titleLabel.textColor = CommonColor.systemWhiteColor;
         naviBar.addSubview(titleLabel);
         
         backButton.backgroundColor = CommonColor.naviBarBlackColor;
         backButton.setTitle("Back", for: .normal);
         backButton.titleLabel?.textAlignment = NSTextAlignment.left;
-        backButton.titleLabel?.font = CommonFontType.sfProTextRegular;
+        backButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         backButton.titleLabel?.textColor = CommonColor.systemWhiteColor;
         backButton.addTarget(self, action: #selector(backToSignInVC), for: .touchUpInside);
         naviBar.addSubview(backButton);
         
         loginIDTextField.placeholder = "Login ID";
-        loginIDTextField.font = CommonFontType.sfProTextRegular;
+        loginIDTextField.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         loginIDTextField.textAlignment = NSTextAlignment.left;
         loginIDTextField.autocorrectionType = UITextAutocorrectionType.no;
         view.addSubview(loginIDTextField);
         
         passwordTextField.placeholder = "Passcode";
-        passwordTextField.font = CommonFontType.sfProTextRegular;
+        passwordTextField.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         passwordTextField.textAlignment = NSTextAlignment.left;
         passwordTextField.keyboardType = .numberPad;
         passwordTextField.isSecureTextEntry = true;
         view.addSubview(passwordTextField);
 //
         confirmPasswordTextField.placeholder = "Confirm Passcode";
-        confirmPasswordTextField.font = CommonFontType.sfProTextRegular;
+        confirmPasswordTextField.font = UIFont.ofSize(fontSize: 17, withType: .regular);
         confirmPasswordTextField.textAlignment = NSTextAlignment.left;
         confirmPasswordTextField.keyboardType = .numberPad;
         confirmPasswordTextField.isSecureTextEntry = true;
@@ -74,7 +74,7 @@ class RegisterViewController: ViewControllerProtocol {
         continueButton.setTitle("Continue", for: .normal);
         continueButton.addTarget(self, action: #selector(navigateToDashBoard), for: .touchUpInside)
         continueButton.backgroundColor = CommonColor.buttonBlackColor;
-        continueButton.titleLabel?.font = CommonFontType.sfProTextBold;
+        continueButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold);
         view.addSubview(continueButton);
         // Do any additional setup after loading the view.
         view.setNeedsUpdateConstraints()
