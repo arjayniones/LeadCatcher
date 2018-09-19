@@ -9,6 +9,7 @@
 import UIKit
 import Neon
 import SnapKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         prepareAndExecute() {
             
             self.window?.rootViewController = BaseViewController()
+            //AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4
+            GMSServices.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
+            //GMSPlacesClient.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
         }
         
         return true

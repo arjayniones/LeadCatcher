@@ -44,5 +44,10 @@
 		<string>SF-Pro-Text-Medium.otf</string>
 		<string>SF-Pro-Text-Light.otf</string>
 	</array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>googlechromes</string>
+        <string>comgooglemaps</string>
+    </array>
 </dict>
 </plist>
