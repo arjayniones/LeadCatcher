@@ -8,13 +8,13 @@
 
 import UIKit
 
-class DetailsTodoTableViewCell: UITableViewCell {
+class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     fileprivate var didSetupContraints = false
     fileprivate let iconImage = UIImageView()
-    fileprivate let labelTitle = UILabel()
+    let labelTitle = UITextField()
     
-    fileprivate let nextIcon:UIImageView = {
+    let nextIcon:UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "next-icon")
         return imageView
@@ -32,6 +32,7 @@ class DetailsTodoTableViewCell: UITableViewCell {
         }
     }
     
+    var subjectCallback:((String) -> ())?
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,7 +40,9 @@ class DetailsTodoTableViewCell: UITableViewCell {
         contentView.addSubview(iconImage)
         
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
+        labelTitle.returnKeyType = .done
         labelTitle.textColor = .lightGray
+        labelTitle.isEnabled = false
         contentView.addSubview(labelTitle)
         
         contentView.addSubview(nextIcon)
@@ -51,6 +54,18 @@ class DetailsTodoTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let callback = subjectCallback {
+            if let text = textField.text {
+                callback(text)
+            }
+        }
+        endEditing(true)
+        
+        return true
+    }
+    
     
     override func updateConstraints() {
         

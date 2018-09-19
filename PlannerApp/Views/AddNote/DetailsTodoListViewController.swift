@@ -8,7 +8,9 @@
 
 import UIKit
 
-class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
+class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar,NotesViewControllerDelegate {
+    
+    var userNotes: String = ""
     
     let tableView = UITableView()
     
@@ -37,7 +39,23 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         tableView.register(DetailsTodoTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
+        let saveButton = UIButton()
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        
         view.needsUpdateConstraints()
+    }
+    @objc func save() {
+        viewModel.saveSchedule(completion: { val in
+            if val {
+                let alert = UIAlertController.alertControllerWithTitle(title: "Success", message: "Your To Do task has saved.")
+                self.present(alert, animated: true, completion: nil);
+            } else {
+                let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Your To Do task did not saved.")
+                self.present(alert, animated: true, completion: nil);
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,9 +87,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         let data = viewModel.detailRows[indexPath.row]
         
         if data.title == "Notes" {
-            self.present(NotesViewController(), animated: true, completion: nil)
+            let noteController = NotesViewController()
+            noteController.delegate = self
+            self.present(noteController, animated: true, completion: nil)
         } else if data.alertOptions.count != 0 {
-            self.taskTypeSheetPressed(data: data)
+            self.sheetPressed(data: data)
         }
     }
     
@@ -80,6 +100,16 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         let data = viewModel.detailRows[indexPath.row]
         cell.leftIcon = data.icon
         cell.title = data.title
+        
+        if data.title == "Subject" {
+            cell.labelTitle.isEnabled = true
+            cell.nextIcon.isHidden = true
+            cell.subjectCallback = { val in
+                print(val)
+                self.viewModel.addNoteModel?.addNote_subject = val
+            }
+        }
+        
         return cell
     }
     
@@ -89,15 +119,21 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
-    func taskTypeSheetPressed(data:AddTodoViewObject){
+    func sheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)
         
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
-                print("You've pressed default");
+                if data.title == "Alert date time" {
+                    self.viewModel.addNoteModel?.addNote_alertDateTime = title
+                } else if data.title == "Task type" {
+                    self.viewModel.addNoteModel?.addNote_taskType = title
+                }
             }
             actionSheet.addAction(action)
         }
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         self.present(actionSheet, animated: true, completion: nil)
     }

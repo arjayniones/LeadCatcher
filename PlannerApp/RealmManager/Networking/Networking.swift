@@ -76,7 +76,6 @@ class Networking {
                                          parameters: parameters,
                                          headers:headers).responseJSON { response in
                                             
-                                            print(response)
                                             if response.result.isSuccess {
                                                 completion(Result.Success(response.result.value as AnyObject))
                                             } else {

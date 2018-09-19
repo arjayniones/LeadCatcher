@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import UserNotifications
 
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
+    
+    var contentChosen:UNMutableNotificationContent?
+    var dateChosen:UNCalendarNotificationTrigger?
+    var addNoteModel: AddNoteModel?
     
     init() {
         
@@ -50,5 +55,55 @@ class DetailsTodoListViewModel {
         row7.title = "Location"
         self.detailRows.append(row7)
     }
+    
+    func setupNotificationDateSettings(chosenTime:DateComponents) {
+        
+//        var date = DateComponents()
+//        date.hour = 22
+        
+        let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: chosenTime, repeats: true)
+        self.dateChosen = calendarTrigger
+        
+        // will fire when the user comes within specified metres of the designated coordinate
+        
+        //            let center = CLLocationCoordinate2D(latitude: 40.0, longitude: 120.0)
+        //            let region = CLCircularRegion(center: center, radius: 500.0, identifier: "Location")
+        
+        //            region.notifyOnEntry = true;
+        //            region.notifyOnExit = false;
+        //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
+    }
+    
+    func setupNotificationInfoSettings(message:NotificationMessage) {
+        let content = UNMutableNotificationContent()
+        content.title = message.title
+        content.subtitle = message.subtitle
+        content.body = message.body
+        content.badge = 1
+        content.sound = UNNotificationSound.default()
+        self.contentChosen = content
+    }
+    
+    func saveSchedule(completion: @escaping ((_ success:Bool) -> Void)) {
+        if let content = self.contentChosen,let triggerTime = self.dateChosen {
+            let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: triggerTime)
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error = error {
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        } else {
+            completion(false)
+        }
+        
+    }
+}
+
+class NotificationMessage {
+    var title: String = ""
+    var subtitle: String = ""
+    var body: String = ""
 }
 

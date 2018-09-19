@@ -51,7 +51,7 @@ extension LargeNativeNavbar where Self: UIViewController {
         
         UIApplication.shared.setStatusBarHidden(false, with: .none)
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true

@@ -8,9 +8,9 @@
 
 import UIKit
 
-class NotesPopUpController: UIView {
+class NotesPopUpControllerView: UIView {
     
-    fileprivate let tField = UITextView()
+    let tField = UITextView()
     fileprivate var didSetupConstraints = false
 
     override init (frame: CGRect) {

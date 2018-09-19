@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol NotesViewControllerDelegate {
+    var userNotes:String { get set }
+}
+
 class NotesViewController: ViewControllerProtocol {
     
-    fileprivate let notesPopUp = NotesPopUpController()
+    var delegate: NotesViewControllerDelegate?
+    
+    fileprivate let notesPopUp = NotesPopUpControllerView()
     fileprivate let doneButton = ActionButton()
 
     override func viewDidLoad() {
@@ -29,6 +35,11 @@ class NotesViewController: ViewControllerProtocol {
     }
     
     @objc func doneButtonPressed() {
+        
+        if let data = notesPopUp.tField.text {
+            delegate?.userNotes = data
+        }
+        
         self.dismiss(animated: true, completion: nil)
     }
     
