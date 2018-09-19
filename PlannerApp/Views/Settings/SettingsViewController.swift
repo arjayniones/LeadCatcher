@@ -107,31 +107,41 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func getTheContact()
     {
         let store = CNContactStore();
+        // show permission to access phonebook
         store.requestAccess(for: .contacts) { granted, error in
             guard granted else {
                 DispatchQueue.main.async {
+                    // user not allow at first time and click import again then call this
                     self.presentSettingsActionSheet();
                 }
                 return
             }
             
             // get the contacts
-            
             var contacts = [CNContact]();
             
-            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactEmailAddressesKey, CNContactBirthdayKey, CNContactImageDataKey, CNContactPhoneNumbersKey] as [Any]
+            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactEmailAddressesKey, CNContactBirthdayKey, CNContactImageDataKey, CNContactPhoneNumbersKey,CNContactPostalAddressesKey] as [Any]
             
             let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor]);
             do {
                 try store.enumerateContacts(with: request) { contact, stop in
+                    print(contact.postalAddresses);
                     contacts.append(contact);
                 }
             } catch {
                 print(error);
             }
             
-            // do something with the contacts array
-            ContactViewModel.processUserContact(contacts:contacts);
+            // do something with the 'contacts' array
+            ContactViewModel.processUserContact(contacts: contacts, completetion:
+            {
+                result in
+                if result == "Success"
+                {
+                    let alert = UIAlertController.alertControllerWithTitle(title: "Info", message: "Success import contact from phonebook");
+                    self.present(alert, animated:false, completion: nil);
+                }
+            });
         }
     }
     
