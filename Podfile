@@ -10,10 +10,10 @@ target 'PlannerApp' do
 
 pod 'ObjectMapper', '~> 3.3'
 pod 'SnapKit'
+pod 'RealmSwift'
 pod 'Neon'
 pod 'SwiftyUserDefaults'
 pod 'Alamofire', '~> 4.7'
-pod 'RealmSwift'
 pod 'GoogleMaps'
 pod 'GooglePlaces'
 end

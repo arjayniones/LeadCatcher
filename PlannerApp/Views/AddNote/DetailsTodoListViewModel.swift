@@ -20,13 +20,13 @@ class DetailsTodoListViewModel {
         
         let row1 = AddTodoViewObject()
         row1.icon = "calendar-icon"
-        row1.title = "Alert date time"
-        row1.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
+        row1.title = "Start Date Time"
         self.detailRows.append(row1)
         
         let row2 = AddTodoViewObject()
         row2.icon = "repeat-icon"
-        row2.title = "Repeat"
+        row2.title = "Alert"
+        row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
         self.detailRows.append(row2)
         
         let row3 = AddTodoViewObject()
@@ -74,6 +74,16 @@ class DetailsTodoListViewModel {
         //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
     }
     
+    func convertToTime() {
+        ["3 months before","2 months before","1 month before","Everyday"]
+        
+        if let time = self.addNoteModel?.addNote_alertDateTime {
+            if time == "3 months before" {
+                
+            }
+        }
+    }
+    
     func setupNotificationInfoSettings(message:NotificationMessage) {
         let content = UNMutableNotificationContent()
         content.title = message.title
@@ -84,11 +94,38 @@ class DetailsTodoListViewModel {
         self.contentChosen = content
     }
     
+    func prepareData() -> Bool {
+        guard let messageTitle = self.addNoteModel?.addNote_taskType else {
+            return false
+        }
+        
+        guard let messageSubject = self.addNoteModel?.addNote_subject else {
+            return false
+        }
+        
+        guard let messageBody = self.addNoteModel?.addNote_notes else {
+            return false
+        }
+        
+        let message = NotificationMessage()
+        message.title = messageTitle
+        message.subtitle = messageSubject
+        message.body = messageBody
+        self.setupNotificationInfoSettings(message: message)
+        
+        return true
+    }
+    
     func saveSchedule(completion: @escaping ((_ success:Bool) -> Void)) {
+        guard prepareData() else {
+            completion(false)
+            return
+        }
+        
         if let content = self.contentChosen,let triggerTime = self.dateChosen {
             let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: triggerTime)
             UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
+                if error != nil {
                     completion(false)
                 } else {
                     completion(true)

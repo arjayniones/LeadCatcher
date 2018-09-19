@@ -43,6 +43,7 @@
 		2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */; };
 		2455FBD02151D87D00881541 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2455FBCF2151D87D00881541 /* UserNotifications.framework */; };
 		2455FBD22151F2B800881541 /* AddNoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD12151F2B800881541 /* AddNoteModel.swift */; };
+		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
@@ -109,6 +110,7 @@
 		2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewObject.swift; sourceTree = "<group>"; };
 		2455FBCF2151D87D00881541 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2455FBD12151F2B800881541 /* AddNoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteModel.swift; sourceTree = "<group>"; };
+		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				2455FBBA21508E8D00881541 /* DetailsTodoListViewController.swift */,
 				2455FBBC21508EA700881541 /* DetailsTodoListViewModel.swift */,
 				2455FBC021509B4E00881541 /* DetailsTodoTableViewCell.swift */,
+				2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */,
 			);
 			path = AddNote;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
 				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
+				2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
 				0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */,
