@@ -17,7 +17,7 @@ class NotesPopUpController: UIView {
         super.init(frame: frame)
         
         tField.textColor = .black
-        tField.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
+        tField.backgroundColor = UIColor(rgb:0xFFFFCC)
         addSubview(tField)
         
         updateConstraintsIfNeeded()
