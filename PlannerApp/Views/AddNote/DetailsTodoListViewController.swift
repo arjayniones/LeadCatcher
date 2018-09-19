@@ -68,23 +68,39 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
         
-        if data["title"]! == "Notes" {
+        if data.title == "Notes" {
             self.present(NotesViewController(), animated: true, completion: nil)
+        } else if data.alertOptions.count != 0 {
+            self.taskTypeSheetPressed(data: data)
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         let data = viewModel.detailRows[indexPath.row]
-        cell.leftIcon = data["icon"]!
-        cell.title = data["title"]!
+        cell.leftIcon = data.icon
+        cell.title = data.title
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.detailRows.count
     }
-    
+}
+
+extension DetailsTodoListViewController:UIActionSheetDelegate {
+    func taskTypeSheetPressed(data:AddTodoViewObject){
+        let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)
+        
+        for title in data.alertOptions {
+            let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
+                print("You've pressed default");
+            }
+            actionSheet.addAction(action)
+        }
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
 }
 
 

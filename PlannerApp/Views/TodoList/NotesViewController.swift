@@ -16,7 +16,7 @@ class NotesViewController: ViewControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor(rgb:0xFFFFCC)
         view.addSubview(notesPopUp)
         
         doneButton.setTitle("Done", for: .normal)
