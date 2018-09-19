@@ -40,7 +40,7 @@ class ContactViewModel {
 
             if contactID.count > 0
             {
-                print("Success import contact from phone book");
+                //print("Success import contact from phone book");
             }
             
         }

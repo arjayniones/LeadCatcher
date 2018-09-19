@@ -18,9 +18,6 @@ class HomeViewController: UIViewController,NativeNavbar {
         
         title = "Dashboard"
         
-        let store = try! Realm();
-        print(store.configuration.fileURL);
-        
         view.backgroundColor = .yellow
         
         calendarView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/2)
