@@ -37,10 +37,8 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             guard let tableView = self?.tableView else { return }
             switch changes {
             case .initial:
-                // Results are now populated and can be accessed without blocking the UI
                 tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
-                // Query results have changed, so apply them to the UITableView
                 tableView.beginUpdates()
                 tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
                                      with: .automatic)
@@ -50,7 +48,6 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
                                      with: .automatic)
                 tableView.endUpdates()
             case .error(let error):
-                // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
             }
         }

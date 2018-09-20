@@ -42,10 +42,19 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         saveButton.sizeToFit()
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        
+        let clearButton = UIButton()
+        clearButton.setTitle("Clear", for: .normal)
+        clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+        clearButton.sizeToFit()
+        clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.width, height: clearButton.height)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
@@ -61,6 +70,19 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             }
         })
     }
+    
+    @objc func clear() {
+        let controller = UIAlertController(title: "Info", message: "Clear the fields?", preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
+        controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            self.viewModel.addNoteModel = AddNoteModel()
+            self.tableView.reloadData()
+        }))
+        
+        self.present(controller, animated: true, completion: nil);
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
