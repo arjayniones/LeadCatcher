@@ -61,11 +61,14 @@ class DetailsTodoListViewModel {
     
     func setupNotificationDateSettings() {
         if let date = self.addNoteModel?.addNote_alertDateTime {
+            print(date)
             //function for adding date
 //            let n = 7
 //            let nextTriggerDate = Calendar.current.date(byAdding: .day, value: n, to: date)!
             
-            let comps = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date)
+            print(comps)
+            
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
             self.dateChosen = calendarTrigger
         }

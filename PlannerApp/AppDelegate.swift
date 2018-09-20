@@ -24,9 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
         center.requestAuthorization(options: options) { (granted, error) in
             if granted {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
+//                DispatchQueue.main.async {
+//                    application.registerForRemoteNotifications()
+//                }
             }
         }
         
@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             self.window?.rootViewController = BaseViewController()
             GMSServices.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
-            //GMSPlacesClient.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
         }
         
         return true
@@ -54,18 +53,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         self.window?.makeKeyAndVisible()
     }
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        //
-    }
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        //
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("pumasok dito")
+        let actionIdentifier = response.actionIdentifier
+        let content = response.notification.request.content
+        
+        switch actionIdentifier {
+        case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
+            // Do something
+            completionHandler()
+        case UNNotificationDefaultActionIdentifier: // App was opened from notification
+            // Do something
+            completionHandler()
+        default:
+            completionHandler()
+        }
     }
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        completionHandler(.alert)
+        DispatchQueue.main.async {
+            let notification = CWStatusBarNotification()
+            notification.displayNotificationWithMessage("You have task to do", forDuration: 1.5)
+            notification.notificationTappedClosure = {
+            }
+        }
+        
+        completionHandler([.alert,.sound,.badge])
     }
 
 

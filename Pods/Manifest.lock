@@ -9,12 +9,12 @@ PODS:
     - GoogleMaps/Base (= 2.7.0)
   - Neon (0.4.0)
   - ObjectMapper (3.3.0)
-  - Realm (3.9.0):
-    - Realm/Headers (= 3.9.0)
-  - Realm/Headers (3.9.0)
-  - RealmSwift (3.9.0):
-    - Realm (= 3.9.0)
-  - SnapKit (4.0.0)
+  - Realm (3.10.0):
+    - Realm/Headers (= 3.10.0)
+  - Realm/Headers (3.10.0)
+  - RealmSwift (3.10.0):
+    - Realm (= 3.10.0)
+  - SnapKit (4.0.1)
   - SwiftyUserDefaults (3.0.1)
 
 DEPENDENCIES:
@@ -23,8 +23,8 @@ DEPENDENCIES:
   - GooglePlaces
   - Neon
   - ObjectMapper (~> 3.3)
-  - RealmSwift
-  - SnapKit
+  - RealmSwift (~> 3.10)
+  - SnapKit (~> 4.0.1)
   - SwiftyUserDefaults
 
 SPEC REPOS:
@@ -45,11 +45,11 @@ SPEC CHECKSUMS:
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  Realm: 3d36f208bf3aff8335dc3298742140182bde4edb
-  RealmSwift: aa4d11917bfcfaa3ed51f219102a487ecd895447
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Realm: 85ab9e4f779d66f6e9ffeb118dc25b7f130c96ac
+  RealmSwift: 69121c8b86d0ae005fb779efdb10e606732e1c74
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 98308b91d6c8f135d73701e2fff142ae8d61408d
+PODFILE CHECKSUM: 124f45ab8fb4bc22cf4e9cd91d4f76137db94f2c
 
 COCOAPODS: 1.5.3
