@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import CoreLocation
 
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
@@ -119,8 +120,6 @@ class DetailsTodoListViewModel {
             completion(false)
             return
         }
-        self.addNoteModel?.newInstance()
-        self.addNoteModel?.add()
         
         if let content = self.contentChosen,let triggerTime = self.dateChosen {
             let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: triggerTime)
@@ -136,7 +135,34 @@ class DetailsTodoListViewModel {
         }
         
     }
+    
+    func saveToRealm() {
+        if let addNoteMod = self.addNoteModel {
+            let addNote = AddNote()
+            addNote.newInstance()
+            addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
+            addNote.addNote_repeat = addNoteMod.addNote_repeat
+            addNote.addNote_subject = addNoteMod.addNote_subject
+            addNote.addNote_customerId = addNoteMod.addNote_customerId
+            addNote.addNote_taskType = addNoteMod.addNote_taskType
+            addNote.addNote_notes = addNoteMod.addNote_notes
+            addNote.addNote_location = addNoteMod.addNote_location
+            addNote.add()
+        }
+        
+    }
 }
+
+class AddNoteModel {
+    var addNote_alertDateTime: Date?
+    var addNote_repeat: String = ""
+    var addNote_subject: String = ""
+    var addNote_customerId: String = ""
+    var addNote_taskType: String = ""
+    var addNote_notes: String = ""
+    var addNote_location:CLLocation?
+}
+
 
 class NotificationMessage {
     var title: String = ""

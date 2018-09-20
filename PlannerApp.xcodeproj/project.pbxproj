@@ -27,8 +27,6 @@
 		2450D38921420B4000F5F61F /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38821420B4000F5F61F /* StoreManager.swift */; };
 		2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38A21420DD600F5F61F /* ServiceManager.swift */; };
 		2450D38E2142106200F5F61F /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38D2142106200F5F61F /* DateExtension.swift */; };
-		2450D390214212E600F5F61F /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38F214212E600F5F61F /* SampleModel.swift */; };
-		2450D392214212F800F5F61F /* SampleModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D391214212F800F5F61F /* SampleModel2.swift */; };
 		2450D3942142143100F5F61F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D3932142143100F5F61F /* Utils.swift */; };
 		2450D3AC21427D2400F5F61F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2450D3AB21427D2400F5F61F /* LaunchScreen.storyboard */; };
 		2455FBBB21508E8D00881541 /* DetailsTodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBBA21508E8D00881541 /* DetailsTodoListViewController.swift */; };
@@ -42,7 +40,7 @@
 		2455FBCC2150DD8100881541 /* AddNoteNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBCB2150DD8100881541 /* AddNoteNavViewController.swift */; };
 		2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */; };
 		2455FBD02151D87D00881541 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2455FBCF2151D87D00881541 /* UserNotifications.framework */; };
-		2455FBD22151F2B800881541 /* AddNoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD12151F2B800881541 /* AddNoteModel.swift */; };
+		2455FBD22151F2B800881541 /* AddNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD12151F2B800881541 /* AddNote.swift */; };
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
@@ -94,8 +92,6 @@
 		2450D38821420B4000F5F61F /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		2450D38A21420DD600F5F61F /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		2450D38D2142106200F5F61F /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
-		2450D38F214212E600F5F61F /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
-		2450D391214212F800F5F61F /* SampleModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel2.swift; sourceTree = "<group>"; };
 		2450D3932142143100F5F61F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		2450D3AB21427D2400F5F61F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2455FBBA21508E8D00881541 /* DetailsTodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTodoListViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +105,7 @@
 		2455FBCB2150DD8100881541 /* AddNoteNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteNavViewController.swift; sourceTree = "<group>"; };
 		2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewObject.swift; sourceTree = "<group>"; };
 		2455FBCF2151D87D00881541 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
-		2455FBD12151F2B800881541 /* AddNoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteModel.swift; sourceTree = "<group>"; };
+		2455FBD12151F2B800881541 /* AddNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNote.swift; sourceTree = "<group>"; };
 		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -244,7 +240,7 @@
 			children = (
 				2450D38721420B2B00F5F61F /* DataManager */,
 				2450D38421420AD400F5F61F /* Networking */,
-				2450D38121420A6600F5F61F /* Models */,
+				2450D38121420A6600F5F61F /* Model */,
 				2450D37E214209E000F5F61F /* Realm */,
 			);
 			path = RealmManager;
@@ -258,18 +254,16 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
-		2450D38121420A6600F5F61F /* Models */ = {
+		2450D38121420A6600F5F61F /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				2450D38221420A7400F5F61F /* Model.swift */,
-				2450D38F214212E600F5F61F /* SampleModel.swift */,
-				2450D391214212F800F5F61F /* SampleModel2.swift */,
 				D60A199921422DF4008246FE /* UserModel.swift */,
 				D66E10CD215081D7005625BF /* ContactModel.swift */,
 				2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */,
-				2455FBD12151F2B800881541 /* AddNoteModel.swift */,
+				2455FBD12151F2B800881541 /* AddNote.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		2450D38421420AD400F5F61F /* Networking */ = {
@@ -621,7 +615,6 @@
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
 				0CBFA0DA2150C1810028750B /* ContactDetailsViewController.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
-				2450D392214212F800F5F61F /* SampleModel2.swift in Sources */,
 				24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */,
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
@@ -629,7 +622,7 @@
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
 				2455FBC92150DCBB00881541 /* TodoListViewController.swift in Sources */,
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
-				2455FBD22151F2B800881541 /* AddNoteModel.swift in Sources */,
+				2455FBD22151F2B800881541 /* AddNote.swift in Sources */,
 				0CBFA0DF2151FC3B0028750B /* MapsViewController.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
@@ -660,7 +653,6 @@
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
 				2455FBBB21508E8D00881541 /* DetailsTodoListViewController.swift in Sources */,
 				0CBFA0DC2150EAD60028750B /* ContactDetailsTableViewCell.swift in Sources */,
-				2450D390214212E600F5F61F /* SampleModel.swift in Sources */,
 				2455FBC32150C92B00881541 /* NotesPopUpControllerView.swift in Sources */,
 				2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */,
 				2455FBC72150D6FD00881541 /* ColorExtension.swift in Sources */,
