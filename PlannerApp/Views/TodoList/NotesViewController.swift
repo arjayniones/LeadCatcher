@@ -10,6 +10,7 @@ import UIKit
 
 protocol NotesViewControllerDelegate {
     var userNotes:String { get set }
+    func notesControllerDidExit()
 }
 
 class NotesViewController: ViewControllerProtocol {
@@ -40,6 +41,8 @@ class NotesViewController: ViewControllerProtocol {
             delegate?.userNotes = data
         }
         
+        delegate?.notesControllerDidExit()
+        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -49,7 +52,7 @@ class NotesViewController: ViewControllerProtocol {
             doneButton.snp.makeConstraints { make in
                 make.top.equalTo(view).inset(20)
                 make.right.equalTo(view).inset(10)
-                make.width.equalTo(CGSize(width: 100, height: 40))
+                make.size.equalTo(CGSize(width: 100, height: 40))
             }
             notesPopUp.snp.makeConstraints { make in
                 make.bottom.left.right.equalTo(view).inset(10)

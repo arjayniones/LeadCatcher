@@ -8,9 +8,10 @@
 
 import UIKit
 
-class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar,NotesViewControllerDelegate {
+class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     var userNotes: String = ""
+    var selectedDate: Date = Date()
     
     let tableView = UITableView()
     
@@ -62,6 +63,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar,No
         updateNavbarAppear()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("reloading")
+        tableView.reloadData()
+    }
+    
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
@@ -80,32 +87,60 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar,No
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
 }
 extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
         
         if data.title == "Notes" {
-            let noteController = NotesViewController()
-            noteController.delegate = self
-            self.present(noteController, animated: true, completion: nil)
+            self.openNoteController()
         } else if data.alertOptions.count != 0 {
             self.sheetPressed(data: data)
+        } else if data.title == "Start Date Time" {
+            self.showDateTimePicker()
         }
+    }
+    
+    func populateData(cell:DetailsTodoTableViewCell,index:IndexPath,data:AddTodoViewObject) {
+        
+        if let viewmod = viewModel.addNoteModel {
+            switch index.row {
+            case 0:
+                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : (viewmod.addNote_alertDateTime?.toRFC3339String())!
+            case 1:
+                cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
+            case 2:
+                cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
+            case 3:
+                cell.title = viewmod.addNote_customerId == "" ? data.title: viewmod.addNote_customerId
+            case 4:
+                cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
+            case 5:
+                cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
+            case 6:
+                cell.title = viewmod.addNote_location == nil ? data.title:"\(String(describing: viewmod.addNote_location))"
+            default:
+                break
+            }
+        } else {
+            cell.title = data.title
+        }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         let data = viewModel.detailRows[indexPath.row]
         cell.leftIcon = data.icon
-        cell.title = data.title
+        self.populateData(cell: cell, index: indexPath, data:data)
+        cell.selectionStyle = .none
         
         if data.title == "Subject" {
             cell.labelTitle.isEnabled = true
             cell.nextIcon.isHidden = true
             cell.subjectCallback = { val in
-                print(val)
                 self.viewModel.addNoteModel?.addNote_subject = val
             }
         }
@@ -119,16 +154,19 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
+    
+    
     func sheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)
         
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
-                if data.title == "Alert date time" {
-                    self.viewModel.addNoteModel?.addNote_alertDateTime = title
+                if data.title == "Alert" {
+                    self.viewModel.addNoteModel?.addNote_repeat = title
                 } else if data.title == "Task type" {
                     self.viewModel.addNoteModel?.addNote_taskType = title
                 }
+                self.tableView.reloadData()
             }
             actionSheet.addAction(action)
         }
@@ -136,6 +174,32 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         self.present(actionSheet, animated: true, completion: nil)
+    }
+}
+
+extension DetailsTodoListViewController:NotesViewControllerDelegate {
+    func openNoteController() {
+        let noteController = NotesViewController()
+        noteController.delegate = self
+        self.present(noteController, animated: true, completion: nil)
+    }
+    
+    func notesControllerDidExit() {
+        viewModel.addNoteModel?.addNote_notes = userNotes
+        print(userNotes)
+    }
+}
+
+extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate {
+    func pickerControllerDidExit() {
+        viewModel.addNoteModel?.addNote_alertDateTime = selectedDate
+        print(selectedDate.toRFC3339String())
+    }
+    
+    func showDateTimePicker() {
+        let datePickerController = DateAndTimePickerViewController()
+        datePickerController.delegate = self
+        self.present(datePickerController, animated: true, completion: nil)
     }
 }
 

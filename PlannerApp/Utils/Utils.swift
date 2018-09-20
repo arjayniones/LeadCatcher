@@ -11,3 +11,12 @@ import UIKit
 func uuid() -> UUID {
     return NSUUID().uuidString.lowercased()
 }
+
+func convertDateTimeToString(date:Date) -> String {
+    let dateFormatter: DateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd/yyyy hh:mm"
+    
+    let selectedDate: String = dateFormatter.string(from:date)
+    
+    return selectedDate
+}

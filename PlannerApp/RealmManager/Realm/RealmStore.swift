@@ -21,6 +21,7 @@ class RealmStore {
 
     static func add(model: Object) {
         let store = try! Realm()
+        print("saved into: ",store.configuration.fileURL)
         try! RealmStore.write {
             store.add(model, update: true)
         }

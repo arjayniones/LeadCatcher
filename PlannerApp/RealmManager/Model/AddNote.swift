@@ -10,9 +10,9 @@ import UIKit
 import ObjectMapper
 import CoreLocation
 
-class AddNoteModel: Model {
-    @objc dynamic var addNote_alertDateTime: String = "";
-    @objc dynamic var addNote_repeat: String = "";
+class AddNote: Model {
+    @objc dynamic var addNote_alertDateTime: Date?
+    @objc dynamic var addNote_repeat: String = ""
     @objc dynamic var addNote_subject: String = ""
     @objc dynamic var addNote_customerId: String = ""
     @objc dynamic var addNote_taskType: String = ""

@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import CoreLocation
 
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
@@ -18,15 +19,17 @@ class DetailsTodoListViewModel {
     
     init() {
         
+        self.addNoteModel = AddNoteModel()
+        
         let row1 = AddTodoViewObject()
         row1.icon = "calendar-icon"
-        row1.title = "Alert date time"
-        row1.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
+        row1.title = "Start Date Time"
         self.detailRows.append(row1)
         
         let row2 = AddTodoViewObject()
         row2.icon = "repeat-icon"
-        row2.title = "Repeat"
+        row2.title = "Alert"
+        row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
         self.detailRows.append(row2)
         
         let row3 = AddTodoViewObject()
@@ -56,13 +59,17 @@ class DetailsTodoListViewModel {
         self.detailRows.append(row7)
     }
     
-    func setupNotificationDateSettings(chosenTime:DateComponents) {
+    func setupNotificationDateSettings() {
+        if let date = self.addNoteModel?.addNote_alertDateTime {
+            //function for adding date
+//            let n = 7
+//            let nextTriggerDate = Calendar.current.date(byAdding: .day, value: n, to: date)!
+            
+            let comps = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+            self.dateChosen = calendarTrigger
+        }
         
-//        var date = DateComponents()
-//        date.hour = 22
-        
-        let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: chosenTime, repeats: true)
-        self.dateChosen = calendarTrigger
         
         // will fire when the user comes within specified metres of the designated coordinate
         
@@ -84,11 +91,40 @@ class DetailsTodoListViewModel {
         self.contentChosen = content
     }
     
+    func prepareData() -> Bool {
+        guard let messageTitle = self.addNoteModel?.addNote_taskType else {
+            return false
+        }
+        
+        guard let messageSubject = self.addNoteModel?.addNote_subject else {
+            return false
+        }
+        
+        guard let messageBody = self.addNoteModel?.addNote_notes else {
+            return false
+        }
+        
+        let message = NotificationMessage()
+        message.title = messageTitle
+        message.subtitle = messageSubject
+        message.body = messageBody
+        
+        self.setupNotificationInfoSettings(message: message)
+        self.setupNotificationDateSettings()
+        
+        return true
+    }
+    
     func saveSchedule(completion: @escaping ((_ success:Bool) -> Void)) {
+        guard prepareData() else {
+            completion(false)
+            return
+        }
+        
         if let content = self.contentChosen,let triggerTime = self.dateChosen {
             let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: triggerTime)
             UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
+                if error != nil {
                     completion(false)
                 } else {
                     completion(true)
@@ -99,7 +135,34 @@ class DetailsTodoListViewModel {
         }
         
     }
+    
+    func saveToRealm() {
+        if let addNoteMod = self.addNoteModel {
+            let addNote = AddNote()
+            addNote.newInstance()
+            addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
+            addNote.addNote_repeat = addNoteMod.addNote_repeat
+            addNote.addNote_subject = addNoteMod.addNote_subject
+            addNote.addNote_customerId = addNoteMod.addNote_customerId
+            addNote.addNote_taskType = addNoteMod.addNote_taskType
+            addNote.addNote_notes = addNoteMod.addNote_notes
+            addNote.addNote_location = addNoteMod.addNote_location
+            addNote.add()
+        }
+        
+    }
 }
+
+class AddNoteModel {
+    var addNote_alertDateTime: Date?
+    var addNote_repeat: String = ""
+    var addNote_subject: String = ""
+    var addNote_customerId: String = ""
+    var addNote_taskType: String = ""
+    var addNote_notes: String = ""
+    var addNote_location:CLLocation?
+}
+
 
 class NotificationMessage {
     var title: String = ""
