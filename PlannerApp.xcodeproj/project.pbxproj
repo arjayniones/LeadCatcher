@@ -304,7 +304,6 @@
 			isa = PBXGroup;
 			children = (
 				2455FBBE2150956100881541 /* TodoListNavViewController.swift */,
-				2455FBC42150CA9000881541 /* NotesViewController.swift */,
 				2455FBC82150DCBB00881541 /* TodoListViewController.swift */,
 				0CBFA0E4215376110028750B /* TodoListViewModel.swift */,
 			);
@@ -319,6 +318,7 @@
 				2455FBBC21508EA700881541 /* DetailsTodoListViewModel.swift */,
 				2455FBC021509B4E00881541 /* DetailsTodoTableViewCell.swift */,
 				2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */,
+				2455FBC42150CA9000881541 /* NotesViewController.swift */,
 			);
 			path = AddNote;
 			sourceTree = "<group>";
@@ -795,7 +795,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

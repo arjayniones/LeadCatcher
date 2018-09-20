@@ -11,6 +11,7 @@ import Neon
 import SnapKit
 import UserNotifications
 import GoogleMaps
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
@@ -47,6 +48,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         SessionService.onLogout(performAlways: true) {
             self.window?.rootViewController?.present(LoginViewController(), animated: true, completion: nil)
         }
+        
+        let config = Realm.Configuration(
+            // Set the new schema version. This must be greater than the previously used
+            // version (if you've never set a schema version before, the version is 0).
+            schemaVersion: 1,
+            
+            // Set the block which will be called automatically when opening a Realm with
+            // a schema version lower than the one set above
+            migrationBlock: { migration, oldSchemaVersion in
+                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                if (oldSchemaVersion < 1) {
+                    // Nothing to do!
+                    // Realm will automatically detect new properties and removed properties
+                    // And will update the schema on disk automatically
+                }
+        })
+        
+        // Tell Realm to use this new configuration object for the default Realm
+        Realm.Configuration.defaultConfiguration = config
         
         GMSServices.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
         //GMSPlacesClient.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
