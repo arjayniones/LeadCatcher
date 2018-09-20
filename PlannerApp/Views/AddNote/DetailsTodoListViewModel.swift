@@ -127,6 +127,7 @@ class DetailsTodoListViewModel {
                 if error != nil {
                     completion(false)
                 } else {
+                    self.saveToRealm()
                     completion(true)
                 }
             }

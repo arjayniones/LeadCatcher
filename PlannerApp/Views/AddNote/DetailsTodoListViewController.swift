@@ -107,7 +107,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if let viewmod = viewModel.addNoteModel {
             switch index.row {
             case 0:
-                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : (viewmod.addNote_alertDateTime?.toRFC3339String())!
+                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : convertDateTimeToString(date: viewmod.addNote_alertDateTime!)
             case 1:
                 cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
             case 2:
@@ -127,6 +127,10 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.title = data.title
         }
         
+        
+    }
+    
+    func convertToDayString() {
         
     }
     
