@@ -54,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("pumasok dito")
         let actionIdentifier = response.actionIdentifier
         let content = response.notification.request.content
         
@@ -72,13 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        DispatchQueue.main.async {
-            let notification = CWStatusBarNotification()
-            notification.displayNotificationWithMessage("You have task to do", forDuration: 1.5)
-            notification.notificationTappedClosure = {
-            }
-        }
         
         completionHandler([.alert,.sound,.badge])
     }
