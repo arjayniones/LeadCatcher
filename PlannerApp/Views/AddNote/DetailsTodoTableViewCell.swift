@@ -42,6 +42,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
         labelTitle.returnKeyType = .done
         labelTitle.textColor = .lightGray
+        labelTitle.delegate = self
         labelTitle.isEnabled = false
         contentView.addSubview(labelTitle)
         

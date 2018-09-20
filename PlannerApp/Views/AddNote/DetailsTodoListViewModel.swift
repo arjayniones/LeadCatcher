@@ -18,6 +18,8 @@ class DetailsTodoListViewModel {
     
     init() {
         
+        self.addNoteModel = AddNoteModel()
+        
         let row1 = AddTodoViewObject()
         row1.icon = "calendar-icon"
         row1.title = "Start Date Time"
@@ -56,13 +58,17 @@ class DetailsTodoListViewModel {
         self.detailRows.append(row7)
     }
     
-    func setupNotificationDateSettings(chosenTime:DateComponents) {
+    func setupNotificationDateSettings() {
+        if let date = self.addNoteModel?.addNote_alertDateTime {
+            //function for adding date
+//            let n = 7
+//            let nextTriggerDate = Calendar.current.date(byAdding: .day, value: n, to: date)!
+            
+            let comps = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+            self.dateChosen = calendarTrigger
+        }
         
-//        var date = DateComponents()
-//        date.hour = 22
-        
-        let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: chosenTime, repeats: true)
-        self.dateChosen = calendarTrigger
         
         // will fire when the user comes within specified metres of the designated coordinate
         
@@ -72,16 +78,6 @@ class DetailsTodoListViewModel {
         //            region.notifyOnEntry = true;
         //            region.notifyOnExit = false;
         //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
-    }
-    
-    func convertToTime() {
-        ["3 months before","2 months before","1 month before","Everyday"]
-        
-        if let time = self.addNoteModel?.addNote_alertDateTime {
-            if time == "3 months before" {
-                
-            }
-        }
     }
     
     func setupNotificationInfoSettings(message:NotificationMessage) {
@@ -111,7 +107,9 @@ class DetailsTodoListViewModel {
         message.title = messageTitle
         message.subtitle = messageSubject
         message.body = messageBody
+        
         self.setupNotificationInfoSettings(message: message)
+        self.setupNotificationDateSettings()
         
         return true
     }
@@ -121,6 +119,8 @@ class DetailsTodoListViewModel {
             completion(false)
             return
         }
+        self.addNoteModel?.newInstance()
+        self.addNoteModel?.add()
         
         if let content = self.contentChosen,let triggerTime = self.dateChosen {
             let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: triggerTime)

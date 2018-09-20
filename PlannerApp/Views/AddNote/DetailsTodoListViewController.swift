@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftDate
 
 class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
@@ -49,11 +48,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.needsUpdateConstraints()
     }
     @objc func save() {
-        viewModel.addNoteModel?.addNote_alertDateTime = selectedDate.toRFC3339String()
-        viewModel.addNoteModel?.addNote_notes = userNotes
-        print(userNotes)
-        print(selectedDate.toRFC3339String())
-        
         viewModel.saveSchedule(completion: { val in
             if val {
                 let alert = UIAlertController.alertControllerWithTitle(title: "Success", message: "Your To Do task has saved.")
@@ -67,6 +61,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("reloading")
+        tableView.reloadData()
     }
     
     override func updateViewConstraints() {
@@ -102,11 +102,40 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         }
     }
     
+    func populateData(cell:DetailsTodoTableViewCell,index:IndexPath,data:AddTodoViewObject) {
+        
+        if let viewmod = viewModel.addNoteModel {
+            switch index.row {
+            case 0:
+                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : (viewmod.addNote_alertDateTime?.toRFC3339String())!
+            case 1:
+                cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
+            case 2:
+                cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
+            case 3:
+                cell.title = viewmod.addNote_customerId == "" ? data.title: viewmod.addNote_customerId
+            case 4:
+                cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
+            case 5:
+                cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
+            case 6:
+                cell.title = viewmod.addNote_location == nil ? data.title:"\(String(describing: viewmod.addNote_location))"
+            default:
+                break
+            }
+        } else {
+            cell.title = data.title
+        }
+        
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         let data = viewModel.detailRows[indexPath.row]
         cell.leftIcon = data.icon
-        cell.title = data.title
+        self.populateData(cell: cell, index: indexPath, data:data)
+        cell.selectionStyle = .none
         
         if data.title == "Subject" {
             cell.labelTitle.isEnabled = true
@@ -137,6 +166,7 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
                 } else if data.title == "Task type" {
                     self.viewModel.addNoteModel?.addNote_taskType = title
                 }
+                self.tableView.reloadData()
             }
             actionSheet.addAction(action)
         }
@@ -153,9 +183,19 @@ extension DetailsTodoListViewController:NotesViewControllerDelegate {
         noteController.delegate = self
         self.present(noteController, animated: true, completion: nil)
     }
+    
+    func notesControllerDidExit() {
+        viewModel.addNoteModel?.addNote_notes = userNotes
+        print(userNotes)
+    }
 }
 
 extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate {
+    func pickerControllerDidExit() {
+        viewModel.addNoteModel?.addNote_alertDateTime = selectedDate
+        print(selectedDate.toRFC3339String())
+    }
+    
     func showDateTimePicker() {
         let datePickerController = DateAndTimePickerViewController()
         datePickerController.delegate = self

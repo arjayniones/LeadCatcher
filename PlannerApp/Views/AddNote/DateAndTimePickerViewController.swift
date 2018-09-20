@@ -10,6 +10,7 @@ import UIKit
 
 protocol DateAndTimePickerViewControllerDelegate {
     var selectedDate:Date { get set }
+    func pickerControllerDidExit()
 }
 
 class DateAndTimePickerViewController: ViewControllerProtocol {
@@ -68,10 +69,12 @@ class DateAndTimePickerViewController: ViewControllerProtocol {
     @objc func doneButtonPressed() {
         
         delegate?.selectedDate = datePicker.date
+        delegate?.pickerControllerDidExit()
         self.dismiss(animated: true, completion: nil)
     }
     
     @objc func cancelButtonPressed() {
+        delegate?.pickerControllerDidExit()
         self.dismiss(animated: true, completion: nil)
     }
     

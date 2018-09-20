@@ -10,6 +10,7 @@ import UIKit
 
 protocol NotesViewControllerDelegate {
     var userNotes:String { get set }
+    func notesControllerDidExit()
 }
 
 class NotesViewController: ViewControllerProtocol {
@@ -39,6 +40,8 @@ class NotesViewController: ViewControllerProtocol {
         if let data = notesPopUp.tField.text {
             delegate?.userNotes = data
         }
+        
+        delegate?.notesControllerDidExit()
         
         self.dismiss(animated: true, completion: nil)
     }
