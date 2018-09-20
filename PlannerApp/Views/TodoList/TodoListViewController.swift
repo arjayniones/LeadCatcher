@@ -11,7 +11,6 @@ import UIKit
 class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
     let todoListModel = TodoListViewModel()
-    let todoNameLabels = TodoListViewModel.getTodoListItems()
     
     
     override func viewDidLoad() {
@@ -78,10 +77,13 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
                                reuseIdentifier: "cell")
         
         cell.imageView?.image = UIImage(named: "book-icon")
-        cell.textLabel?.text = todoNameLabels[indexPath.row].eventName
+        
+        let data = todoListModel.todoListData[indexPath.row]
+        
+//        cell.textLabel?.text = data.eventName
         cell.textLabel?.numberOfLines = 0
     
-        cell.detailTextLabel?.text = todoNameLabels[indexPath.row].dateTime
+//        cell.detailTextLabel?.text = data.dateTime
         cell.detailTextLabel?.textColor = UIColor.red
         //cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
        // cell.setNeedsUpdateConstraints()
@@ -96,7 +98,7 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         return 60
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoNameLabels.count //total number of array using models
+        return todoListModel.todoListData.count //total number of array using models
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
