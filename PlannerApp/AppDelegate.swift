@@ -32,9 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         prepareAndExecute() {
             
-            GMSServices.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
-            //GMSPlacesClient.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
-            
             self.window?.rootViewController = BaseViewController()
            
         }
@@ -50,6 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         SessionService.onLogout(performAlways: true) {
             self.window?.rootViewController?.present(LoginViewController(), animated: true, completion: nil)
         }
+        
+        GMSServices.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
+        //GMSPlacesClient.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
         
         fn()
         
