@@ -10,7 +10,8 @@ import UIKit
 
 class SettingsNavController: BaseNavigationController {
     
-    let controller = SettingsViewController()
+    //let controller = SettingsViewController()
+    let controller = MapsViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()

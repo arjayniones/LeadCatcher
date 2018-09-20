@@ -26,7 +26,20 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
-        view.setNeedsUpdateConstraints()
+        let addButton = UIButton()
+        //addButton.setTitle("+", for: .normal)
+        let image = UIImage(named: "plus-grey-icon" )
+        
+        addButton.setImage(image, for: .normal)
+        addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        
+        view.needsUpdateConstraints()
+    }
+    @objc func addContact() {
+       //add nav to maps here
+        let contactsDetailsVC = ContactDetailsViewController()
+        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
