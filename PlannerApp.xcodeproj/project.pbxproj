@@ -14,6 +14,9 @@
 		0CBFA0DA2150C1810028750B /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */; };
 		0CBFA0DC2150EAD60028750B /* ContactDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0DB2150EAD60028750B /* ContactDetailsTableViewCell.swift */; };
 		0CBFA0DF2151FC3B0028750B /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0DE2151FC3B0028750B /* MapsViewController.swift */; };
+		0CBFA0E1215349570028750B /* MapMarkerWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E0215349570028750B /* MapMarkerWindowView.xib */; };
+		0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E221534A8C0028750B /* MapMarkerWindow.swift */; };
+		0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E4215376110028750B /* TodoListViewModel.swift */; };
 		24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5C2148AF9B007687EB /* SecurityViewController.swift */; };
 		24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5D2148AF9B007687EB /* SecurityViewModel.swift */; };
 		24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5F2148AF9B007687EB /* SettingsViewModel.swift */; };
@@ -79,6 +82,9 @@
 		0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		0CBFA0DB2150EAD60028750B /* ContactDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		0CBFA0DE2151FC3B0028750B /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
+		0CBFA0E0215349570028750B /* MapMarkerWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapMarkerWindowView.xib; sourceTree = "<group>"; };
+		0CBFA0E221534A8C0028750B /* MapMarkerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerWindow.swift; sourceTree = "<group>"; };
+		0CBFA0E4215376110028750B /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
 		24140A5C2148AF9B007687EB /* SecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
 		24140A5D2148AF9B007687EB /* SecurityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
 		24140A5F2148AF9B007687EB /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -201,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				0CBFA0DE2151FC3B0028750B /* MapsViewController.swift */,
+				0CBFA0E0215349570028750B /* MapMarkerWindowView.xib */,
+				0CBFA0E221534A8C0028750B /* MapMarkerWindow.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -298,6 +306,7 @@
 				2455FBBE2150956100881541 /* TodoListNavViewController.swift */,
 				2455FBC42150CA9000881541 /* NotesViewController.swift */,
 				2455FBC82150DCBB00881541 /* TodoListViewController.swift */,
+				0CBFA0E4215376110028750B /* TodoListViewModel.swift */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";
@@ -492,7 +501,7 @@
 				TargetAttributes = {
 					248B83772140B29D00119D9D = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -527,6 +536,7 @@
 				248B83832140B29D00119D9D /* Assets.xcassets in Resources */,
 				D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */,
 				D6715DA52140FBA900957E86 /* SF-Pro-Text-Medium.otf in Resources */,
+				0CBFA0E1215349570028750B /* MapMarkerWindowView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,6 +646,7 @@
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */,
 				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
+				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
@@ -647,6 +658,7 @@
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
+				0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */,
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
 				D639EACF2148B7980053894C /* UserViewModel.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
@@ -776,13 +788,14 @@
 			baseConfigurationReference = 2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A9LH66DXBS;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -793,13 +806,14 @@
 			baseConfigurationReference = 02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A9LH66DXBS;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

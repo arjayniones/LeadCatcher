@@ -10,47 +10,152 @@ import UIKit
 import GoogleMaps
 
 class MapsViewController: UIViewController, GMSMapViewDelegate {
+    
+    private var infoWindow = MapMarkerWindow()
+    fileprivate var locationMarker : GMSMarker? = GMSMarker()
+    
+    func loadNiB() -> MapMarkerWindow {
+        let infoWindow = MapMarkerWindow.instanceFromNib() as! MapMarkerWindow
+        return infoWindow
+    }
 
-    let geocoder = GMSGeocoder()
-    override func loadView() {
-        let camera = GMSCameraPosition.camera(withLatitude: 1.285,
-                                              longitude: 103.848,
-                                              zoom: 12)
+    override func viewDidLoad() {
         
-        let mapView = GMSMapView.map(withFrame: .zero, camera: camera)
-        mapView.delegate = self
-        self.view = mapView
-    }
-    
-    // MARK: GMSMapViewDelegate
-    
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print("You tapped at \(coordinate.latitude), \(coordinate.longitude)")
-    }
-    
-    
-    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-        mapView.clear()
-    }
-    
-    func mapView(_ mapView: GMSMapView, idleAt cameraPosition: GMSCameraPosition) {
-        geocoder.reverseGeocodeCoordinate(cameraPosition.target) { (response, error) in
-            guard error == nil else {
-                return
-            }
-            
-            if let result = response?.firstResult() {
+        self.infoWindow = loadNiB()
+        
+        
+        //let latitude = ""
+        //let longitude = ""
+        
+         //Create a GMSCameraPosition that tells the map to display the
+                // coordinate -33.86,151.20 at zoom level 6.
+                let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+                let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+                //mapView.animate(toZoom: 200)
+                mapView.settings.myLocationButton = true
+                view = mapView
+        
+                // Creates a marker in the center of the map.
                 let marker = GMSMarker()
-                marker.position = cameraPosition.target
-                marker.title = result.lines?[0]
-                marker.snippet = result.lines?[1]
+                marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+                marker.title = "Sydney"
+                marker.snippet = "Australia"
                 marker.map = mapView
-            }
-        }
+        
+        
+//        func loadMarkersFromDB() {
+//            let ref = FIRDatabase.database().reference().child("spots")
+//            ref.observe(.childAdded, with: { (snapshot) in
+//                if snapshot.value as? [String : AnyObject] != nil {
+//                    self.gMapView.clear()
+//                    guard let spot = snapshot.value as? [String : AnyObject] else {
+//                        return
+//                    }
+//                    // Get coordinate values from DB
+//                    let latitude = spot["latitude"]
+//                    let longitude = spot["longitude"]
+//
+//                    DispatchQueue.main.async(execute: {
+//                        let marker = GMSMarker()
+//                        // Assign custom image for each marker
+//                        let markerImage = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30).withRenderingMode(.alwaysTemplate)
+//                        let markerView = UIImageView(image: markerImage)
+//                        // Customize color of marker here:
+//                        markerView.tintColor = rented ? .lightGray : UIColor(hexString: "19E698")
+//                        marker.iconView = markerView
+//                        marker.position = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
+//                        marker.map = self.gMapView
+//                        // *IMPORTANT* Assign all the spots data to the marker's userData property
+//                        marker.userData = spot
+//                    })
+//                }
+//            }, withCancel: nil)
+//        }
+        
+        
+        
     }
-
-
+    
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        var markerData : NSDictionary?
+        if let data = marker.userData! as? NSDictionary {
+            markerData = data
+        }
+        locationMarker = marker
+        infoWindow.removeFromSuperview()
+        infoWindow = loadNiB()
+        guard let location = locationMarker?.position else {
+            print("locationMarker is nil")
+            return false
+        }
+        // Pass the spot data to the info window, and set its delegate to self
+        infoWindow.spotData = markerData
+        infoWindow.delegate = self as? MapMarkerDelegate
+        // Configure UI properties of info window
+        infoWindow.alpha = 0.9
+        infoWindow.layer.cornerRadius = 12
+        infoWindow.layer.borderWidth = 2
+        infoWindow.layer.borderColor = UIColor.red as! CGColor
+        infoWindow.viewBtn.layer.cornerRadius = infoWindow.viewBtn.frame.height / 2
+        
+        let eventName = markerData!["event"]!
+        let dateTime = markerData!["dateTime"]!
+        let desc = markerData!["desc"]!
+        //let toTime = markerData!["toTime"]!
+        
+        infoWindow.eventNameLbl.text = eventName as? String
+        infoWindow.dateTimeLbl.text = dateTime as? String //date here
+        infoWindow.descLbl.text = desc as? String //load desc info here
+        
+        // Offset the info window to be directly above the tapped marker
+        infoWindow.center = mapView.projection.point(for: location)
+        infoWindow.center.y = infoWindow.center.y - 82
+        self.view.addSubview(infoWindow)
+        return false
+    }
 }
+    
+//    let geocoder = GMSGeocoder()
+//    override func loadView() {
+//        let camera = GMSCameraPosition.camera(withLatitude: 1.285,
+//                                              longitude: 103.848,
+//                                              zoom: 12)
+//
+//        let mapView = GMSMapView.map(withFrame: .zero, camera: camera)
+//        mapView.delegate = self
+//        self.view = mapView
+//    }
+//
+//    // MARK: GMSMapViewDelegate
+//
+//    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+//        print("You tapped at \(coordinate.latitude), \(coordinate.longitude)")
+//    }
+//
+//
+//    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+//        mapView.clear()
+//    }
+//
+//    func mapView(_ mapView: GMSMapView, idleAt cameraPosition: GMSCameraPosition) {
+//        geocoder.reverseGeocodeCoordinate(cameraPosition.target) { (response, error) in
+//            guard error == nil else {
+//                return
+//            }
+//
+//            if let result = response?.firstResult() {
+//                let marker = GMSMarker()
+//                marker.position = cameraPosition.target
+//                marker.title = result.lines?[0]
+//                //marker.snippet = result.lines?[1]
+//                marker.map = mapView
+//            }
+//        }
+//    }
+//
+//
+//}
 
 //UIViewController {
 //

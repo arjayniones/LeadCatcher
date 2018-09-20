@@ -14,3 +14,10 @@ class AddTodoViewObject: NSObject {
     var title:String = ""
     var alertOptions:[String] = []
 }
+
+class AddTodoListViewObject: NSObject {
+    
+    var eventName:String = ""
+    var dateTime:String = ""
+    
+}

@@ -30,7 +30,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         title = "New to do"
         
         tableView.delegate = self

@@ -27,7 +27,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         title = "Contact Details"
         
         tableView.delegate = self
@@ -38,6 +38,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.addSubview(tableView)
         
         view.needsUpdateConstraints()
+        view.updateConstraintsIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {

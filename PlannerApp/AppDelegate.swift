@@ -32,9 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         prepareAndExecute() {
             
-            self.window?.rootViewController = BaseViewController()
             GMSServices.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
             //GMSPlacesClient.provideAPIKey("AIzaSyCeTGV2wh-JFCok4DN_NQdtdpx5m1epQV4")
+            
+            self.window?.rootViewController = BaseViewController()
+           
         }
         
         return true
