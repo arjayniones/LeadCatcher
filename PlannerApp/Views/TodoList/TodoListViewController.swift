@@ -26,19 +26,18 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         view.addSubview(tableView)
         
         let addButton = UIButton()
-        //addButton.setTitle("+", for: .normal)
-        let image = UIImage(named: "plus-grey-icon" )
-        
-        addButton.setImage(image, for: .normal)
-        addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
+        addButton.setTitle("Edit", for: .normal)
+//        let image = UIImage(named: "plus-grey-icon" )
+//
+//        addButton.setImage(image, for: .normal)
+        addButton.addTarget(self, action: #selector(EditTodoList), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
         
         view.needsUpdateConstraints()
     }
-    @objc func addContact() {
-        //add nav to maps here
-        let contactsDetailsVC = ContactDetailsViewController()
-        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+    @objc func EditTodoList() {
+        //edit code here swipe left and right to the change or add buttons
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -79,11 +78,14 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         cell.imageView?.image = UIImage(named: "book-icon")
         
         let data = todoListModel.todoListData[indexPath.row]
+        print(data)
         
-//        cell.textLabel?.text = data.eventName
+        let date = data.addNote_alertDateTime
+        let dateString = date?.toString(withFormat: "yyyy-MM-dd HH:mm:ss")
+        cell.textLabel?.text = data.addNote_subject as? String
         cell.textLabel?.numberOfLines = 0
     
-//        cell.detailTextLabel?.text = data.dateTime
+        cell.detailTextLabel?.text = dateString
         cell.detailTextLabel?.textColor = UIColor.red
         //cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
        // cell.setNeedsUpdateConstraints()
@@ -104,10 +106,24 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //func to navigate to contact details view
         
-        //let contactsDetailsVC = ContactDetailsViewController()
-       // self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+        let data = todoListModel.todoListData[indexPath.row]
+        let selectedID = data.id
+        let contactsDetailsVC = ContactDetailsViewController()
+        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
     }
     
 }
 
+extension Date {
+    
+    func toString(withFormat format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        let myString = formatter.string(from: self)
+        let yourDate = formatter.date(from: myString)
+        formatter.dateFormat = format
+        
+        return formatter.string(from: yourDate!)
+    }
+}
 
