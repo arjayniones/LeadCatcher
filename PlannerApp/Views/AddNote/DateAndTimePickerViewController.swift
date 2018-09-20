@@ -24,7 +24,6 @@ class DateAndTimePickerViewController: ViewControllerProtocol {
     
     var delegate: DateAndTimePickerViewControllerDelegate?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,29 +79,33 @@ class DateAndTimePickerViewController: ViewControllerProtocol {
     
     override func updateViewConstraints() {
         
-        dateTimeLabel.snp.makeConstraints { make in
-            make.width.equalTo(view.snp.width).multipliedBy(0.5)
-            make.height.equalTo(40)
-            make.centerY.equalTo(view.snp.centerY).offset(-100)
-            make.centerX.equalTo(view.snp.centerX)
+        if !didSetupConstraints {
+            
+            dateTimeLabel.snp.makeConstraints { make in
+                make.width.equalTo(view.snp.width).multipliedBy(0.5)
+                make.height.equalTo(40)
+                make.centerY.equalTo(view.snp.centerY).offset(-100)
+                make.centerX.equalTo(view.snp.centerX)
+            }
+            
+            doneButton.snp.makeConstraints { make in
+                make.top.equalTo(view).inset(20)
+                make.right.equalTo(view).inset(10)
+                make.width.equalTo(CGSize(width: 100, height: 40))
+            }
+            cancelButton.snp.makeConstraints { make in
+                make.top.equalTo(view).inset(20)
+                make.left.equalTo(view).inset(10)
+                make.size.equalTo(CGSize(width: 100, height: 40))
+            }
+            
+            datePicker.snp.makeConstraints { make in
+                make.bottom.left.right.equalTo(view)
+                make.height.equalTo(200)
+            }
+            
+            didSetupConstraints = true
         }
-        
-        doneButton.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(20)
-            make.right.equalTo(view).inset(10)
-            make.width.equalTo(CGSize(width: 100, height: 40))
-        }
-        cancelButton.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(20)
-            make.left.equalTo(view).inset(10)
-            make.size.equalTo(CGSize(width: 100, height: 40))
-        }
-        
-        datePicker.snp.makeConstraints { make in
-            make.bottom.left.right.equalTo(view)
-            make.height.equalTo(200)
-        }
-        
         super.updateViewConstraints()
     }
 

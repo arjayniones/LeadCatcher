@@ -43,9 +43,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        saveButton.sizeToFit()
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         
         view.needsUpdateConstraints()
+        view.updateConstraintsIfNeeded()
     }
     @objc func save() {
         viewModel.saveSchedule(completion: { val in
@@ -65,7 +68,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("reloading")
         tableView.reloadData()
     }
     
@@ -74,7 +76,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         if !didSetupConstraints {
             
             tableView.snp.makeConstraints { make in
-                make.edges.equalTo(view)
+                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
             }
             
             didSetupConstraints = true
@@ -107,7 +109,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if let viewmod = viewModel.addNoteModel {
             switch index.row {
             case 0:
-                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : (viewmod.addNote_alertDateTime?.toRFC3339String())!
+                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : convertDateTimeToString(date: viewmod.addNote_alertDateTime!)
             case 1:
                 cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
             case 2:

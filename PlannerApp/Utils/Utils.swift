@@ -14,7 +14,7 @@ func uuid() -> UUID {
 
 func convertDateTimeToString(date:Date) -> String {
     let dateFormatter: DateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM/dd/yyyy hh:mm"
+    dateFormatter.dateFormat = "EEEE,dd MMM yyyy hh:mm a"
     
     let selectedDate: String = dateFormatter.string(from:date)
     
