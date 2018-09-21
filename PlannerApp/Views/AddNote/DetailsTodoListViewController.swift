@@ -204,6 +204,9 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
 extension DetailsTodoListViewController:NotesViewControllerDelegate {
     func openNoteController() {
         let noteController = NotesViewController()
+        if let notes = viewModel.addNoteModel?.addNote_notes {
+            noteController.textNotes = notes
+        }
         noteController.delegate = self
         self.present(noteController, animated: true, completion: nil)
     }

@@ -19,6 +19,11 @@ class NotesViewController: ViewControllerProtocol {
     
     fileprivate let notesPopUp = NotesPopUpControllerView()
     fileprivate let doneButton = ActionButton()
+    var textNotes:String = "" {
+        didSet {
+            notesPopUp.tField.text = textNotes
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
