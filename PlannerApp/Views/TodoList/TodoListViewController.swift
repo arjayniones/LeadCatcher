@@ -17,6 +17,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     fileprivate var filteredNotes: Results<AddNote>?
     fileprivate let viewModel = TodoListViewModel()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +44,28 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
+        viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
+            guard let tableView = self?.tableView else { return }
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                // Query results have changed, so apply them to the UITableView
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                                     with: .automatic)
+                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.endUpdates()
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+            }
+        }
+        
+        
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
     }
@@ -67,8 +90,6 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         updateNavbarAppear()
     }
     
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -87,7 +108,9 @@ extension TodoListViewController: UISearchBarDelegate {
 extension TodoListViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
-        // TODO
+        if let searchText = searchController.searchBar.text {
+            print(searchText)
+        }
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -102,48 +125,62 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
+        guard let data = viewModel.todoListData else {
+            return nil
+        }
+        
         let note: AddNote
         
         if isFiltering() {
             note = filteredNotes![indexPath.row]
         } else {
-            note = viewModel.todoListData[indexPath.row]
+            note = data[indexPath.row]
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
             
             //TODO: delete realm method
-            
+            RealmStore.delete(model: note)
             
         }
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
             
             //TODO: realm edit method
         }
+        
         return [deleteAction, editAction]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let data = viewModel.todoListData else {
+            return 0
+        }
+        
         if isFiltering() {
-            searchFooter.setIsFilteringToShow(filteredItemCount: filteredNotes!.count, of: viewModel.todoListData.count)
+            searchFooter.setIsFilteringToShow(filteredItemCount: filteredNotes!.count, of: data.count)
             return filteredNotes!.count
         }
         
         searchFooter.setNotFiltering()
         
-        return viewModel.todoListData.count
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
         
+        guard let data = viewModel.todoListData else {
+            return cell
+        }
+        
         let note: AddNote
         
         if isFiltering() {
             note = filteredNotes![indexPath.row]
         } else {
-            note = viewModel.todoListData[indexPath.row]
+            note = data[indexPath.row]
         }
         
         cell.textLabel!.text = note.addNote_subject

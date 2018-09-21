@@ -47,12 +47,10 @@ class RealmStore {
      
      - returns: Object (Model)
      */
-    static func model<T: Object>(type: T.Type, query: String) -> T? {
+    static func model<T: Object>(type: T.Type, query: String) -> Results<T>? {
         let store = try! Realm()
-        if let model:T = store.objects(T.self).filter(query).first {
-            return  model
-        }
-        return nil
+        let model = store.objects(T.self).filter(query)
+        return model
     }
     
     /**
@@ -75,9 +73,8 @@ class RealmStore {
      - parameter model: object (Model)
      */
     static func delete(model: Model) {
-        let store = try! Realm()
         try! RealmStore.write {
-            store.delete(model)
+            model.deleted_at = Date()
         }
     }
     
