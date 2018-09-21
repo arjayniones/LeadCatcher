@@ -39,7 +39,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 80
+        tableView.estimatedRowHeight = 100
         tableView.tableFooterView = searchFooter
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
@@ -68,6 +68,10 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
+    }
+    
+    deinit {
+        viewModel.notificationToken?.invalidate()
     }
     
     override func updateViewConstraints() {
@@ -109,7 +113,12 @@ extension TodoListViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            print(searchText)
+            let subpredicates = viewModel.subpredicates.map { property in
+                NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, searchText)
+            }
+            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
+            filteredNotes = RealmStore.models(type: AddNote.self).filter(predicate)
+            self.tableView.reloadData()
         }
     }
     
@@ -138,8 +147,6 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-            
-            //TODO: delete realm method
             RealmStore.delete(model: note)
             
         }
