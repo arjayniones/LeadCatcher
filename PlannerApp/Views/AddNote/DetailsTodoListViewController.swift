@@ -17,6 +17,14 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     fileprivate let viewModel:DetailsTodoListViewModel
     
+    var isControllerEditing:Bool = false
+    
+    var setupModel: AddNoteModel? {
+        didSet {
+            viewModel.addNoteModel = setupModel
+        }
+    }
+    
     required init() {
         viewModel = DetailsTodoListViewModel()
         
@@ -48,13 +56,15 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         
-        let clearButton = UIButton()
-        clearButton.setTitle("Clear", for: .normal)
-        clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
-        clearButton.sizeToFit()
-        clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.width, height: clearButton.height)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
+        if !isControllerEditing {
+            let clearButton = UIButton()
+            clearButton.setTitle("Clear", for: .normal)
+            clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+            clearButton.sizeToFit()
+            clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.width, height: clearButton.height)
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
+        }
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()

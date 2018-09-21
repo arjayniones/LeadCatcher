@@ -17,7 +17,6 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     fileprivate var filteredNotes: Results<AddNote>?
     fileprivate let viewModel = TodoListViewModel()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,10 +151,36 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
             
-            //TODO: realm edit method
+            self.openDetailsNoteForEditing(model: note)
         }
         
         return [deleteAction, editAction]
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let data = viewModel.todoListData else {
+            return
+        }
+        
+        self.openDetailsNoteForEditing(model: data[indexPath.row])
+    }
+    
+    func openDetailsNoteForEditing(model:AddNote) {
+        let detailController = DetailsTodoListViewController()
+        detailController.isControllerEditing = true
+        
+        let todoModel = AddNoteModel()
+        todoModel.addNote_alertDateTime = model.addNote_alertDateTime
+        todoModel.addNote_repeat = model.addNote_repeat
+        todoModel.addNote_subject = model.addNote_subject
+        todoModel.addNote_customerId = model.addNote_customerId
+        todoModel.addNote_taskType = model.addNote_taskType
+        todoModel.addNote_notes = model.addNote_notes
+        todoModel.addNote_location = model.addNote_location
+        
+        detailController.setupModel = todoModel
+        
+        self.navigationController?.pushViewController(detailController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
