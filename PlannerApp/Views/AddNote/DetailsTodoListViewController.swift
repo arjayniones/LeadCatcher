@@ -59,6 +59,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
+    
     @objc func save() {
         viewModel.saveSchedule(completion: { val in
             if val {
@@ -81,8 +82,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         self.present(controller, animated: true, completion: nil);
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
@@ -150,8 +149,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         } else {
             cell.title = data.title
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -178,7 +175,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
-    
     
     func sheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)

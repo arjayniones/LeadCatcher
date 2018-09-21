@@ -9,129 +9,150 @@
 import UIKit
 import RealmSwift
 
-class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
-    let tableView = UITableView()
-    let todoListModel = TodoListViewModel()
+class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     
+    fileprivate let tableView = UITableView()
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
+    fileprivate var searchFooter = SearchFooterView()
+    fileprivate var filteredNotes: Results<AddNote>?
+    fileprivate let viewModel = TodoListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "To Do List"
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search To Do"
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            // Fallback on earlier versions
+        }
+        definesPresentationContext = true
+        
+        searchController.searchBar.delegate = self
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 80
+        tableView.tableFooterView = searchFooter
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
-        let addButton = UIButton()
-        let image = UIImage(named: "plus-grey-icon" )
-        
-        addButton.setImage(image, for: .normal)
-        addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
-        
-        todoListModel.notificationToken = todoListModel.todoListData.observe { [weak self] (changes: RealmCollectionChange) in
-            guard let tableView = self?.tableView else { return }
-            switch changes {
-            case .initial:
-                tableView.reloadData()
-            case .update(_, let deletions, let insertions, let modifications):
-                tableView.beginUpdates()
-                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
-                                     with: .automatic)
-                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
-                                     with: .automatic)
-                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
-                                     with: .automatic)
-                tableView.endUpdates()
-            case .error(let error):
-                fatalError("\(error)")
-            }
-        }
-        
-        
+        view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
     }
-    deinit {
-        todoListModel.notificationToken?.invalidate()
+    
+    override func updateViewConstraints() {
+        if !didSetupConstraints {
+            tableView.snp.makeConstraints { make in
+                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+            }
+            
+            didSetupConstraints = true
+        }
+        super.updateViewConstraints()
     }
     
-    @objc func addContact() {
-        //add nav to maps here
-        let contactsDetailsVC = ContactDetailsViewController()
-        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        if let selectionIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
+        super.viewWillAppear(animated)
+        
+        updateNavbarAppear()
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+}
+
+extension TodoListViewController: UISearchBarDelegate {
+    // MARK: - UISearchBar Delegate
     
-    override func viewWillAppear(_ animated: Bool) {
-        updateNavbarAppear()
-        tableView.reloadData()
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+}
+
+extension TodoListViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        // TODO
     }
     
-    override func updateViewConstraints() {
-        
-        if !didSetupConstraints {
-            
-            tableView.snp.makeConstraints { make in
-                make.top.left.right.equalTo(view)
-                make.bottom.equalTo(view).inset(50)
-            }
-            
-            didSetupConstraints = true
-        }
-        
-        super.updateViewConstraints()
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
     }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        var cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
-        
-        cell = UITableViewCell(style: UITableViewCellStyle.subtitle,
-                               reuseIdentifier: "cell")
-        
-        cell.imageView?.image = UIImage(named: "book-icon")
-        
-        let data = todoListModel.todoListData[indexPath.row]
-        
-//        cell.textLabel?.text = data.eventName
-        cell.textLabel?.numberOfLines = 0
-    
-//        cell.detailTextLabel?.text = data.dateTime
-        cell.detailTextLabel?.textColor = UIColor.red
-        //cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-       // cell.setNeedsUpdateConstraints()
-        //cell.updateConstraintsIfNeeded()
-        
-        return cell
-    }
+}
+
+extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoListModel.todoListData.count //total number of array using models
-    }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //func to navigate to contact details view
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        //let contactsDetailsVC = ContactDetailsViewController()
-       // self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+        let note: AddNote
+        
+        if isFiltering() {
+            note = filteredNotes![indexPath.row]
+        } else {
+            note = viewModel.todoListData[indexPath.row]
+        }
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
+            
+            //TODO: delete realm method
+            
+            
+        }
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
+            
+            //TODO: realm edit method
+        }
+        return [deleteAction, editAction]
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            searchFooter.setIsFilteringToShow(filteredItemCount: filteredNotes!.count, of: viewModel.todoListData.count)
+            return filteredNotes!.count
+        }
+        
+        searchFooter.setNotFiltering()
+        
+        return viewModel.todoListData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
+        
+        let note: AddNote
+        
+        if isFiltering() {
+            note = filteredNotes![indexPath.row]
+        } else {
+            note = viewModel.todoListData[indexPath.row]
+        }
+        
+        cell.textLabel!.text = note.addNote_subject
+        cell.imageView?.image = UIImage(named: "book-icon")
+        cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
+        cell.detailTextLabel?.textColor = .red
+        return cell
+    }
 }
+
 
 

@@ -12,7 +12,6 @@ import RealmSwift
 
 class TodoListViewModel {
     
-    var detailRows:[AddTodoListViewObject] = []
     var todoListData:Results<AddNote>
     
     var notificationToken: NotificationToken? = nil
