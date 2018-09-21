@@ -59,19 +59,65 @@ class DetailsTodoListViewModel {
         self.detailRows.append(row7)
     }
     
-    func setupNotificationDateSettings() {
+    func verifyRepeatTime(date: Date) -> Bool {
+        if let repeatTime = self.addNoteModel?.addNote_repeat {
+            
+            let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
+            
+            var intToMinus:Int = -1
+            
+            switch index {
+            case 0:
+                intToMinus = -3
+                
+            case 1:
+                intToMinus = -2
+            case 2:
+                intToMinus = -1
+            case 3:
+                guard let dateMinus = Calendar.current.date(byAdding: .day, value: -1, to: date) else {
+                    return false
+                }
+                if isDateLessThan(a: dateMinus, b: Date()) {
+                    return false
+                } else {
+                    return true
+                }
+            default:
+                return false
+            }
+            
+            guard let dateMinus = Calendar.current.date(byAdding: .month, value: intToMinus, to: date) else {
+                return false
+            }
+            
+            if isDateLessThan(a: dateMinus, b: Date()) {
+                return false
+            }
+            
+            return true
+        }
+        
+        return false
+    }
+    
+    
+    func setupNotificationDateSettings() -> Bool {
         if let date = self.addNoteModel?.addNote_alertDateTime {
-            print(date)
-            //function for adding date
-//            let n = 7
-//            let nextTriggerDate = Calendar.current.date(byAdding: .day, value: n, to: date)!
+            
+            guard verifyRepeatTime(date:date) else {
+                return false
+            }
             
             let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date)
-            print(comps)
             
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
             self.dateChosen = calendarTrigger
+            
+            return true
         }
+        
+        return false
         
         
         // will fire when the user comes within specified metres of the designated coordinate
@@ -107,13 +153,16 @@ class DetailsTodoListViewModel {
             return false
         }
         
+        guard setupNotificationDateSettings() else {
+            return false
+        }
+        
         let message = NotificationMessage()
         message.title = messageTitle
         message.subtitle = messageSubject
         message.body = messageBody
         
         self.setupNotificationInfoSettings(message: message)
-        self.setupNotificationDateSettings()
         
         return true
     }

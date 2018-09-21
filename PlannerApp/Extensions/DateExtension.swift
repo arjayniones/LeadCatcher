@@ -43,17 +43,17 @@ public extension Date {
     
 }
 
-//public func <(a: Date, b: Date) -> Bool {
-//    return a.compare(b) == ComparisonResult.orderedAscending
-//}
-//
-//public func >(a: Date, b: Date) -> Bool {
-//    return a.compare(b) == ComparisonResult.orderedDescending
-//}
-//
-//public func ==(a: Date, b: Date) -> Bool {
-//    return a.compare(b) == ComparisonResult.orderedSame
-//}
+public func isDateLessThan(a: Date, b: Date) -> Bool {
+    return a.compare(b) == ComparisonResult.orderedAscending
+}
+
+public func isDateGreaterThan(a: Date, b: Date) -> Bool {
+    return a.compare(b) == ComparisonResult.orderedDescending
+}
+
+public func isDateEqual(a: Date, b: Date) -> Bool {
+    return a.compare(b) == ComparisonResult.orderedSame
+}
 
 extension Date {
     
