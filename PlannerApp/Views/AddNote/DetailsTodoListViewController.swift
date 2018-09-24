@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
@@ -110,7 +111,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
-            
             tableView.snp.makeConstraints { make in
                 make.edges.equalTo(view).inset(UIEdgeInsets.zero)
             }
@@ -153,8 +153,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         } else if data.title == "Customer" {
             self.openContactListViewController()
         } else if data.title == "Location" {
-            let mapController = MapsPickerViewController()
-            mapController.delegate = self
+//            let mapController = MapsPickerViewController()
+//            mapController.delegate = self
+//            self.navigationController?.pushViewController(mapController, animated: true)
+            
+            let mapController = MapViewController()
             self.navigationController?.pushViewController(mapController, animated: true)
         }
         
@@ -177,7 +180,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             case 5:
                 cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
             case 6:
-                cell.title = viewmod.addNote_location == nil ? data.title:"\(String(describing: viewmod.addNote_location?.name))"
+                cell.title = viewmod.addNote_location == nil ? data.title:"\(viewmod.addNote_location?.name ?? data.title)"
             default:
                 break
             }

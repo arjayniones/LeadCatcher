@@ -17,14 +17,11 @@ class AddNote: Model {
     @objc dynamic var addNote_customerId: UUID?
     @objc dynamic var addNote_taskType: String = ""
     @objc dynamic var addNote_notes: String = ""
-    var addNote_location:LocationModel?
+    @objc dynamic var addNote_location:LocationModel?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
         
-//        U_Username    <- map["U_UserName"]
-//        U_Password    <- map["U_Password"]
-//        U_EnableTouchID <- map["U_EnableTouchID"]
     }
     
     func newInstance() {

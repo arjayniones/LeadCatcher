@@ -39,8 +39,6 @@ class MapsViewController: UIViewController, CLLocationManagerDelegate {
 
         self.infoWindow = loadNiB()
 
-       
-        
         if CLLocationManager.locationServicesEnabled() {
 
             locationManager.delegate = self

@@ -86,7 +86,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         {
             self.getTheContact();
         }
-        else if indexPath.row == 10{
+        else if indexPath.row == 9{
             popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
             
         }
