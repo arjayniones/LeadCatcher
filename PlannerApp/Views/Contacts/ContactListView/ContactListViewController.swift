@@ -92,6 +92,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         let contactsDetailsVC = ContactDetailsViewController()
         self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+        
+        
     }
     
 }

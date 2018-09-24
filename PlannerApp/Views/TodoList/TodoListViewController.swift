@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
@@ -26,19 +27,52 @@ class TodoListViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         view.addSubview(tableView)
         
         let addButton = UIButton()
+
         addButton.setTitle("Edit", for: .normal)
 //        let image = UIImage(named: "plus-grey-icon" )
 //
 //        addButton.setImage(image, for: .normal)
         addButton.addTarget(self, action: #selector(EditTodoList), for: .touchUpInside)
+
+      
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        
+        todoListModel.notificationToken = todoListModel.todoListData.observe { [weak self] (changes: RealmCollectionChange) in
+            guard let tableView = self?.tableView else { return }
+            switch changes {
+            case .initial:
+                // Results are now populated and can be accessed without blocking the UI
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                // Query results have changed, so apply them to the UITableView
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                                     with: .automatic)
+                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.endUpdates()
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+            }
+        }
+        
         
         view.needsUpdateConstraints()
     }
+
     @objc func EditTodoList() {
         //edit code here swipe left and right to the change or add buttons
         
     }
+    
+    deinit {
+        todoListModel.notificationToken?.invalidate()
+    }
+    
+  
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

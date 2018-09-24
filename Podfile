@@ -16,4 +16,6 @@ pod 'SwiftyUserDefaults'
 pod 'Alamofire', '~> 4.7'
 pod 'GoogleMaps'
 pod 'GooglePlaces'
+pod 'GooglePlacePicker'
+ 
 end
