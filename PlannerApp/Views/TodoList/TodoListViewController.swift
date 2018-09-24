@@ -73,6 +73,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         viewModel.notificationToken?.invalidate()
     }
     
+  
     override func updateViewConstraints() {
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
@@ -178,6 +179,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             todoModel.addNote_customer = customerModel
         }
         
+
         todoModel.addNote_taskType = model.addNote_taskType
         todoModel.addNote_notes = model.addNote_notes
         todoModel.addNote_location = model.addNote_location
@@ -227,5 +229,17 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     }
 }
 
+extension Date {
+    
+    func toString(withFormat format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        let myString = formatter.string(from: self)
+        let yourDate = formatter.date(from: myString)
+        formatter.dateFormat = format
+        
+        return formatter.string(from: yourDate!)
+    }
+}
 
 

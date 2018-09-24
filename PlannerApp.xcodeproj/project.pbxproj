@@ -16,6 +16,12 @@
 		0CBFA0E1215349570028750B /* MapMarkerWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E0215349570028750B /* MapMarkerWindowView.xib */; };
 		0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E221534A8C0028750B /* MapMarkerWindow.swift */; };
 		0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E4215376110028750B /* TodoListViewModel.swift */; };
+		0CBFA0E7215483590028750B /* MapsLocationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E6215483590028750B /* MapsLocationListViewController.swift */; };
+		0CBFA0E92154BC270028750B /* MapsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E82154BC270028750B /* MapsPickerViewController.swift */; };
+		0CBFA0EB2154EF030028750B /* PickAPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0EA2154EF030028750B /* PickAPlaceViewController.swift */; };
+		0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0EC215888650028750B /* CustomMarkerView.swift */; };
+		0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0EE21588ED40028750B /* DetailsVC.swift */; };
+		0CBFA0F121588F020028750B /* RestaurantPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0F021588F020028750B /* RestaurantPreviewView.swift */; };
 		24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5C2148AF9B007687EB /* SecurityViewController.swift */; };
 		24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5D2148AF9B007687EB /* SecurityViewModel.swift */; };
 		24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5F2148AF9B007687EB /* SettingsViewModel.swift */; };
@@ -84,6 +90,12 @@
 		0CBFA0E0215349570028750B /* MapMarkerWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapMarkerWindowView.xib; sourceTree = "<group>"; };
 		0CBFA0E221534A8C0028750B /* MapMarkerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerWindow.swift; sourceTree = "<group>"; };
 		0CBFA0E4215376110028750B /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
+		0CBFA0E6215483590028750B /* MapsLocationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsLocationListViewController.swift; sourceTree = "<group>"; };
+		0CBFA0E82154BC270028750B /* MapsPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsPickerViewController.swift; sourceTree = "<group>"; };
+		0CBFA0EA2154EF030028750B /* PickAPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickAPlaceViewController.swift; sourceTree = "<group>"; };
+		0CBFA0EC215888650028750B /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
+		0CBFA0EE21588ED40028750B /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
+		0CBFA0F021588F020028750B /* RestaurantPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPreviewView.swift; sourceTree = "<group>"; };
 		24140A5C2148AF9B007687EB /* SecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
 		24140A5D2148AF9B007687EB /* SecurityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
 		24140A5F2148AF9B007687EB /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -208,6 +220,12 @@
 				0CBFA0DE2151FC3B0028750B /* MapsViewController.swift */,
 				0CBFA0E0215349570028750B /* MapMarkerWindowView.xib */,
 				0CBFA0E221534A8C0028750B /* MapMarkerWindow.swift */,
+				0CBFA0E6215483590028750B /* MapsLocationListViewController.swift */,
+				0CBFA0E82154BC270028750B /* MapsPickerViewController.swift */,
+				0CBFA0EA2154EF030028750B /* PickAPlaceViewController.swift */,
+				0CBFA0EC215888650028750B /* CustomMarkerView.swift */,
+				0CBFA0EE21588ED40028750B /* DetailsVC.swift */,
+				0CBFA0F021588F020028750B /* RestaurantPreviewView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -560,11 +578,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,6 +656,8 @@
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
 				24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */,
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
+				0CBFA0E92154BC270028750B /* MapsPickerViewController.swift in Sources */,
+				0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */,
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
 				2455FBC52150CA9000881541 /* NotesViewController.swift in Sources */,
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
@@ -644,9 +666,11 @@
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
 				2455FBD22151F2B800881541 /* AddNote.swift in Sources */,
 				0CBFA0DF2151FC3B0028750B /* MapsViewController.swift in Sources */,
+				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
 				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
+				0CBFA0F121588F020028750B /* RestaurantPreviewView.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
 				2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
@@ -664,9 +688,11 @@
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				242717D821491150001792BD /* HomeViewController.swift in Sources */,
 				2455FBCC2150DD8100881541 /* AddNoteNavViewController.swift in Sources */,
+				0CBFA0E7215483590028750B /* MapsLocationListViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */,
+				0CBFA0EB2154EF030028750B /* PickAPlaceViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
 				0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */,
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
