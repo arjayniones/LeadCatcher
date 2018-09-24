@@ -2,7 +2,7 @@
 //  ContactDetailsViewController.swift
 //  PlannerApp
 //
-//  Created by Niones Arjay Orcullo on 18/09/2018.
+//  Created by Alkuino Robert John Matias on 18/09/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
@@ -34,7 +34,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.register(DetailsTodoTableViewCell.self, forCellReuseIdentifier: "contactCell")
+        tableView.register(DetailsTodoTableViewCell.self, forCellReuseIdentifier: "contactDetailCell")
         view.addSubview(tableView)
         
         view.needsUpdateConstraints()
@@ -76,7 +76,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! DetailsTodoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! DetailsTodoTableViewCell
         let data = viewModel.detailRows[indexPath.row]
         cell.leftIcon = data.icon
         cell.title = data.title

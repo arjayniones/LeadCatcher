@@ -6,9 +6,8 @@
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
-import Foundation
-
 import UIKit
+import RealmSwift
 
 class ContactDetailsViewModel {
     var detailRows:[AddTodoViewObject] = []

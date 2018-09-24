@@ -61,6 +61,8 @@ class DetailsTodoListViewModel {
     
     func verifyRepeatTime(date: Date) -> Bool {
         
+        return true
+        
         if let repeatTime = self.addNoteModel?.addNote_repeat {
             
             let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
@@ -154,6 +156,10 @@ class DetailsTodoListViewModel {
             return false
         }
         
+        guard ((self.addNoteModel?.addNote_customer) != nil) else {
+            return false
+        }
+        
         guard setupNotificationDateSettings() else {
             return false
         }
@@ -191,19 +197,20 @@ class DetailsTodoListViewModel {
     }
     
     func saveToRealm() {
-        if let addNoteMod = self.addNoteModel {
-            let addNote = AddNote()
-            addNote.newInstance()
-            addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
-            addNote.addNote_repeat = addNoteMod.addNote_repeat
-            addNote.addNote_subject = addNoteMod.addNote_subject
-            addNote.addNote_customerId = addNoteMod.addNote_customerId
-            addNote.addNote_taskType = addNoteMod.addNote_taskType
-            addNote.addNote_notes = addNoteMod.addNote_notes
-            addNote.addNote_location = addNoteMod.addNote_location
-            addNote.add()
+        DispatchQueue.main.async {
+            if let addNoteMod = self.addNoteModel {
+                let addNote = AddNote()
+                addNote.newInstance()
+                addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
+                addNote.addNote_repeat = addNoteMod.addNote_repeat
+                addNote.addNote_subject = addNoteMod.addNote_subject
+                addNote.addNote_customerId = addNoteMod.addNote_customer?.id
+                addNote.addNote_taskType = addNoteMod.addNote_taskType
+                addNote.addNote_notes = addNoteMod.addNote_notes
+                addNote.addNote_location = addNoteMod.addNote_location
+                addNote.add()
+            }
         }
-        
     }
 }
 
@@ -211,7 +218,7 @@ class AddNoteModel {
     var addNote_alertDateTime: Date?
     var addNote_repeat: String = ""
     var addNote_subject: String = ""
-    var addNote_customerId: String = ""
+    var addNote_customer: ContactModel?
     var addNote_taskType: String = ""
     var addNote_notes: String = ""
     var addNote_location:CLLocation?

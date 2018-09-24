@@ -14,7 +14,7 @@ class AddNote: Model {
     @objc dynamic var addNote_alertDateTime: Date?
     @objc dynamic var addNote_repeat: String = ""
     @objc dynamic var addNote_subject: String = ""
-    @objc dynamic var addNote_customerId: String = ""
+    @objc dynamic var addNote_customerId: UUID?
     @objc dynamic var addNote_taskType: String = ""
     @objc dynamic var addNote_notes: String = ""
     var addNote_location:CLLocation?

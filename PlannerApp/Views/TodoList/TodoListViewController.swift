@@ -173,7 +173,11 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         todoModel.addNote_alertDateTime = model.addNote_alertDateTime
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
-        todoModel.addNote_customerId = model.addNote_customerId
+        
+        if let customerModel = RealmStore.model(type: ContactModel.self, query: "id == '\(model.addNote_customerId!)'")?.first {
+            todoModel.addNote_customer = customerModel
+        }
+        
         todoModel.addNote_taskType = model.addNote_taskType
         todoModel.addNote_notes = model.addNote_notes
         todoModel.addNote_location = model.addNote_location

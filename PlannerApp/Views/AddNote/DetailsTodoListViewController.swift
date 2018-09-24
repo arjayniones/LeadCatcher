@@ -122,6 +122,19 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
 }
+extension DetailsTodoListViewController:ContactListViewControllerDelegate {
+    func didSelectCustomer(user: ContactModel) {
+        viewModel.addNoteModel?.addNote_customer = user
+    }
+    
+    func openContactListViewController() {
+        let controller = ContactListViewController()
+        controller.delegate = self
+        controller.userInContactsSelection = true
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
 extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
@@ -132,6 +145,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             self.sheetPressed(data: data)
         } else if data.title == "Start Date Time" {
             self.showDateTimePicker()
+        } else if data.title == "Customer" {
+            self.openContactListViewController()
         }
     }
     
@@ -146,7 +161,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             case 2:
                 cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
             case 3:
-                cell.title = viewmod.addNote_customerId == "" ? data.title: viewmod.addNote_customerId
+                cell.title = viewmod.addNote_customer?.C_Name == "" ? data.title: viewmod.addNote_customer?.C_Name ?? data.title
             case 4:
                 cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
             case 5:
@@ -219,14 +234,12 @@ extension DetailsTodoListViewController:NotesViewControllerDelegate {
     
     func notesControllerDidExit() {
         viewModel.addNoteModel?.addNote_notes = userNotes
-        print(userNotes)
     }
 }
 
 extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate {
     func pickerControllerDidExit() {
         viewModel.addNoteModel?.addNote_alertDateTime = selectedDate
-        print(selectedDate.toRFC3339String())
     }
     
     func showDateTimePicker() {
