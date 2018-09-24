@@ -13,7 +13,6 @@ import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-
 struct MyPlace {
     var name: String
     var lat: Double

@@ -163,7 +163,15 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             return
         }
         
-        self.openDetailsNoteForEditing(model: data[indexPath.row])
+        let note: AddNote
+        
+        if isFiltering() {
+            note = filteredNotes![indexPath.row]
+        } else {
+            note = data[indexPath.row]
+        }
+        
+        self.openDetailsNoteForEditing(model: note)
     }
     
     func openDetailsNoteForEditing(model:AddNote) {

@@ -114,6 +114,28 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         super.updateViewConstraints()
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        guard let data = viewModel.contactList  else {
+            return []
+        }
+        
+        let contactData: ContactModel
+        
+        if isFiltering() {
+            contactData = self.viewModel.filteredContacts![indexPath.row]
+        } else {
+            contactData = data[indexPath.row]
+        }
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
+            RealmStore.delete(model: contactData)
+            
+        }
+        
+        return [deleteAction]
+    }
+    
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactListCell")
@@ -122,24 +144,36 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             return cell!
         }
         
+        let contactData: ContactModel
+        
+        if isFiltering() {
+            contactData = self.viewModel.filteredContacts![indexPath.row]
+        } else {
+            contactData = data[indexPath.row]
+        }
+        
         if let userId = userIdSelected,userId == data[indexPath.row].id {
             cell?.accessoryType = .checkmark
         } else {
             cell?.accessoryType = .none
         }
         
-        cell?.textLabel?.text = data[indexPath.row].C_Name
+        cell?.textLabel?.text = contactData.C_Name
         
         return cell!
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let data = viewModel.contactList  else {
             return 0
         }
+        
+        if isFiltering() {
+            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
+            return viewModel.filteredContacts!.count
+        }
+        
+        searchFooter.setNotFiltering()
         
         return data.count
     }
@@ -149,9 +183,17 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             return
         }
         
+        let contactData: ContactModel
+        
+        if isFiltering() {
+            contactData = self.viewModel.filteredContacts![indexPath.row]
+        } else {
+            contactData = data[indexPath.row]
+        }
+        
         if userInContactsSelection {
-            delegate?.didSelectCustomer(user:data[indexPath.row])
-            userIdSelected = data[indexPath.row].id
+            delegate?.didSelectCustomer(user:contactData)
+            userIdSelected = contactData.id
             tableView.reloadData()
         } else {
             let contactsDetailsVC = ContactDetailsViewController()
@@ -173,11 +215,7 @@ extension ContactListViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            let subpredicates = viewModel.subpredicates.map { property in
-                NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, searchText)
-            }
-            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-            viewModel.filteredContacts = RealmStore.models(type: ContactModel.self).filter(predicate)
+            viewModel.searchText(text: searchText)
             self.tableView.reloadData()
         }
     }
