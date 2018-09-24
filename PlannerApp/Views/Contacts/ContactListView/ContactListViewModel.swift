@@ -11,6 +11,8 @@ import RealmSwift
 class ContactListViewModel {
     let contactList:Results<ContactModel>?
     var notificationToken: NotificationToken? = nil
+    var filteredContacts: Results<ContactModel>?
+    var subpredicates = ["addNote_subject", "addNote_notes"]
     
     init() {
         

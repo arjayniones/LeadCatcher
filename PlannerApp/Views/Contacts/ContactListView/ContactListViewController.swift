@@ -15,6 +15,10 @@ protocol ContactListViewControllerDelegate:class {
 
 class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
+    
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
+    fileprivate var searchFooter = SearchFooterView()
+    
     let viewModel = ContactListViewModel()
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
@@ -22,6 +26,18 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Contact"
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            // Fallback on earlier versions
+        }
+        definesPresentationContext = true
+        searchController.searchBar.delegate = self
 
         title = "Contacts"
         tableView.delegate = self
@@ -143,6 +159,32 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
     }
     
+}
+
+extension ContactListViewController: UISearchBarDelegate {
+    // MARK: - UISearchBar Delegate
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+}
+
+extension ContactListViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            let subpredicates = viewModel.subpredicates.map { property in
+                NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, searchText)
+            }
+            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
+            viewModel.filteredContacts = RealmStore.models(type: ContactModel.self).filter(predicate)
+            self.tableView.reloadData()
+        }
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
 }
    
 

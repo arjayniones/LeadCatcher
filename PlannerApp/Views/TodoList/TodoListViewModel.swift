@@ -2,11 +2,10 @@
 //  TodoListViewModel.swift
 //  PlannerApp
 //
-//  Created by Niones Arjay Orcullo on 20/09/2018.
+//  Created by Alkuino Robert John Matias on 20/09/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
-import Foundation
 import RealmSwift
 
 
@@ -21,11 +20,5 @@ class TodoListViewModel {
     init() {
         self.todoListData = RealmStore.model(type: AddNote.self, query: "deleted_at == nil")
     }
-    
-}
-
-struct TodoListItems {
-    let eventName:String?
-    let dateTime:String?
     
 }
