@@ -156,7 +156,7 @@ class DetailsTodoListViewModel {
             return false
         }
         
-        guard ((self.addNoteModel?.addNote_customer) != nil) else {
+        guard let customerName = self.addNoteModel?.addNote_customer?.C_Name else {
             return false
         }
         
@@ -165,7 +165,7 @@ class DetailsTodoListViewModel {
         }
         
         let message = NotificationMessage()
-        message.title = messageTitle
+        message.title = messageTitle + " with \(customerName)"
         message.subtitle = messageSubject
         message.body = messageBody
         

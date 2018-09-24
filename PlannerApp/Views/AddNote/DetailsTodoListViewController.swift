@@ -73,8 +73,13 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     @objc func save() {
         viewModel.saveSchedule(completion: { val in
             if val {
-                let alert = UIAlertController.alertControllerWithTitle(title: "Success", message: "Your To Do task has saved.")
-                self.present(alert, animated: true, completion: nil);
+                let alert = UIAlertController(title: "Success,Your To Do task has saved.", message: "Clear the fields?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    self.viewModel.addNoteModel = AddNoteModel()
+                    self.tableView.reloadData()
+                }))
+                self.present(alert, animated: true, completion:nil);
             } else {
                 let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Your To Do task did not saved.")
                 self.present(alert, animated: true, completion: nil);
