@@ -21,7 +21,7 @@ class SecurityViewModel {
     
     static func enableTouchID(bool:Bool) {
 
-        if let update = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'") {
+        if let update = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
             try! RealmStore.write {
                 update.U_EnableTouchID = bool
             }
@@ -29,7 +29,7 @@ class SecurityViewModel {
     }
     
      func checkTouchIDUpdate() -> Bool{
-        if let update = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'") {
+        if let update = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
               return update.U_EnableTouchID
         }
             

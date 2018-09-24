@@ -175,7 +175,7 @@ class ChangePasscodeViewModel {
     
     func changePasscode(passcode:String) -> Bool {
         
-        if let userModel = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'") {
+        if let userModel = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
             try! RealmStore.write {
                 userModel.U_Password = passcode
             }

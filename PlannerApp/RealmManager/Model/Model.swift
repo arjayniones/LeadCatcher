@@ -59,6 +59,11 @@ class Model: Object, Mappable {
         return nil
     }
     
+    func loadData<T: Model>(result: @escaping ((Results<T>) -> Void)) {
+        let data = RealmStore.models(type: T.self)
+        result(data)
+    }
+    
     func changed<T: Model>(type: T.Type, block: @escaping (_: T?, _: ObjectChanged) -> Void) ->
         NotificationToken {
             

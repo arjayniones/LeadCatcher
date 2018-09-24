@@ -59,19 +59,68 @@ class DetailsTodoListViewModel {
         self.detailRows.append(row7)
     }
     
-    func setupNotificationDateSettings() {
+    func verifyRepeatTime(date: Date) -> Bool {
+        
+        return true
+        
+        if let repeatTime = self.addNoteModel?.addNote_repeat {
+            
+            let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
+            
+            var intToMinus:Int = -1
+            
+            switch index {
+            case 0:
+                intToMinus = -3
+                
+            case 1:
+                intToMinus = -2
+            case 2:
+                intToMinus = -1
+            case 3:
+                guard let dateMinus = Calendar.current.date(byAdding: .day, value: -1, to: date) else {
+                    return false
+                }
+                if isDateLessThan(a: dateMinus, b: Date()) {
+                    return false
+                } else {
+                    return true
+                }
+            default:
+                return false
+            }
+            
+            guard let dateMinus = Calendar.current.date(byAdding: .month, value: intToMinus, to: date) else {
+                return false
+            }
+            
+            if isDateLessThan(a: dateMinus, b: Date()) {
+                return false
+            }
+            
+            return true
+        }
+        
+        return false
+    }
+    
+    
+    func setupNotificationDateSettings() -> Bool {
         if let date = self.addNoteModel?.addNote_alertDateTime {
-            print(date)
-            //function for adding date
-//            let n = 7
-//            let nextTriggerDate = Calendar.current.date(byAdding: .day, value: n, to: date)!
+            
+            guard verifyRepeatTime(date:date) else {
+                return false
+            }
             
             let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date)
-            print(comps)
             
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
             self.dateChosen = calendarTrigger
+            
+            return true
         }
+        
+        return false
         
         
         // will fire when the user comes within specified metres of the designated coordinate
@@ -107,13 +156,20 @@ class DetailsTodoListViewModel {
             return false
         }
         
+        guard let customerName = self.addNoteModel?.addNote_customer?.C_Name else {
+            return false
+        }
+        
+        guard setupNotificationDateSettings() else {
+            return false
+        }
+        
         let message = NotificationMessage()
-        message.title = messageTitle
+        message.title = messageTitle + " with \(customerName)"
         message.subtitle = messageSubject
         message.body = messageBody
         
         self.setupNotificationInfoSettings(message: message)
-        self.setupNotificationDateSettings()
         
         return true
     }
@@ -141,19 +197,20 @@ class DetailsTodoListViewModel {
     }
     
     func saveToRealm() {
-        if let addNoteMod = self.addNoteModel {
-            let addNote = AddNote()
-            addNote.newInstance()
-            addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
-            addNote.addNote_repeat = addNoteMod.addNote_repeat
-            addNote.addNote_subject = addNoteMod.addNote_subject
-            addNote.addNote_customerId = addNoteMod.addNote_customerId
-            addNote.addNote_taskType = addNoteMod.addNote_taskType
-            addNote.addNote_notes = addNoteMod.addNote_notes
-            addNote.addNote_location = addNoteMod.addNote_location
-            addNote.add()
+        DispatchQueue.main.async {
+            if let addNoteMod = self.addNoteModel {
+                let addNote = AddNote()
+                addNote.newInstance()
+                addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
+                addNote.addNote_repeat = addNoteMod.addNote_repeat
+                addNote.addNote_subject = addNoteMod.addNote_subject
+                addNote.addNote_customerId = addNoteMod.addNote_customer?.id
+                addNote.addNote_taskType = addNoteMod.addNote_taskType
+                addNote.addNote_notes = addNoteMod.addNote_notes
+                addNote.addNote_location = addNoteMod.addNote_location
+                addNote.add()
+            }
         }
-        
     }
 }
 
@@ -161,7 +218,7 @@ class AddNoteModel {
     var addNote_alertDateTime: Date?
     var addNote_repeat: String = ""
     var addNote_subject: String = ""
-    var addNote_customerId: String = ""
+    var addNote_customer: ContactModel?
     var addNote_taskType: String = ""
     var addNote_notes: String = ""
     var addNote_location:CLLocation?

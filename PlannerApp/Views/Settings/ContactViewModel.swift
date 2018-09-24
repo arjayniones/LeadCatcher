@@ -77,7 +77,7 @@ class ContactViewModel {
     // update deleted date but not actual delete from table when user delete particular contact from contact table
     class func deleteParticularContact(id:String)
     {
-        if let contactModel = RealmStore.model(type: ContactModel.self, query: "id = '\(id)'") {
+        if let contactModel = RealmStore.model(type: ContactModel.self, query: "id = '\(id)'")?.first {
             try! RealmStore.write {
                 contactModel.deleted_at = Date();
             }
@@ -105,7 +105,7 @@ class ContactViewModel {
     // update contact info
     class func updateDataContactModel(id:String, cName:String, cDOB:Date?, cAddress:String, cPhoneNo:String, cEmail:String, cScore:Int, cRemark:String, cStatus:String)->Bool
     {
-        if let contactModel = RealmStore.model(type: ContactModel.self, query: "id = '\(id)'") {
+        if let contactModel = RealmStore.model(type: ContactModel.self, query: "id = '\(id)'")?.first {
             try! RealmStore.write {
                 contactModel.C_Name = cName;
                 contactModel.C_DOB = cDOB;

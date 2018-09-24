@@ -12,15 +12,14 @@ import RealmSwift
 
 class TodoListViewModel {
     
-    var detailRows:[AddTodoListViewObject] = []
-    var todoListData:Results<AddNote>
+    var todoListData:Results<AddNote>?
     
     var notificationToken: NotificationToken? = nil
     
+    var subpredicates = ["addNote_subject", "addNote_notes"]
+    
     init() {
-        self.todoListData = RealmStore.models(type: AddNote.self)
-        
-        
+        self.todoListData = RealmStore.model(type: AddNote.self, query: "deleted_at == nil")
     }
     
 }

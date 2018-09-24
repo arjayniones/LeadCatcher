@@ -17,6 +17,14 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     fileprivate let viewModel:DetailsTodoListViewModel
     
+    var isControllerEditing:Bool = false
+    
+    var setupModel: AddNoteModel? {
+        didSet {
+            viewModel.addNoteModel = setupModel
+        }
+    }
+    
     required init() {
         viewModel = DetailsTodoListViewModel()
         
@@ -42,24 +50,52 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         saveButton.sizeToFit()
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         
+        if !isControllerEditing {
+            let clearButton = UIButton()
+            clearButton.setTitle("Clear", for: .normal)
+            clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+            clearButton.sizeToFit()
+            clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.width, height: clearButton.height)
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
+        }
+        
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
+    
     @objc func save() {
         viewModel.saveSchedule(completion: { val in
             if val {
-                let alert = UIAlertController.alertControllerWithTitle(title: "Success", message: "Your To Do task has saved.")
-                self.present(alert, animated: true, completion: nil);
+                let alert = UIAlertController(title: "Success,Your To Do task has saved.", message: "Clear the fields?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    self.viewModel.addNoteModel = AddNoteModel()
+                    self.tableView.reloadData()
+                }))
+                self.present(alert, animated: true, completion:nil);
             } else {
                 let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Your To Do task did not saved.")
                 self.present(alert, animated: true, completion: nil);
             }
         })
+    }
+    
+    @objc func clear() {
+        let controller = UIAlertController(title: "Info", message: "Clear the fields?", preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
+        controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            self.viewModel.addNoteModel = AddNoteModel()
+            self.tableView.reloadData()
+        }))
+        
+        self.present(controller, animated: true, completion: nil);
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,6 +127,19 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
 }
+extension DetailsTodoListViewController:ContactListViewControllerDelegate {
+    func didSelectCustomer(user: ContactModel) {
+        viewModel.addNoteModel?.addNote_customer = user
+    }
+    
+    func openContactListViewController() {
+        let controller = ContactListViewController()
+        controller.delegate = self
+        controller.userInContactsSelection = true
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
 extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
@@ -101,6 +150,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             self.sheetPressed(data: data)
         } else if data.title == "Start Date Time" {
             self.showDateTimePicker()
+        } else if data.title == "Customer" {
+            self.openContactListViewController()
         }
     }
     
@@ -115,7 +166,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             case 2:
                 cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
             case 3:
-                cell.title = viewmod.addNote_customerId == "" ? data.title: viewmod.addNote_customerId
+                cell.title = viewmod.addNote_customer?.C_Name == "" ? data.title: viewmod.addNote_customer?.C_Name ?? data.title
             case 4:
                 cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
             case 5:
@@ -128,8 +179,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         } else {
             cell.title = data.title
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -157,7 +206,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
     
-    
     func sheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)
         
@@ -182,20 +230,21 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
 extension DetailsTodoListViewController:NotesViewControllerDelegate {
     func openNoteController() {
         let noteController = NotesViewController()
+        if let notes = viewModel.addNoteModel?.addNote_notes {
+            noteController.textNotes = notes
+        }
         noteController.delegate = self
         self.present(noteController, animated: true, completion: nil)
     }
     
     func notesControllerDidExit() {
         viewModel.addNoteModel?.addNote_notes = userNotes
-        print(userNotes)
     }
 }
 
 extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate {
     func pickerControllerDidExit() {
         viewModel.addNoteModel?.addNote_alertDateTime = selectedDate
-        print(selectedDate.toRFC3339String())
     }
     
     func showDateTimePicker() {
