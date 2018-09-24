@@ -152,7 +152,12 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             self.showDateTimePicker()
         } else if data.title == "Customer" {
             self.openContactListViewController()
+        } else if data.title == "Location" {
+            let mapController = MapsPickerViewController()
+            mapController.delegate = self
+            self.navigationController?.pushViewController(mapController, animated: true)
         }
+        
     }
     
     func populateData(cell:DetailsTodoTableViewCell,index:IndexPath,data:AddTodoViewObject) {
@@ -172,7 +177,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             case 5:
                 cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
             case 6:
-                cell.title = viewmod.addNote_location == nil ? data.title:"\(String(describing: viewmod.addNote_location))"
+                cell.title = viewmod.addNote_location == nil ? data.title:"\(String(describing: viewmod.addNote_location?.name))"
             default:
                 break
             }
@@ -252,6 +257,16 @@ extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate 
         datePickerController.delegate = self
         self.present(datePickerController, animated: true, completion: nil)
     }
+}
+
+extension DetailsTodoListViewController: PlaceViewControllerDelegate {
+    func notesControllerDidExit(customerPlace: LocationModel) {
+        viewModel.addNoteModel?.addNote_location = customerPlace
+    }
+    
+    
+    
+    
 }
 
 

@@ -13,32 +13,22 @@ import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-struct MyPlace {
-    var name: String
-    var lat: Double
-    var long: Double
+protocol PlaceViewControllerDelegate:class {
+    func notesControllerDidExit(customerPlace: LocationModel)
 }
 
-protocol PlaceViewControllerDelegate {
-    var customerPlace: MyPlace { get set }
-    func notesControllerDidExit()
-}
-
-class MapsPickerViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate {
+class MapsPickerViewController: ViewControllerProtocol, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate {
     
-    var delegate: PlaceViewControllerDelegate?
+    weak var delegate: PlaceViewControllerDelegate?
     
-    //fileprivate let notesPopUp = MapsPickerViewController()
     fileprivate let doneButton = ActionButton()
     
     let currentLocationMarker = GMSMarker()
     var locationManager = CLLocationManager()
-    var chosenPlace: MyPlace?
+    var chosenPlace: LocationModel?
     
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
-    
-//    let previewDemoData = [(title: "The Polar Junction", img: #imageLiteral(resourceName: "restaurant1"), price: 10), (title: "The Nifty Lounge", img: #imageLiteral(resourceName: "restaurant2"), price: 8), (title: "The Lunar Petal", img: #imageLiteral(resourceName: "restaurant3"), price: 12)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,10 +57,8 @@ class MapsPickerViewController: UIViewController, CLLocationManagerDelegate, GMS
     @objc func doneButtonPressed() {
         
         if let data = chosenPlace {
-            delegate?.customerPlace = data
+            delegate?.notesControllerDidExit(customerPlace:data)
         }
-        
-//        delegate?.notesControllerDidExit()
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -93,12 +81,10 @@ class MapsPickerViewController: UIViewController, CLLocationManagerDelegate, GMS
         let lat = place.coordinate.latitude
         let long = place.coordinate.longitude
         
-        //showPartyMarkers(lat: lat, long: long)
-        
         let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 17.0)
         myMapView.camera = camera
         txtFieldSearch.text=place.formattedAddress
-        chosenPlace = MyPlace(name: place.formattedAddress!, lat: lat, long: long)
+        chosenPlace = LocationModel(name: place.formattedAddress!, lat: lat, long: long)
         let marker=GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
         marker.title = "\(place.name)"

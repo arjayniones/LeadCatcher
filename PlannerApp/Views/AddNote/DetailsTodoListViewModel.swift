@@ -207,8 +207,12 @@ class DetailsTodoListViewModel {
                 addNote.addNote_customerId = addNoteMod.addNote_customer?.id
                 addNote.addNote_taskType = addNoteMod.addNote_taskType
                 addNote.addNote_notes = addNoteMod.addNote_notes
-                addNote.addNote_location = addNoteMod.addNote_location
+                
+                if let location = addNoteMod.addNote_location {
+                    addNote.addNote_location = location
+                }
                 addNote.add()
+                
             }
         }
     }
@@ -221,7 +225,7 @@ class AddNoteModel {
     var addNote_customer: ContactModel?
     var addNote_taskType: String = ""
     var addNote_notes: String = ""
-    var addNote_location:CLLocation?
+    var addNote_location:LocationModel?
 }
 
 

@@ -52,6 +52,7 @@
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
+		24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2CC2158BBF100277DA8 /* LocationModel.swift */; };
 		24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
 		24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */; };
@@ -129,6 +130,7 @@
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		248B83872140B29D00119D9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		248B83992141014600119D9D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		24A2F2CC2158BBF100277DA8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
 		24D55FB921410A8D001140C1 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				D66E10CD215081D7005625BF /* ContactModel.swift */,
 				2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */,
 				2455FBD12151F2B800881541 /* AddNote.swift */,
+				24A2F2CC2158BBF100277DA8 /* LocationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
 				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
+				24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
 				24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */,

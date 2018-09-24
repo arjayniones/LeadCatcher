@@ -17,7 +17,7 @@ class AddNote: Model {
     @objc dynamic var addNote_customerId: UUID?
     @objc dynamic var addNote_taskType: String = ""
     @objc dynamic var addNote_notes: String = ""
-    var addNote_location:CLLocation?
+    var addNote_location:LocationModel?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
