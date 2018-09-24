@@ -60,6 +60,7 @@ class DetailsTodoListViewModel {
     }
     
     func verifyRepeatTime(date: Date) -> Bool {
+        
         if let repeatTime = self.addNoteModel?.addNote_repeat {
             
             let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!

@@ -11,17 +11,23 @@ import Foundation
 import UIKit
 
 class ContactDetailsViewModel {
-    var detailRows:[[String:String]]
+    var detailRows:[AddTodoViewObject] = []
     
     init() {
-        self.detailRows = [["icon":"person-icon","title":"Name"],
+        let rowData = [["icon":"person-icon","title":"Name"],
                            ["icon":"calendar-icon","title":"Date of Birth"],
                            ["icon":"location-icon","title":"Address"],
                            ["icon":"phone-icon","title":"Phone Number"],
                            ["icon":"email-icon","title":"Email"],
                            ["icon":"notes-icon","title":"Leads Scoring"],
                            ["icon":"subject-icon","title":"Write Remarks"],
-                           ["icon":"task-icon","title":"Status"]
-        ]
+                           ["icon":"task-icon","title":"Status"]]
+        
+        for row in rowData {
+            let a = AddTodoViewObject()
+            a.icon = row["icon"]!
+            a.title = row["title"]!
+            self.detailRows.append(a)
+        }
     }
 }

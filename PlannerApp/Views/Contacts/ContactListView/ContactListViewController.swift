@@ -10,9 +10,7 @@ import UIKit
 
 class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
-    let contactListModel = ContactListViewModel()
-    let contactNameLabels = ContactListViewModel.getContactListNames()
-    
+    let viewModel = ContactListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +35,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         view.needsUpdateConstraints()
     }
     @objc func addContact() {
-       //add nav to maps here
         let contactsDetailsVC = ContactDetailsViewController()
         self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
     }
@@ -49,6 +46,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         updateNavbarAppear()
         tableView.reloadData()
     }
@@ -70,26 +69,30 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
-        cell.textLabel?.text = contactNameLabels[indexPath.row].contactName
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-        cell.setNeedsUpdateConstraints()
-        //cell.updateConstraintsIfNeeded()
+        guard let data = viewModel.contactList  else {
+            return cell!
+        }
         
-        return cell
+        cell?.textLabel?.text = data[indexPath.row].C_Name
+        cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        
+        return cell!
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactNameLabels.count //total number of array using models
+        guard let data = viewModel.contactList  else {
+            return 0
+        }
+        
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //func to navigate to contact details view
-        
         let contactsDetailsVC = ContactDetailsViewController()
         self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
     }

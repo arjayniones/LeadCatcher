@@ -34,7 +34,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.register(ContactDetailsTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(DetailsTodoTableViewCell.self, forCellReuseIdentifier: "contactCell")
         view.addSubview(tableView)
         
         view.needsUpdateConstraints()
@@ -70,16 +70,16 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
         
-        if data["title"]! == "Notes" {
+        if data.title == "Notes" {
             self.present(NotesViewController(), animated: true, completion: nil)
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactDetailsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! DetailsTodoTableViewCell
         let data = viewModel.detailRows[indexPath.row]
-        cell.leftIcon = data["icon"]!
-        cell.title = data["title"]!
+        cell.leftIcon = data.icon
+        cell.title = data.title
         return cell
     }
     
