@@ -153,12 +153,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         } else if data.title == "Customer" {
             self.openContactListViewController()
         } else if data.title == "Location" {
-//            let mapController = MapsPickerViewController()
-//            mapController.delegate = self
-//            self.navigationController?.pushViewController(mapController, animated: true)
-            
-            let mapController = MapViewController()
-            self.navigationController?.pushViewController(mapController, animated: true)
+            self.openMapView()
         }
         
     }
@@ -262,14 +257,22 @@ extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate 
     }
 }
 
-extension DetailsTodoListViewController: PlaceViewControllerDelegate {
-    func notesControllerDidExit(customerPlace: LocationModel) {
+extension DetailsTodoListViewController: MapViewControllerDelegate {
+    func controllerDidExit(customerPlace: LocationModel) {
         viewModel.addNoteModel?.addNote_location = customerPlace
     }
-    
-    
-    
-    
+    func openMapView() {
+        if let location = viewModel.addNoteModel?.addNote_location {
+            let locationCoordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
+            let mapController = MapViewController(coordinates:[locationCoordinate])
+            mapController.delegate = self
+            self.navigationController?.pushViewController(mapController, animated: true)
+        } else {
+            let mapController = MapViewController(coordinates:nil)
+            mapController.delegate = self
+            self.navigationController?.pushViewController(mapController, animated: true)
+        }
+    }
 }
 
 
