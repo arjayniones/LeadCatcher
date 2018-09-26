@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
@@ -38,7 +39,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        title = "New to do"
+        title = isControllerEditing ? "Edit To Do Task":"New To Do Task"
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -109,7 +110,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
-            
             tableView.snp.makeConstraints { make in
                 make.edges.equalTo(view).inset(UIEdgeInsets.zero)
             }
@@ -152,9 +152,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         } else if data.title == "Customer" {
             self.openContactListViewController()
         } else if data.title == "Location" {
-            let mapController = MapsPickerViewController()
-            mapController.delegate = self
-            self.navigationController?.pushViewController(mapController, animated: true)
+            self.openMapView()
         }
         
     }
@@ -176,7 +174,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             case 5:
                 cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
             case 6:
-                cell.title = viewmod.addNote_location == nil ? data.title:"\(String(describing: viewmod.addNote_location?.name))"
+                cell.title = viewmod.addNote_location == nil ? data.title:"\(viewmod.addNote_location?.name ?? data.title)"
             default:
                 break
             }
@@ -260,14 +258,22 @@ extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate 
     }
 }
 
-extension DetailsTodoListViewController: PlaceViewControllerDelegate {
-    func notesControllerDidExit(customerPlace: LocationModel) {
+extension DetailsTodoListViewController: MapViewControllerDelegate {
+    func controllerDidExit(customerPlace: LocationModel) {
         viewModel.addNoteModel?.addNote_location = customerPlace
     }
-    
-    
-    
-    
+    func openMapView() {
+        if let location = viewModel.addNoteModel?.addNote_location {
+            let locationCoordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
+            let mapController = MapViewController(coordinates:[locationCoordinate])
+            mapController.delegate = self
+            self.navigationController?.pushViewController(mapController, animated: true)
+        } else {
+            let mapController = MapViewController(coordinates:nil)
+            mapController.delegate = self
+            self.navigationController?.pushViewController(mapController, animated: true)
+        }
+    }
 }
 
 

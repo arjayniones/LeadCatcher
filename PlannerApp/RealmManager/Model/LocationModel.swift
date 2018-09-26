@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import RealmSwift
+import ObjectMapper
 
-class LocationModel {
-    var name: String
-    var lat: Double
-    var long: Double
+class LocationModel:Model {
+    @objc dynamic var name: String = ""
+    @objc dynamic var lat: Double = 0.0
+    @objc dynamic var long: Double = 0.0
     
-    init(name: String, lat: Double, long: Double)  {
-        self.name = name
-        self.lat = lat
-        self.long = long
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        //
     }
+    
+    func newInstance() {
+        id = uuid()
+        created_at = Date()
+        updated_at = Date()
+    }
+    
+    
 }

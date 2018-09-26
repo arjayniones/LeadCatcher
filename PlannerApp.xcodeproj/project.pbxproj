@@ -52,9 +52,11 @@
 		2455FBD02151D87D00881541 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2455FBCF2151D87D00881541 /* UserNotifications.framework */; };
 		2455FBD22151F2B800881541 /* AddNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD12151F2B800881541 /* AddNote.swift */; };
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
+		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2CC2158BBF100277DA8 /* LocationModel.swift */; };
+		24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2D22158DDF000277DA8 /* MapViewController.swift */; };
 		24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
 		24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */; };
@@ -129,12 +131,14 @@
 		2455FBCF2151D87D00881541 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2455FBD12151F2B800881541 /* AddNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNote.swift; sourceTree = "<group>"; };
 		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
+		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		248B83872140B29D00119D9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		248B83992141014600119D9D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		24A2F2CC2158BBF100277DA8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		24A2F2D22158DDF000277DA8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
 		24D55FB921410A8D001140C1 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 				0CBFA0EC215888650028750B /* CustomMarkerView.swift */,
 				0CBFA0EE21588ED40028750B /* DetailsVC.swift */,
 				0CBFA0F021588F020028750B /* RestaurantPreviewView.swift */,
+				24A2F2D22158DDF000277DA8 /* MapViewController.swift */,
+				24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -537,7 +543,7 @@
 				TargetAttributes = {
 					248B83772140B29D00119D9D = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -658,6 +664,7 @@
 			files = (
 				2455FBBD21508EA700881541 /* DetailsTodoListViewModel.swift in Sources */,
 				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
+				24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
 				2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
@@ -690,6 +697,7 @@
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */,
 				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
+				24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */,
 				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
 				24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */,
@@ -835,8 +843,9 @@
 			baseConfigurationReference = 2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A9LH66DXBS;
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -853,8 +862,9 @@
 			baseConfigurationReference = 02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A9LH66DXBS;
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

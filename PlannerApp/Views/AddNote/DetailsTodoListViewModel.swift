@@ -160,6 +160,10 @@ class DetailsTodoListViewModel {
             return false
         }
         
+        guard self.addNoteModel?.addNote_location != nil else {
+            return false
+        }
+        
         guard setupNotificationDateSettings() else {
             return false
         }
@@ -212,7 +216,6 @@ class DetailsTodoListViewModel {
                     addNote.addNote_location = location
                 }
                 addNote.add()
-                
             }
         }
     }

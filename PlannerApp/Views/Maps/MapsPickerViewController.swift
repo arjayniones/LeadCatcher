@@ -21,8 +21,6 @@ class MapsPickerViewController: ViewControllerProtocol, CLLocationManagerDelegat
     
     weak var delegate: PlaceViewControllerDelegate?
     
-    fileprivate let doneButton = ActionButton()
-    
     let currentLocationMarker = GMSMarker()
     var locationManager = CLLocationManager()
     var chosenPlace: LocationModel?
@@ -41,10 +39,12 @@ class MapsPickerViewController: ViewControllerProtocol, CLLocationManagerDelegat
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringSignificantLocationChanges()
         
+        let doneButton = UIButton()
         doneButton.setTitle("Done", for: .normal)
-        doneButton.backgroundColor = .clear
-        doneButton.setTitleColor(.blue, for: .normal)
+        doneButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         doneButton.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
+        doneButton.sizeToFit()
+        doneButton.frame = CGRect(x: 0, y: -2, width: doneButton.width, height: doneButton.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
         
         setupViews()
@@ -60,7 +60,7 @@ class MapsPickerViewController: ViewControllerProtocol, CLLocationManagerDelegat
             delegate?.notesControllerDidExit(customerPlace:data)
         }
         
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: textfield
@@ -84,14 +84,19 @@ class MapsPickerViewController: ViewControllerProtocol, CLLocationManagerDelegat
         let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 17.0)
         myMapView.camera = camera
         txtFieldSearch.text=place.formattedAddress
-        chosenPlace = LocationModel(name: place.formattedAddress!, lat: lat, long: long)
+        let locationModel = LocationModel()
+        locationModel.newInstance()
+        locationModel.name = place.formattedAddress!
+        locationModel.lat = lat
+        locationModel.long = long
+        chosenPlace = locationModel
+        
         let marker=GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
         marker.title = "\(place.name)"
         marker.snippet = "\(place.formattedAddress!)"
         marker.map = myMapView
         
-        print(chosenPlace)
         self.dismiss(animated: true, completion: nil) // dismiss after place selected
     }
     

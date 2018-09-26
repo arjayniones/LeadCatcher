@@ -81,14 +81,12 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         if indexPath.row == 0 {
             let securityVC = SecurityViewController()
             self.navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
-        }
-        else if indexPath.row == 5
-        {
+        } else if indexPath.row == 4{
+            self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
+        } else if indexPath.row == 5{
             self.getTheContact();
-        }
-        else if indexPath.row == 10{
+        } else if indexPath.row == 9{
             popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
-            
         }
     }
     
