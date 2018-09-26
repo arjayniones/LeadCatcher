@@ -2,7 +2,7 @@
 //  MapsPickerViewController.swift
 //  PlannerApp
 //
-//  Created by Niones Arjay Orcullo on 21/09/2018.
+//  Created by Alkuino Robert John Matias on 21/09/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 //
@@ -27,7 +27,7 @@ class MapViewController: ViewControllerProtocol {
         tf.borderStyle = .roundedRect
         tf.backgroundColor = .white
         tf.layer.borderColor = UIColor.darkGray.cgColor
-        tf.placeholder="Search for a location"
+        tf.placeholder="Search a location"
         tf.translatesAutoresizingMaskIntoConstraints=false
         return tf
     }()
