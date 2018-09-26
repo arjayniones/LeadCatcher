@@ -223,8 +223,6 @@ extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         self.pin(long: position.target.longitude, lat: position.target.latitude, place: nil)
     }
-    
-    
 }
 extension MapViewController: UITextFieldDelegate {
     
