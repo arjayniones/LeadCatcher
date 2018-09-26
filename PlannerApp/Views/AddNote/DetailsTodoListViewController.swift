@@ -40,7 +40,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        title = "New to do"
+        title = isControllerEditing ? "Edit To Do Task":"New To Do Task"
         
         tableView.delegate = self
         tableView.dataSource = self
