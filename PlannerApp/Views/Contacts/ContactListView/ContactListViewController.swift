@@ -18,7 +18,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var searchFooter = SearchFooterView()
-    
+    var filteredContacts: Results<ContactModel>?
     let viewModel = ContactListViewModel()
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
@@ -97,6 +97,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavbarAppear()
+        self.tableView.reloadData()
     }
     
     override func updateViewConstraints() {
@@ -123,7 +124,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         
         if isFiltering() {
-            contactData = self.viewModel.filteredContacts![indexPath.row]
+            contactData = filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
@@ -147,7 +148,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         
         if isFiltering() {
-            contactData = self.viewModel.filteredContacts![indexPath.row]
+            contactData = filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
@@ -169,8 +170,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
         
         if isFiltering() {
-            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
-            return viewModel.filteredContacts!.count
+            searchFooter.setIsFilteringToShow(filteredItemCount: filteredContacts!.count, of: data.count)
+            return filteredContacts!.count
         }
         
         searchFooter.setNotFiltering()
@@ -186,7 +187,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         
         if isFiltering() {
-            contactData = self.viewModel.filteredContacts![indexPath.row]
+            contactData = filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
@@ -196,9 +197,29 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             userIdSelected = contactData.id
             tableView.reloadData()
         } else {
-            let contactsDetailsVC = ContactDetailsViewController()
-            self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+            self.openContactForEditing(model: contactData)
+//            let contactsDetailsVC = ContactDetailsViewController()
+//            self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
         }
+    }
+    
+    func openContactForEditing(model:ContactModel) {
+        let detailController = ContactDetailsViewController()
+        detailController.isControllerEditing = true
+        
+        let contactModel = AddContactModel()
+        contactModel.addContact_contactName = model.C_Name
+        contactModel.addContact_dateOfBirth = model.C_DOB
+        contactModel.addContact_address = model.C_Address
+        contactModel.addContact_phoneNum = model.C_PhoneNo
+        contactModel.addContact_email = model.C_Email
+        contactModel.addContact_leadScore = model.C_Scoring
+        contactModel.addContact_remarks = model.C_Remark
+        contactModel.addContact_status = model.C_Status
+        
+        detailController.setupModel = contactModel
+        
+        self.navigationController?.pushViewController(detailController, animated: true)
     }
     
 }

@@ -10,7 +10,6 @@ import UIKit
 
 class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
-    var userNotes: String = ""
     var selectedDate: Date = Date()
     
     let tableView = UITableView()
@@ -233,6 +232,10 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
 }
 
 extension DetailsTodoListViewController:NotesViewControllerDelegate {
+    func notesControllerDidExit(notes: String) {
+        viewModel.addNoteModel?.addNote_notes = notes
+    }
+    
     func openNoteController() {
         let noteController = NotesViewController()
         if let notes = viewModel.addNoteModel?.addNote_notes {
@@ -242,9 +245,7 @@ extension DetailsTodoListViewController:NotesViewControllerDelegate {
         self.present(noteController, animated: true, completion: nil)
     }
     
-    func notesControllerDidExit() {
-        viewModel.addNoteModel?.addNote_notes = userNotes
-    }
+    
 }
 
 extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate {
