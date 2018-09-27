@@ -9,8 +9,7 @@
 import UIKit
 
 protocol NotesViewControllerDelegate {
-    var userNotes:String { get set }
-    func notesControllerDidExit()
+    func notesControllerDidExit(notes:String)
 }
 
 class NotesViewController: ViewControllerProtocol {
@@ -43,10 +42,9 @@ class NotesViewController: ViewControllerProtocol {
     @objc func doneButtonPressed() {
         
         if let data = notesPopUp.tField.text {
-            delegate?.userNotes = data
+            delegate?.notesControllerDidExit(notes: data)
         }
         
-        delegate?.notesControllerDidExit()
         
         self.dismiss(animated: true, completion: nil)
     }

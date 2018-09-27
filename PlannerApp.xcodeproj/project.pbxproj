@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */; };
 		0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */; };
 		0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D121509C3C0028750B /* ContactListViewController.swift */; };
 		0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D321509CA80028750B /* ContactListViewModel.swift */; };
@@ -22,6 +23,7 @@
 		0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0EC215888650028750B /* CustomMarkerView.swift */; };
 		0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0EE21588ED40028750B /* DetailsVC.swift */; };
 		0CBFA0F121588F020028750B /* RestaurantPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0F021588F020028750B /* RestaurantPreviewView.swift */; };
+		0CBFA0F32158D2F60028750B /* AddContactViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */; };
 		24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5C2148AF9B007687EB /* SecurityViewController.swift */; };
 		24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5D2148AF9B007687EB /* SecurityViewModel.swift */; };
 		24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5F2148AF9B007687EB /* SettingsViewModel.swift */; };
@@ -84,6 +86,7 @@
 
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
+		0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListNavViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D121509C3C0028750B /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D321509CA80028750B /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 		0CBFA0EC215888650028750B /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		0CBFA0EE21588ED40028750B /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		0CBFA0F021588F020028750B /* RestaurantPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPreviewView.swift; sourceTree = "<group>"; };
+		0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewObject.swift; sourceTree = "<group>"; };
 		24140A5C2148AF9B007687EB /* SecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
 		24140A5D2148AF9B007687EB /* SecurityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
 		24140A5F2148AF9B007687EB /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 			children = (
 				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
 				0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */,
+				0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */,
 			);
 			path = ContactListDetailsView;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 				2455FBCD2150EEED00881541 /* AddTodoViewObject.swift */,
 				2455FBD12151F2B800881541 /* AddNote.swift */,
 				24A2F2CC2158BBF100277DA8 /* LocationModel.swift */,
+				0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -679,6 +685,7 @@
 				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
+				0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */,
 				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
 				0CBFA0F121588F020028750B /* RestaurantPreviewView.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
@@ -710,6 +717,7 @@
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
 				D639EACF2148B7980053894C /* UserViewModel.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
+				0CBFA0F32158D2F60028750B /* AddContactViewObject.swift in Sources */,
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
 				2455FBBB21508E8D00881541 /* DetailsTodoListViewController.swift in Sources */,
 				2455FBC32150C92B00881541 /* NotesPopUpControllerView.swift in Sources */,
