@@ -83,6 +83,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         view.updateConstraintsIfNeeded()
     }
     
+    deinit {
+        viewModel.notificationToken?.invalidate()
+    }
+    
+    
     @objc func addContact() {
         let contactsDetailsVC = ContactDetailsViewController()
         self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
