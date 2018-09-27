@@ -56,6 +56,15 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let callback = subjectCallback {
+            if let text = textField.text {
+                callback(text)
+            }
+        }
+        endEditing(true)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let callback = subjectCallback {
             if let text = textField.text {
