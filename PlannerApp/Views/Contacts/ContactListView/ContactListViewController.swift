@@ -18,7 +18,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var searchFooter = SearchFooterView()
-    var filteredContacts: Results<ContactModel>?
     let viewModel = ContactListViewModel()
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
@@ -51,7 +50,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         let addButton = UIButton()
         let image = UIImage(named: "plus-grey-icon" )
-        
         addButton.setImage(image, for: .normal)
         addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
@@ -129,7 +127,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         
         if isFiltering() {
-            contactData = filteredContacts![indexPath.row]
+            contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
@@ -153,7 +151,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         
         if isFiltering() {
-            contactData = filteredContacts![indexPath.row]
+            contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
@@ -170,13 +168,13 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let data = viewModel.contactList  else {
+        guard let data = viewModel.contactList else {
             return 0
         }
         
         if isFiltering() {
-            searchFooter.setIsFilteringToShow(filteredItemCount: filteredContacts!.count, of: data.count)
-            return filteredContacts!.count
+            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
+            return viewModel.filteredContacts!.count
         }
         
         searchFooter.setNotFiltering()
@@ -192,7 +190,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         
         if isFiltering() {
-            contactData = filteredContacts![indexPath.row]
+            contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }

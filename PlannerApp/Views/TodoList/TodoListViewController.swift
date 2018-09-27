@@ -14,7 +14,6 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     fileprivate let tableView = UITableView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var searchFooter = SearchFooterView()
-    fileprivate var filteredNotes: Results<AddNote>?
     fileprivate let viewModel = TodoListViewModel()
     
     override func viewDidLoad() {
@@ -113,11 +112,7 @@ extension TodoListViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            let subpredicates = viewModel.subpredicates.map { property in
-                NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, searchText)
-            }
-            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-            filteredNotes = RealmStore.models(type: AddNote.self).filter(predicate)
+            viewModel.searchText(text: searchText)
             self.tableView.reloadData()
         }
     }
@@ -141,7 +136,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         let note: AddNote
         
         if isFiltering() {
-            note = filteredNotes![indexPath.row]
+            note = viewModel.filteredNotes![indexPath.row]
         } else {
             note = data[indexPath.row]
         }
@@ -166,7 +161,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         let note: AddNote
         
         if isFiltering() {
-            note = filteredNotes![indexPath.row]
+            note = viewModel.filteredNotes![indexPath.row]
         } else {
             note = data[indexPath.row]
         }
@@ -204,8 +199,8 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         if isFiltering() {
-            searchFooter.setIsFilteringToShow(filteredItemCount: filteredNotes!.count, of: data.count)
-            return filteredNotes!.count
+            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredNotes!.count, of: data.count)
+            return viewModel.filteredNotes!.count
         }
         
         searchFooter.setNotFiltering()
@@ -224,7 +219,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         let note: AddNote
         
         if isFiltering() {
-            note = filteredNotes![indexPath.row]
+            note = viewModel.filteredNotes![indexPath.row]
         } else {
             note = data[indexPath.row]
         }
