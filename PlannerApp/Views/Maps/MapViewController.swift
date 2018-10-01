@@ -47,9 +47,11 @@ class MapViewController: ViewControllerProtocol {
         return btn
     }()
     
-    private let coordinates:[CLLocationCoordinate2D]?
+    private var coordinates:[CLLocationCoordinate2D]?
     
     private var destinationMarker:GMSMarker!
+    
+    private var fingerIsInTheMap:Bool = false
     
     required init(coordinates:[CLLocationCoordinate2D]?) {
         self.coordinates = coordinates
@@ -98,13 +100,12 @@ class MapViewController: ViewControllerProtocol {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation();
         }
-        if let userSelectedCoordinates = self.coordinates{
-            guard userSelectedCoordinates.count > 0 else {
-                return
-            }
+        if let userSelectedCoordinates = self.coordinates , userSelectedCoordinates.count > 0{
             
-            let camera = GMSCameraPosition.camera(withLatitude: userSelectedCoordinates[0].latitude, longitude: userSelectedCoordinates[0].longitude, zoom: 17.0)
-            self.pin(long: userSelectedCoordinates[0].longitude, lat: userSelectedCoordinates[0].latitude, place: nil)
+            let camera = self.pin(long: userSelectedCoordinates[0].longitude,
+                                lat: userSelectedCoordinates[0].latitude,
+                                place: nil)
+            
             self.mapView.animate(to: camera)
         }
     }
@@ -192,14 +193,16 @@ class MapViewController: ViewControllerProtocol {
         view.addSubview(mapView)
     }
     
-    func pin(long: CLLocationDegrees,lat:CLLocationDegrees,place: GMSPlace?) {
+    func pin(long: CLLocationDegrees,lat:CLLocationDegrees,place: GMSPlace?) -> GMSCameraPosition {
         
         let cameraPosition = GMSCameraPosition.camera(withLatitude:  lat, longitude: long,zoom: 14)
         
-        if destinationMarker == nil {
+        guard destinationMarker != nil else {
             destinationMarker = GMSMarker()
-            destinationMarker.appearAnimation = .pop
             destinationMarker.icon = UIImage(named: "map-pin-icon")
+            destinationMarker.appearAnimation = .pop
+            destinationMarker.map = mapView
+            destinationMarker.position = cameraPosition.target
             if place != nil {
                 destinationMarker.title = "\(place!.name)"
                 destinationMarker.snippet = "\(place!.formattedAddress!)"
@@ -207,21 +210,41 @@ class MapViewController: ViewControllerProtocol {
                 destinationMarker.snippet = "Me"
             }
             
-            destinationMarker.map = mapView
-        } else {
-            CATransaction.begin()
-            CATransaction.setAnimationDuration(1.0)
-            destinationMarker.position = cameraPosition.target
-            CATransaction.commit()
+            return cameraPosition
         }
         
+        if place != nil {
+            destinationMarker.title = "\(place!.name)"
+            destinationMarker.snippet = "\(place!.formattedAddress!)"
+        } else {
+            destinationMarker.snippet = "Me"
+        }
+        
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.1)
+        destinationMarker.position = cameraPosition.target
+        CATransaction.commit()
+        
+        return cameraPosition
+        
     }
-
 }
+
 extension MapViewController: GMSMapViewDelegate {
     
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+        if gesture {
+            fingerIsInTheMap = true
+        }
+    }
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        fingerIsInTheMap = false
+    }
+    
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        self.pin(long: position.target.longitude, lat: position.target.latitude, place: nil)
+        if fingerIsInTheMap {
+            _ = self.pin(long: position.target.longitude, lat: position.target.latitude, place: nil)
+        }
     }
 }
 extension MapViewController: UITextFieldDelegate {
@@ -242,15 +265,15 @@ extension MapViewController: UITextFieldDelegate {
 
 extension MapViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        
+        self.coordinates = nil
+        
         let lat = place.coordinate.latitude
         let long = place.coordinate.longitude
         
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 17.0)
-        mapView.camera = camera
         txtFieldSearch.text = place.formattedAddress
         
-        self.pin(long: long, lat: lat,place: place)
-        
+        self.mapView.animate(to: self.pin(long: long, lat: lat,place: place))
         self.dismiss(animated: true, completion: nil)
     }
    
@@ -298,12 +321,11 @@ extension MapViewController: CLLocationManagerDelegate {
             return
         }
         
-        guard self.coordinates == nil else {
+        guard self.coordinates == nil && self.destinationMarker == nil else {
             return
         }
         
-        let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 17.0)
-        self.pin(long: longitude, lat: latitude, place: nil)
+        let camera = self.pin(long: longitude, lat: latitude, place: nil)
         self.mapView.animate(to: camera)
         
         print("my location longitude: ",locations.first?.coordinate.longitude ?? "no longitude")
