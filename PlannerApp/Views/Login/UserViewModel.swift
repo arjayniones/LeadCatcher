@@ -17,21 +17,20 @@ class UserViewModel{
     {
         
     }
-    
     // MARK: - Query Realm
     // query UserTable data and return is realmresults
     // checkType = "ViewLoad" will call when viewDidLoad
     // "LoginClick" will only when user click login button
     class func queryUserTable(checkType:String, loginID:String, passcode:String)->Results<UserModel>
     {
+        let realmStore = RealmStore<UserModel>()
+        
         if checkType == "ViewLoad" {
             // used to define UserTable is empty or not
-            return RealmStore.models(type: UserModel.self)
-        }
-        else
-        {
+            return realmStore.models()
+        } else {
             // used to verify user info correct or not
-            return RealmStore.models(type: UserModel.self).filter("U_Username = %@ AND U_Password = %@",loginID, passcode);
+            return realmStore.models().filter("U_Username = '\(loginID)' AND U_Password = '\(passcode)'")
         }
     }
     

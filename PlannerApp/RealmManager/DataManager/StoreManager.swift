@@ -10,13 +10,12 @@ import UIKit
 import RealmSwift
 
 class StoreManager {
-    
     class func local<T: Model >(
         type: T.Type,
         dataSource: APIDataSource,
         complete: ((_ data: [T]?) -> Void)) {
         var response = [T]()
-        let model = RealmStore.models(type: T.self)
+        let model = RealmStore<T>().models()
         
         if model.count != 0 {
             for data in model {
@@ -42,7 +41,7 @@ class StoreManager {
                 for (_, object) in data.enumerated() {
                     let genericObject = T()
                     if let obj:T = genericObject.map(type: type, value: object) {
-                        RealmStore.add(model: obj)
+                        RealmStore<T>().add(model: obj)
                         genericObjects.append(obj)
                     }
                 }
@@ -52,7 +51,7 @@ class StoreManager {
                 print("not array",data)
                 let genericObject = T()
                 if let obj:T = genericObject.map(type: type, value: data) {
-                    RealmStore.add(model: obj)
+                    RealmStore<T>().add(model: obj)
                     complete([obj])
                     return
                 }

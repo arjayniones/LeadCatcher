@@ -142,9 +142,9 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-            RealmStore.delete(model: note)
-            
+            self.viewModel.realmStore.delete(model: note, hard: false)
         }
+        
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
             
             self.openDetailsNoteForEditing(model: note)
@@ -178,10 +178,9 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
         
-        if let customerModel = RealmStore.model(type: ContactModel.self, query: "id == '\(model.addNote_customerId!)'")?.first {
+        if let customerModel = RealmStore<ContactModel>().models(query: "id == '\(model.addNote_customerId!)'")?.first {
             todoModel.addNote_customer = customerModel
         }
-        
 
         todoModel.addNote_taskType = model.addNote_taskType
         todoModel.addNote_notes = model.addNote_notes

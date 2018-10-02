@@ -11,7 +11,11 @@ import RealmSwift
 
 public typealias RealmStoreNotificationToken = NotificationToken
 
-class RealmStore {
+class RealmStore<T: Model> {
+    
+    let store = try! Realm()
+    
+    fileprivate var model: Results<T>?
     
     /**
      Add object(Model) to store
@@ -19,10 +23,10 @@ class RealmStore {
      - parameter model: object (Model)
      */
 
-    static func add(model: Object) {
-        let store = try! Realm()
+    func add(model: Object) {
+        
         print("saved into: ",store.configuration.fileURL)
-        try! RealmStore.write {
+        try! write {
             store.add(model, update: true)
         }
     }
@@ -34,9 +38,10 @@ class RealmStore {
      
      - returns: List Model Result (Model)
      */
-    static func models<T: Object>(type: T.Type) -> Results<T> {
-        let store = try! Realm()
-        return store.objects(T.self)
+    func models() -> Results<T> {
+        let model = store.objects(T.self)
+        self.model = model
+        return model
     }
     
     /**
@@ -47,9 +52,9 @@ class RealmStore {
      
      - returns: Object (Model)
      */
-    static func model<T: Object>(type: T.Type, query: String) -> Results<T>? {
-        let store = try! Realm()
+    func models(query: String) -> Results<T>? {
         let model = store.objects(T.self).filter(query)
+        self.model = model
         return model
     }
     
@@ -60,8 +65,7 @@ class RealmStore {
      
      - throws:
      */
-    static func write( block: (() throws -> Void)) throws {
-        let store = try! Realm()
+    func write( block: (() throws -> Void)) throws {
         store.beginWrite()
         try block()
         try! store.commitWrite()
@@ -72,11 +76,36 @@ class RealmStore {
      
      - parameter model: object (Model)
      */
-    static func delete(model: Model) {
-        try! RealmStore.write {
-            model.deleted_at = Date()
-        }
-    }
     
+    func delete(hard:Bool) {
+        guard let model = self.model else {
+            return
+        }
+        
+        if !hard {
+            try! write {
+                let _ = model.map { $0.deleted_at = Date() }
+            }
+            return
+        }
+        
+        let store = try! Realm()
+        store.delete(model)
+    }
+    func delete(model: T ,hard:Bool) {
+        guard let model = self.model else {
+            return
+        }
+        
+        if !hard {
+            try! write {
+                let _ = model.map { $0.deleted_at = Date() }
+            }
+            return
+        }
+        
+        let store = try! Realm()
+        store.delete(model)
+    }
 }
 

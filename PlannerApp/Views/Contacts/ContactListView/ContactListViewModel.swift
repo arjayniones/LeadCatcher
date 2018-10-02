@@ -14,8 +14,10 @@ class ContactListViewModel {
     var filteredContacts: Results<ContactModel>?
     var subpredicates = ["C_Name", "C_MobilePhoneNo","C_Email"]
     
+    let realmStore = RealmStore<ContactModel>()
+    
     init() {
-        contactList = RealmStore.model(type: ContactModel.self, query: "deleted_at == nil")
+        contactList = realmStore.models(query: "deleted_at == nil")
     }
     
     
@@ -24,7 +26,7 @@ class ContactListViewModel {
             NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, text)
         }
         let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-        self.filteredContacts = RealmStore.models(type: ContactModel.self).filter(predicate)
+        self.filteredContacts = realmStore.models().filter(predicate)
     }
         
 }

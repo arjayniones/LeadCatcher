@@ -17,6 +17,7 @@ class ContactViewModel {
     {
         
     }
+    fileprivate static var realmStore = RealmStore<ContactModel>()
     
     class func processUserContact(contacts:[CNContact], completetion:@escaping(_ value:String)->Void)
     {
@@ -63,25 +64,16 @@ class ContactViewModel {
     }
     
     // datele all contact that C_From = PhoneBook
-    class func deletePhoneBookContact(from:String)
-    {
-        let objectTobeDeleted = RealmStore.models(type: ContactModel.self).filter("C_From = %@","PhoneBook");
-        
-        let store = try! Realm()
-        try! RealmStore.write {
-            store.delete(objectTobeDeleted);
+    class func deletePhoneBookContact(from:String) {
+        if realmStore.models(query: "C_From = '\(from)'") != nil {
+            realmStore.delete(hard: false)
         }
-        
     }
     
     // update deleted date but not actual delete from table when user delete particular contact from contact table
-    class func deleteParticularContact(id:String)
-    {
-        if let contactModel = RealmStore.model(type: ContactModel.self, query: "id = '\(id)'")?.first {
-            try! RealmStore.write {
-                contactModel.deleted_at = Date();
-            }
-        }
+    class func deleteParticularContact(id:String) {
+        let _ = realmStore.models(query: String(format:"id = '\(id)'"))
+        realmStore.delete(hard: false)
     }
     
     // insert contact info into contact table
@@ -103,29 +95,26 @@ class ContactViewModel {
     }
     
     // update contact info
-    class func updateDataContactModel(id:String, cName:String, cDOB:Date?, cAddress:String, cPhoneNo:String, cEmail:String, cScore:Int, cRemark:String, cStatus:String)->Bool
-    {
-        if let contactModel = RealmStore.model(type: ContactModel.self, query: "id = '\(id)'")?.first {
-            try! RealmStore.write {
-                contactModel.C_Name = cName;
-                contactModel.C_DOB = cDOB;
-                contactModel.C_Address = cAddress;
-                contactModel.C_PhoneNo = cPhoneNo;
-                contactModel.C_Email = cEmail;
-                contactModel.C_Scoring = cScore;
-                contactModel.C_Remark = cRemark;
-                contactModel.C_Status = cStatus;
-            }
+    class func updateDataContactModel(id:String, cName:String, cDOB:Date?, cAddress:String, cPhoneNo:String, cEmail:String, cScore:Int, cRemark:String, cStatus:String)->Bool {
+        if let contactModel = realmStore.models(query: "id = '\(id)'")?.first {
+            contactModel.C_Name = cName;
+            contactModel.C_DOB = cDOB;
+            contactModel.C_Address = cAddress;
+            contactModel.C_PhoneNo = cPhoneNo;
+            contactModel.C_Email = cEmail;
+            contactModel.C_Scoring = cScore;
+            contactModel.C_Remark = cRemark;
+            contactModel.C_Status = cStatus;
             return true
         }
+        
         return false
     }
     
     // query contact info
-    class func queryContactTable(checkType:String, id:String)->Results<ContactModel>
-    {
+    class func queryContactTable(checkType:String, id:String)->Results<ContactModel> {
         // query particular contact info by id
-        return RealmStore.models(type: ContactModel.self).filter("id = %@", id);
+        return realmStore.models(query:  "id = '\(id)'")!
     }
     
 }

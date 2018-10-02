@@ -15,6 +15,7 @@ class ClusterMapViewController: ViewControllerProtocol {
     
     private var mapView:GMSMapView!
     private var locationManager = CLLocationManager()
+    private let realmStore = RealmStore<AddNote>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class ClusterMapViewController: ViewControllerProtocol {
             locationManager.requestLocation();
         }
         
-        let data = RealmStore.models(type: AddNote.self)
+        let data = realmStore.models()
         
         for x in data {
             self.pin(long: (x.addNote_location?.long)!,

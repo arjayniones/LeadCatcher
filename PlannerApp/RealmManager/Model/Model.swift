@@ -49,7 +49,7 @@ class Model: Object, Mappable {
     }
     
     func add() {
-        RealmStore.add(model: self)
+        RealmStore().add(model: self)
     }
     
     func map<T: Model>(type: T.Type, value: AnyObject) -> T? {
@@ -57,41 +57,6 @@ class Model: Object, Mappable {
             return Mapper<T>().map(JSON: value)
         }
         return nil
-    }
-    
-    func loadData<T: Model>(result: @escaping ((Results<T>) -> Void)) {
-        let data = RealmStore.models(type: T.self)
-        result(data)
-    }
-    
-    func changed<T: Model>(type: T.Type, block: @escaping (_: T?, _: ObjectChanged) -> Void) ->
-        NotificationToken {
-            
-            let data = RealmStore.models(type: T.self).filter("id == '\(id)'")
-            
-            return data.observe{ (changes: RealmCollectionChange) in
-                switch changes {
-                case .initial(let result):
-                    block(result.first, ObjectChanged.Initial)
-                case .update(let result, deletions: let deletions, insertions: _, modifications: let modifications):
-                    if deletions.count > 0 {
-                        block(result.first, ObjectChanged.Delete)
-                    } else if modifications.count > 0 {
-                        block(result.first, ObjectChanged.Update)
-                    } else {
-                        block(nil, ObjectChanged.Initial)
-                    }
-                case .error(let error):
-                    block(nil, ObjectChanged.Error(error as NSError))
-                }
-            }
-    }
-}
-
-extension Model {
-    
-    class func object<T:Model>(type: T.Type, id: UUID) -> T? {
-        return RealmStore.models(type: T.self).filter("id == '\(id)'").first
     }
 }
 

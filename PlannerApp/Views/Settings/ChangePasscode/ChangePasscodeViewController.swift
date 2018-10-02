@@ -173,12 +173,12 @@ class ChangePasscodeViewController: ViewControllerProtocol,LargeNativeNavbar {
 
 class ChangePasscodeViewModel {
     
+    fileprivate let realmStore = RealmStore<UserModel>()
+    
     func changePasscode(passcode:String) -> Bool {
         
-        if let userModel = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
-            try! RealmStore.write {
-                userModel.U_Password = passcode
-            }
+        if let userModel = realmStore.models(query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
+            userModel.U_Password = passcode
             return true
         }
         return false

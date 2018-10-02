@@ -133,8 +133,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-            RealmStore.delete(model: contactData)
-            
+            self.viewModel.realmStore.delete(model: contactData,hard:false)
         }
         
         return [deleteAction]

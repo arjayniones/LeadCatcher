@@ -19,8 +19,10 @@ class TodoListViewModel {
     
     var subpredicates = ["addNote_subject", "addNote_notes"]
     
+    let realmStore = RealmStore<AddNote>()
+    
     init() {
-        self.todoListData = RealmStore.model(type: AddNote.self, query: "deleted_at == nil")
+        self.todoListData = realmStore.models(query: "deleted_at == nil")
     }
     
     func searchText(text:String) {
@@ -28,7 +30,7 @@ class TodoListViewModel {
             NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, text)
         }
         let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-        self.filteredNotes = RealmStore.models(type: AddNote.self).filter(predicate)
+        self.filteredNotes = realmStore.models().filter(predicate)
     }
     
 }

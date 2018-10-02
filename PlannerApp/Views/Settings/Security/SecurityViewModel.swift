@@ -11,6 +11,8 @@ import SwiftyUserDefaults
 
 
 class SecurityViewModel {
+    static let realmStore = RealmStore<UserModel>()
+    
     static func getSecurityLabels() -> [SecurityLabels]{
         let labelNames = [
             SecurityLabels(labelName: "Use Touch ID"),
@@ -21,19 +23,19 @@ class SecurityViewModel {
     
     static func enableTouchID(bool:Bool) {
 
-        if let update = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
-            try! RealmStore.write {
+        if let update = realmStore.models(query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
+            try! realmStore.write {
                 update.U_EnableTouchID = bool
             }
         }
     }
     
      func checkTouchIDUpdate() -> Bool{
-        if let update = RealmStore.model(type: UserModel.self, query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
+        if let update = SecurityViewModel.realmStore.models(query: "id = '\(Defaults[.SessionUserId]!)'")?.first {
               return update.U_EnableTouchID
         }
             
-            return false
+        return false
     }
 }
 
