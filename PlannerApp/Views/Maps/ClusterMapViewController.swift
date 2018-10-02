@@ -19,6 +19,7 @@ class ClusterMapViewController: ViewControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Map"
         self.view.backgroundColor = UIColor.white
         
         self.setupMap()

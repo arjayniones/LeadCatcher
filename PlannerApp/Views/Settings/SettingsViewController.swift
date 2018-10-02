@@ -81,6 +81,16 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         if indexPath.row == 0 {
             let securityVC = SecurityViewController()
             self.navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
+        } else if indexPath.row == 1{
+            //SummaryViewController
+            let summaryVC = SummaryViewController()
+            self.navigationController?.pushViewController(summaryVC, animated: true)
+            
+        } else if indexPath.row == 2{
+            //SummaryViewController
+            let summaryVC = NotificationsListViewController()
+            self.navigationController?.pushViewController(summaryVC, animated: true)
+            
         } else if indexPath.row == 4{
             self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
         } else if indexPath.row == 5{
