@@ -33,9 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         prepareAndExecute() {
-            
             self.window?.rootViewController = BaseViewController()
-           
         }
         
         return true

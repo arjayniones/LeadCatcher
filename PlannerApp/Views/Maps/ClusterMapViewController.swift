@@ -85,8 +85,6 @@ class ClusterMapViewController: ViewControllerProtocol {
     
     func pin(long: CLLocationDegrees,lat:CLLocationDegrees,name:String) {
         
-        print(long,lat,name,"<<<<<<<<<")
-        
         let destinationMarker = GMSMarker()
         destinationMarker.appearAnimation = .pop
         destinationMarker.icon = UIImage(named: "map-pin-icon")
