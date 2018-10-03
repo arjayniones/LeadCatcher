@@ -29,6 +29,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
+       
         
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
