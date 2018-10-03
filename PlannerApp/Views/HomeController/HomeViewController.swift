@@ -13,11 +13,12 @@ import FSCalendar
 class HomeViewController: ViewControllerProtocol,NativeNavbar {
     
     fileprivate let calendarView = FSCalendar()
-    fileprivate weak var eventLabel: UILabel!
+//    fileprivate weak var eventLabel: UILabel!
     fileprivate let viewModel = TodoListViewModel()
     
     fileprivate var clonedData: [AddNote] = []
     fileprivate let tableView = UITableView()
+    fileprivate var filteredDates: [AddNote] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +87,7 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar {
             }
             tableView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(self.view).inset(UIEdgeInsets.zero)
-                make.top.equalTo(calendarView.snp.bottom).offset(0)
+                make.top.equalTo(calendarView.snp.bottom)
                 make.bottom.equalTo(self.view)
             }
             didSetupConstraints = true
@@ -115,20 +116,25 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
 //    }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        //
+        
+        filteredDates = clonedData.filter({
+            convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
+        })
+        
+        tableView.reloadData()
     }
 }
 
 extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clonedData.count
+        return filteredDates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
         
-        let data = clonedData[indexPath.row]
+        let data = filteredDates[indexPath.row]
         
         cell?.textLabel!.text = data.addNote_subject
         cell?.imageView?.image = UIImage(named: "book-icon")

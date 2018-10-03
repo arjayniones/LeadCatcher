@@ -13,9 +13,9 @@ func uuid() -> UUID {
     return NSUUID().uuidString.lowercased()
 }
 
-func convertDateTimeToString(date:Date) -> String {
+func convertDateTimeToString(date:Date,dateFormat:String = "EEEE,dd MMM yyyy hh:mm a") -> String {
     let dateFormatter: DateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "EEEE,dd MMM yyyy hh:mm a"
+    dateFormatter.dateFormat = dateFormat
     
     let selectedDate: String = dateFormatter.string(from:date)
     

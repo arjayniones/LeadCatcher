@@ -8,10 +8,6 @@
 
 import RealmSwift
 
-protocol TodoListViewModelDelegate:class  {
-    var deleteNotification:AddNote? { get set }
-}
-
 class TodoListViewModel {
     
     var todoListData:Results<AddNote>?
@@ -23,8 +19,6 @@ class TodoListViewModel {
     var subpredicates = ["addNote_subject", "addNote_notes"]
     
     let realmStore = RealmStore<AddNote>()
-    
-    weak var delegate: TodoListViewModelDelegate?
     
     init() {
         self.todoListData = realmStore.models(query: "deleted_at == nil")
