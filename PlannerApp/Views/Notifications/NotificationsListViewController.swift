@@ -108,7 +108,7 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-            RealmStore.delete(model: note)
+//            RealmStore.delete(model: note)
             
         }
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
@@ -142,9 +142,9 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
         
-        if let customerModel = RealmStore.model(type: ContactModel.self, query: "id == '\(model.addNote_customerId!)'")?.first {
-            todoModel.addNote_customer = customerModel
-        }
+//        if let customerModel = viewModel.realmStore.models(query: "id == '\(model.addNote_customerId!)'")?.first {
+//            todoModel.addNote_customer = customerModel
+//        }
         
         
         todoModel.addNote_taskType = model.addNote_taskType
