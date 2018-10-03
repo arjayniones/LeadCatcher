@@ -10,10 +10,11 @@ import UIKit
 import RealmSwift
 import FSCalendar
 
-class HomeViewController: ViewControllerProtocol,NativeNavbar {
+class HomeViewController: ViewControllerProtocol,NativeNavbar,FSCalendarDelegateAppearance {
     
     fileprivate let calendarView = FSCalendar()
 //    fileprivate weak var eventLabel: UILabel!
+    fileprivate let gregorian = Calendar(identifier: .gregorian)
     fileprivate let viewModel = TodoListViewModel()
     
     fileprivate var clonedData: [AddNote] = []
@@ -24,7 +25,7 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar {
         super.viewDidLoad()
     
         title = "Dashboard"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(rgb: 0xee5858)
         
         calendarView.dataSource = self
         calendarView.delegate = self
@@ -32,7 +33,9 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar {
         calendarView.backgroundColor = .yellow
         calendarView.calendarHeaderView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         calendarView.calendarWeekdayView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-        calendarView.appearance.eventSelectionColor = UIColor.white
+//        calendarView.appearance.eventSelectionColor = UIColor.white
+        calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
+        
         calendarView.appearance.eventOffset = CGPoint(x: 0, y: -7)
 //        calendarView.register(CalendarViewCell.self, forCellReuseIdentifier: "cell")
 //        calendarView.swipeToChooseGesture.isEnabled = true // Swipe-To-Choose
@@ -115,6 +118,19 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
 //        return 2
 //    }
     
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
+        if self.gregorian.isDateInToday(date) {
+            return [UIColor.orange]
+        }
+        return [appearance.eventDefaultColor]
+    }
+    
+    
+    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
+        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! HomeCalendarCell
+        
+        return cell
+    }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         
         filteredDates = clonedData.filter({
