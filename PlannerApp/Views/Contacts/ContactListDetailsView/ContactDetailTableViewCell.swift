@@ -68,6 +68,15 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let callback = textFieldsCallback {
+            if let text = textField.text {
+                callback(text)
+            }
+        }
+        endEditing(true)
+    }
+    
     
     override func updateConstraints() {
         

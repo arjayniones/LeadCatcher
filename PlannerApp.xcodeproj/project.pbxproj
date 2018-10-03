@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */; };
+		0C8DBA1E21630513009A1475 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA1D21630513009A1475 /* SummaryViewController.swift */; };
+		0C8DBA2021631E88009A1475 /* SummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */; };
+		0C8DBA24216359A6009A1475 /* SummaryBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA23216359A6009A1475 /* SummaryBarChart.swift */; };
+		0C8DBA26216359E1009A1475 /* SummaryBarEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA25216359E1009A1475 /* SummaryBarEntry.swift */; };
+		0C8DBA29216369BD009A1475 /* NotificationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA28216369BD009A1475 /* NotificationsListViewController.swift */; };
+		0C8DBA2B21636AEA009A1475 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA2A21636AEA009A1475 /* NotificationViewModel.swift */; };
+		0C8DBA2E21646A66009A1475 /* PanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA2D21646A66009A1475 /* PanelListViewController.swift */; };
+		0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA2F21646D01009A1475 /* PanelListDetailsViewController.swift */; };
+		0C8DBA332164711B009A1475 /* ArchivesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA322164711B009A1475 /* ArchivesViewController.swift */; };
+		0C8DBA3621647150009A1475 /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3521647150009A1475 /* LanguageSettingsViewController.swift */; };
+		0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */; };
 		0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */; };
 		0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D121509C3C0028750B /* ContactListViewController.swift */; };
 		0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D321509CA80028750B /* ContactListViewModel.swift */; };
@@ -90,6 +101,17 @@
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
 		0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
+		0C8DBA1D21630513009A1475 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
+		0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C8DBA23216359A6009A1475 /* SummaryBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryBarChart.swift; sourceTree = "<group>"; };
+		0C8DBA25216359E1009A1475 /* SummaryBarEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryBarEntry.swift; sourceTree = "<group>"; };
+		0C8DBA28216369BD009A1475 /* NotificationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListViewController.swift; sourceTree = "<group>"; };
+		0C8DBA2A21636AEA009A1475 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		0C8DBA2D21646A66009A1475 /* PanelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListViewController.swift; sourceTree = "<group>"; };
+		0C8DBA2F21646D01009A1475 /* PanelListDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListDetailsViewController.swift; sourceTree = "<group>"; };
+		0C8DBA322164711B009A1475 /* ArchivesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesViewController.swift; sourceTree = "<group>"; };
+		0C8DBA3521647150009A1475 /* LanguageSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewController.swift; sourceTree = "<group>"; };
+		0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesViewController.swift; sourceTree = "<group>"; };
 		0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListNavViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D121509C3C0028750B /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D321509CA80028750B /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
@@ -190,8 +212,14 @@
 		0C7C490A21410EB900DBD4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0C8DBA3721647351009A1475 /* Message Templates */,
+				0C8DBA3421647128009A1475 /* Language Settings */,
+				0C8DBA3121647103009A1475 /* Archives */,
+				0C8DBA2C21646A48009A1475 /* Panel List */,
+				0C8DBA2721636990009A1475 /* Notifications */,
+				0C8DBA1C216304C7009A1475 /* Summary */,
 				0CBFA0DD2151FBD40028750B /* Maps */,
-				2455FBCA2150DD5200881541 /* AddNote */,
+				2455FBCA2150DD5200881541 /* AddTask */,
 				0CBFA0CE215098FF0028750B /* Contacts */,
 				2455FBB921508E5A00881541 /* TodoList */,
 				24140A5A2148AF9B007687EB /* Settings */,
@@ -201,6 +229,59 @@
 				D6715DAB2141213C00957E86 /* BaseController */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0C8DBA1C216304C7009A1475 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA1D21630513009A1475 /* SummaryViewController.swift */,
+				0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */,
+				0C8DBA23216359A6009A1475 /* SummaryBarChart.swift */,
+				0C8DBA25216359E1009A1475 /* SummaryBarEntry.swift */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
+		0C8DBA2721636990009A1475 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA28216369BD009A1475 /* NotificationsListViewController.swift */,
+				0C8DBA2A21636AEA009A1475 /* NotificationViewModel.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		0C8DBA2C21646A48009A1475 /* Panel List */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA2D21646A66009A1475 /* PanelListViewController.swift */,
+				0C8DBA2F21646D01009A1475 /* PanelListDetailsViewController.swift */,
+			);
+			path = "Panel List";
+			sourceTree = "<group>";
+		};
+		0C8DBA3121647103009A1475 /* Archives */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA322164711B009A1475 /* ArchivesViewController.swift */,
+			);
+			path = Archives;
+			sourceTree = "<group>";
+		};
+		0C8DBA3421647128009A1475 /* Language Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA3521647150009A1475 /* LanguageSettingsViewController.swift */,
+			);
+			path = "Language Settings";
+			sourceTree = "<group>";
+		};
+		0C8DBA3721647351009A1475 /* Message Templates */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */,
+			);
+			path = "Message Templates";
 			sourceTree = "<group>";
 		};
 		0CBFA0CE215098FF0028750B /* Contacts */ = {
@@ -349,7 +430,7 @@
 			path = TodoList;
 			sourceTree = "<group>";
 		};
-		2455FBCA2150DD5200881541 /* AddNote */ = {
+		2455FBCA2150DD5200881541 /* AddTask */ = {
 			isa = PBXGroup;
 			children = (
 				2455FBCB2150DD8100881541 /* AddNoteNavViewController.swift */,
@@ -359,7 +440,7 @@
 				2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */,
 				2455FBC42150CA9000881541 /* NotesViewController.swift */,
 			);
-			path = AddNote;
+			path = AddTask;
 			sourceTree = "<group>";
 		};
 		248B836F2140B29D00119D9D = {
@@ -692,12 +773,15 @@
 				24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */,
 				24D1B80521636816001D519C /* HomeViewModel.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
+				0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */,
 				2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
 				0CBFA0DA2150C1810028750B /* ContactDetailsViewController.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
 				24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */,
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
+				0C8DBA26216359E1009A1475 /* SummaryBarEntry.swift in Sources */,
+				0C8DBA2B21636AEA009A1475 /* NotificationViewModel.swift in Sources */,
 				0CBFA0E92154BC270028750B /* MapsPickerViewController.swift in Sources */,
 				0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */,
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
@@ -711,18 +795,24 @@
 				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
+				0C8DBA2E21646A66009A1475 /* PanelListViewController.swift in Sources */,
 				0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */,
+				0C8DBA332164711B009A1475 /* ArchivesViewController.swift in Sources */,
+				0C8DBA29216369BD009A1475 /* NotificationsListViewController.swift in Sources */,
 				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
 				0CBFA0F121588F020028750B /* RestaurantPreviewView.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
 				2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */,
+				0C8DBA3621647150009A1475 /* LanguageSettingsViewController.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
 				0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */,
+				0C8DBA2021631E88009A1475 /* SummaryCollectionViewCell.swift in Sources */,
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */,
 				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
+				0C8DBA1E21630513009A1475 /* SummaryViewController.swift in Sources */,
 				24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */,
 				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
@@ -730,9 +820,11 @@
 				24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
+				0C8DBA24216359A6009A1475 /* SummaryBarChart.swift in Sources */,
 				24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				242717D821491150001792BD /* HomeViewController.swift in Sources */,
+				0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */,
 				2455FBCC2150DD8100881541 /* AddNoteNavViewController.swift in Sources */,
 				0CBFA0E7215483590028750B /* MapsLocationListViewController.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
