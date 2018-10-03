@@ -9,7 +9,8 @@
 import UIKit
 import RealmSwift
 
-class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
+class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar,TodoListViewModelDelegate{
+    var deleteNotification: AddNote?
     
     fileprivate let tableView = UITableView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
@@ -41,6 +42,8 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         tableView.tableFooterView = searchFooter
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
+        
+        viewModel.delegate = self
         
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
@@ -142,7 +145,9 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-            self.viewModel.realmStore.delete(model: note, hard: false)
+           
+            self.deleteNotification = note
+            self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
         }
         
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in

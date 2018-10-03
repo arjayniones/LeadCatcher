@@ -92,20 +92,30 @@ class RealmStore<T: Model> {
         let store = try! Realm()
         store.delete(model)
     }
-    func delete(model: T ,hard:Bool) {
-        guard let model = self.model else {
-            return
-        }
-        
-        if !hard {
-            try! write {
-                let _ = model.map { $0.deleted_at = Date() }
+    func delete(modelToDelete: T?,hard:Bool) {
+        if modelToDelete != nil {
+            assert((modelToDelete != nil))
+            if !hard {
+                try! write {
+                    let _ = modelToDelete.map { $0.deleted_at = Date() }
+                }
+                return
             }
+            
+            try! write {
+                store.delete(modelToDelete!)
+            }
+            
             return
         }
         
-        let store = try! Realm()
-        store.delete(model)
+        if let model = self.model {
+            if !hard {
+                try! write {
+                    let _ = model.map { $0.deleted_at = Date() }
+                }
+            }
+        }
     }
 }
 

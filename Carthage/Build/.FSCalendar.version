@@ -1,0 +1,9 @@
+{
+  "commitish" : "2.7.9",
+  "iOS" : [
+    {
+      "name" : "FSCalendar",
+      "hash" : "2abd7797f33d2e8eb945016bbcbfdd4d4aec7657cd696825947a84c988536834"
+    }
+  ]
+}

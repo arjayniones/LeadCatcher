@@ -58,6 +58,8 @@
 		24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2CC2158BBF100277DA8 /* LocationModel.swift */; };
 		24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2D22158DDF000277DA8 /* MapViewController.swift */; };
 		24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */; };
+		24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D1B7FE216359AC001D519C /* FSCalendar.framework */; };
+		24D1B80521636816001D519C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D1B80421636816001D519C /* HomeViewModel.swift */; };
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
 		24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */; };
 		24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C3214A193A00EC7DBE /* NavBarProtocols.swift */; };
@@ -140,6 +142,8 @@
 		24A2F2CC2158BBF100277DA8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		24A2F2D22158DDF000277DA8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
+		24D1B7FE216359AC001D519C /* FSCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FSCalendar.framework; path = Carthage/Build/iOS/FSCalendar.framework; sourceTree = "<group>"; };
+		24D1B80421636816001D519C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		24D55FB921410A8D001140C1 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
 		24D8B2C3214A193A00EC7DBE /* NavBarProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarProtocols.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */,
 				2455FBD02151D87D00881541 /* UserNotifications.framework in Frameworks */,
 				D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */,
 				735165380657D3B189D33234 /* Pods_PlannerApp.framework in Frameworks */,
@@ -493,6 +498,7 @@
 			children = (
 				D6715DB12141218900957E86 /* HomeNavController.swift */,
 				242717D721491150001792BD /* HomeViewController.swift */,
+				24D1B80421636816001D519C /* HomeViewModel.swift */,
 			);
 			name = HomeController;
 			path = PlannerApp/Views/HomeController;
@@ -501,6 +507,7 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24D1B7FE216359AC001D519C /* FSCalendar.framework */,
 				2455FBCF2151D87D00881541 /* UserNotifications.framework */,
 				D60A199D21426253008246FE /* LocalAuthentication.framework */,
 				86EE6281404B932663E52096 /* Pods_PlannerApp.framework */,
@@ -521,6 +528,7 @@
 				248B83762140B29D00119D9D /* Resources */,
 				4E83F632AD252D4F323F9CA0 /* [CP] Embed Pods Frameworks */,
 				3C56C0A9E28170B15171EA4E /* [CP] Copy Pods Resources */,
+				24D1B80121635A57001D519C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -585,6 +593,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		24D1B80121635A57001D519C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/FSCalendar.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
 		3C56C0A9E28170B15171EA4E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -665,6 +687,7 @@
 				2455FBBD21508EA700881541 /* DetailsTodoListViewModel.swift in Sources */,
 				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
 				24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */,
+				24D1B80521636816001D519C /* HomeViewModel.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
 				2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
@@ -846,6 +869,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A9LH66DXBS;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -865,6 +892,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A9LH66DXBS;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
