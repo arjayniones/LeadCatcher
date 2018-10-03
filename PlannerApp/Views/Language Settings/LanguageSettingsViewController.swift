@@ -61,7 +61,7 @@ class LanguageSettingsViewController: ViewControllerProtocol,UITableViewDelegate
             cell.textLabel?.text = "Chinese (CH)"
         }
         else if indexPath.row == 2 {
-            cell.textLabel?.text = "Bahasa Melayu (BM)"
+            cell.textLabel?.text = "Bahasa Melayu (MY)"
         }
         
         

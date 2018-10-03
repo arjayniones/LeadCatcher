@@ -56,7 +56,7 @@ class MessageTemplatesViewController: ViewControllerProtocol,UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
         cell.textLabel?.text = "Message \(indexPath.row + 1)"
-        cell.imageView?.image = UIImage(named: "message-template-icon")
+        cell.imageView?.image = UIImage(named: "message-icon")
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
