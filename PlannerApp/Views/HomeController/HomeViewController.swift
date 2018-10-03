@@ -25,24 +25,26 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar,FSCalendarDelegate
         super.viewDidLoad()
     
         title = "Dashboard"
-        view.backgroundColor = UIColor(rgb: 0xee5858)
+        view.backgroundColor = .white
         
         calendarView.dataSource = self
         calendarView.delegate = self
         calendarView.allowsMultipleSelection = true
-        calendarView.backgroundColor = .yellow
-        calendarView.calendarHeaderView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-        calendarView.calendarWeekdayView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-//        calendarView.appearance.eventSelectionColor = UIColor.white
+        calendarView.appearance.selectionColor = .clear
+        calendarView.backgroundColor = UIColor(rgb: 0xFFFFFF)
+        calendarView.calendarHeaderView.backgroundColor = UIColor.clear
+        calendarView.calendarWeekdayView.backgroundColor = UIColor.clear
+        calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 17, withType: .bold)
+        calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 15, withType: .bold)
+        calendarView.appearance.weekdayTextColor = .lightGray
+        calendarView.appearance.headerTitleColor = .black
+        calendarView.dropShadow()
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
-        
-        calendarView.appearance.eventOffset = CGPoint(x: 0, y: -7)
-//        calendarView.register(CalendarViewCell.self, forCellReuseIdentifier: "cell")
-//        calendarView.swipeToChooseGesture.isEnabled = true // Swipe-To-Choose
         view.addSubview(calendarView)
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .clear
         tableView.estimatedRowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
@@ -54,7 +56,7 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar,FSCalendarDelegate
                     self?.calendarView.select(data.addNote_alertDateTime)
                     self?.clonedData.append(data)
                 }
-                self?.tableView.reloadData()
+                self?.calendarView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
                 _ = deletions.map({
                     if let date = self?.clonedData[$0].addNote_alertDateTime {
@@ -84,13 +86,14 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar,FSCalendarDelegate
     
     override func updateViewConstraints() {
         if !didSetupConstraints {
-            calendarView.snp.updateConstraints { (make) in
-                make.top.left.right.equalTo(self.view).inset(UIEdgeInsets.zero)
-                make.height.equalTo(300)
+            calendarView.snp.makeConstraints { (make) in
+                make.left.top.right.equalTo(self.view).inset(0)
+                make.height.equalTo(400)
             }
+            
             tableView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(self.view).inset(UIEdgeInsets.zero)
-                make.top.equalTo(calendarView.snp.bottom)
+                make.top.equalTo(calendarView.snp.bottom).offset(10)
                 make.bottom.equalTo(self.view)
             }
             didSetupConstraints = true
@@ -109,25 +112,15 @@ class HomeViewController: ViewControllerProtocol,NativeNavbar,FSCalendarDelegate
     }
 }
 extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
-//    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
-//        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
-//        return cell
-//    }
-//
-//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-//        return 2
-//    }
-    
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        if self.gregorian.isDateInToday(date) {
-            return [UIColor.orange]
-        }
-        return [appearance.eventDefaultColor]
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        return clonedData.filter({
+            convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
+        }).count
     }
-    
     
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! HomeCalendarCell
+        cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
         
         return cell
     }
