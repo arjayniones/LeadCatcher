@@ -88,13 +88,27 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             
         } else if indexPath.row == 2{
             //SummaryViewController
-            let summaryVC = NotificationsListViewController()
-            self.navigationController?.pushViewController(summaryVC, animated: true)
+            let notifVC = NotificationsListViewController()
+            self.navigationController?.pushViewController(notifVC, animated: true)
+            
+        }else if indexPath.row == 3{
+            //SummaryViewController
+            let panelListVC = PanelListViewController()
+            self.navigationController?.pushViewController(panelListVC, animated: true)
             
         } else if indexPath.row == 4{
             self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
         } else if indexPath.row == 5{
             self.getTheContact();
+        } else if indexPath.row == 6{
+            let messageTempVC = MessageTemplatesViewController()
+            self.navigationController?.pushViewController(messageTempVC, animated: true)
+        } else if indexPath.row == 7{
+            let langSetVC = LanguageSettingsViewController()
+            self.navigationController?.pushViewController(langSetVC, animated: true)
+        } else if indexPath.row == 8{
+            let archivesVC = ArchivesViewController()
+            self.navigationController?.pushViewController(archivesVC, animated: true)
         } else if indexPath.row == 9{
             popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
         }

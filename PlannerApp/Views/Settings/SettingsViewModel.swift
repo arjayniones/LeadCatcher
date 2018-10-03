@@ -19,7 +19,7 @@ class SettingsViewModel {
             SettingsLabels(labelName: "Panel List"),
             SettingsLabels(labelName: "Map"),
             SettingsLabels(labelName: "Sync Phone Book Contacts"),
-            SettingsLabels(labelName: "Message Settings"),
+            SettingsLabels(labelName: "Message Templates"),
             SettingsLabels(labelName: "Language"),
             SettingsLabels(labelName: "Archives"),
             SettingsLabels(labelName: "Log Out")

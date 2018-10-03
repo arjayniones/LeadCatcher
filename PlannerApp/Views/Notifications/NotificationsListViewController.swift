@@ -7,74 +7,52 @@
 //
 
 import UIKit
+import RealmSwift
 
-class NotificationsListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
-    let tableView = UITableView()
+class NotificationsListViewController: ViewControllerProtocol,LargeNativeNavbar{
     
-    fileprivate let searchController = UISearchController(searchResultsController: nil)
-    fileprivate var searchFooter = SearchFooterView()
-    let viewModel = NotificationViewModel()
-    //weak var delegate:ContactListViewControllerDelegate?
-    var userInContactsSelection: Bool = false
-    var userIdSelected:UUID?
+    fileprivate let tableView = UITableView()
+    fileprivate let viewModel = TodoListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        searchController.searchResultsUpdater = self
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "Search Notification"
-//
-        
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-        } else {
-            // Fallback on earlier versions
-        }
-        definesPresentationContext = true
-      //  searchController.searchBar.delegate = self
-        
         title = "Notifications"
+        
+       
+        definesPresentationContext = true
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.allowsMultipleSelection = false
         tableView.estimatedRowHeight = 100
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "notificationListCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
-        let addButton = UIButton()
-        let image = UIImage(named: "plus-grey-icon" )
-        addButton.setImage(image, for: .normal)
-        addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
+            guard let tableView = self?.tableView else { return }
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                // Query results have changed, so apply them to the UITableView
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                                     with: .automatic)
+                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.endUpdates()
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+            }
+        }
         
-        //need to implement this , correct reloading of table after it was been populated.
         
-//        viewModel.notificationToken = viewModel.contactList?.observe { [weak self] (changes: RealmCollectionChange) in
-//            guard let tableView = self?.tableView else { return }
-//            switch changes {
-//            case .initial:
-//                tableView.reloadData()
-//            case .update(_, let deletions, let insertions, let modifications):
-//                // Query results have changed, so apply them to the UITableView
-//                tableView.beginUpdates()
-//                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
-//                                     with: .automatic)
-//                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
-//                                     with: .automatic)
-//                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
-//                                     with: .automatic)
-//                tableView.endUpdates()
-//            case .error(let error):
-//                // An error occurred while opening the Realm file on the background worker thread
-//                fatalError("\(error)")
-//            }
-//        }
-        
-        view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+        view.needsUpdateConstraints()
     }
     
     deinit {
@@ -82,9 +60,24 @@ class NotificationsListViewController: ViewControllerProtocol,UITableViewDelegat
     }
     
     
-    @objc func addContact() {
-        let contactsDetailsVC = ContactDetailsViewController()
-        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+    override func updateViewConstraints() {
+        if !didSetupConstraints {
+            tableView.snp.makeConstraints { make in
+                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+            }
+            
+            didSetupConstraints = true
+        }
+        super.updateViewConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let selectionIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
+        super.viewWillAppear(animated)
+        
+        updateNavbarAppear()
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,157 +85,110 @@ class NotificationsListViewController: ViewControllerProtocol,UITableViewDelegat
         // Dispose of any resources that can be recreated.
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateNavbarAppear()
-        self.tableView.reloadData()
-    }
-    
-    override func updateViewConstraints() {
-        
-        if !didSetupConstraints {
-            
-            tableView.snp.makeConstraints { make in
-                make.top.left.right.equalTo(view)
-                make.bottom.equalTo(view).inset(50)
-            }
-            
-            didSetupConstraints = true
-        }
-        
-        super.updateViewConstraints()
+}
+
+
+
+
+extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        guard let data = viewModel.contactList  else {
-            return []
+        guard let data = viewModel.todoListData else {
+            return nil
         }
         
-        let contactData: ContactModel
+        let note: AddNote
         
-        if isFiltering() {
-            contactData = viewModel.filteredContacts![indexPath.row]
-        } else {
-            contactData = data[indexPath.row]
-        }
+        
+            note = data[indexPath.row]
+        
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-            RealmStore.delete(model: contactData)
+            RealmStore.delete(model: note)
             
         }
-        
-        return [deleteAction]
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notificationListCell")
-        
-        guard let data = viewModel.contactList  else {
-            return cell!
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
+            
+            self.openDetailsNoteForEditing(model: note)
         }
         
-        let contactData: ContactModel
-        
-        if isFiltering() {
-            contactData = viewModel.filteredContacts![indexPath.row]
-        } else {
-            contactData = data[indexPath.row]
-        }
-        
-        if let userId = userIdSelected,userId == data[indexPath.row].id {
-            cell?.accessoryType = .checkmark
-        } else {
-            cell?.accessoryType = .none
-        }
-        
-        cell?.textLabel?.text = contactData.C_Name
-        
-        return cell!
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let data = viewModel.contactList else {
-            return 0
-        }
-        
-        if isFiltering() {
-            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
-            return viewModel.filteredContacts!.count
-        }
-        
-        searchFooter.setNotFiltering()
-        
-        return data.count
+        return [deleteAction, editAction]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let data = viewModel.contactList  else {
+        guard let data = viewModel.todoListData else {
             return
         }
         
-        let contactData: ContactModel
+        let note: AddNote
         
-        if isFiltering() {
-            contactData = viewModel.filteredContacts![indexPath.row]
-        } else {
-            contactData = data[indexPath.row]
-        }
+       
+            note = data[indexPath.row]
         
-        if userInContactsSelection {
-//            delegate?.didSelectCustomer(user:contactData)
-//            userIdSelected = contactData.id
-            tableView.reloadData()
-        } else {
-            self.openContactForEditing(model: contactData)
-            //            let contactsDetailsVC = ContactDetailsViewController()
-            //            self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
-        }
+        //add validation here to check if its birthday or notes
+        //self.openDetailsNoteForEditing(model: note)
     }
     
-    func openContactForEditing(model:ContactModel) {
-        let detailController = ContactDetailsViewController()
+    func openDetailsNoteForEditing(model:AddNote) {
+        let detailController = DetailsTodoListViewController()
         detailController.isControllerEditing = true
         
-        let contactModel = AddContactModel()
-        contactModel.addContact_contactName = model.C_Name
-        contactModel.addContact_dateOfBirth = model.C_DOB
-        contactModel.addContact_address = model.C_Address
-        contactModel.addContact_phoneNum = model.C_PhoneNo
-        contactModel.addContact_email = model.C_Email
-        contactModel.addContact_leadScore = model.C_Scoring
-        contactModel.addContact_remarks = model.C_Remark
-        contactModel.addContact_status = model.C_Status
+        let todoModel = AddNoteModel()
+        todoModel.addNote_alertDateTime = model.addNote_alertDateTime
+        todoModel.addNote_repeat = model.addNote_repeat
+        todoModel.addNote_subject = model.addNote_subject
         
-        detailController.setupModel = contactModel
+        if let customerModel = RealmStore.model(type: ContactModel.self, query: "id == '\(model.addNote_customerId!)'")?.first {
+            todoModel.addNote_customer = customerModel
+        }
+        
+        
+        todoModel.addNote_taskType = model.addNote_taskType
+        todoModel.addNote_notes = model.addNote_notes
+        todoModel.addNote_location = model.addNote_location
+        
+        detailController.setupModel = todoModel
         
         self.navigationController?.pushViewController(detailController, animated: true)
     }
     
-}
-
-extension NotificationsListViewController: UISearchBarDelegate {
-    // MARK: - UISearchBar Delegate
-
-    func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
-    }
-}
-
-extension NotificationsListViewController: UISearchResultsUpdating {
-    // MARK: - UISearchResultsUpdating Delegate
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            viewModel.searchText(text: searchText)
-            self.tableView.reloadData()
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let data = viewModel.todoListData else {
+            return 0
         }
+        
+        
+        return data.count
     }
-
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
+        
+        guard let data = viewModel.todoListData else {
+            return cell
+        }
+        
+        let note: AddNote
+        
+       
+            note = data[indexPath.row]
+        
+        //write validations here if birthday change icon to "birthday-icon" if meeting change icon to "meeting-icon"
+        
+        cell.textLabel!.text = note.addNote_subject
+        cell.imageView?.image = UIImage(named: "meeting-icon")
+        cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
+        cell.detailTextLabel?.textColor = .red
+        return cell
     }
 }
+
+
 
 
