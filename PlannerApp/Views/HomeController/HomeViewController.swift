@@ -183,10 +183,11 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
         
         cell?.backgroundColor = .clear
         cell?.textLabel!.text = data.addNote_subject
-        let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"book-icon"
+        cell?.textLabel!.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
         cell?.imageView?.image = UIImage(named: imageNamed)
         cell?.detailTextLabel?.text = convertDateTimeToString(date: data.addNote_alertDateTime!)
-        cell?.detailTextLabel?.textColor = .red
+        cell?.detailTextLabel?.font = UIFont.ofSize(fontSize: 11, withType: .bold)
         
         return cell!
     }
