@@ -74,8 +74,8 @@ class MessageTemplatesViewController: ViewControllerProtocol,UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        let panelDetailsVC = PanelListDetailsViewController()
-        self.navigationController?.pushViewController(panelDetailsVC, animated: true) //call security navigation
+        let messageTemplateDetailsVC = MessageTemplatesDetailsViewController()
+        self.navigationController?.pushViewController(messageTemplateDetailsVC, animated: true) //call security navigation
     }
     
     
