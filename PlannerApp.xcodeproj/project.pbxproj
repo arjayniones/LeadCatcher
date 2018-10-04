@@ -68,6 +68,7 @@
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
+		2491C0E32165B86800037578 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2491C0E22165B86800037578 /* bg.jpg */; };
 		24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2CC2158BBF100277DA8 /* LocationModel.swift */; };
 		24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2D22158DDF000277DA8 /* MapViewController.swift */; };
 		24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */; };
@@ -76,6 +77,8 @@
 		24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D55FB921410A8D001140C1 /* SessionService.swift */; };
 		24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */; };
 		24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8B2C3214A193A00EC7DBE /* NavBarProtocols.swift */; };
+		24FE315D2164A2FB00A4EB96 /* HomeCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FE315C2164A2FB00A4EB96 /* HomeCalendarCell.swift */; };
+		24FE315F2164B1C500A4EB96 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FE315E2164B1C500A4EB96 /* UIViewExtensions.swift */; };
 		735165380657D3B189D33234 /* Pods_PlannerApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EE6281404B932663E52096 /* Pods_PlannerApp.framework */; };
 		D60A199A21422DF4008246FE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199921422DF4008246FE /* UserModel.swift */; };
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
@@ -165,6 +168,7 @@
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		248B83872140B29D00119D9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		248B83992141014600119D9D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		2491C0E22165B86800037578 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		24A2F2CC2158BBF100277DA8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		24A2F2D22158DDF000277DA8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 		24D55FB921410A8D001140C1 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		24D8B2C02149F57800EC7DBE /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
 		24D8B2C3214A193A00EC7DBE /* NavBarProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarProtocols.swift; sourceTree = "<group>"; };
+		24FE315C2164A2FB00A4EB96 /* HomeCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCell.swift; sourceTree = "<group>"; };
+		24FE315E2164B1C500A4EB96 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.debug.xcconfig"; sourceTree = "<group>"; };
 		86EE6281404B932663E52096 /* Pods_PlannerApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlannerApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D60A199921422DF4008246FE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -420,6 +426,7 @@
 			children = (
 				2450D38D2142106200F5F61F /* DateExtension.swift */,
 				2455FBC62150D6FD00881541 /* ColorExtension.swift */,
+				24FE315E2164B1C500A4EB96 /* UIViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -468,6 +475,7 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				2491C0DF2165B12700037578 /* Resources */,
 				24B186C92154B8BA0028CE23 /* CustomViews */,
 				24D8B2C2214A191C00EC7DBE /* Protocols */,
 				2450D38C2142105000F5F61F /* Extensions */,
@@ -478,7 +486,6 @@
 				0C7C490A21410EB900DBD4A3 /* Views */,
 				248B83982141012B00119D9D /* Utils */,
 				248B837B2140B29D00119D9D /* AppDelegate.swift */,
-				248B83822140B29D00119D9D /* Assets.xcassets */,
 				2450D3AB21427D2400F5F61F /* LaunchScreen.storyboard */,
 				248B83872140B29D00119D9D /* Info.plist */,
 			);
@@ -494,6 +501,15 @@
 				2455FBC22150C92B00881541 /* NotesPopUpControllerView.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		2491C0DF2165B12700037578 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2491C0E22165B86800037578 /* bg.jpg */,
+				248B83822140B29D00119D9D /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		24B186C92154B8BA0028CE23 /* CustomViews */ = {
@@ -586,6 +602,7 @@
 				D6715DB12141218900957E86 /* HomeNavController.swift */,
 				242717D721491150001792BD /* HomeViewController.swift */,
 				24D1B80421636816001D519C /* HomeViewModel.swift */,
+				24FE315C2164A2FB00A4EB96 /* HomeCalendarCell.swift */,
 			);
 			name = HomeController;
 			path = PlannerApp/Views/HomeController;
@@ -671,6 +688,7 @@
 				D6715D9C2140FBA900957E86 /* SF-Pro-Text-Regular.otf in Resources */,
 				D6715D9D2140FBA900957E86 /* SF-Pro-Text-Bold.otf in Resources */,
 				248B83832140B29D00119D9D /* Assets.xcassets in Resources */,
+				2491C0E32165B86800037578 /* bg.jpg in Resources */,
 				D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */,
 				D6715DA52140FBA900957E86 /* SF-Pro-Text-Medium.otf in Resources */,
 				0CBFA0E1215349570028750B /* MapMarkerWindowView.xib in Resources */,
@@ -795,6 +813,7 @@
 				2455FBC92150DCBB00881541 /* TodoListViewController.swift in Sources */,
 				24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */,
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
+				24FE315F2164B1C500A4EB96 /* UIViewExtensions.swift in Sources */,
 				2455FBD22151F2B800881541 /* AddNote.swift in Sources */,
 				0CBFA0DF2151FC3B0028750B /* MapsViewController.swift in Sources */,
 				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
@@ -821,6 +840,7 @@
 				24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */,
 				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
+				24FE315D2164A2FB00A4EB96 /* HomeCalendarCell.swift in Sources */,
 				24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */,
 				D60A199A21422DF4008246FE /* UserModel.swift in Sources */,
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
