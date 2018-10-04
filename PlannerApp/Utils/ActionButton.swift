@@ -12,7 +12,7 @@ class ActionButton: UIButton {
     
     var isActive:Bool = false {
         didSet {
-            backgroundColor = isActive ? UIColor.red.withAlphaComponent(0.5):.clear
+            backgroundColor = isActive ? UIColor.red.withAlphaComponent(0.2):.clear
         }
     }
     

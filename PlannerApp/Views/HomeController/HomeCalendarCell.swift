@@ -20,18 +20,26 @@ class HomeCalendarCell: FSCalendarCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let circleImageView = UIImageView(image: UIImage(named: "circle")!)
+        backgroundColor = .clear
+        let circleImageView = UIImageView(image: UIImage(named: "push-pin")!)
         self.contentView.insertSubview(circleImageView, at: 0)
         self.circleImageView = circleImageView
         
         self.shapeLayer.isHidden = true
-        self.backgroundColor = .clear
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.circleImageView.frame = self.contentView.bounds
+        self.circleImageView.frame = CGRect(x: self.contentView.center.x, y: self.contentView.center.y - 32, width: 32, height: 32)
+    }
+    
+    override func configureAppearance() {
+        super.configureAppearance()
+        // Override the build-in appearance configuration
+        if self.isPlaceholder {
+            self.eventIndicator.isHidden = true
+            self.titleLabel.textColor = UIColor.lightGray
+        }
     }
     
 }

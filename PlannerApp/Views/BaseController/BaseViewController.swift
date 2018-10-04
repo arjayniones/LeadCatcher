@@ -15,7 +15,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         case home,contact,addNote,todoList,addMore
     }
     
-    let tabView = UIView()
+    let tabView = PassThroughView()
+    fileprivate let bottomGradient = CAGradientLayer()
     
     fileprivate var homeNavController: BaseNavigationController
     fileprivate var contactNavController: BaseNavigationController
@@ -56,26 +57,33 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         view.insertSubview(homeNavController.view, at: 0)
         
         tabView.frame = CGRect(x: 0, y: view.height - 50, width: view.width, height: 50)
-        tabView.backgroundColor = .white
+        bottomGradient.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.5).cgColor]
+        tabView.layer.addSublayer(bottomGradient)
+        
         self.view.addSubview(tabView)
         
-        homeButton.setImage(UIImage(named:"home-icon"), for: .normal)
+        homeButton.setImage(UIImage(named:"home-icon-inactive"), for: .normal)
+        homeButton.setImage(UIImage(named:"home-icon-active"), for: .selected)
         homeButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(homeButton)
         
-        contactButton.setImage(UIImage(named:"profile-icon"), for: .normal)
+        contactButton.setImage(UIImage(named:"profile-icon-inactive"), for: .normal)
+        contactButton.setImage(UIImage(named:"profile-icon-active"), for: .selected)
         contactButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(contactButton)
         
-        addNoteButton.setImage(UIImage(named:"plus-icon"), for: .normal)
+        addNoteButton.setImage(UIImage(named:"plus-icon-inactive"), for: .normal)
+        addNoteButton.setImage(UIImage(named:"plus-icon-active"), for: .selected)
         addNoteButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addNoteButton)
         
-        todoListButton.setImage(UIImage(named:"book-icon"), for: .normal)
+        todoListButton.setImage(UIImage(named:"book-icon-inactive"), for: .normal)
+        todoListButton.setImage(UIImage(named:"book-icon-active"), for: .selected)
         todoListButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(todoListButton)
         
-        addMoreButton.setImage(UIImage(named:"more-icon"), for: .normal)
+        addMoreButton.setImage(UIImage(named:"more-icon-inactive"), for: .normal)
+        addMoreButton.setImage(UIImage(named:"more-icon-active"), for: .selected)
         addMoreButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
         tabView.addSubview(addMoreButton)
         
@@ -188,23 +196,23 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     }
     
     func activeTabColor() {
-        homeButton.isActive = false
-        contactButton.isActive = false
-        addNoteButton.isActive = false
-        todoListButton.isActive = false
-        addMoreButton.isActive = false
+        homeButton.isSelected = false
+        contactButton.isSelected = false
+        addNoteButton.isSelected = false
+        todoListButton.isSelected = false
+        addMoreButton.isSelected = false
         
         switch self.activeTab {
         case .home:
-            homeButton.isActive = true
+            homeButton.isSelected = true
         case .contact:
-            contactButton.isActive = true
+            contactButton.isSelected = true
         case .addNote:
-            addNoteButton.isActive = true
+            addNoteButton.isSelected = true
         case .todoList:
-            todoListButton.isActive = true
+            todoListButton.isSelected = true
         case .addMore:
-            addMoreButton.isActive = true
+            addMoreButton.isSelected = true
         }
         
     }
@@ -221,6 +229,17 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
 extension UIViewController {
     var tabController: BaseViewController? {
         return navigationController?.parent as? BaseViewController
+    }
+}
+
+class PassThroughView: UIView {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews as [UIView] {
+            if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event) {
+                return true
+            }
+        }
+        return false
     }
 }
 

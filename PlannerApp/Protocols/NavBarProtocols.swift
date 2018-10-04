@@ -8,6 +8,22 @@
 
 import UIKit
 
+protocol NoNavbar {
+    func updateNavbarAppear()
+}
+
+extension NoNavbar where Self: UIViewController {
+    
+    func updateNavbarAppear() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.isTranslucent = true
+    }
+    
+}
+
+
 protocol NativeNavbar {
     func updateNavbarAppear()
 }
@@ -28,8 +44,6 @@ extension NativeNavbar where Self: UIViewController {
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = false
         }
-        
-        UIApplication.shared.setStatusBarHidden(false, with: .none)
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
@@ -49,7 +63,6 @@ extension LargeNativeNavbar where Self: UIViewController {
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         
-        UIApplication.shared.setStatusBarHidden(false, with: .none)
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
