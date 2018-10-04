@@ -19,6 +19,8 @@
 		0C8DBA332164711B009A1475 /* ArchivesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA322164711B009A1475 /* ArchivesViewController.swift */; };
 		0C8DBA3621647150009A1475 /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3521647150009A1475 /* LanguageSettingsViewController.swift */; };
 		0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */; };
+		0C8DBA3B2165C610009A1475 /* AddPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */; };
+		0C8DBA3D2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */; };
 		0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */; };
 		0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D121509C3C0028750B /* ContactListViewController.swift */; };
 		0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D321509CA80028750B /* ContactListViewModel.swift */; };
@@ -117,6 +119,8 @@
 		0C8DBA322164711B009A1475 /* ArchivesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesViewController.swift; sourceTree = "<group>"; };
 		0C8DBA3521647150009A1475 /* LanguageSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewController.swift; sourceTree = "<group>"; };
 		0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesViewController.swift; sourceTree = "<group>"; };
+		0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPanelViewController.swift; sourceTree = "<group>"; };
+		0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesDetailsViewController.swift; sourceTree = "<group>"; };
 		0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListNavViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D121509C3C0028750B /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D321509CA80028750B /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 			children = (
 				0C8DBA2D21646A66009A1475 /* PanelListViewController.swift */,
 				0C8DBA2F21646D01009A1475 /* PanelListDetailsViewController.swift */,
+				0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */,
 			);
 			path = "Panel List";
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */,
+				0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */,
 			);
 			path = "Message Templates";
 			sourceTree = "<group>";
@@ -814,10 +820,12 @@
 				0CBFA0DA2150C1810028750B /* ContactDetailsViewController.swift in Sources */,
 				2450D38E2142106200F5F61F /* DateExtension.swift in Sources */,
 				24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */,
+				0C8DBA3D2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift in Sources */,
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
 				0C8DBA26216359E1009A1475 /* SummaryBarEntry.swift in Sources */,
 				0C8DBA2B21636AEA009A1475 /* NotificationViewModel.swift in Sources */,
 				0CBFA0E92154BC270028750B /* MapsPickerViewController.swift in Sources */,
+				0C8DBA3B2165C610009A1475 /* AddPanelViewController.swift in Sources */,
 				0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */,
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
 				2455FBC52150CA9000881541 /* NotesViewController.swift in Sources */,

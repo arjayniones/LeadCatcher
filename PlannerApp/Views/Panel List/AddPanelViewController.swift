@@ -1,8 +1,8 @@
 //
-//  PanelListDetailsViewController.swift
+//  AddPanelViewController.swift
 //  PlannerApp
 //
-//  Created by Niones Arjay Orcullo on 03/10/2018.
+//  Created by Niones Arjay Orcullo on 04/10/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
@@ -11,8 +11,8 @@ import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-class PanelListDetailsViewController: ViewControllerProtocol, LargeNativeNavbar {
-
+class AddPanelViewController: ViewControllerProtocol, LargeNativeNavbar {
+    
     private var mapView:GMSMapView!
     let mainView: UIView = {
         let view = UIView()
@@ -34,16 +34,30 @@ class PanelListDetailsViewController: ViewControllerProtocol, LargeNativeNavbar 
         return namLbl
     }()
     
+    let nameTextField : UITextField = {
+        let nametxt = UITextField()
+        nametxt.placeholder = "enter hospital name here "
+        
+        return nametxt
+    }()
+    
     let contactLabel : UILabel = {
         let contactLbl = UILabel()
-        contactLbl.text = "Contact Number: "
+        contactLbl.text = "Contact No.: "
         contactLbl.textColor = .white
         return contactLbl
     }()
     
+    let contactTextField : UITextField = {
+        let nametxt = UITextField()
+        nametxt.placeholder = "enter contact number here "
+        
+        return nametxt
+    }()
+    
     let addressLabel : UILabel = {
         let addLbl = UILabel()
-        addLbl.text = "Address"
+        addLbl.text = "Address: "
         addLbl.textColor = .white
         return addLbl
     }()
@@ -60,19 +74,20 @@ class PanelListDetailsViewController: ViewControllerProtocol, LargeNativeNavbar 
         mainView.addSubview(nameLabel)
         mainView.addSubview(contactLabel)
         mainView.addSubview(addressLabel)
-
+        mainView.addSubview(nameTextField)
+        mainView.addSubview(contactTextField)
         self.setupMap()
         
         view.setNeedsUpdateConstraints()
-
+        
         func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+            super.didReceiveMemoryWarning()
+            // Dispose of any resources that can be recreated.
+        }
+        
+        
+        
     }
-        
-        
-
- }
     
     override func updateViewConstraints() {
         
@@ -83,19 +98,38 @@ class PanelListDetailsViewController: ViewControllerProtocol, LargeNativeNavbar 
                 make.bottom.equalTo(view).inset(60)
             }
             nameLabel.snp.makeConstraints {  make in
-               make.top.left.equalTo(mainView).offset(5)
+                make.top.left.equalTo(mainView).offset(5)
                 make.height.equalTo(30);
-               // make.bottom.equalTo(view).offset(20)
+                make.width.equalTo(130)
             }
+            
+            nameTextField.snp.makeConstraints { make in
+                make.top.equalTo(mainView).offset(5)
+                make.left.equalTo(nameLabel.snp.right).offset(5)
+                make.right.equalTo(mainView).offset(5)
+                make.height.equalTo(30);
+                
+            }
+            
+            
             contactLabel.snp.makeConstraints {  make in
                 make.top.equalTo(nameLabel.snp.bottom)
-                make.left.right.equalTo(nameLabel).offset(0)
+                make.left.equalTo(mainView).offset(5)
                 make.height.equalTo(30);
-                //make.bottom.equalTo(view).offset(20)
+               make.width.equalTo(130)
             }
+            
+            contactTextField.snp.makeConstraints { make in
+                make.top.equalTo(nameTextField.snp.bottom).offset(5)
+                make.left.equalTo(contactLabel.snp.right).offset(2)
+                make.right.equalTo(mainView).offset(5)
+                make.height.equalTo(30);
+                
+            }
+            
             addressLabel.snp.makeConstraints {  make in
                 make.top.equalTo(contactLabel.snp.bottom)
-                make.left.right.equalTo(contactLabel).offset(0)
+                make.left.right.equalTo(contactLabel).offset(5)
                 //make.bottom.equalTo(view).offset(20)
                 make.height.equalTo(50)
             }
@@ -121,5 +155,6 @@ class PanelListDetailsViewController: ViewControllerProtocol, LargeNativeNavbar 
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
     }
-
+    
 }
+

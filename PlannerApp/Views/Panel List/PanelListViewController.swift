@@ -24,6 +24,15 @@ class PanelListViewController: ViewControllerProtocol,UITableViewDelegate,UITabl
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
+        let saveButton = UIButton()
+        saveButton.setTitle("Add", for: .normal)
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        saveButton.sizeToFit()
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        
+        
         view.setNeedsUpdateConstraints()
     }
     
@@ -50,6 +59,13 @@ class PanelListViewController: ViewControllerProtocol,UITableViewDelegate,UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func save(){
+        
+        let addPanelVC = AddPanelViewController()
+        self.navigationController?.pushViewController(addPanelVC, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
