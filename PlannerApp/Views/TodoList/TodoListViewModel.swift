@@ -8,6 +8,8 @@
 
 import RealmSwift
 
+
+
 class TodoListViewModel {
     
     var todoListData:Results<AddNote>?
@@ -20,6 +22,10 @@ class TodoListViewModel {
     
     let realmStore = RealmStore<AddNote>()
     
+    var timeByString:TimeStatus?
+    
+    var filteredDates: [AddNote] = []
+    
     init() {
         self.todoListData = realmStore.models(query: "deleted_at == nil")
     }
@@ -30,6 +36,40 @@ class TodoListViewModel {
         }
         let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
         self.filteredNotes = realmStore.models().filter(predicate)
+    }
+    
+    func fontColorByTime() -> UIColor {
+        guard let x = timeByString else {
+            return .black
+        }
+        
+        switch x {
+        case .morning:
+            return .black
+        case .noon:
+            return .black
+        case .afternoon:
+            return .black
+        case .evening:
+            return .lightGray
+        }
+    }
+    
+    func getHeaderMessage() -> String {
+        guard let x = timeByString else {
+            return "Good Day,"
+        }
+        
+        switch x {
+        case .morning:
+            return "Good Morning,"
+        case .noon:
+            return "Good Day,"
+        case .afternoon:
+            return "Good Afternoon,"
+        case .evening:
+            return "Good Evening,"
+        }
     }
     
 }

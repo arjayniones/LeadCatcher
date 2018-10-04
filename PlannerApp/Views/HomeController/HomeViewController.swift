@@ -9,8 +9,16 @@
 import UIKit
 import RealmSwift
 import FSCalendar
+import CoreImage
 
-class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppearance {
+public enum TimeStatus {
+    case morning
+    case noon
+    case evening
+    case afternoon
+}
+
+class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppearance,UIScrollViewDelegate {
     
     fileprivate let calendarView = FSCalendar()
 //    fileprivate weak var eventLabel: UILabel!
@@ -19,14 +27,42 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
     
     fileprivate var clonedData: [AddNote] = []
     fileprivate let tableView = UITableView()
-    fileprivate var filteredDates: [AddNote] = []
-    fileprivate let imageView = UIImageView(image:UIImage(named: "bg.jpg"))
-
+    
+    fileprivate let imageView = UIImageView()
+    fileprivate var context = CIContext(options: nil)
+    fileprivate let scrollView = UIScrollView()
+    fileprivate let contentView = UIView()
+    fileprivate let headerView = UIStackView()
+    fileprivate let greetingsLabel = UILabel()
+    fileprivate let appointmentLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         imageView.isUserInteractionEnabled = true
-        view.addSubview(imageView)
+        self.blurredBGImage()
+        view = imageView
+        
+        scrollView.backgroundColor = .clear
+        view.addSubview(scrollView)
+        
+        contentView.backgroundColor = .clear
+        scrollView.addSubview(contentView)
+        
+        headerView.axis = .vertical
+        headerView.alignment = .leading
+        headerView.spacing = 10
+        contentView.addSubview(headerView)
+        
+        greetingsLabel.text = "\(viewModel.getHeaderMessage()) Facundo!"
+        greetingsLabel.textColor = viewModel.fontColorByTime()
+        greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
+        headerView.addArrangedSubview(greetingsLabel)
+        
+        appointmentLabel.text = "📌 You have 4 appointments today."
+        appointmentLabel.textColor = viewModel.fontColorByTime()
+        appointmentLabel.font = UIFont.ofSize(fontSize: 20, withType: .bold)
+        headerView.addArrangedSubview(appointmentLabel)
         
         calendarView.dataSource = self
         calendarView.delegate = self
@@ -36,20 +72,20 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         calendarView.calendarWeekdayView.backgroundColor = UIColor.clear
         calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 17, withType: .bold)
         calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 15, withType: .bold)
-        calendarView.appearance.weekdayTextColor = .lightGray
-        calendarView.appearance.headerTitleColor = .black
+        calendarView.appearance.weekdayTextColor = viewModel.fontColorByTime()
+        calendarView.appearance.headerTitleColor = viewModel.fontColorByTime()
         calendarView.appearance.borderRadius = 0
         calendarView.appearance.eventOffset = CGPoint(x: 0, y: -7)
-        calendarView.dropShadow()
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
-        imageView.addSubview(calendarView)
+        contentView.addSubview(calendarView)
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.estimatedRowHeight = 100
+        tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        imageView.addSubview(tableView)
+        contentView.addSubview(tableView)
         
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             switch changes {
@@ -72,6 +108,7 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                         self?.clonedData.append(note)
                     }
                 })
+                self?.calendarView.reloadData()
                 
             case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -82,26 +119,65 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         view.setNeedsUpdateConstraints()
     }
     
+    func blurredBGImage() {
+        
+        let hour = Calendar.current.component(.hour, from: Date())
+        
+        switch hour {
+        case 6..<12 : imageView.image = UIImage(named:"morning.jpg") ; viewModel.timeByString = .morning
+        case 12 : imageView.image = UIImage(named:"noon.jpg") ; viewModel.timeByString = .noon
+        case 13..<17 : imageView.image = UIImage(named:"afternoon.jpg") ; viewModel.timeByString = .afternoon
+        case 17..<22 : imageView.image = UIImage(named:"evening.jpeg") ; viewModel.timeByString = .evening
+        default: imageView.image = UIImage(named:"evening.jpeg") ; viewModel.timeByString = .evening
+        }
+        
+        let currentFilter = CIFilter(name: "CIGaussianBlur")
+        let beginImage = CIImage(image: imageView.image!)
+        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
+        currentFilter!.setValue(4, forKey: kCIInputRadiusKey)
+        
+        let cropFilter = CIFilter(name: "CICrop")
+        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
+        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
+        
+        let output = cropFilter!.outputImage
+        let cgimg = context.createCGImage(output!, from: output!.extent)
+        let processedImage = UIImage(cgImage: cgimg!)
+        imageView.image = processedImage
+    }
+    
     deinit {
         viewModel.notificationToken?.invalidate()
     }
     
     override func updateViewConstraints() {
         if !didSetupConstraints {
-            imageView.snp.makeConstraints {make in
-                make.edges.equalTo(self.view).inset(UIEdgeInsets.zero)
+            
+            scrollView.snp.makeConstraints { (make) in
+                make.edges.equalTo(view)
             }
             
-            calendarView.snp.makeConstraints { (make) in
-                make.left.right.equalTo(self.imageView).inset(UIEdgeInsets.zero)
-                make.top.equalTo(self.imageView).inset(60)
+            contentView.snp.makeConstraints {make in
+                make.top.bottom.equalTo(scrollView)
+                make.left.right.equalTo(view)
+            }
+            
+            headerView.snp.makeConstraints {make in
+                make.top.equalTo(contentView).inset(5)
+                make.left.right.equalTo(contentView).inset(20)
+            }
+            
+            calendarView.snp.updateConstraints { (make) in
+                make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
+                make.top.equalTo(headerView.snp.bottom).offset(10)
                 make.height.equalTo(400)
             }
             
             tableView.snp.makeConstraints { (make) in
-                make.left.right.equalTo(self.imageView).inset(UIEdgeInsets.zero)
+                make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
                 make.top.equalTo(calendarView.snp.bottom).offset(10)
-                make.bottom.equalTo(self.imageView)
+                make.height.equalTo(300)
+                make.bottom.equalTo(contentView).offset(-50)
             }
             didSetupConstraints = true
         }
@@ -128,11 +204,13 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! HomeCalendarCell
         if self.gregorian.isDateInToday(date) {
-            filteredDates = clonedData.filter({
+            viewModel.filteredDates =
+                clonedData.filter({
                 convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
             })
             self.tableView.reloadData()
         }
+        cell.titleLabel.textColor = .black
         cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
         return cell
     }
@@ -167,7 +245,7 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
     
     func calendar(_ calendar: FSCalendar, shouldDeselect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         
-        filteredDates = clonedData.filter({
+        viewModel.filteredDates = clonedData.filter({
             convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
         })
         
@@ -179,24 +257,44 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
 
 extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredDates.count
+        return viewModel.filteredDates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
         
-        let data = filteredDates[indexPath.row]
+        let data = viewModel.filteredDates[indexPath.row]
         
         cell?.backgroundColor = .clear
-        cell?.textLabel!.text = data.addNote_subject
-        cell?.textLabel!.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        cell?.textLabel?.text = data.addNote_subject
+        cell?.textLabel?.textColor = viewModel.fontColorByTime()
+        cell?.textLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
         cell?.imageView?.image = UIImage(named: imageNamed)
         cell?.detailTextLabel?.text = convertDateTimeToString(date: data.addNote_alertDateTime!)
+        cell?.detailTextLabel?.textColor = viewModel.fontColorByTime()
         cell?.detailTextLabel?.font = UIFont.ofSize(fontSize: 11, withType: .bold)
         
         return cell!
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        
+        if scrollView == self.scrollView {
+            if yOffset >= scrollView.contentSize.height - view.height {
+                scrollView.isScrollEnabled = false
+                tableView.isScrollEnabled = true
+            }
+        }
+        
+        if scrollView == self.tableView {
+            if yOffset <= 0 {
+                self.scrollView.isScrollEnabled = true
+                self.tableView.isScrollEnabled = false
+            }
+        }
     }
 }
 
