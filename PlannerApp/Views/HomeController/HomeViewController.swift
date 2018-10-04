@@ -38,6 +38,7 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 15, withType: .bold)
         calendarView.appearance.weekdayTextColor = .lightGray
         calendarView.appearance.headerTitleColor = .black
+        calendarView.appearance.borderRadius = 0
         calendarView.appearance.eventOffset = CGPoint(x: 0, y: -7)
         calendarView.dropShadow()
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
@@ -126,6 +127,12 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
     
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! HomeCalendarCell
+        if self.gregorian.isDateInToday(date) {
+            filteredDates = clonedData.filter({
+                convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
+            })
+            self.tableView.reloadData()
+        }
         cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
         return cell
     }
