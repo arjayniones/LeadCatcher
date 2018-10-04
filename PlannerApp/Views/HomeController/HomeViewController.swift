@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import FSCalendar
 import CoreImage
+import SwiftyUserDefaults
 
 public enum TimeStatus {
     case morning
@@ -54,7 +55,10 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         headerView.spacing = 10
         contentView.addSubview(headerView)
         
-        greetingsLabel.text = "\(viewModel.getHeaderMessage()) Facundo!"
+        if let name = Defaults[.SessionUsername] {
+            greetingsLabel.text = "\(viewModel.getHeaderMessage()) \(name)!"
+        }
+        
         greetingsLabel.textColor = viewModel.fontColorByTime()
         greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
         headerView.addArrangedSubview(greetingsLabel)
@@ -169,7 +173,7 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
             
             calendarView.snp.updateConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
-                make.top.equalTo(headerView.snp.bottom).offset(10)
+                make.top.equalTo(headerView.snp.bottom).offset(20)
                 make.height.equalTo(400)
             }
             

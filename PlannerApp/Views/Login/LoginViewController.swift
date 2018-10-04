@@ -198,7 +198,6 @@ class LoginViewController: ViewControllerProtocol {
         // if viewdidload then checktype will be "ViewLoad"
         // if click login button then checktype will be "LoginClick"
         resultUserList = UserViewModel.queryUserTable(checkType: checkType, loginID: self.loginUsernameField.text!, passcode: self.passwordField.text!);
-        print(resultUserList)
         
         if resultUserList.count > 0
         {
@@ -213,11 +212,10 @@ class LoginViewController: ViewControllerProtocol {
                     if result == "Success"
                     {
                         DispatchQueue.main.async {
+                            Defaults[.SessionUserId] = self.resultUserList[0].id;
+                            Defaults[.SessionUsername] = self.resultUserList[0].U_Username;
                             self.dismiss(animated: false, completion: nil)
                         }
-//                        self.present(BaseViewController(), animated: true, completion: nil);
-                        
-//                        self.dismiss(animated: true, completion: nil)
                     }
                     
                 })
@@ -226,6 +224,7 @@ class LoginViewController: ViewControllerProtocol {
             if checkType == "LoginClick"
             {
                 Defaults[.SessionUserId] = resultUserList[0].id;
+                Defaults[.SessionUsername] = resultUserList[0].U_Username;
 //                self.present(BaseViewController(), animated: true, completion: nil);
                 self.dismiss(animated: true, completion: nil)
             }

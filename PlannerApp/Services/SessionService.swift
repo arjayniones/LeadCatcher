@@ -11,6 +11,7 @@ import SwiftyUserDefaults
 
 extension DefaultsKeys {
     static let SessionUserId = DefaultsKey<UUID?>("session_user_id")
+    static let SessionUsername = DefaultsKey<UUID?>("session_user_name")
 }
 
 class SessionService {

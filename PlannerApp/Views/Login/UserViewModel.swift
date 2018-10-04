@@ -107,7 +107,6 @@ extension LoginViewController{
                     let resultUserList = UserViewModel.queryUserTable(checkType: "ViewLoad", loginID: "", passcode: "");
                     Defaults[.SessionUserId] = resultUserList[0].id;
                     completion("Success")
-                    //self.present(BaseViewController(), animated: true, completion: nil);
                 } else {
                     //TODO: User did not authenticate successfully, look at error and take appropriate action
                     guard let error = evaluateError else {
