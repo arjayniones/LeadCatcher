@@ -55,10 +55,6 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         headerView.spacing = 10
         contentView.addSubview(headerView)
         
-        if let name = Defaults[.SessionUsername] {
-            greetingsLabel.text = "\(viewModel.getHeaderMessage()) \(name)!"
-        }
-        
         greetingsLabel.textColor = viewModel.fontColorByTime()
         greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
         headerView.addArrangedSubview(greetingsLabel)
@@ -191,6 +187,10 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
+        
+        if let name = Defaults[.SessionUsername] {
+            greetingsLabel.text = "\(viewModel.getHeaderMessage()) \(name)!"
+        }
     }
 
     override func didReceiveMemoryWarning() {
