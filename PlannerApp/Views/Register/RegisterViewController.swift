@@ -185,6 +185,7 @@ class RegisterViewController: ViewControllerProtocol {
             if userId.count > 0
             {
                 Defaults[.SessionUserId] = userId;
+                Defaults[.SessionUsername] = self.loginIDTextField.text!;
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         }
