@@ -224,7 +224,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: "book-icon")
+        cell.imageView?.image = UIImage(named: "dashboard-task-icon")
         cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
         cell.detailTextLabel?.textColor = .red
         return cell
