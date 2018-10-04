@@ -163,7 +163,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
             }
             
             headerView.snp.makeConstraints {make in
-                make.left.top.right.equalTo(contentView).inset(5)
+                make.top.equalTo(contentView).inset(5)
+                make.left.right.equalTo(contentView).inset(20)
             }
             
             calendarView.snp.updateConstraints { (make) in
