@@ -143,15 +143,15 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
         
-        if data.title == "Notes" {
+        if data.title == "notes".localized {
             self.openNoteController()
         } else if data.alertOptions.count != 0 {
             self.sheetPressed(data: data)
-        } else if data.title == "Start Date Time" {
+        } else if data.title == "start_date_time".localized {
             self.showDateTimePicker()
-        } else if data.title == "Customer" {
+        } else if data.title == "customer".localized {
             self.openContactListViewController()
-        } else if data.title == "Location" {
+        } else if data.title == "location".localized {
             self.openMapView()
         }
         
@@ -209,7 +209,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 extension DetailsTodoListViewController:UIActionSheetDelegate {
     
     func sheetPressed(data:AddTodoViewObject){
-        let actionSheet = UIAlertController(title: "choose_options", message: "please_select".localized + " \(data.title)", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select".localized + " \(data.title)", preferredStyle: .actionSheet)
         
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
