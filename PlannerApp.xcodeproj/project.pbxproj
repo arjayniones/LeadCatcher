@@ -67,6 +67,8 @@
 		2455FBD22151F2B800881541 /* AddNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD12151F2B800881541 /* AddNote.swift */; };
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
+		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
+		2484739E2167119D00C6AFE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 248473A02167119D00C6AFE7 /* Localizable.strings */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		2491C0E62165E37700037578 /* morning.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2491C0E52165E37700037578 /* morning.jpg */; };
@@ -167,7 +169,11 @@
 		2455FBCF2151D87D00881541 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2455FBD12151F2B800881541 /* AddNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNote.swift; sourceTree = "<group>"; };
 		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
+		246F01782167346D008EBE76 /* ms-MY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ms-MY"; path = "ms-MY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
+		2484739421670FF000C6AFE7 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		2484739F2167119D00C6AFE7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		248473A32167131A00C6AFE7 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -463,6 +469,15 @@
 			path = AddTask;
 			sourceTree = "<group>";
 		};
+		248473962167110200C6AFE7 /* LanguageSettings */ = {
+			isa = PBXGroup;
+			children = (
+				2484739421670FF000C6AFE7 /* Localizable.swift */,
+				248473A02167119D00C6AFE7 /* Localizable.strings */,
+			);
+			path = LanguageSettings;
+			sourceTree = "<group>";
+		};
 		248B836F2140B29D00119D9D = {
 			isa = PBXGroup;
 			children = (
@@ -484,6 +499,7 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				248473962167110200C6AFE7 /* LanguageSettings */,
 				2491C0DF2165B12700037578 /* Resources */,
 				24B186C92154B8BA0028CE23 /* CustomViews */,
 				24D8B2C2214A191C00EC7DBE /* Protocols */,
@@ -686,6 +702,8 @@
 			knownRegions = (
 				en,
 				Base,
+				zh,
+				"ms-MY",
 			);
 			mainGroup = 248B836F2140B29D00119D9D;
 			productRefGroup = 248B83792140B29D00119D9D /* Products */;
@@ -710,6 +728,7 @@
 				D6715DA32140FBA900957E86 /* SF-Pro-Text-Semibold.otf in Resources */,
 				D6715D9C2140FBA900957E86 /* SF-Pro-Text-Regular.otf in Resources */,
 				2491C0F02165EEB100037578 /* evening.jpeg in Resources */,
+				2484739E2167119D00C6AFE7 /* Localizable.strings in Resources */,
 				D6715D9D2140FBA900957E86 /* SF-Pro-Text-Bold.otf in Resources */,
 				248B83832140B29D00119D9D /* Assets.xcassets in Resources */,
 				D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */,
@@ -875,6 +894,7 @@
 				0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */,
 				2455FBCC2150DD8100881541 /* AddNoteNavViewController.swift in Sources */,
 				0CBFA0E7215483590028750B /* MapsLocationListViewController.swift in Sources */,
+				2484739521670FF000C6AFE7 /* Localizable.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */,
@@ -897,11 +917,25 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		248473A02167119D00C6AFE7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2484739F2167119D00C6AFE7 /* en */,
+				248473A32167131A00C6AFE7 /* zh */,
+				246F01782167346D008EBE76 /* ms-MY */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		248B83882140B29D00119D9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -959,6 +993,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

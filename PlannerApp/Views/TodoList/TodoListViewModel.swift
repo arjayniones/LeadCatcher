@@ -38,6 +38,17 @@ class TodoListViewModel {
         self.filteredNotes = realmStore.models().filter(predicate)
     }
     
+    func searchAppointmentByDay(fromDate:Date,toDate:Date) -> Results<AddNote>? {
+        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@",fromDate,toDate,"Appointment")
+    }
+    
+    func getAppointmentHeaderMessage() -> String {
+        
+        let message = "📌 You have \(self.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)?.count ?? 0) appointment(s) today."
+        
+        return message
+    }
+    
     func fontColorByTime() -> UIColor {
         guard let x = timeByString else {
             return .black

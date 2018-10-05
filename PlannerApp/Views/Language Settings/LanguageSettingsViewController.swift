@@ -15,7 +15,7 @@ class LanguageSettingsViewController: ViewControllerProtocol,UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Change Language"
+        title = "change_language".localized
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
@@ -53,35 +53,43 @@ class LanguageSettingsViewController: ViewControllerProtocol,UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
         if indexPath.row == 0 {
-            cell.textLabel?.text = "English (EN)"
+            cell!.textLabel?.text = "English (EN)"
         } else if indexPath.row == 1 {
-            cell.textLabel?.text = "Chinese (CH)"
+            cell!.textLabel?.text = "Chinese (ZH)"
         }
         else if indexPath.row == 2 {
-            cell.textLabel?.text = "Bahasa Melayu (MY)"
+            cell!.textLabel?.text = "Bahasa Melayu (MY)"
         }
         
-        
-        //cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-        cell.setNeedsUpdateConstraints()
-        cell.updateConstraintsIfNeeded()
-        
-        return cell
+        return cell!
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 //settingsLabels.count //total number of array using models
+        return 3
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            Language.language = .english
+            break
+        case 1:
+            Language.language = .chinese
+            break
+        case 2:
+            Language.language = .malay
+            break
+        default:
+            break
+        }
         
-        
+        self.navigationController?.popViewController(animated: true)
       
     }
     
