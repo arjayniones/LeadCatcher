@@ -21,3 +21,15 @@
 "yes" = "ya";
 "add_task_failed" = "Tugas Doa Anda Tidak Disimpan";
 "error" = "Kesilapan";
+"cancel" = "Batalkan";
+"ok" = "Okey";
+"notes" = "Nota";
+"start_date_time" = "Tarikh Waktu Mula";
+"customer" = "Pelanggan";
+"location" = "lokasi";
+"subject" = "Subjek";
+"choose_options" = "Pilih Pilihan";
+"please_select" = "Sila Pilih";
+"alert" = "Amaran";
+"task_type" = "jenis tugas";
+

@@ -21,6 +21,17 @@
 "yes" = "是";
 "add_task_failed" = "失败，您的待办事项任务未保存";
 "error" = "错误";
+"cancel" = "取消";
+"ok" = "好";
+"notes" = "笔记";
+"start_date_time" = "开始日期时间";
+"customer" = "顾客";
+"location" = "地点";
+"subject" = "学科";
+"choose_options" = "选择选项";
+"please_select" = "请选择";
+"alert" = "警报";
+"task_type" = "任务类型";
 
 
 

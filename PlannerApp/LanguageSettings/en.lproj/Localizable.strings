@@ -21,3 +21,14 @@
 "yes" = "Yes";
 "add_task_failed" = "Failed, Your To-Do task did not Saved.";
 "error" = "Error";
+"cancel" = "Cancel";
+"ok" = "Ok";
+"notes" = "Notes";
+"start_date_time" = "Start Date Time";
+"customer" = "Customer";
+"location" = "Location";
+"subject" = "Subject";
+"choose_options" = "Choose options";
+"please_select" = "Please select";
+"alert" = "Alert";
+"task_type" = "Task type";
