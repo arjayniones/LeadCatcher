@@ -48,6 +48,7 @@ class AddPanelViewController: ViewControllerProtocol, LargeNativeNavbar {
         return contactLbl
     }()
     
+    
     let contactTextField : UITextField = {
         let nametxt = UITextField()
         nametxt.placeholder = "enter contact number here "
@@ -68,7 +69,7 @@ class AddPanelViewController: ViewControllerProtocol, LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Panel List Details"
+        title = "Add New Panel"
         
         view.addSubview(mainView)
         mainView.addSubview(nameLabel)

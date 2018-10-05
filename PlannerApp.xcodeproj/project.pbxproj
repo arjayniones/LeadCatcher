@@ -21,6 +21,7 @@
 		0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */; };
 		0C8DBA3B2165C610009A1475 /* AddPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */; };
 		0C8DBA3D2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */; };
+		0C8DBA3F21673790009A1475 /* EmailActionSheetPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */; };
 		0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */; };
 		0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D121509C3C0028750B /* ContactListViewController.swift */; };
 		0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D321509CA80028750B /* ContactListViewModel.swift */; };
@@ -123,6 +124,7 @@
 		0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesViewController.swift; sourceTree = "<group>"; };
 		0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPanelViewController.swift; sourceTree = "<group>"; };
 		0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesDetailsViewController.swift; sourceTree = "<group>"; };
+		0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailActionSheetPresenter.swift; sourceTree = "<group>"; };
 		0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListNavViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D121509C3C0028750B /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D321509CA80028750B /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */,
 				0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */,
+				0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */,
 			);
 			path = "Message Templates";
 			sourceTree = "<group>";
@@ -829,6 +832,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2455FBBD21508EA700881541 /* DetailsTodoListViewModel.swift in Sources */,
+				0C8DBA3F21673790009A1475 /* EmailActionSheetPresenter.swift in Sources */,
 				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
 				24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */,
 				24D1B80521636816001D519C /* HomeViewModel.swift in Sources */,
