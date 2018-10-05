@@ -59,7 +59,6 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
         headerView.addArrangedSubview(greetingsLabel)
         
-        appointmentLabel.text = "📌 You have 4 appointments today."
         appointmentLabel.textColor = viewModel.fontColorByTime()
         appointmentLabel.font = UIFont.ofSize(fontSize: 20, withType: .bold)
         headerView.addArrangedSubview(appointmentLabel)
@@ -96,6 +95,7 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 }
                 self?.calendarView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
+                
                 _ = deletions.map({
                     if let date = self?.clonedData[$0].addNote_alertDateTime {
                         self?.calendarView.deselect(date)
@@ -191,6 +191,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         if let name = Defaults[.SessionUsername] {
             greetingsLabel.text = "\(viewModel.getHeaderMessage()) \(name)!"
         }
+        
+        self.appointmentLabel.text = self.viewModel.getAppointmentHeaderMessage()
     }
 
     override func didReceiveMemoryWarning() {

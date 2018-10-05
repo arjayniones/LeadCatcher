@@ -144,11 +144,11 @@ class DetailsTodoListViewModel {
     }
     
     func prepareData() -> Bool {
-        guard let messageTitle = self.addNoteModel?.addNote_taskType else {
+        guard let messageTitle = self.addNoteModel?.addNote_taskType,messageTitle != "" else {
             return false
         }
         
-        guard let messageSubject = self.addNoteModel?.addNote_subject else {
+        guard let messageSubject = self.addNoteModel?.addNote_subject,messageSubject != "" else {
             return false
         }
         
@@ -156,7 +156,7 @@ class DetailsTodoListViewModel {
             return false
         }
         
-        guard let customerName = self.addNoteModel?.addNote_customer?.C_Name else {
+        guard let customerName = self.addNoteModel?.addNote_customer?.C_Name,customerName != "" else {
             return false
         }
         
