@@ -7,3 +7,20 @@
 */
 
 "change_language" = "改变语言";
+"to_do_list" = "待办事项清单";
+"search_to_do" = "搜索做";
+"delete" = "删除";
+"edit" = "编辑";
+"edit_to_do_task" = "编辑做任务";
+"new_to_do_task" = "新任务";
+"save" = "保存";
+"clear" = "明确";
+"add_task_success" = "成功，您的待办事项已保存。";
+"no" = "没有";
+"clear_the_fields" = "清除田地?";
+"yes" = "是";
+"add_task_failed" = "失败，您的待办事项任务未保存";
+"error" = "错误";
+
+
+

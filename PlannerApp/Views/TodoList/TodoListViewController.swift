@@ -20,11 +20,11 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "To Do List"
+        title = "to_do_list".localized
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search To Do"
+        searchController.searchBar.placeholder = "search_to_do".localized
         
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
@@ -142,11 +142,11 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             note = data[indexPath.row]
         }
         
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "delete".localized) { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
         }
         
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
+        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
             self.openDetailsNoteForEditing(model: note)
         }
         

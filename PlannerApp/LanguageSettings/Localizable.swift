@@ -40,13 +40,11 @@ enum Language: String {
 //                    preferredLanguage.startIndex,
 //                    offsetBy: 2
 //                )
-//                guard let localization = Language(
-//                    rawValue: String(preferredLanguage[..<index])
-//                    ) else {
-//                        return Language.english
-//                }
+                guard let localization = Language(rawValue: preferredLanguage) else {
+                        return Language.english
+                }
                 
-                return Language(rawValue: preferredLanguage)!
+                return localization
             }
         }
         set {

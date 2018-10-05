@@ -39,7 +39,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        title = isControllerEditing ? "Edit To Do Task":"New To Do Task"
+        title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -49,7 +49,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.addSubview(tableView)
         
         let saveButton = UIButton()
-        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitle("save".localized, for: .normal)
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         saveButton.sizeToFit()
@@ -58,7 +58,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         if !isControllerEditing {
             let clearButton = UIButton()
-            clearButton.setTitle("Clear", for: .normal)
+            clearButton.setTitle("clear".localized, for: .normal)
             clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
             clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
             clearButton.sizeToFit()
@@ -73,15 +73,15 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     @objc func save() {
         viewModel.saveSchedule(completion: { val in
             if val {
-                let alert = UIAlertController(title: "Success,Your To Do task has saved.", message: "Clear the fields?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                let alert = UIAlertController(title: "add_task_success".localized, message: "clear_the_fields".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.addNoteModel = AddNoteModel()
                     self.tableView.reloadData()
                 }))
                 self.present(alert, animated: true, completion:nil);
             } else {
-                let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Your To Do task did not saved.")
+                let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "add_task_failed")
                 self.present(alert, animated: true, completion: nil);
             }
         })
