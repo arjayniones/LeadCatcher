@@ -133,11 +133,12 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         
         
             let emailAction = UIAlertAction(title: "Email", style: .default) { (action:UIAlertAction) in
-                //self.sendEmail()
-                UIApplication.shared.open(URL(string: "mailto:")!, options: [:], completionHandler: nil)
+                self.sendEmail()
+                //UIApplication.shared.open(URL(string: "mailto:")!, options: [:], completionHandler: nil)
             }
             let smsAction = UIAlertAction(title: "SMS", style: .default) { (action:UIAlertAction) in
-            UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
+            //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
+                
             }
             actionSheet.addAction(emailAction)
             actionSheet.addAction(smsAction)
@@ -171,11 +172,34 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             self.present(mc, animated: true, completion: nil)
         } else {
             // show failure alert
+             print("Can't send messages.")
+        }
+    }
+    
+    @objc func sendSMS(){
+        
+        
+         let mc: MFMessageComposeViewController = MFMessageComposeViewController()
+        //let composeVC = MFMessageComposeViewController()
+        mc.messageComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        mc.recipients = ["+60164925940"]
+        mc.body = self.messageTextField.text
+        
+        if MFMessageComposeViewController.canSendText() {
+            self.present(mc, animated: true, completion: nil)
+        } else {
+            print("Can't send messages.")
         }
     }
 }
 
-extension MessageTemplatesDetailsViewController : MFMailComposeViewControllerDelegate{
+extension MessageTemplatesDetailsViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true)
+    }
+    
     
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
