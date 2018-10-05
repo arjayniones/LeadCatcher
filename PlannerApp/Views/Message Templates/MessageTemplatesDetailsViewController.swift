@@ -138,7 +138,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             }
             let smsAction = UIAlertAction(title: "SMS", style: .default) { (action:UIAlertAction) in
             //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
-                
+                self.sendSMS()
             }
             actionSheet.addAction(emailAction)
             actionSheet.addAction(smsAction)
@@ -152,28 +152,32 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     
     @objc func sendEmail() {
-        if MFMailComposeViewController.canSendMail() {
-//            let mail = MFMailComposeViewController()
-//            mail.mailComposeDelegate = self
-//            //mail.setToRecipients(["ved.ios@yopmail.com"])
-//            mail.setMessageBody(messageTextField.text, isHTML: true)
+//        if MFMailComposeViewController.canSendMail() {
 //
-//            present(mail, animated: true)
-            
-            let emailTitle = titleLabel.text
-            let messageBody = messageTextField.text
-            let toRecipents = ["arjayniones@gmail.com"]
-            let mc: MFMailComposeViewController = MFMailComposeViewController()
-            mc.mailComposeDelegate = self
-            mc.setSubject(emailTitle!)
-            mc.setMessageBody(messageBody!, isHTML: false)
-            mc.setToRecipients(toRecipents)
-            
-            self.present(mc, animated: true, completion: nil)
-        } else {
-            // show failure alert
-             print("Can't send messages.")
-        }
+//
+//            let emailTitle = titleLabel.text
+//            let messageBody = messageTextField.text
+//            let toRecipents = ["arjayniones@gmail.com"]
+//            let mc: MFMailComposeViewController = MFMailComposeViewController()
+//            mc.mailComposeDelegate = self
+//            mc.setSubject(emailTitle!)
+//            mc.setMessageBody(messageBody!, isHTML: false)
+//            mc.setToRecipients(toRecipents)
+//
+//            UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
+//        } else {
+//            // show failure alert
+//             print("Can't send messages.")
+//        }
+        
+        let mailComposeViewController = MFMailComposeViewController()
+        mailComposeViewController.mailComposeDelegate = self
+        mailComposeViewController.setToRecipients([""])
+        mailComposeViewController.setMessageBody(messageTextField.text, isHTML: false)
+        mailComposeViewController.setSubject(titleLabel.text!)
+
+
+        UIApplication.shared.keyWindow?.rootViewController?.present(mailComposeViewController, animated: true)
     }
     
     @objc func sendSMS(){
@@ -188,7 +192,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         mc.body = self.messageTextField.text
         
         if MFMessageComposeViewController.canSendText() {
-            self.present(mc, animated: true, completion: nil)
+             UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
         } else {
             print("Can't send messages.")
         }
