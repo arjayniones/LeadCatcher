@@ -190,7 +190,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         self.populateData(cell: cell, index: indexPath, data:data)
         cell.selectionStyle = .none
         
-        if data.title == "Subject" {
+        if data.title == "subject".localized {
             cell.labelTitle.isEnabled = true
             cell.nextIcon.isHidden = true
             cell.subjectCallback = { val in
