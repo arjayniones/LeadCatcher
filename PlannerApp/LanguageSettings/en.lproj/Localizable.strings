@@ -11,3 +11,13 @@
 "search_to_do" = "Search To Do";
 "delete" = "Delete";
 "edit" = "Edit";
+"edit_to_do_task" = "Edit To Do Task";
+"new_to_do_task" = "New To Do Task";
+"save" = "Save";
+"clear" = "Clear";
+"add_task_success" = "Success, Your To-Do task has been saved.";
+"no" = "No";
+"clear_the_fields" = "Clear the Fields?";
+"yes" = "Yes";
+"add_task_failed" = "Failed, Your To-Do task did not Saved.";
+"error" = "Error";
