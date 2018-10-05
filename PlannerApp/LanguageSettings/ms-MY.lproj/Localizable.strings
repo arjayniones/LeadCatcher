@@ -7,4 +7,12 @@
 */
 
 "change_language" = "Tukar bahasa";
-
+"to_do_list" = "Senarai Yang Hendak Dibuat";
+"search_to_do" = "Carian Untuk Dilakukan";
+"delete" = "padam";
+"edit" = "Edit";
+"edit_to_do_task" = "Edit Untuk Melakukan Tugas";
+"new_to_do_task" = "Baru Untuk Melakukan Tugas";
+"save" = "simpan";
+"clear" = "jelas";
+"add_task_success" : "Kejayaan, Tugasan To Do Anda Telah Disimpan."

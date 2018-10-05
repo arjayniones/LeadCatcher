@@ -7,4 +7,7 @@
 */
 
 "change_language" = "Change Language";
-
+"to_do_list" = "To Do List";
+"search_to_do" = "Search To Do";
+"delete" = "Delete";
+"edit" = "Edit";
