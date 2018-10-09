@@ -62,6 +62,8 @@ class StoreManager {
                 return
             }
         }
+        
+       
     }
     
     class func data<T: Model >(

@@ -6,6 +6,9 @@
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
+
+
+//not used yet
 import UIKit
 
 class DetailsVC: UIViewController {

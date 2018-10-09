@@ -78,6 +78,32 @@ class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         self.navigationController?.pushViewController(panelDetailsVC, animated: true) //call security navigation
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+//        guard let data = viewModel.todoListData else {
+//            return nil
+//        }
+        
+        let note: AddNote
+        
+//        if isFiltering() {
+//            note = viewModel.filteredNotes![indexPath.row]
+//        } else {
+//            note = data[indexPath.row]
+//        }
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "delete".localized) { (deleteAction, indexPath) -> Void in
+           // self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
+            
+        }
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
+            //self.openDetailsNoteForEditing(model: note)
+        }
+        
+        return [deleteAction, editAction]
+    }
+    
     
     
 }

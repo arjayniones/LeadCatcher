@@ -218,11 +218,13 @@ class DetailsTodoListViewModel {
             if let location = addNoteMod.addNote_location {
                 addNote.addNote_location = location
             }
+
             addNote.add()
             
             return id
         } else {
             return nil
+
         }
     }
 }
