@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import UserNotifications
 
 class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     var deleteNotification: AddNote?
@@ -144,6 +145,8 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "delete".localized) { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
+            let identifier = "user_notification_\(note.id)"
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         }
         
         let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in

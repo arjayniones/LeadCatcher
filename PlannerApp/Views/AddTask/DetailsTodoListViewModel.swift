@@ -147,7 +147,7 @@ class DetailsTodoListViewModel {
         content.userInfo = ["id": "\(id)"]
         content.sound = UNNotificationSound.default()
         
-        let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: self.dateChosen!)
+        let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in
             if error != nil {
                 completion(false)

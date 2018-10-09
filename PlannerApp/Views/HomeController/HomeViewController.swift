@@ -11,6 +11,7 @@ import RealmSwift
 import FSCalendar
 import CoreImage
 import SwiftyUserDefaults
+import UserNotifications
 
 public enum TimeStatus {
     case morning
@@ -219,6 +220,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         }
         
         self.appointmentLabel.text = self.viewModel.getAppointmentHeaderMessage()
+        
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 
     override func didReceiveMemoryWarning() {
