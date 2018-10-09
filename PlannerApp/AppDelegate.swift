@@ -84,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let actionIdentifier = response.actionIdentifier
         let content = response.notification.request.content
         
+        print("pumasok dito pumasok dito")
+        
         switch actionIdentifier {
         case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
             // Do something
@@ -98,6 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("sample sample sample")
+        
         
         completionHandler([.alert,.sound,.badge])
     }

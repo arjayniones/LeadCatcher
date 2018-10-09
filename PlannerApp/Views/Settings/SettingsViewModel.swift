@@ -15,7 +15,6 @@ class SettingsViewModel {
         let labelNames = [
             SettingsLabels(labelName: "Security"),
             SettingsLabels(labelName: "Summary"),
-            SettingsLabels(labelName: "Notifications"),
             SettingsLabels(labelName: "Panel List"),
             SettingsLabels(labelName: "Map"),
             SettingsLabels(labelName: "Sync Phone Book Contacts"),

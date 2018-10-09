@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class NotificationsListViewController: ViewControllerProtocol,LargeNativeNavbar{
+class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
     
     fileprivate let tableView = UITableView()
     fileprivate let viewModel = TodoListViewModel()
@@ -19,7 +19,6 @@ class NotificationsListViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         title = "Notifications"
         
-       
         definesPresentationContext = true
         
         tableView.delegate = self

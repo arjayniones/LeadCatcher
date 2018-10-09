@@ -115,8 +115,18 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 fatalError("\(error)")
             }
         }
+        let notificationImage = UIImageView()
+        notificationImage.image = UIImage(named:"bell-icon-inactive")
+        notificationImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openNotificationPage)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationImage)
+        
         view.updateConstraintsIfNeeded()
         view.setNeedsUpdateConstraints()
+    }
+    
+    @objc func openNotificationPage() {
+        let notifVC = NotificationsListViewController()
+        self.navigationController?.pushViewController(notifVC, animated: true)
     }
     
     func blurredBGImage() {
