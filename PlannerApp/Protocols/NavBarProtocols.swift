@@ -20,9 +20,7 @@ extension NoNavbar where Self: UIViewController {
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.isTranslucent = true
     }
-    
 }
-
 
 protocol NativeNavbar {
     func updateNavbarAppear()
@@ -36,6 +34,7 @@ extension NativeNavbar where Self: UIViewController {
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedStringKey.font: UIFont.ofSize(fontSize: 17, withType: .bold),
             NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor,

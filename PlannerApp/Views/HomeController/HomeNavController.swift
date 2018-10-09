@@ -14,9 +14,6 @@ class HomeNavController: BaseNavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.isTranslucent = false;
-        navigationBar.barTintColor = .white;
-        navigationBar.backgroundColor = .red
         pushViewController(controller, animated: true)
         // Do any additional setup after loading the view.
     }

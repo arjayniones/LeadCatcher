@@ -86,10 +86,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         switch actionIdentifier {
         case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
-            // Do something
+            
+            let realm = RealmStore<AddNote>()
+            
+            let data = realm.models(query: "id = '\(content.userInfo["id"]!)'")?.first
+            try! realm.write {
+                data?.status = "unread"
+            }
+            
             completionHandler()
         case UNNotificationDefaultActionIdentifier: // App was opened from notification
-            // Do something
+            
+            let realm = RealmStore<AddNote>()
+            
+            let data = realm.models(query: "id = '\(content.userInfo["id"]!)'")?.first
+            try! realm.write {
+                data?.status = "unread"
+            }
+            
             completionHandler()
         default:
             completionHandler()
@@ -98,6 +112,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        let realm = RealmStore<AddNote>()
+        
+        let data = realm.models(query: "id = '\(notification.request.content.userInfo["id"]!)'")?.first
+        try! realm.write {
+            data?.status = "unread"
+        }
         
         completionHandler([.alert,.sound,.badge])
     }

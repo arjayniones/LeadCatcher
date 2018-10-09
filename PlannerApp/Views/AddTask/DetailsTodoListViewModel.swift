@@ -13,7 +13,6 @@ import CoreLocation
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
     
-    var contentChosen:UNMutableNotificationContent?
     var dateChosen:UNCalendarNotificationTrigger?
     var addNoteModel: AddNoteModel?
     
@@ -23,39 +22,39 @@ class DetailsTodoListViewModel {
         
         let row1 = AddTodoViewObject()
         row1.icon = "calendar-icon"
-        row1.title = "Start Date Time"
+        row1.title = "start_date_time".localized
         self.detailRows.append(row1)
         
         let row2 = AddTodoViewObject()
         row2.icon = "repeat-icon"
-        row2.title = "Alert"
+        row2.title = "alert".localized
         row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
         self.detailRows.append(row2)
         
         let row3 = AddTodoViewObject()
         row3.icon = "subject-icon"
-        row3.title = "Subject"
+        row3.title = "subject".localized
         self.detailRows.append(row3)
         
         let row4 = AddTodoViewObject()
         row4.icon = "person-icon"
-        row4.title = "Customer"
+        row4.title = "customer".localized
         self.detailRows.append(row4)
         
         let row5 = AddTodoViewObject()
         row5.icon = "task-icon"
-        row5.title = "Task type"
+        row5.title = "task_type".localized
         row5.alertOptions = ["Appointment","Customer Birthday","Other"]
         self.detailRows.append(row5)
         
         let row6 = AddTodoViewObject()
         row6.icon = "notes-icon"
-        row6.title = "Notes"
+        row6.title = "notes".localized
         self.detailRows.append(row6)
         
         let row7 = AddTodoViewObject()
         row7.icon = "location-icon"
-        row7.title = "Location"
+        row7.title = "location".localized
         self.detailRows.append(row7)
     }
     
@@ -133,39 +132,56 @@ class DetailsTodoListViewModel {
         //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
     }
     
-    func setupNotificationInfoSettings(message:NotificationMessage) {
+    func setupNotificationInfoSettings(message:NotificationMessage,completion: @escaping ((_ success:Bool) -> Void)) {
+        
+        guard let id = self.saveToRealm() else {
+            completion(false)
+            return
+        }
+        
         let content = UNMutableNotificationContent()
         content.title = message.title
         content.subtitle = message.subtitle
         content.body = message.body
         content.badge = 1
+        content.userInfo = ["id": "\(id)"]
         content.sound = UNNotificationSound.default()
-        self.contentChosen = content
+        
+        let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
+        UNUserNotificationCenter.current().add(request) { error in
+            if error != nil {
+                completion(false)
+                return
+            } else {
+                completion(true)
+                return
+            }
+        }
     }
     
-    func prepareData() -> Bool {
+    func prepareData() -> NotificationMessage? {
         guard let messageTitle = self.addNoteModel?.addNote_taskType,messageTitle != "" else {
-            return false
+            return nil
         }
         
         guard let messageSubject = self.addNoteModel?.addNote_subject,messageSubject != "" else {
-            return false
+            return nil
         }
         
         guard let messageBody = self.addNoteModel?.addNote_notes else {
-            return false
+            return nil
         }
         
         guard let customerName = self.addNoteModel?.addNote_customer?.C_Name,customerName != "" else {
-            return false
+            return nil
         }
         
         guard self.addNoteModel?.addNote_location != nil else {
-            return false
+            return nil
         }
         
-        guard setupNotificationDateSettings() else {
-            return false
+        guard setupNotificationDateSettings() && self.dateChosen != nil else {
+            return nil
         }
         
         let message = NotificationMessage()
@@ -173,51 +189,42 @@ class DetailsTodoListViewModel {
         message.subtitle = messageSubject
         message.body = messageBody
         
-        self.setupNotificationInfoSettings(message: message)
-        
-        return true
+        return message
     }
     
     func saveSchedule(completion: @escaping ((_ success:Bool) -> Void)) {
-        guard prepareData() else {
+        guard let messageConstructed = prepareData() else {
             completion(false)
             return
         }
         
-        if let content = self.contentChosen,let triggerTime = self.dateChosen {
-            let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: triggerTime)
-            UNUserNotificationCenter.current().add(request) { error in
-                if error != nil {
-                    completion(false)
-                } else {
-                    self.saveToRealm()
-                    completion(true)
-                }
-            }
-        } else {
-            completion(false)
-        }
-        
+        self.setupNotificationInfoSettings(message: messageConstructed, completion:{ val in
+            completion(val)
+            return
+        })
     }
     
-    func saveToRealm() {
-        DispatchQueue.main.async {
-            if let addNoteMod = self.addNoteModel {
-                let addNote = AddNote()
-                addNote.newInstance()
-                addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
-                addNote.addNote_repeat = addNoteMod.addNote_repeat
-                addNote.addNote_subject = addNoteMod.addNote_subject
-                addNote.addNote_customerId = addNoteMod.addNote_customer?.id
-                addNote.addNote_taskType = addNoteMod.addNote_taskType
-                addNote.addNote_notes = addNoteMod.addNote_notes
-                
-                if let location = addNoteMod.addNote_location {
-                    addNote.addNote_location = location
-                }
-                addNote.add()
-            }
+    func saveToRealm() -> UUID? {
+        if let addNoteMod = self.addNoteModel {
+            let addNote = AddNote()
+            let id = addNote.newInstance()
+            addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
+            addNote.addNote_repeat = addNoteMod.addNote_repeat
+            addNote.addNote_subject = addNoteMod.addNote_subject
+            addNote.addNote_customerId = addNoteMod.addNote_customer?.id
+            addNote.addNote_taskType = addNoteMod.addNote_taskType
+            addNote.addNote_notes = addNoteMod.addNote_notes
             
+            if let location = addNoteMod.addNote_location {
+                addNote.addNote_location = location
+            }
+
+            addNote.add()
+            
+            return id
+        } else {
+            return nil
+
         }
     }
 }

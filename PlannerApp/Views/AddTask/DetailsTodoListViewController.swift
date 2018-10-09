@@ -81,14 +81,14 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 }))
                 self.present(alert, animated: true, completion:nil);
             } else {
-                let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "add_task_failed")
+                let alert = UIAlertController.alertControllerWithTitle(title: "error".localized, message: "add_task_failed".localized)
                 self.present(alert, animated: true, completion: nil);
             }
         })
     }
     
     @objc func clear() {
-        let controller = UIAlertController(title: "Info", message: "Clear the fields?", preferredStyle: .alert)
+        let controller = UIAlertController(title: "Info", message: "clear_the_fields".localized, preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
         controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             self.viewModel.addNoteModel = AddNoteModel()
@@ -143,15 +143,15 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
         
-        if data.title == "Notes" {
+        if data.title == "notes".localized {
             self.openNoteController()
         } else if data.alertOptions.count != 0 {
             self.sheetPressed(data: data)
-        } else if data.title == "Start Date Time" {
+        } else if data.title == "start_date_time".localized {
             self.showDateTimePicker()
-        } else if data.title == "Customer" {
+        } else if data.title == "customer".localized {
             self.openContactListViewController()
-        } else if data.title == "Location" {
+        } else if data.title == "location".localized {
             self.openMapView()
         }
         
@@ -190,7 +190,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         self.populateData(cell: cell, index: indexPath, data:data)
         cell.selectionStyle = .none
         
-        if data.title == "Subject" {
+        if data.title == "subject".localized {
             cell.labelTitle.isEnabled = true
             cell.nextIcon.isHidden = true
             cell.subjectCallback = { val in
@@ -209,13 +209,13 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 extension DetailsTodoListViewController:UIActionSheetDelegate {
     
     func sheetPressed(data:AddTodoViewObject){
-        let actionSheet = UIAlertController(title: "Choose options", message: "Please select \(data.title)", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select".localized + " \(data.title)", preferredStyle: .actionSheet)
         
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
-                if data.title == "Alert" {
+                if data.title == "alert".localized {
                     self.viewModel.addNoteModel?.addNote_repeat = title
-                } else if data.title == "Task type" {
+                } else if data.title == "task_type".localized {
                     self.viewModel.addNoteModel?.addNote_taskType = title
                 }
                 self.tableView.reloadData()
@@ -223,7 +223,7 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
             actionSheet.addAction(action)
         }
         
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
         
         self.present(actionSheet, animated: true, completion: nil)
     }

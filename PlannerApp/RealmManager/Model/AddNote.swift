@@ -18,15 +18,18 @@ class AddNote: Model {
     @objc dynamic var addNote_taskType: String = ""
     @objc dynamic var addNote_notes: String = ""
     @objc dynamic var addNote_location:LocationModel?
+    @objc dynamic var status:String = ""
     
     override func mapping(map: Map) {
         super.mapping(map: map)
         
     }
     
-    func newInstance() {
+    func newInstance() -> UUID {
         id = uuid()
         created_at = Date()
         updated_at = Date()
+        
+        return id
     }
 }

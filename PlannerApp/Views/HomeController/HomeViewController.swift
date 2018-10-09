@@ -11,6 +11,7 @@ import RealmSwift
 import FSCalendar
 import CoreImage
 import SwiftyUserDefaults
+import UserNotifications
 
 public enum TimeStatus {
     case morning
@@ -44,16 +45,10 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         self.blurredBGImage()
         view = imageView
         
-        scrollView.backgroundColor = .clear
-        view.addSubview(scrollView)
-        
-        contentView.backgroundColor = .clear
-        scrollView.addSubview(contentView)
-        
         headerView.axis = .vertical
         headerView.alignment = .leading
         headerView.spacing = 10
-        contentView.addSubview(headerView)
+        view.addSubview(headerView)
         
         greetingsLabel.textColor = viewModel.fontColorByTime()
         greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
@@ -62,6 +57,12 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         appointmentLabel.textColor = viewModel.fontColorByTime()
         appointmentLabel.font = UIFont.ofSize(fontSize: 20, withType: .bold)
         headerView.addArrangedSubview(appointmentLabel)
+        
+        scrollView.backgroundColor = .clear
+        view.addSubview(scrollView)
+        
+        contentView.backgroundColor = .clear
+        scrollView.addSubview(contentView)
         
         calendarView.dataSource = self
         calendarView.delegate = self
@@ -86,12 +87,20 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         contentView.addSubview(tableView)
         
+        let notificationImage = UIImageView()
+        notificationImage.image = UIImage(named:"bell-icon-inactive")
+        notificationImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openNotificationPage)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationImage)
+        
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             switch changes {
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
                     self?.calendarView.select(data.addNote_alertDateTime)
                     self?.clonedData.append(data)
+                    if data.status == "unread" {
+                        notificationImage.image = UIImage(named:"bell-icon-active")
+                    }
                 }
                 self?.calendarView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
@@ -108,6 +117,17 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                         self?.clonedData.append(note)
                     }
                 })
+                
+                if modifications.count > 0 {
+                    if let notes = self?.viewModel.todoListData?.filter({ $0.status == "unread" }) {
+                        if  notes.count > 0 {
+                            notificationImage.image = UIImage(named:"bell-icon-active")
+                        } else {
+                            notificationImage.image = UIImage(named:"bell-icon-inactive")
+                        }
+                    }
+                }
+                
                 self?.calendarView.reloadData()
                 
             case .error(let error):
@@ -115,8 +135,14 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 fatalError("\(error)")
             }
         }
+        
         view.updateConstraintsIfNeeded()
         view.setNeedsUpdateConstraints()
+    }
+    
+    @objc func openNotificationPage() {
+        let notifVC = NotificationsListViewController()
+        self.navigationController?.pushViewController(notifVC, animated: true)
     }
     
     func blurredBGImage() {
@@ -153,8 +179,14 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
     override func updateViewConstraints() {
         if !didSetupConstraints {
             
+            headerView.snp.makeConstraints {make in
+                make.top.equalTo(view.safeArea.top).inset(5)
+                make.left.right.equalTo(contentView).inset(20)
+            }
+            
             scrollView.snp.makeConstraints { (make) in
-                make.edges.equalTo(view)
+                make.left.bottom.right.equalTo(view)
+                make.top.equalTo(headerView.snp.bottom)
             }
             
             contentView.snp.makeConstraints {make in
@@ -162,14 +194,9 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 make.left.right.equalTo(view)
             }
             
-            headerView.snp.makeConstraints {make in
-                make.top.equalTo(contentView).inset(5)
-                make.left.right.equalTo(contentView).inset(20)
-            }
-            
             calendarView.snp.updateConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
-                make.top.equalTo(headerView.snp.bottom).offset(20)
+                make.top.equalTo(contentView).offset(10)
                 make.height.equalTo(400)
             }
             
@@ -193,6 +220,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         }
         
         self.appointmentLabel.text = self.viewModel.getAppointmentHeaderMessage()
+        
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 
     override func didReceiveMemoryWarning() {
