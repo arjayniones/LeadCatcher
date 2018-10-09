@@ -147,8 +147,6 @@ class DetailsTodoListViewModel {
         content.userInfo = ["id": "\(id)"]
         content.sound = UNNotificationSound.default()
         
-        print(content)
-        
         let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in
             if error != nil {
@@ -190,7 +188,6 @@ class DetailsTodoListViewModel {
         message.title = messageTitle + " with \(customerName)"
         message.subtitle = messageSubject
         message.body = messageBody
-        print(message)
         
         return message
     }

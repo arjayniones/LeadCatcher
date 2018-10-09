@@ -2,7 +2,7 @@
 //  NotificationsListViewController.swift
 //  PlannerApp
 //
-//  Created by Niones Arjay Orcullo on 02/10/2018.
+//  Created by Alkuino Robert John Matias on 02/10/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import RealmSwift
 class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
     
     fileprivate let tableView = UITableView()
-    fileprivate let viewModel = TodoListViewModel()
+    fileprivate let viewModel = NotificationViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
-        viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
+        viewModel.notificationToken = viewModel.tasks?.observe { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
             case .initial:
@@ -86,9 +86,6 @@ class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
     
 }
 
-
-
-
 extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -96,40 +93,34 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        guard let data = viewModel.todoListData else {
+        guard let data = viewModel.tasks else {
             return nil
         }
         
         let note: AddNote
-        
-        
-            note = data[indexPath.row]
+        note = data[indexPath.row]
         
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
-//            RealmStore.delete(model: note)
-            
-        }
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (editAction, indexPath) -> Void in
-            
-            self.openDetailsNoteForEditing(model: note)
+            self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
         }
         
-        return [deleteAction, editAction]
+        return [deleteAction]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let data = viewModel.todoListData else {
+        guard let data = viewModel.tasks else {
             return
         }
         
         let note: AddNote
+        note = data[indexPath.row]
         
-       
-            note = data[indexPath.row]
+        try! viewModel.realmStore.write {
+            note.status = "read"
+        }
         
-        //add validation here to check if its birthday or notes
-        //self.openDetailsNoteForEditing(model: note)
+        self.openDetailsNoteForEditing(model: note)
     }
     
     func openDetailsNoteForEditing(model:AddNote) {
@@ -141,9 +132,9 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
         
-//        if let customerModel = viewModel.realmStore.models(query: "id == '\(model.addNote_customerId!)'")?.first {
-//            todoModel.addNote_customer = customerModel
-//        }
+        if let customerModel = RealmStore<ContactModel>().models(query: "id == '\(model.addNote_customerId!)'")?.first {
+            todoModel.addNote_customer = customerModel
+        }
         
         
         todoModel.addNote_taskType = model.addNote_taskType
@@ -157,10 +148,9 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let data = viewModel.todoListData else {
+        guard let data = viewModel.tasks else {
             return 0
         }
-        
         
         return data.count
     }
@@ -169,21 +159,24 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
         
-        guard let data = viewModel.todoListData else {
+        guard let data = viewModel.tasks else {
             return cell
         }
         
         let note: AddNote
-        
-       
-            note = data[indexPath.row]
-        
-        //write validations here if birthday change icon to "birthday-icon" if meeting change icon to "meeting-icon"
+        note = data[indexPath.row]
         
         cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: "meeting-icon")
+        cell.imageView?.image = UIImage(named: note.addNote_taskType == "Customer Birthday" ? "birthday-icon":"meeting-icon")
         cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
         cell.detailTextLabel?.textColor = .red
+        
+        if note.status == "unread" {
+            cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        } else {
+            cell.backgroundColor = .white
+        }
+        
         return cell
     }
 }

@@ -86,12 +86,20 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         contentView.addSubview(tableView)
         
+        let notificationImage = UIImageView()
+        notificationImage.image = UIImage(named:"bell-icon-inactive")
+        notificationImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openNotificationPage)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationImage)
+        
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             switch changes {
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
                     self?.calendarView.select(data.addNote_alertDateTime)
                     self?.clonedData.append(data)
+                    if data.status == "unread" {
+                        notificationImage.image = UIImage(named:"bell-icon-active")
+                    }
                 }
                 self?.calendarView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
@@ -108,6 +116,17 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                         self?.clonedData.append(note)
                     }
                 })
+                
+                if modifications.count > 0 {
+                    if let notes = self?.viewModel.todoListData?.filter({ $0.status == "unread" }) {
+                        if  notes.count > 0 {
+                            notificationImage.image = UIImage(named:"bell-icon-active")
+                        } else {
+                            notificationImage.image = UIImage(named:"bell-icon-inactive")
+                        }
+                    }
+                }
+                
                 self?.calendarView.reloadData()
                 
             case .error(let error):
@@ -115,10 +134,6 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 fatalError("\(error)")
             }
         }
-        let notificationImage = UIImageView()
-        notificationImage.image = UIImage(named:"bell-icon-inactive")
-        notificationImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openNotificationPage)))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationImage)
         
         view.updateConstraintsIfNeeded()
         view.setNeedsUpdateConstraints()
