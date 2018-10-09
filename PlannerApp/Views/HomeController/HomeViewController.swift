@@ -44,16 +44,10 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         self.blurredBGImage()
         view = imageView
         
-        scrollView.backgroundColor = .clear
-        view.addSubview(scrollView)
-        
-        contentView.backgroundColor = .clear
-        scrollView.addSubview(contentView)
-        
         headerView.axis = .vertical
         headerView.alignment = .leading
         headerView.spacing = 10
-        contentView.addSubview(headerView)
+        view.addSubview(headerView)
         
         greetingsLabel.textColor = viewModel.fontColorByTime()
         greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
@@ -62,6 +56,12 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         appointmentLabel.textColor = viewModel.fontColorByTime()
         appointmentLabel.font = UIFont.ofSize(fontSize: 20, withType: .bold)
         headerView.addArrangedSubview(appointmentLabel)
+        
+        scrollView.backgroundColor = .clear
+        view.addSubview(scrollView)
+        
+        contentView.backgroundColor = .clear
+        scrollView.addSubview(contentView)
         
         calendarView.dataSource = self
         calendarView.delegate = self
@@ -178,8 +178,14 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
     override func updateViewConstraints() {
         if !didSetupConstraints {
             
+            headerView.snp.makeConstraints {make in
+                make.top.equalTo(view.safeArea.top).inset(5)
+                make.left.right.equalTo(contentView).inset(20)
+            }
+            
             scrollView.snp.makeConstraints { (make) in
-                make.edges.equalTo(view)
+                make.left.bottom.right.equalTo(view)
+                make.top.equalTo(headerView.snp.bottom)
             }
             
             contentView.snp.makeConstraints {make in
@@ -187,14 +193,9 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 make.left.right.equalTo(view)
             }
             
-            headerView.snp.makeConstraints {make in
-                make.top.equalTo(contentView).inset(5)
-                make.left.right.equalTo(contentView).inset(20)
-            }
-            
             calendarView.snp.updateConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
-                make.top.equalTo(headerView.snp.bottom).offset(20)
+                make.top.equalTo(contentView).offset(10)
                 make.height.equalTo(400)
             }
             
