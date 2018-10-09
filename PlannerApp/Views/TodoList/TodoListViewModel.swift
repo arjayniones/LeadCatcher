@@ -39,7 +39,7 @@ class TodoListViewModel {
     }
     
     func searchAppointmentByDay(fromDate:Date,toDate:Date) -> Results<AddNote>? {
-        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@",fromDate,toDate,"Appointment")
+        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Appointment")
     }
     
     func getAppointmentHeaderMessage() -> String {
