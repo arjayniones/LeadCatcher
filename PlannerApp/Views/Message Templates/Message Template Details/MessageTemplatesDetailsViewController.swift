@@ -11,6 +11,27 @@ import MessageUI
 
 class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNativeNavbar {
 
+    fileprivate let viewModel: MessageTemplateDetailsViewModel
+    var isControllerEditing:Bool = false
+    private let realmStore = RealmStore<MessageTemplatesModel>()
+    
+    
+    var setupModel: AddMessageTemplateModel? {
+        didSet {
+            viewModel.addMessageTemplateModel = setupModel
+        }
+    }
+    
+    required init() {
+        viewModel = MessageTemplateDetailsViewModel()
+        
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let mainView: UIView = {
         let view = UIView()
         view.backgroundColor = .yellow
@@ -25,10 +46,18 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     }()
     
     let titleLabel : UILabel = {
-        let namLbl = UILabel()
-        namLbl.text = "Birthday Greetings"
-        namLbl.textColor = .black
-        return namLbl
+        let titleLbl = UILabel()
+        titleLbl.text = "Title:"
+        titleLbl.textColor = .black
+        return titleLbl
+    }()
+    
+    let titleTextView : UITextField = {
+        let titleTxt = UITextField()
+        titleTxt.placeholder = "Enter your message title here"
+        titleTxt.font = UIFont.ofSize(fontSize: 20, withType: .regular)
+        
+        return titleTxt
     }()
     
     let instructionLabel : UILabel = {
@@ -52,12 +81,71 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         return copyBtn
     }()
     
+    let bodyLabel : UILabel = {
+        let bodyLbl = UILabel()
+        bodyLbl.text = "Message:"
+        bodyLbl.textColor = .black
+        return bodyLbl
+    }()
+    
     let messageTextField : UITextView = {
         let nametxt = UITextView()
         nametxt.text = "Happy Birthday! \nEvery day is an opportunity for a fresh new start. \nMake this one counted. Take care!\n\nI send this birthday wishes earlier before you inbox get crowded,\nFirst of all, I would like to say thank you and good luck to the new chapter of your life.\n\nHappy birthday my friend!"
         nametxt.font = UIFont.ofSize(fontSize: 20, withType: .regular)
         return nametxt
     }()
+    
+    
+    @objc func save(){
+        
+        
+        self.viewModel.addMessageTemplateModel?.addMsgTemp_title = self.titleTextView.text!
+        self.viewModel.addMessageTemplateModel?.addMsgTemp_body = self.messageTextField.text!
+        
+        
+        self.viewModel.savePanel(completion: { val in
+            if val {
+                let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    self.viewModel.addMessageTemplateModel = AddMessageTemplateModel()
+                     self.navigationController?.popViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion:nil);
+            } else {
+                let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved.")
+                self.present(alert, animated: true, completion: nil);
+            }
+            
+           
+        })
+        
+    }
+    
+    @objc func clear() {
+        let controller = UIAlertController(title: "Info", message: "Clear the fields?", preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
+        controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            self.viewModel.addMessageTemplateModel = AddMessageTemplateModel()
+            ///self.tableView.reloadData()
+        }))
+        
+        self.present(controller, animated: true, completion: nil);
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateNavbarAppear()
+        
+    }
+    
+    @objc func loadMessages(){
+        self.titleTextView.text = self.viewModel.addMessageTemplateModel?.addMsgTemp_title
+        
+        self.messageTextField.text = self.viewModel.addMessageTemplateModel?.addMsgTemp_body
+        
+        
+    }
     
     
     override func viewDidLoad() {
@@ -67,10 +155,23 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         
         view.addSubview(mainView)
         mainView.addSubview(titleLabel)
+        mainView.addSubview(titleTextView)
+        mainView.addSubview(bodyLabel)
         mainView.addSubview(messageTextField)
         mainView.addSubview(instructionLabel)
         mainView.addSubview(copyButton)
       
+        let saveButton = UIButton()
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        saveButton.sizeToFit()
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        
+        
+        
+        self.loadMessages()
         
         view.setNeedsUpdateConstraints()
     }
@@ -91,13 +192,30 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             }
             titleLabel.snp.makeConstraints {  make in
                 make.top.left.equalTo(mainView).offset(10)
-                make.height.equalTo(50);
+                make.height.equalTo(50)
+                make.width.equalTo(100)
                 // make.bottom.equalTo(view).offset(20)
             }
+            titleTextView.snp.makeConstraints {  make in
+                make.top.right.equalTo(mainView).inset(10)
+                make.left.equalTo(titleLabel.snp.right).offset(10)
+                make.height.equalTo(50)
+                // make.bottom.equalTo(view).offset(20)
+            }
+            
+            bodyLabel.snp.makeConstraints {  make in
+                make.top.equalTo(titleLabel.snp.bottom).offset(10)
+                make.left.right.equalTo(mainView).offset(10)
+                make.height.equalTo(50)
+                make.width.equalTo(100)
+                // make.bottom.equalTo(view).offset(20)
+            }
+            
+            
             messageTextField.snp.makeConstraints {  make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(5)
+                make.top.equalTo(bodyLabel.snp.bottom).offset(10)
                 make.left.right.equalTo(mainView).inset(10)
-                make.height.equalTo(300);
+                make.height.equalTo(300)
                 
             }
             
@@ -169,15 +287,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             // show failure alert
              print("Can't send messages.")
         }
-//
-//        let mailComposeViewController = MFMailComposeViewController()
-//        mailComposeViewController.mailComposeDelegate = self
-//        mailComposeViewController.setToRecipients(["arjayniones@gmail.com"])
-//        mailComposeViewController.setMessageBody(messageTextField.text, isHTML: false)
-//        mailComposeViewController.setSubject(titleLabel.text!)
-//
-//
-//        self.present(mailComposeViewController, animated: true)
+
     }
     
     @objc func sendSMS(){

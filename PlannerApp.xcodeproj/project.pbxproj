@@ -22,6 +22,12 @@
 		0C8DBA3B2165C610009A1475 /* AddPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */; };
 		0C8DBA3D2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */; };
 		0C8DBA3F21673790009A1475 /* EmailActionSheetPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */; };
+		0C8DBA41216AF2C4009A1475 /* PanelListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA40216AF2C4009A1475 /* PanelListModel.swift */; };
+		0C8DBA43216AFBD3009A1475 /* PanelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA42216AFBD3009A1475 /* PanelListViewModel.swift */; };
+		0C8DBA47216B3A29009A1475 /* PanelListDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA46216B3A29009A1475 /* PanelListDetailViewModel.swift */; };
+		0C8DBA49216C4B7A009A1475 /* MessageTemplatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA48216C4B7A009A1475 /* MessageTemplatesModel.swift */; };
+		0C8DBA4D216C4DBD009A1475 /* MessageTemplateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA4C216C4DBD009A1475 /* MessageTemplateListViewModel.swift */; };
+		0C8DBA4F216C4EE3009A1475 /* MessageTemplateDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA4E216C4EE3009A1475 /* MessageTemplateDetailsViewModel.swift */; };
 		0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */; };
 		0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D121509C3C0028750B /* ContactListViewController.swift */; };
 		0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0D321509CA80028750B /* ContactListViewModel.swift */; };
@@ -125,6 +131,12 @@
 		0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPanelViewController.swift; sourceTree = "<group>"; };
 		0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesDetailsViewController.swift; sourceTree = "<group>"; };
 		0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailActionSheetPresenter.swift; sourceTree = "<group>"; };
+		0C8DBA40216AF2C4009A1475 /* PanelListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListModel.swift; sourceTree = "<group>"; };
+		0C8DBA42216AFBD3009A1475 /* PanelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListViewModel.swift; sourceTree = "<group>"; };
+		0C8DBA46216B3A29009A1475 /* PanelListDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListDetailViewModel.swift; sourceTree = "<group>"; };
+		0C8DBA48216C4B7A009A1475 /* MessageTemplatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplatesModel.swift; sourceTree = "<group>"; };
+		0C8DBA4C216C4DBD009A1475 /* MessageTemplateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplateListViewModel.swift; sourceTree = "<group>"; };
+		0C8DBA4E216C4EE3009A1475 /* MessageTemplateDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTemplateDetailsViewModel.swift; sourceTree = "<group>"; };
 		0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListNavViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D121509C3C0028750B /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		0CBFA0D321509CA80028750B /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
@@ -276,9 +288,8 @@
 		0C8DBA2C21646A48009A1475 /* Panel List */ = {
 			isa = PBXGroup;
 			children = (
-				0C8DBA2D21646A66009A1475 /* PanelListViewController.swift */,
-				0C8DBA2F21646D01009A1475 /* PanelListDetailsViewController.swift */,
-				0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */,
+				0C8DBA45216B39FC009A1475 /* PanelListDetailsView */,
+				0C8DBA44216B39D7009A1475 /* PanelListView */,
 			);
 			path = "Panel List";
 			sourceTree = "<group>";
@@ -302,11 +313,48 @@
 		0C8DBA3721647351009A1475 /* Message Templates */ = {
 			isa = PBXGroup;
 			children = (
-				0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */,
-				0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */,
-				0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */,
+				0C8DBA4B216C4C9E009A1475 /* Message Template Details */,
+				0C8DBA4A216C4C80009A1475 /* Message Template List */,
 			);
 			path = "Message Templates";
+			sourceTree = "<group>";
+		};
+		0C8DBA44216B39D7009A1475 /* PanelListView */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA2D21646A66009A1475 /* PanelListViewController.swift */,
+				0C8DBA42216AFBD3009A1475 /* PanelListViewModel.swift */,
+			);
+			path = PanelListView;
+			sourceTree = "<group>";
+		};
+		0C8DBA45216B39FC009A1475 /* PanelListDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA2F21646D01009A1475 /* PanelListDetailsViewController.swift */,
+				0C8DBA3A2165C610009A1475 /* AddPanelViewController.swift */,
+				0C8DBA46216B3A29009A1475 /* PanelListDetailViewModel.swift */,
+			);
+			path = PanelListDetailsView;
+			sourceTree = "<group>";
+		};
+		0C8DBA4A216C4C80009A1475 /* Message Template List */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA382164737A009A1475 /* MessageTemplatesViewController.swift */,
+				0C8DBA3E21673790009A1475 /* EmailActionSheetPresenter.swift */,
+				0C8DBA4C216C4DBD009A1475 /* MessageTemplateListViewModel.swift */,
+			);
+			path = "Message Template List";
+			sourceTree = "<group>";
+		};
+		0C8DBA4B216C4C9E009A1475 /* Message Template Details */ = {
+			isa = PBXGroup;
+			children = (
+				0C8DBA3C2165F9DA009A1475 /* MessageTemplatesDetailsViewController.swift */,
+				0C8DBA4E216C4EE3009A1475 /* MessageTemplateDetailsViewModel.swift */,
+			);
+			path = "Message Template Details";
 			sourceTree = "<group>";
 		};
 		0CBFA0CE215098FF0028750B /* Contacts */ = {
@@ -415,6 +463,8 @@
 				2455FBD12151F2B800881541 /* AddNote.swift */,
 				24A2F2CC2158BBF100277DA8 /* LocationModel.swift */,
 				0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */,
+				0C8DBA40216AF2C4009A1475 /* PanelListModel.swift */,
+				0C8DBA48216C4B7A009A1475 /* MessageTemplatesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -835,6 +885,7 @@
 				0C8DBA3F21673790009A1475 /* EmailActionSheetPresenter.swift in Sources */,
 				D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */,
 				24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */,
+				0C8DBA41216AF2C4009A1475 /* PanelListModel.swift in Sources */,
 				24D1B80521636816001D519C /* HomeViewModel.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
 				0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */,
@@ -847,6 +898,7 @@
 				D6715DAA21411DF800957E86 /* CommonFontType.swift in Sources */,
 				0C8DBA26216359E1009A1475 /* SummaryBarEntry.swift in Sources */,
 				0C8DBA2B21636AEA009A1475 /* NotificationViewModel.swift in Sources */,
+				0C8DBA49216C4B7A009A1475 /* MessageTemplatesModel.swift in Sources */,
 				0CBFA0E92154BC270028750B /* MapsPickerViewController.swift in Sources */,
 				0C8DBA3B2165C610009A1475 /* AddPanelViewController.swift in Sources */,
 				0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */,
@@ -854,18 +906,21 @@
 				2455FBC52150CA9000881541 /* NotesViewController.swift in Sources */,
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
 				2455FBC92150DCBB00881541 /* TodoListViewController.swift in Sources */,
+				0C8DBA47216B3A29009A1475 /* PanelListDetailViewModel.swift in Sources */,
 				24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */,
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
 				24FE315F2164B1C500A4EB96 /* UIViewExtensions.swift in Sources */,
 				2455FBD22151F2B800881541 /* AddNote.swift in Sources */,
 				0CBFA0DF2151FC3B0028750B /* MapsViewController.swift in Sources */,
 				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
+				0C8DBA43216AFBD3009A1475 /* PanelListViewModel.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
 				0C8DBA2E21646A66009A1475 /* PanelListViewController.swift in Sources */,
 				0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */,
 				0C8DBA332164711B009A1475 /* ArchivesViewController.swift in Sources */,
 				0C8DBA29216369BD009A1475 /* NotificationsListViewController.swift in Sources */,
+				0C8DBA4F216C4EE3009A1475 /* MessageTemplateDetailsViewModel.swift in Sources */,
 				D66E10CE215081D7005625BF /* ContactModel.swift in Sources */,
 				0CBFA0F121588F020028750B /* RestaurantPreviewView.swift in Sources */,
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
@@ -897,6 +952,7 @@
 				2484739521670FF000C6AFE7 /* Localizable.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
+				0C8DBA4D216C4DBD009A1475 /* MessageTemplateListViewModel.swift in Sources */,
 				2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */,
 				0CBFA0EB2154EF030028750B /* PickAPlaceViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,

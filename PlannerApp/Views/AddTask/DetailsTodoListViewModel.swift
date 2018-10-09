@@ -217,6 +217,7 @@ class DetailsTodoListViewModel {
                 }
                 addNote.add()
             }
+            
         }
     }
 }
