@@ -55,6 +55,9 @@ class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
+        
+        
+        
         cell.textLabel?.text = "Archives \(indexPath.row + 1)"
         cell.imageView?.image = UIImage(named: "archive-icon")
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -74,9 +77,7 @@ class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        let panelDetailsVC = PanelListDetailsViewController()
-        self.navigationController?.pushViewController(panelDetailsVC, animated: true) //call security navigation
-    }
+      }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
