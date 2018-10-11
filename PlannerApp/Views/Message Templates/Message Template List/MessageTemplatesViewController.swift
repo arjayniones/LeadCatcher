@@ -139,7 +139,21 @@ extension MessageTemplatesViewController :  UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
-        cell.textLabel?.text = "Message \(indexPath.row + 1)"
+        guard let data = viewModel.msgTemplateList  else {
+            return cell
+        }
+        
+        let msgTempData: MessageTemplatesModel
+        
+        if isFiltering() {
+            msgTempData = viewModel.filteredMsgTemp![indexPath.row]
+        } else {
+            msgTempData = data[indexPath.row]
+        }
+        
+        
+        
+        cell.textLabel?.text = msgTempData.msgTitle
         cell.imageView?.image = UIImage(named: "message-icon")
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()

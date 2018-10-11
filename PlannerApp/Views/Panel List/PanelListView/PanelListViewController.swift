@@ -142,7 +142,20 @@ extension PanelListViewController : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
-        cell.textLabel?.text = "Hospital \(indexPath.row + 1)"
+        guard let data = viewModel.panelList  else {
+            return cell
+        }
+        
+        let panelData: PanelListModel
+        
+        if isFiltering() {
+            panelData = viewModel.filteredPanel![indexPath.row]
+        } else {
+            panelData = data[indexPath.row]
+        }
+        
+       
+        cell.textLabel?.text = panelData.panelName
         cell.imageView?.image = UIImage(named: "hospital-icon")
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
