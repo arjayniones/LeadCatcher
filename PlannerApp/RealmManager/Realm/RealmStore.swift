@@ -58,6 +58,19 @@ class RealmStore<T: Model> {
         return model
     }
     
+    func models(query: String,sortingKey:String,ascending:Bool) -> Results<T>? {
+        let model = store.objects(T.self).sorted(byKeyPath: sortingKey, ascending: ascending).filter(query)
+        self.model = model
+        return model
+    }
+    
+    func models(sortingKey:String,ascending:Bool) -> Results<T>? {
+        
+        let model = store.objects(T.self).sorted(byKeyPath: sortingKey, ascending: ascending)
+        self.model = model
+        return model
+    }
+    
     /**
      Change value of object in block
      

@@ -76,6 +76,7 @@
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
 		2484739E2167119D00C6AFE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 248473A02167119D00C6AFE7 /* Localizable.strings */; };
+		24854D3E216EEC2100BD9663 /* bgimage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 24854D3D216EEC2100BD9663 /* bgimage.jpg */; };
 		248B83832140B29D00119D9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248B83822140B29D00119D9D /* Assets.xcassets */; };
 		248B839A2141014600119D9D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B83992141014600119D9D /* ActionButton.swift */; };
 		2491C0E62165E37700037578 /* morning.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2491C0E52165E37700037578 /* morning.jpg */; };
@@ -188,6 +189,7 @@
 		2484739421670FF000C6AFE7 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		2484739F2167119D00C6AFE7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		248473A32167131A00C6AFE7 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/Localizable.strings; sourceTree = "<group>"; };
+		24854D3D216EEC2100BD9663 /* bgimage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bgimage.jpg; sourceTree = "<group>"; };
 		248B83782140B29D00119D9D /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		248B837B2140B29D00119D9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248B83822140B29D00119D9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 		2491C0E42165E21900037578 /* bgCollections */ = {
 			isa = PBXGroup;
 			children = (
+				24854D3D216EEC2100BD9663 /* bgimage.jpg */,
 				2491C0EB2165E75300037578 /* noon.jpg */,
 				2491C0EF2165EEB100037578 /* evening.jpeg */,
 				2491C0E72165E64A00037578 /* afternoon.jpg */,
@@ -785,6 +788,7 @@
 				D6715D9D2140FBA900957E86 /* SF-Pro-Text-Bold.otf in Resources */,
 				248B83832140B29D00119D9D /* Assets.xcassets in Resources */,
 				D6715D9B2140FBA900957E86 /* SF-Pro-Text-Light.otf in Resources */,
+				24854D3E216EEC2100BD9663 /* bgimage.jpg in Resources */,
 				D6715DA52140FBA900957E86 /* SF-Pro-Text-Medium.otf in Resources */,
 				0CBFA0E1215349570028750B /* MapMarkerWindowView.xib in Resources */,
 			);
