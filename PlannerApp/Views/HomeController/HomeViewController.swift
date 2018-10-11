@@ -108,8 +108,15 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
                 
                 _ = deletions.map({
                     if let date = self?.clonedData[$0].addNote_alertDateTime {
-                        self?.calendarView.deselect(date)
+                        
                         self?.clonedData.remove(at: $0)
+                        let countDataInCalendar = self?.clonedData.filter({
+                            (self?.gregorian.isDateInToday($0.addNote_alertDateTime!))! && $0.deleted_at == nil
+                        }).count
+                        
+                        if countDataInCalendar == 0 {
+                            self?.calendarView.deselect(date)
+                        }
                     }
                 })
                 _ = insertions.map({
