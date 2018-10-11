@@ -15,7 +15,6 @@ class NotificationViewModel {
     var realmStore = RealmStore<AddNote>()
     
     init() {
-        tasks = realmStore.models(query: "status != ''")
+        tasks = realmStore.models(query: "status != '' && deleted_at == nil", sortingKey: "addNote_alertDateTime", ascending: false)
     }
-    
 }

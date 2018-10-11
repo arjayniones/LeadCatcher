@@ -42,7 +42,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         super.viewDidLoad()
         
         imageView.isUserInteractionEnabled = true
-        self.blurredBGImage()
+        imageView.image = UIImage(named:"bgimage.jpg")
+//        self.blurredBGImage()
         view = imageView
         
         headerView.axis = .vertical

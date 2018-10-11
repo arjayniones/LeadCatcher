@@ -27,7 +27,7 @@ class TodoListViewModel {
     var filteredDates: [AddNote] = []
     
     init() {
-        self.todoListData = realmStore.models(query: "deleted_at == nil")
+        self.todoListData = realmStore.models(query: "deleted_at == nil",sortingKey: "addNote_alertDateTime", ascending: false)
     }
     
     func searchText(text:String) {
@@ -62,7 +62,7 @@ class TodoListViewModel {
         case .afternoon:
             return .black
         case .evening:
-            return .lightGray
+            return .black//.lightGray
         }
     }
     
