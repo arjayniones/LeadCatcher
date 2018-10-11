@@ -71,8 +71,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         calendarView.backgroundColor = .clear
         calendarView.calendarHeaderView.backgroundColor = UIColor.clear
         calendarView.calendarWeekdayView.backgroundColor = UIColor.clear
-        calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 17, withType: .bold)
-        calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 15, withType: .bold)
+        calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 18, withType: .bold)
+        calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 18, withType: .bold)
         calendarView.appearance.weekdayTextColor = viewModel.fontColorByTime()
         calendarView.appearance.headerTitleColor = viewModel.fontColorByTime()
         calendarView.appearance.borderRadius = 0
