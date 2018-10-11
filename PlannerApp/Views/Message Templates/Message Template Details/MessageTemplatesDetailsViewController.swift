@@ -54,7 +54,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     let titleTextView : UITextField = {
         let titleTxt = UITextField()
-        titleTxt.placeholder = "Enter your message title here"
+        titleTxt.placeholder = "Enter message title here"
         titleTxt.font = UIFont.ofSize(fontSize: 20, withType: .regular)
         
         return titleTxt
@@ -62,7 +62,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     let instructionLabel : UILabel = {
         let instructLbl = UILabel()
-        instructLbl.text = "Copy this message to you Email or SMS. "
+        instructLbl.text = "Copy this message or tap send button. "
         instructLbl.textColor = .darkGray
         instructLbl.font = UIFont.ofSize(fontSize: 14, withType: .regular)
         
