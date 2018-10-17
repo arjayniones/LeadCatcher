@@ -82,25 +82,26 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             let securityVC = SecurityViewController()
             self.navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
         }
-//        else if indexPath.row == 1{
-//            //SummaryViewController
-//            let summaryVC = SummaryViewController()
-//            self.navigationController?.pushViewController(summaryVC, animated: true)
-//
-//        }
         else if indexPath.row == 1{
+            //SummaryViewController
+            let summaryVC = SummaryViewController()
+            self.navigationController?.pushViewController(summaryVC, animated: true)
+
+        }
+        else if indexPath.row == 2{
             //SummaryViewController
             let panelListVC = PanelListViewController()
             self.navigationController?.pushViewController(panelListVC, animated: true)
             
-        } else if indexPath.row == 2{
-            self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
         } else if indexPath.row == 3{
-            self.getTheContact();
+            self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
         } else if indexPath.row == 4{
+            self.getTheContact();
+        } else if indexPath.row == 5{
             let messageTempVC = MessageTemplatesViewController()
             self.navigationController?.pushViewController(messageTempVC, animated: true)
-        } else if indexPath.row == 5{
+        }
+        else if indexPath.row == 6{
             let langSetVC = LanguageSettingsViewController()
             self.navigationController?.pushViewController(langSetVC, animated: true)
         }

@@ -14,7 +14,7 @@ class SettingsViewModel {
     static func getSettingsLabels() -> [SettingsLabels]{
         let labelNames = [
             SettingsLabels(labelName: "Security"),
-            //SettingsLabels(labelName: "Summary"),
+            SettingsLabels(labelName: "Summary"),
             SettingsLabels(labelName: "Panel List"),
             SettingsLabels(labelName: "Map"),
             SettingsLabels(labelName: "Sync Phone Book Contacts"),
