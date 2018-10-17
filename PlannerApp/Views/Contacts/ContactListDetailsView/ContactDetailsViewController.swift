@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import ImagePicker
+import Kingfisher
 
-class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
+class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     var selectedDate = Date()
-    //user date variables
     var contactName = String()
     var dateOfBirth: Date = Date()
     var location = String()
@@ -22,6 +23,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
     var status = String()
     var isControllerEditing:Bool = false
     
+    fileprivate let profileImageView = UIImageView()
+    
     let tableView = UITableView()
     
     fileprivate let viewModel: ContactDetailsViewModel
@@ -31,6 +34,17 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
             viewModel.addContactModel = setupModel
         }
     }
+    
+    let imagePickerController:ImagePickerController = {
+        let configuration = Configuration()
+        configuration.doneButtonTitle = "Finish"
+        configuration.noImagesTitle = "Sorry! There are no images here!"
+        configuration.recordLocation = false
+        
+        let imagePicker = ImagePickerController(configuration: configuration)
+        imagePicker.imageLimit = 1
+        return imagePicker
+    }()
     
     required init() {
         viewModel = ContactDetailsViewModel()
@@ -47,6 +61,19 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         view.backgroundColor = .white
         title = "Contact Details"
+        
+        imagePickerController.delegate = self
+        
+        profileImageView.layer.cornerRadius = 45
+        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.layer.borderWidth = 2
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.image = UIImage(named:"profile-icon")
+        profileImageView.layer.masksToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
+        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editProfileImage)))
+        view.addSubview(profileImageView)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -73,8 +100,23 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
         }
         
+        if let id = viewModel.addContactModel?.addContact_id {
+            ImageCache.default.retrieveImage(forKey: "profile_"+id, options: nil) {
+                image, cacheType in
+                if let image = image {
+                    self.profileImageView.image = image
+                } else {
+                    print("Not exist in cache.")
+                }
+            }
+        }
+        
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    
+    @objc func editProfileImage() {
+        self.present(imagePickerController, animated: true, completion: nil)
     }
     
     @objc func save() {
@@ -130,8 +172,15 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         if !didSetupConstraints {
             
+            profileImageView.snp.makeConstraints { make in
+                make.top.equalTo(view).inset(10)
+                make.size.equalTo(CGSize(width: 90, height: 90))
+                make.centerX.equalTo(view.snp.centerX)
+            }
+            
             tableView.snp.makeConstraints { make in
-                make.edges.equalTo(view)
+                make.top.equalTo(profileImageView.snp.bottom).offset(10)
+                make.left.right.bottom.equalTo(view)
             }
             
             didSetupConstraints = true
@@ -334,11 +383,28 @@ extension ContactDetailsViewController:DateAndTimePickerViewControllerDelegate {
         self.present(datePickerController, animated: true, completion: nil)
     }
 }
-
-//extension ContactDetailsViewController: PlaceViewControllerDelegate {
-//    func notesControllerDidExit(customerPlace: LocationModel) {
-//        viewModel.addNoteModel?.addNote_location = customerPlace
-//    }
-//
-//}
+extension ContactDetailsViewController: ImagePickerDelegate {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        if images.count > 0 {
+            profileImageView.image = images[0]
+            viewModel.profileImage = images[0]
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        if images.count > 0 {
+            profileImageView.image = images[0]
+            viewModel.profileImage = images[0]
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+}
 

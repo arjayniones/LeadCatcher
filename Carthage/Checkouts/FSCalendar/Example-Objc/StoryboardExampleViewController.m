@@ -7,7 +7,7 @@
 //
 
 #import "StoryboardExampleViewController.h"
-
+#import "LunarFormatter.h"
 #import "CalendarConfigViewController.h"
 
 @interface StoryboardExampleViewController()<FSCalendarDataSource,FSCalendarDelegate,FSCalendarDelegateAppearance>
@@ -23,11 +23,9 @@
 
 @property (strong, nonatomic) NSCalendar *gregorianCalendar;
 
-@property (strong, nonatomic) NSCalendar *lunarCalendar;
-@property (strong, nonatomic) NSArray<NSString *> *lunarChars;
-
 @property (strong, nonatomic) NSDateFormatter *dateFormatter1;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter2;
+@property (strong, nonatomic) LunarFormatter *lunarFormatter;
 
 - (IBAction)unwind2StoryboardExample:(UIStoryboardSegue *)segue;
 
@@ -54,10 +52,6 @@
         self.dateFormatter2.locale = chinese;
         self.dateFormatter2.dateFormat = @"yyyy-MM-dd";
         
-        self.lunarCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
-        self.lunarCalendar.locale = chinese;
-        self.lunarChars = @[@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十",@"二一",@"二二",@"二三",@"二四",@"二五",@"二六",@"二七",@"二八",@"二九",@"三十"];
-        
         self.calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase|FSCalendarCaseOptionsWeekdayUsesUpperCase;
         
         self.datesShouldNotBeSelected = @[@"2016/08/07",
@@ -72,6 +66,8 @@
                                 @"2016-12-07",
                                 @"2016-12-15",
                                 @"2016-12-25"];
+        
+        self.lunarFormatter = [[LunarFormatter alloc] init];
     }
     return self;
 }
@@ -108,8 +104,7 @@
     if (!_lunar) {
         return nil;
     }
-    NSInteger day = [_lunarCalendar component:NSCalendarUnitDay fromDate:date];
-    return _lunarChars[day-1];
+    return [self.lunarFormatter stringFromDate:date];
 }
 
 - (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date
@@ -127,7 +122,7 @@
 
 - (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar
 {
-    return [self.dateFormatter1 dateFromString:@"2017/05/31"];
+    return [self.dateFormatter1 dateFromString:@"2018/05/31"];
 }
 
 #pragma mark - FSCalendarDelegate
@@ -136,11 +131,9 @@
 {
     BOOL shouldSelect = ![_datesShouldNotBeSelected containsObject:[self.dateFormatter1 stringFromDate:date]];
     if (!shouldSelect) {
-        [[[UIAlertView alloc] initWithTitle:@"FSCalendar"
-                                    message:[NSString stringWithFormat:@"FSCalendar delegate forbid %@  to be selected",[self.dateFormatter1 stringFromDate:date]]
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil, nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"FSCalendar" message:[NSString stringWithFormat:@"FSCalendar delegate forbid %@  to be selected",[self.dateFormatter1 stringFromDate:date]] preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
     } else {
         NSLog(@"Should select date %@",[self.dateFormatter1 stringFromDate:date]);
     }
@@ -158,12 +151,6 @@
 - (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
 {
     NSLog(@"did change to page %@",[self.dateFormatter1 stringFromDate:calendar.currentPage]);
-}
-
-- (void)calendar:(FSCalendar *)calendar boundingRectWillChange:(CGRect)bounds animated:(BOOL)animated
-{
-    _calendarHeightConstraint.constant = CGRectGetHeight(bounds);
-    [self.view layoutIfNeeded];
 }
 
 - (CGPoint)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleOffsetForDate:(NSDate *)date
@@ -221,14 +208,8 @@
     if (self.calendar.firstWeekday != config.firstWeekday) {
         self.calendar.firstWeekday = config.firstWeekday;
     }
-    
     if (self.calendar.scrollDirection != config.scrollDirection) {
         self.calendar.scrollDirection = config.scrollDirection;
-        [[[UIAlertView alloc] initWithTitle:@"FSCalendar"
-                                    message:[NSString stringWithFormat:@"Now swipe %@",@[@"Vertically", @"Horizontally"][self.calendar.scrollDirection]]
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil, nil] show];
     }
 }
 
