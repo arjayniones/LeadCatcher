@@ -73,6 +73,8 @@
 		2455FBD02151D87D00881541 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2455FBCF2151D87D00881541 /* UserNotifications.framework */; };
 		2455FBD22151F2B800881541 /* AddNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD12151F2B800881541 /* AddNote.swift */; };
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
+		2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC492176CBA200DBF03B /* ImagePicker.framework */; };
+		2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */; };
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
 		2484739E2167119D00C6AFE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 248473A02167119D00C6AFE7 /* Localizable.strings */; };
@@ -184,6 +186,8 @@
 		2455FBCF2151D87D00881541 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2455FBD12151F2B800881541 /* AddNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNote.swift; sourceTree = "<group>"; };
 		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
+		2460FC492176CBA200DBF03B /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Carthage/Build/iOS/ImagePicker.framework; sourceTree = "<group>"; };
+		2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		246F01782167346D008EBE76 /* ms-MY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ms-MY"; path = "ms-MY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
 		2484739421670FF000C6AFE7 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -237,6 +241,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */,
+				2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */,
 				24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */,
 				2455FBD02151D87D00881541 /* UserNotifications.framework in Frameworks */,
 				D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */,
@@ -703,6 +709,8 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */,
+				2460FC492176CBA200DBF03B /* ImagePicker.framework */,
 				24D1B7FE216359AC001D519C /* FSCalendar.framework */,
 				2455FBCF2151D87D00881541 /* UserNotifications.framework */,
 				D60A199D21426253008246FE /* LocalAuthentication.framework */,
@@ -804,6 +812,8 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/FSCalendar.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ImagePicker.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
 			);
 			outputPaths = (
 			);

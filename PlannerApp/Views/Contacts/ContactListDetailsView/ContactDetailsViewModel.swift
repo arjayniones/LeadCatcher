@@ -8,10 +8,12 @@
 
 import UIKit
 import RealmSwift
+import Kingfisher
 
 class ContactDetailsViewModel {
     var detailRows:[AddContactViewObject] = []
     var addContactModel:AddContactModel?
+    var profileImage:UIImage?
     init() {
         
         self.addContactModel = AddContactModel()
@@ -117,6 +119,12 @@ class ContactDetailsViewModel {
    
     
     func saveToRealm() {
+        if let image = profileImage {
+            if let id = self.addContactModel?.addContact_id {
+                ImageCache.default.store(image, forKey: "profile_"+id)
+            }
+        }
+        
         DispatchQueue.main.async {
             if let addContactMod = self.addContactModel {
                 let addContact = ContactModel().newInstance()
@@ -141,6 +149,7 @@ class ContactDetailsViewModel {
 }
 
 class AddContactModel {
+    var addContact_id:UUID = ""
     var addContact_contactName: String = ""
     var addContact_dateOfBirth: Date?
     //var addContact_address:LocationModel?

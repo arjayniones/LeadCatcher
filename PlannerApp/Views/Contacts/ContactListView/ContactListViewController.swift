@@ -219,6 +219,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         contactModel.addContact_leadScore = model.C_Scoring
         contactModel.addContact_remarks = model.C_Remark
         contactModel.addContact_status = model.C_Status
+        contactModel.addContact_id = model.id
         
         detailController.setupModel = contactModel
         
