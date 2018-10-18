@@ -258,9 +258,12 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
                 self.sendSMS()
             }
+        let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
+                self.sendWhatsapp()
+        }
             actionSheet.addAction(emailAction)
             actionSheet.addAction(smsAction)
-        
+            actionSheet.addAction(whatsappAction)
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -308,6 +311,22 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             print("Can't send messages.")
         }
     }
+    
+    @objc func sendWhatsapp(){
+        let urlString = self.messageTextField.text
+        let urlStringEncoded = urlString?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+//        let urlStringEncoded = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+//
+        let url  = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
+        
+        if UIApplication.shared.canOpenURL(url! as URL) {
+            UIApplication.shared.openURL(url! as URL)
+        } else {
+            let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages.", delegate: self, cancelButtonTitle: "OK")
+            errorAlert.show()
+        }
+    }
+    
 }
 
 extension MessageTemplatesDetailsViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{

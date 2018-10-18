@@ -133,11 +133,22 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             contactData = data[indexPath.row]
         }
         
+        let callAction = UITableViewRowAction(style: .normal, title: "Call" ) { (deleteAction, indexPath) -> Void in
+            
+            let contactNum = contactData.C_PhoneNo
+            
+            print(contactNum)
+            let url:NSURL = NSURL(string: "tel://\(contactNum)")!
+            UIApplication.shared.openURL(url as URL)
+            
+        }
+    
+        
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: contactData,hard:false)
         }
         
-        return [deleteAction]
+        return [callAction,deleteAction]
     }
     
    
