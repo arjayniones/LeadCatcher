@@ -44,6 +44,7 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         imageView.isUserInteractionEnabled = true
         imageView.image = UIImage(named:"bgimage.jpg")
 //        self.blurredBGImage()
+        self.getGreetingByTime()
         view = imageView
         
         headerView.axis = .vertical
@@ -151,6 +152,18 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
     @objc func openNotificationPage() {
         let notifVC = NotificationsListViewController()
         self.navigationController?.pushViewController(notifVC, animated: true)
+    }
+    
+    func getGreetingByTime() {
+        let hour = Calendar.current.component(.hour, from: Date())
+        
+        switch hour {
+            case 6..<12 : viewModel.timeByString = .morning
+            case 12 : viewModel.timeByString = .noon
+            case 13..<17 : viewModel.timeByString = .afternoon
+            case 17..<22 : viewModel.timeByString = .evening
+            default: viewModel.timeByString = .evening
+        }
     }
     
     func blurredBGImage() {

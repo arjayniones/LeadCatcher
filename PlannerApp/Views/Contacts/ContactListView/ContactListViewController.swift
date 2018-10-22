@@ -230,6 +230,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         cell?.textLabel?.text = contactData.C_Name
         
+        cell?.textLabel?.textColor = contactData.C_Scoring >= 3 ? .blue:.black
+        
         return cell!
     }
     
@@ -260,6 +262,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         } else {
             contactData = data[indexPath.row]
         }
+        
+        
         
         if userInContactsSelection {
             delegate?.didSelectCustomer(user:contactData)

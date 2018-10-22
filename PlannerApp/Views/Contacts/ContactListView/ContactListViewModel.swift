@@ -27,7 +27,7 @@ class ContactListViewModel {
             NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, text)
         }
         let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-        self.filteredContacts = realmStore.models().filter(predicate)
+        self.filteredContacts = contactList?.filter(predicate)
     }
     
     func removeImage(id:UUID) {
