@@ -22,12 +22,6 @@ class ContactModel:Model{
     @objc dynamic var C_Status:String = "";
     @objc dynamic var C_From:String = "";
     
-    override func mapping(map: Map) {
-        super.mapping(map: map)
-        //
-    }
-    
-    
     func newInstance() -> ContactModel {
         let contactInfo = ContactModel()
         contactInfo.id = uuid()

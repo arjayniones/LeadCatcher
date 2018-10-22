@@ -23,13 +23,15 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     var userInContactsSelection: Bool = false
     var userIdSelected:UUID?
     
+    let allButton = ActionButton()
+    let potentialButton = ActionButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
-       
         
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
@@ -40,6 +42,23 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         searchController.searchBar.delegate = self
 
         title = "Contacts"
+        
+        allButton.setTitle("All", for: .normal)
+        allButton.setTitleColor(.white, for: .normal)
+        allButton.setTitleColor(.black, for: .selected)
+        allButton.isSelected = true
+        allButton.backgroundColor = .white
+        allButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
+        view.addSubview(allButton)
+        
+        potentialButton.setTitle("Potential", for: .normal)
+        potentialButton.backgroundColor = CommonColor.naviBarBlackColor
+        potentialButton.isSelected = false
+        potentialButton.setTitleColor(.white, for: .normal)
+        potentialButton.setTitleColor(.black, for: .selected)
+        potentialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
+        view.addSubview(potentialButton)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
@@ -64,6 +83,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
                 // Query results have changed, so apply them to the UITableView
+                
                 tableView.beginUpdates()
                 tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
                                      with: .automatic)
@@ -80,6 +100,26 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    
+    @objc func filterPressed(sender:UIButton) {
+        if sender == allButton && potentialButton.isSelected {
+            //filter all
+            allButton.isSelected = true
+            potentialButton.isSelected = false
+            allButton.backgroundColor = .white
+            potentialButton.backgroundColor = CommonColor.naviBarBlackColor
+            viewModel.filterContact(isPotential: false)
+        } else if sender == potentialButton && allButton.isSelected {
+            //filter potential
+            allButton.isSelected = false
+            potentialButton.isSelected = true
+            allButton.backgroundColor = CommonColor.naviBarBlackColor
+            potentialButton.backgroundColor = .white
+            viewModel.filterContact(isPotential: true)
+        }
+        
+        tableView.reloadData()
     }
     
     deinit {
@@ -108,8 +148,20 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         if !didSetupConstraints {
             
+            allButton.snp.makeConstraints { make in
+                make.top.left.equalTo(view)
+                make.height.equalTo(50)
+            }
+            
+            potentialButton.snp.makeConstraints { make in
+                make.top.right.equalTo(view)
+                make.size.equalTo(allButton.snp.size)
+                make.left.equalTo(allButton.snp.right)
+            }
+            
             tableView.snp.makeConstraints { make in
-                make.top.left.right.equalTo(view)
+                make.left.right.equalTo(view)
+                make.top.equalTo(allButton.snp.bottom)
                 make.bottom.equalTo(view).inset(50)
             }
             
@@ -138,14 +190,17 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             let contactNum = contactData.C_PhoneNo
             
             print(contactNum)
-            let url:NSURL = NSURL(string: "tel://\(contactNum)")!
-            UIApplication.shared.openURL(url as URL)
+            let url:URL = URL(string: "tel://\(contactNum)")!
+            UIApplication.shared.open(url, options: [:], completionHandler: { val in
+                
+            })
             
         }
     
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: contactData,hard:false)
+            self.viewModel.removeImage(id:contactData.id)
         }
         
         return [callAction,deleteAction]
