@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C1933A1217D7F6500AC495A /* ContactListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1933A0217D7F6500AC495A /* ContactListTableViewCell.swift */; };
 		0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */; };
 		0C8DBA1E21630513009A1475 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA1D21630513009A1475 /* SummaryViewController.swift */; };
 		0C8DBA2021631E88009A1475 /* SummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */; };
@@ -120,6 +121,7 @@
 
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
+		0C1933A0217D7F6500AC495A /* ContactListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewCell.swift; sourceTree = "<group>"; };
 		0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0C8DBA1D21630513009A1475 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				0CBFA0CF21509C050028750B /* ContactListNavViewController.swift */,
 				0CBFA0D121509C3C0028750B /* ContactListViewController.swift */,
 				0CBFA0D321509CA80028750B /* ContactListViewModel.swift */,
+				0C1933A0217D7F6500AC495A /* ContactListTableViewCell.swift */,
 			);
 			path = ContactListView;
 			sourceTree = "<group>";
@@ -755,7 +758,7 @@
 				TargetAttributes = {
 					248B83772140B29D00119D9D = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -972,6 +975,7 @@
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
 				0C8DBA4D216C4DBD009A1475 /* MessageTemplateListViewModel.swift in Sources */,
 				2455FBCE2150EEED00881541 /* AddTodoViewObject.swift in Sources */,
+				0C1933A1217D7F6500AC495A /* ContactListTableViewCell.swift in Sources */,
 				0CBFA0EB2154EF030028750B /* PickAPlaceViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
 				0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */,
@@ -1119,9 +1123,10 @@
 			baseConfigurationReference = 2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E8M2K4R399;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1129,9 +1134,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = sampleApp;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1142,9 +1147,10 @@
 			baseConfigurationReference = 02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E8M2K4R399;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1152,9 +1158,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = sampleApp;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import MessageUI
 
 protocol ContactListViewControllerDelegate:class {
     func didSelectCustomer(user:ContactModel)
@@ -45,8 +46,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         tableView.backgroundColor = .white
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.allowsMultipleSelection = false
-        tableView.estimatedRowHeight = 100
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "contactListCell")
+        //tableView.estimatedRowHeight = 200
+        tableView.register(ContactListTableViewCell.self, forCellReuseIdentifier: "contactListCell")
+        //tableView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: "cellReuseIdentifier")
         view.addSubview(tableView)
         
         let addButton = UIButton()
@@ -133,30 +135,107 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             contactData = data[indexPath.row]
         }
         
-        let callAction = UITableViewRowAction(style: .normal, title: "Call" ) { (deleteAction, indexPath) -> Void in
-            
-            let contactNum = contactData.C_PhoneNo
-            
-            print(contactNum)
-            let url:NSURL = NSURL(string: "tel://\(contactNum)")!
-            UIApplication.shared.openURL(url as URL)
-            
-        }
+        
     
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: contactData,hard:false)
         }
         
-        return [callAction,deleteAction]
+        return [deleteAction]
+    }
+    
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+        
+        guard let data = viewModel.contactList  else {
+            return nil
+        }
+        
+        let contactData: ContactModel
+        
+        if isFiltering() {
+            contactData = viewModel.filteredContacts![indexPath.row]
+        } else {
+            contactData = data[indexPath.row]
+        }
+        
+        
+        let callAction = UIContextualAction(style: .normal, title: "Call") { (action, view, handler) in
+            let contactNum = contactData.C_PhoneNo
+            
+            print(contactNum)
+            let url:NSURL = NSURL(string: "tel://\(contactNum)")!
+            UIApplication.shared.open(url as URL)
+            
+        }
+        
+        let smsAction = UIContextualAction(style: .normal, title: "SMS") { (action, view, handler) in
+            let contactNum = contactData.C_PhoneNo
+            let contactName = contactData.C_Name
+            
+            let actionSheet = UIAlertController(title: "Choose options", message: "Send SMS greetings to your lead.", preferredStyle: .actionSheet)
+            
+            
+            let smsAction = UIAlertAction(title: "SMS", style: .default) { (action:UIAlertAction) in
+                //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
+                self.sendSMS(num: contactNum, name: contactName)
+            }
+            let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
+                self.sendWhatsapp(num: contactNum, name: contactName)
+            }
+           
+            actionSheet.addAction(smsAction)
+            actionSheet.addAction(whatsappAction)
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+            self.present(actionSheet, animated: true, completion: nil)
+            
+            
+        }
+        
+        let emailAction = UIContextualAction(style: .normal, title: "Email") { (action, view, handler) in
+            let emailAddress = contactData.C_Email
+            let customerName = contactData.C_Name
+            
+            if MFMailComposeViewController.canSendMail() {
+                
+                
+                let emailTitle = "Hello"
+                let messageBody = "Hello \(customerName),"
+                let toRecipents = [emailAddress]
+                let mc: MFMailComposeViewController = MFMailComposeViewController()
+                mc.mailComposeDelegate = self
+                mc.setSubject(emailTitle)
+                mc.setMessageBody(messageBody, isHTML: false)
+                mc.setToRecipients(toRecipents)
+                
+                UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
+            } else {
+                // show failure alert
+                print("Can't send messages.")
+            }
+            
+           
+       
+        }
+        
+        
+        callAction.backgroundColor = .green
+        smsAction.backgroundColor = .yellow
+        emailAction.backgroundColor = .orange
+        let configuration = UISwipeActionsConfiguration(actions: [callAction,smsAction,emailAction])
+        return configuration
     }
     
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "contactListCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "contactListCell") as! ContactListTableViewCell
         
         guard let data = viewModel.contactList  else {
-            return cell!
+            return cell
         }
         
         let contactData: ContactModel
@@ -168,14 +247,22 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
         
         if let userId = userIdSelected,userId == data[indexPath.row].id {
-            cell?.accessoryType = .checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell?.accessoryType = .none
+            cell.accessoryType = .none
         }
         
-        cell?.textLabel?.text = contactData.C_Name
+       
+        cell.customerName.text = contactData.C_Name == "" ? "No name": contactData.C_Name
+        cell.status.text = contactData.C_Status == "" ? "No Status": contactData.C_Status
+        cell.phoneNum.text = contactData.C_PhoneNo == "" ? "No Number": contactData.C_PhoneNo
+        cell.email.text = contactData.C_Email == "" ? "No Email": contactData.C_Email
+        cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐
+        cell.lastCom.text = contactData.C_LastComm == "" ? "Not contacted yet": contactData.C_LastComm
+        cell.toFollow.text = contactData.C_ToFollow == "" ? "No meeting yet": contactData.C_ToFollow
         
-        return cell!
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -189,6 +276,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
         
         searchFooter.setNotFiltering()
+        
         
         return data.count
     }
@@ -237,6 +325,49 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         self.navigationController?.pushViewController(detailController, animated: true)
     }
     
+    @objc func sendSMS(num: String, name:String){
+        
+        
+        let mc: MFMessageComposeViewController = MFMessageComposeViewController()
+        //let composeVC = MFMessageComposeViewController()
+        mc.messageComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        mc.recipients = [num]
+        mc.body = "Hello \(name)"
+        
+        if MFMessageComposeViewController.canSendText() {
+            //             UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
+            self.present(mc, animated: true, completion: nil)
+        } else {
+            print("Can't send messages.")
+        }
+    }
+    
+    @objc func sendWhatsapp(num: String, name: String){
+
+        
+       
+         let url  = "whatsapp://send?phone=\(num)&text=Hello \(name)\nFirst Whatsapp Share"
+        
+        var characterSet = CharacterSet.urlQueryAllowed
+        characterSet.insert(charactersIn: "?&")
+       if let escapedString = url.addingPercentEncoding(withAllowedCharacters: characterSet) {
+            
+            if let whatsappURL = NSURL(string: escapedString) {
+                if UIApplication.shared.canOpenURL(whatsappURL as URL){
+                    UIApplication.shared.open(whatsappURL as URL)
+                }
+                else {
+                    let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages. Please install Whatsapp in your phone", delegate: self, cancelButtonTitle: "OK")
+                    errorAlert.show()
+                    
+                }
+            }
+        }
+       
+    }
+    
 }
 
 extension ContactListViewController: UISearchBarDelegate {
@@ -262,3 +393,16 @@ extension ContactListViewController: UISearchResultsUpdating {
 }
    
 
+extension ContactListViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true)
+    }
+    
+    
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+    
+    
+}
