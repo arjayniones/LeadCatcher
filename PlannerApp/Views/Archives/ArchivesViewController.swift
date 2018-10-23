@@ -2,7 +2,7 @@
 //  ArchivesViewController.swift
 //  PlannerApp
 //
-//  Created by Niones Arjay Orcullo on 03/10/2018.
+//  Created by Alkuino Robert John Matias on 03/10/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
@@ -11,6 +11,7 @@ import UIKit
 class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
     
+    let viewModel = ArchivesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,18 +54,16 @@ class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
         
+        cell!.textLabel?.text = "Archives \(indexPath.row + 1)"
+        cell!.imageView?.image = UIImage(named: "archive-icon")
+        cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell!.setNeedsUpdateConstraints()
+        cell!.updateConstraintsIfNeeded()
         
-        
-        cell.textLabel?.text = "Archives \(indexPath.row + 1)"
-        cell.imageView?.image = UIImage(named: "archive-icon")
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-        cell.setNeedsUpdateConstraints()
-        cell.updateConstraintsIfNeeded()
-        
-        return cell
+        return cell!
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -73,11 +72,6 @@ class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10 //settingsLabels.count //total number of array using models
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-      }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -98,7 +92,7 @@ class ArchivesViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             
         }
         
-        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
+        let editAction = UITableViewRowAction(style: .normal, title: "restore".localized) { (editAction, indexPath) -> Void in
             //self.openDetailsNoteForEditing(model: note)
         }
         

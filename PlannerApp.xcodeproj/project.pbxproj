@@ -76,6 +76,7 @@
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC492176CBA200DBF03B /* ImagePicker.framework */; };
 		2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */; };
+		24775F5F217F0451004319B1 /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24775F5E217F0451004319B1 /* ResourceViewController.swift */; };
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
 		2484739E2167119D00C6AFE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 248473A02167119D00C6AFE7 /* Localizable.strings */; };
@@ -191,6 +192,8 @@
 		2460FC492176CBA200DBF03B /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Carthage/Build/iOS/ImagePicker.framework; sourceTree = "<group>"; };
 		2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		246F01782167346D008EBE76 /* ms-MY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ms-MY"; path = "ms-MY.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		24775F5E217F0451004319B1 /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
+		24775F60217F1183004319B1 /* PlannerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlannerApp.entitlements; sourceTree = "<group>"; };
 		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
 		2484739421670FF000C6AFE7 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		2484739F2167119D00C6AFE7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 		0C7C490A21410EB900DBD4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24775F5D217F042E004319B1 /* ResourcesAndFiles */,
 				0C8DBA3721647351009A1475 /* Message Templates */,
 				0C8DBA3421647128009A1475 /* Language Settings */,
 				0C8DBA3121647103009A1475 /* Archives */,
@@ -533,6 +537,14 @@
 			path = AddTask;
 			sourceTree = "<group>";
 		};
+		24775F5D217F042E004319B1 /* ResourcesAndFiles */ = {
+			isa = PBXGroup;
+			children = (
+				24775F5E217F0451004319B1 /* ResourceViewController.swift */,
+			);
+			path = ResourcesAndFiles;
+			sourceTree = "<group>";
+		};
 		248473962167110200C6AFE7 /* LanguageSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -563,6 +575,7 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				24775F60217F1183004319B1 /* PlannerApp.entitlements */,
 				248473962167110200C6AFE7 /* LanguageSettings */,
 				2491C0DF2165B12700037578 /* Resources */,
 				24B186C92154B8BA0028CE23 /* CustomViews */,
@@ -758,7 +771,15 @@
 				TargetAttributes = {
 					248B83772140B29D00119D9D = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -981,6 +1002,7 @@
 				0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */,
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
 				D639EACF2148B7980053894C /* UserViewModel.swift in Sources */,
+				24775F5F217F0451004319B1 /* ResourceViewController.swift in Sources */,
 				24D55FBA21410A8D001140C1 /* SessionService.swift in Sources */,
 				0CBFA0F32158D2F60028750B /* AddContactViewObject.swift in Sources */,
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
@@ -1123,10 +1145,11 @@
 			baseConfigurationReference = 2E3A32D680210F65049ABBB3 /* Pods-PlannerApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A9LH66DXBS;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1134,9 +1157,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
+				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = sampleApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1147,10 +1170,11 @@
 			baseConfigurationReference = 02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A9LH66DXBS;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1158,9 +1182,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
+				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = sampleApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

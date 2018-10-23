@@ -104,12 +104,24 @@ class Networking {
     //
     //    }
     //
-    //    func dowload(sourceService: APIDataSource, completion: (error: NSError?, data: [String: AnyObject]?) -> ()) {
-    //
-    //    }
-    //
-    func cancelTask(task: URLSessionDataTask) {
-        task.cancel()
+    func dowload(sourceService: APIDataSource, completion: @escaping ((_ success: Bool) -> Void)) {
+            
+        let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
+        self.request = Alamofire.download(
+                sourceService.apiURL,
+                method: .get,
+                parameters: sourceService.parameters,
+                encoding: JSONEncoding.default,
+                headers: nil,
+                to: destination).downloadProgress(closure: { (progress) in
+                    print("destination")
+                }).response(completionHandler: { (DefaultDownloadResponse) in
+                    print("destination value")
+                })
+        }
+    
+    func cancelTask() {
+        self.request?.task?.cancel()
     }
     
 }
