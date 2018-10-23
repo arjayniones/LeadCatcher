@@ -44,7 +44,9 @@ class TodoListViewModel {
     
     func getAppointmentHeaderMessage() -> String {
         
-        let message = "📌 You have \(self.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)?.count ?? 0) appointment(s) today."
+        var message = "📌 You have "
+        message += "\(self.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)?.count ?? 0)"
+        message += " appointment(s) today."
         
         return message
     }

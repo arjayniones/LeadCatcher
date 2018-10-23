@@ -115,9 +115,7 @@ class ContactDetailsViewModel {
         
         return
     }
-    
    
-    
     func saveToRealm() {
         if let image = profileImage {
             if let id = self.addContactModel?.addContact_id {

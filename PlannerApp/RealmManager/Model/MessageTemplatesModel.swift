@@ -13,10 +13,7 @@ import RealmSwift
 class MessageTemplatesModel:Model{
     @objc dynamic var msgTitle: String = ""
     @objc dynamic var msgBody: String = ""
-   
  
-    
-    
     func newInstance() {
         id = uuid()
         created_at = Date()
