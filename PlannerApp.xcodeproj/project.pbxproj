@@ -76,6 +76,7 @@
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC492176CBA200DBF03B /* ImagePicker.framework */; };
 		2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */; };
+		2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2468C4C42182A50D0062D3FF /* Checklist.swift */; };
 		24775F5F217F0451004319B1 /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24775F5E217F0451004319B1 /* ResourceViewController.swift */; };
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
@@ -191,6 +192,7 @@
 		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
 		2460FC492176CBA200DBF03B /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Carthage/Build/iOS/ImagePicker.framework; sourceTree = "<group>"; };
 		2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		2468C4C42182A50D0062D3FF /* Checklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
 		246F01782167346D008EBE76 /* ms-MY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ms-MY"; path = "ms-MY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		24775F5E217F0451004319B1 /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		24775F60217F1183004319B1 /* PlannerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlannerApp.entitlements; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 				0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */,
 				0C8DBA40216AF2C4009A1475 /* PanelListModel.swift */,
 				0C8DBA48216C4B7A009A1475 /* MessageTemplatesModel.swift */,
+				2468C4C42182A50D0062D3FF /* Checklist.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -771,7 +774,7 @@
 				TargetAttributes = {
 					248B83772140B29D00119D9D = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -1012,6 +1015,7 @@
 				2455FBC72150D6FD00881541 /* ColorExtension.swift in Sources */,
 				0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */,
 				0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */,
+				2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,8 +1152,8 @@
 				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A9LH66DXBS;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1157,9 +1161,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = sampleapp;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1173,8 +1177,8 @@
 				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A9LH66DXBS;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1182,9 +1186,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sicmsb.PlannerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = sampleapp;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
