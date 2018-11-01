@@ -13,13 +13,18 @@ import UserNotifications
 import GoogleMaps
 import RealmSwift
 import GooglePlaces
+import CallKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
-
+    var callObServer:CXCallObserver!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        callObServer = CXCallObserver();
+        callObServer.setDelegate(self, queue: nil);
         
         let center = UNUserNotificationCenter.current()
         center.delegate = self
@@ -123,6 +128,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         completionHandler([.alert,.sound,.badge])
     }
 
+}
 
+extension AppDelegate:CXCallObserverDelegate
+{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        if call.hasEnded == true {
+            // user hang up the phone
+            print("azlim Disconnected")
+            
+        }
+//        if call.isOutgoing == true && call.hasConnected == false {
+//            print("azlim Dialing")
+//        }
+//        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false {
+//            print("azlim Incoming")
+//        }
+        
+        if call.hasConnected == true && call.hasEnded == false {
+            // ppl pick up phone call
+            print("azlim Connected")
+        }
+    }
 }
 

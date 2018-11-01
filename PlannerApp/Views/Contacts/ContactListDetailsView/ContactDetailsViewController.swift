@@ -9,6 +9,7 @@
 import UIKit
 import ImagePicker
 import Kingfisher
+import SwiftyUserDefaults
 
 class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
@@ -55,6 +56,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +123,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     @objc func save() {
+        //let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
+        //UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        
         viewModel.saveContact(completion: { val in
             if val {
                 let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
@@ -269,6 +275,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             case 0:
                 cell.title = viewmod.addContact_contactName == "" ? data.title :
                 viewmod.addContact_contactName
+                Defaults[.ContactID] = viewmod.addContact_id;
             case 1:
                 cell.title = viewmod.addContact_dateOfBirth == nil ? data.title:
                 convertDateTimeToString(date: viewmod.addContact_dateOfBirth!)
@@ -384,6 +391,7 @@ extension ContactDetailsViewController:DateAndTimePickerViewControllerDelegate {
     }
 }
 extension ContactDetailsViewController: ImagePickerDelegate {
+    
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         if images.count > 0 {
             profileImageView.image = images[0]
@@ -397,7 +405,7 @@ extension ContactDetailsViewController: ImagePickerDelegate {
             profileImageView.image = images[0]
             viewModel.profileImage = images[0]
         }
-        
+
         self.dismiss(animated: true, completion: nil)
     }
     

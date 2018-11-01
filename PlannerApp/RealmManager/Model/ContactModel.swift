@@ -23,6 +23,7 @@ class ContactModel:Model{
     @objc dynamic var C_From:String = "";
     @objc dynamic var C_LastComm:String = "";
     @objc dynamic var C_ToFollow:String = "";
+    //let ContactHistorys = List<ContactHistory>();
     
     func newInstance() -> ContactModel {
         let contactInfo = ContactModel()
@@ -32,6 +33,22 @@ class ContactModel:Model{
         contactInfo.deleted_at = nil
         
         return contactInfo;
+    }
+    
+}
+
+class ContactHistory:Model{
+    @objc dynamic var CH_CID:String = "";
+    @objc dynamic var CH_CallingDate:Date?;
+    
+    func newInstance() -> ContactHistory{
+        let contactHistory = ContactHistory();
+        contactHistory.id = uuid();
+        contactHistory.created_at = Date();
+        contactHistory.updated_at = nil;
+        contactHistory.deleted_at = nil;
+        
+        return contactHistory;
     }
     
 }

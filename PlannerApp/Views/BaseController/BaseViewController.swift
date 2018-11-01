@@ -139,6 +139,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             break
         case contactButton:
             self.resetEachController(newTab: .contact, oldTab: self.activeTab)
+            ContactViewModel.insertDataContactHistoryModel(cID: "azlim");
             self.activeTab = .contact
             break
         case addNoteButton:

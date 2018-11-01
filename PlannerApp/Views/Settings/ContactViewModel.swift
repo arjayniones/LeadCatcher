@@ -117,4 +117,15 @@ class ContactViewModel {
         return realmStore.models(query:  "id = '\(id)'")!
     }
     
+    class func insertDataContactHistoryModel(cID:String)->Bool
+    {
+        let data = ContactHistory().newInstance();
+        data.CH_CID = cID;
+        data.CH_CallingDate = Date();
+        
+        data.add();
+        
+        return true;
+    }
+    
 }

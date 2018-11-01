@@ -14,6 +14,7 @@ class ContactDetailsViewModel {
     var detailRows:[AddContactViewObject] = []
     var addContactModel:AddContactModel?
     var profileImage:UIImage?
+    
     init() {
         
         self.addContactModel = AddContactModel()

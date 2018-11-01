@@ -47,6 +47,10 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         self.getGreetingByTime()
         view = imageView
         
+        //let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        //print(paths[0]);
+
+        
         headerView.axis = .vertical
         headerView.alignment = .leading
         headerView.spacing = 10

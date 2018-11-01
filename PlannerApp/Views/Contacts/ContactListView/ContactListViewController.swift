@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import MessageUI
+import SwiftyUserDefaults
 
 protocol ContactListViewControllerDelegate:class {
     func didSelectCustomer(user:ContactModel)
