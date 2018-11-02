@@ -214,6 +214,7 @@ class LoginViewController: ViewControllerProtocol {
                         DispatchQueue.main.async {
                             Defaults[.SessionUserId] = self.resultUserList[0].id;
                             Defaults[.SessionUsername] = self.resultUserList[0].U_Username;
+                            
                             self.dismiss(animated: false, completion: nil)
                         }
                     }
