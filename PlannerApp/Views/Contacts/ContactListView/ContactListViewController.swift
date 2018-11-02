@@ -9,6 +9,8 @@
 import UIKit
 import RealmSwift
 import MessageUI
+import ImagePicker
+import Kingfisher
 
 protocol ContactListViewControllerDelegate:class {
     func didSelectCustomer(user:ContactModel)
@@ -17,6 +19,8 @@ protocol ContactListViewControllerDelegate:class {
 class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
     
+   
+
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var searchFooter = SearchFooterView()
     let viewModel = ContactListViewModel()
@@ -26,6 +30,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
     let allButton = ActionButton()
     let potentialButton = ActionButton()
+    let customerButton = ActionButton()
+    let disqualifiedButton = ActionButton()
+    let topStack = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +46,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         } else {
             // Fallback on earlier versions
         }
-        definesPresentationContext = true
         searchController.searchBar.delegate = self
 
         title = "Contacts"
@@ -47,18 +53,49 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         allButton.setTitle("All", for: .normal)
         allButton.setTitleColor(.white, for: .normal)
         allButton.setTitleColor(.black, for: .selected)
+        allButton.titleLabel?.font =  .systemFont(ofSize: 11)
         allButton.isSelected = true
         allButton.backgroundColor = .white
         allButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
-        view.addSubview(allButton)
+        //view.addSubview(allButton)
         
         potentialButton.setTitle("Potential", for: .normal)
         potentialButton.backgroundColor = CommonColor.naviBarBlackColor
         potentialButton.isSelected = false
         potentialButton.setTitleColor(.white, for: .normal)
         potentialButton.setTitleColor(.black, for: .selected)
+        potentialButton.titleLabel?.font =  .systemFont(ofSize: 11)
         potentialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
-        view.addSubview(potentialButton)
+        //view.addSubview(potentialButton)
+        
+        customerButton.setTitle("Customers", for: .normal)
+        customerButton.backgroundColor = CommonColor.naviBarBlackColor
+        customerButton.isSelected = false
+        customerButton.setTitleColor(.white, for: .normal)
+        customerButton.setTitleColor(.black, for: .selected)
+        customerButton.titleLabel?.font =  .systemFont(ofSize: 11)
+        customerButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
+        //view.addSubview(customerButton)
+        
+        disqualifiedButton.setTitle("Disqualified", for: .normal)
+        disqualifiedButton.backgroundColor = CommonColor.naviBarBlackColor
+        disqualifiedButton.isSelected = false
+        disqualifiedButton.setTitleColor(.white, for: .normal)
+        disqualifiedButton.setTitleColor(.black, for: .selected)
+        disqualifiedButton.titleLabel?.font =  .systemFont(ofSize: 11)
+        disqualifiedButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
+        //view.addSubview(disqualifiedButton)
+        
+        
+        view.addSubview(topStack)
+        topStack.axis = .horizontal
+        
+        topStack.distribution = .fillEqually
+        topStack.addArrangedSubview(allButton)
+        topStack.addArrangedSubview(potentialButton)
+        topStack.addArrangedSubview(customerButton)
+        topStack.addArrangedSubview(disqualifiedButton)
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -104,23 +141,79 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         view.updateConstraintsIfNeeded()
     }
     
+   
+    
     @objc func filterPressed(sender:UIButton) {
-        if sender == allButton && potentialButton.isSelected {
-            //filter all
-            allButton.isSelected = true
-            potentialButton.isSelected = false
-            allButton.backgroundColor = .white
-            potentialButton.backgroundColor = CommonColor.naviBarBlackColor
-            viewModel.filterContact(isPotential: false)
-        } else if sender == potentialButton && allButton.isSelected {
-            //filter potential
-            allButton.isSelected = false
-            potentialButton.isSelected = true
-            allButton.backgroundColor = CommonColor.naviBarBlackColor
-            potentialButton.backgroundColor = .white
-            viewModel.filterContact(isPotential: true)
-        }
         
+        switch sender {
+            
+        case  allButton :
+            
+                allButton.isSelected = true
+                potentialButton.isSelected = false
+                customerButton.isSelected = false
+                disqualifiedButton.isSelected = false
+                allButton.backgroundColor = .white
+                potentialButton.backgroundColor = CommonColor.naviBarBlackColor
+                customerButton.backgroundColor = CommonColor.naviBarBlackColor
+                disqualifiedButton.backgroundColor = CommonColor.naviBarBlackColor
+                viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
+            
+            break
+        case potentialButton:
+                allButton.isSelected = false
+                potentialButton.isSelected = true
+                customerButton.isSelected = false
+                disqualifiedButton.isSelected = false
+                allButton.backgroundColor = CommonColor.naviBarBlackColor
+                potentialButton.backgroundColor = .white
+                customerButton.backgroundColor = CommonColor.naviBarBlackColor
+                disqualifiedButton.backgroundColor = CommonColor.naviBarBlackColor
+                viewModel.filterContact(isPotential: true, isCustomer: false, isDisqualified: false)
+            
+            break
+        
+        case customerButton :
+                allButton.isSelected = false
+                potentialButton.isSelected = false
+                customerButton.isSelected = true
+                disqualifiedButton.isSelected = false
+                allButton.backgroundColor = CommonColor.naviBarBlackColor
+                potentialButton.backgroundColor = CommonColor.naviBarBlackColor
+                customerButton.backgroundColor = .white
+                disqualifiedButton.backgroundColor = CommonColor.naviBarBlackColor
+                viewModel.filterContact(isPotential: false, isCustomer: true, isDisqualified: false)
+                
+            break
+        
+        case disqualifiedButton :
+                allButton.isSelected = false
+                potentialButton.isSelected = false
+                customerButton.isSelected = false
+                disqualifiedButton.isSelected = true
+                allButton.backgroundColor = CommonColor.naviBarBlackColor
+                potentialButton.backgroundColor = CommonColor.naviBarBlackColor
+                customerButton.backgroundColor = CommonColor.naviBarBlackColor
+                disqualifiedButton.backgroundColor = .white
+                viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: true)
+                
+            break
+  
+        
+        default :
+                allButton.isSelected = true
+                potentialButton.isSelected = false
+                customerButton.isSelected = false
+                disqualifiedButton.isSelected = false
+                allButton.backgroundColor = .white
+                potentialButton.backgroundColor = CommonColor.naviBarBlackColor
+                customerButton.backgroundColor = CommonColor.naviBarBlackColor
+                disqualifiedButton.backgroundColor = CommonColor.naviBarBlackColor
+                viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
+            
+            
+        }
+       
         tableView.reloadData()
     }
     
@@ -143,27 +236,32 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavbarAppear()
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        }
+        
         self.tableView.reloadData()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = nil
+        }
     }
     
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
             
-            allButton.snp.makeConstraints { make in
-                make.top.left.equalTo(view)
-                make.height.equalTo(50)
+            topStack.snp.makeConstraints { make in
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalToSuperview()
+                make.height.equalTo(30)
             }
             
-            potentialButton.snp.makeConstraints { make in
-                make.top.right.equalTo(view)
-                make.size.equalTo(allButton.snp.size)
-                make.left.equalTo(allButton.snp.right)
-            }
-            
+
             tableView.snp.makeConstraints { make in
                 make.left.right.equalTo(view)
-                make.top.equalTo(allButton.snp.bottom)
+                make.top.equalTo(topStack.snp.bottom)
                 make.bottom.equalTo(view).inset(50)
             }
             
@@ -309,11 +407,70 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         cell.status.text = contactData.C_Status == "" ? "No Status": contactData.C_Status
         cell.phoneNum.text = contactData.C_PhoneNo == "" ? "No Number": contactData.C_PhoneNo
         cell.email.text = contactData.C_Email == "" ? "No Email": contactData.C_Email
-        cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐
+        
         cell.lastCom.text = contactData.C_LastComm == "" ? "Not contacted yet": contactData.C_LastComm
         cell.toFollow.text = contactData.C_ToFollow == "" ? "No meeting yet": contactData.C_ToFollow
         
-        cell.textLabel?.textColor = contactData.C_Scoring >= 3 ? .blue:.black
+        if contactData.C_Status == "Potential" {
+            
+           cell.cellView.backgroundColor =  .lightGray
+           cell.toFollow.text = "To Follow"
+           cell.toFollow.textColor = .green
+            
+        } else if contactData.C_Status == "Customer" {
+            
+            cell.cellView.backgroundColor =  .green
+            cell.toFollow.text = "Keep In Touch"
+            cell.toFollow.textColor = .blue
+            
+        } else if contactData.C_Status == "Disqualified" {
+            
+            cell.cellView.backgroundColor =  .red
+            cell.toFollow.text = "Delete Contact"
+            cell.toFollow.textColor = .black
+            cell.rating.textColor = .black
+           
+            
+        } else {
+            
+                cell.cellView.backgroundColor = .white
+       
+        }
+        
+        //cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐
+        
+        if contactData.C_Scoring == 0 {
+            cell.rating.text = "No Ratings"
+            cell.rating.textColor = .black
+        } else if contactData.C_Scoring == 1 {
+             cell.rating.text = "★✩✩✩✩"
+             cell.rating.textColor = .yellow
+        } else if contactData.C_Scoring == 2 {
+            cell.rating.text = "★★✩✩✩"
+            cell.rating.textColor = .yellow
+        } else if contactData.C_Scoring == 3 {
+            cell.rating.text = "★★★✩✩"
+            cell.rating.textColor = .yellow
+        } else if contactData.C_Scoring == 4 {
+            cell.rating.text = "★★★★✩"
+            cell.rating.textColor = .yellow
+        } else if contactData.C_Scoring == 5 {
+            cell.rating.text = "★★★★★"
+            cell.rating.textColor = .yellow
+        }
+        
+        ImageCache.default.retrieveImage(forKey: "profile_"+contactData.id, options: nil) {
+            image, cacheType in
+            if let image = image {
+                cell.imgUser.image = image
+            } else {
+                print("Not exist in cache.")
+            }
+        }
+        
+        
+        
+        
         
         return cell
     }

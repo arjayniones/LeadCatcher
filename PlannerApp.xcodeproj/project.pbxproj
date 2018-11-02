@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0C1933A1217D7F6500AC495A /* ContactListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1933A0217D7F6500AC495A /* ContactListTableViewCell.swift */; };
+		0C1E5FFC2181551700DC8750 /* SummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E5FFB2181551700DC8750 /* SummaryViewModel.swift */; };
+		0C1E5FFE2181B23E00DC8750 /* LogsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E5FFD2181B23E00DC8750 /* LogsTableViewCell.swift */; };
+		0C1E60002181B25F00DC8750 /* ToDoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E5FFF2181B25F00DC8750 /* ToDoTableViewCell.swift */; };
+		0C1E60022181B27800DC8750 /* SocialsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E60012181B27800DC8750 /* SocialsTableViewCell.swift */; };
+		0C1E60042181B2B900DC8750 /* FilesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E60032181B2B900DC8750 /* FilesTableViewCell.swift */; };
+		0C1E60062181B2CF00DC8750 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E60052181B2CF00DC8750 /* InfoTableViewCell.swift */; };
 		0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */; };
 		0C8DBA1E21630513009A1475 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA1D21630513009A1475 /* SummaryViewController.swift */; };
 		0C8DBA2021631E88009A1475 /* SummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */; };
@@ -123,6 +129,12 @@
 /* Begin PBXFileReference section */
 		02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlannerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp.release.xcconfig"; sourceTree = "<group>"; };
 		0C1933A0217D7F6500AC495A /* ContactListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewCell.swift; sourceTree = "<group>"; };
+		0C1E5FFB2181551700DC8750 /* SummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModel.swift; sourceTree = "<group>"; };
+		0C1E5FFD2181B23E00DC8750 /* LogsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsTableViewCell.swift; sourceTree = "<group>"; };
+		0C1E5FFF2181B25F00DC8750 /* ToDoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewCell.swift; sourceTree = "<group>"; };
+		0C1E60012181B27800DC8750 /* SocialsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialsTableViewCell.swift; sourceTree = "<group>"; };
+		0C1E60032181B2B900DC8750 /* FilesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesTableViewCell.swift; sourceTree = "<group>"; };
+		0C1E60052181B2CF00DC8750 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0C8DBA1D21630513009A1475 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -285,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				0C8DBA1D21630513009A1475 /* SummaryViewController.swift */,
+				0C1E5FFB2181551700DC8750 /* SummaryViewModel.swift */,
 				0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */,
 				0C8DBA23216359A6009A1475 /* SummaryBarChart.swift */,
 				0C8DBA25216359E1009A1475 /* SummaryBarEntry.swift */,
@@ -400,6 +413,11 @@
 				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
 				0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */,
 				0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */,
+				0C1E5FFD2181B23E00DC8750 /* LogsTableViewCell.swift */,
+				0C1E5FFF2181B25F00DC8750 /* ToDoTableViewCell.swift */,
+				0C1E60012181B27800DC8750 /* SocialsTableViewCell.swift */,
+				0C1E60032181B2B900DC8750 /* FilesTableViewCell.swift */,
+				0C1E60052181B2CF00DC8750 /* InfoTableViewCell.swift */,
 			);
 			path = ContactListDetailsView;
 			sourceTree = "<group>";
@@ -944,6 +962,7 @@
 				0CBFA0E92154BC270028750B /* MapsPickerViewController.swift in Sources */,
 				0C8DBA3B2165C610009A1475 /* AddPanelViewController.swift in Sources */,
 				0CBFA0EF21588ED40028750B /* DetailsVC.swift in Sources */,
+				0C1E60022181B27800DC8750 /* SocialsTableViewCell.swift in Sources */,
 				2450D38621420AEC00F5F61F /* Networking.swift in Sources */,
 				2455FBC52150CA9000881541 /* NotesViewController.swift in Sources */,
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
@@ -954,6 +973,7 @@
 				24FE315F2164B1C500A4EB96 /* UIViewExtensions.swift in Sources */,
 				2455FBD22151F2B800881541 /* AddNote.swift in Sources */,
 				0CBFA0DF2151FC3B0028750B /* MapsViewController.swift in Sources */,
+				0C1E60062181B2CF00DC8750 /* InfoTableViewCell.swift in Sources */,
 				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
 				0C8DBA43216AFBD3009A1475 /* PanelListViewModel.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
@@ -968,6 +988,7 @@
 				24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */,
 				2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */,
 				0C8DBA3621647150009A1475 /* LanguageSettingsViewController.swift in Sources */,
+				0C1E5FFC2181551700DC8750 /* SummaryViewModel.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
 				0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */,
@@ -978,6 +999,7 @@
 				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
 				0C8DBA1E21630513009A1475 /* SummaryViewController.swift in Sources */,
 				24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */,
+				0C1E60002181B25F00DC8750 /* ToDoTableViewCell.swift in Sources */,
 				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
 				D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */,
 				24FE315D2164A2FB00A4EB96 /* HomeCalendarCell.swift in Sources */,
@@ -999,6 +1021,7 @@
 				0C1933A1217D7F6500AC495A /* ContactListTableViewCell.swift in Sources */,
 				0CBFA0EB2154EF030028750B /* PickAPlaceViewController.swift in Sources */,
 				2450D3942142143100F5F61F /* Utils.swift in Sources */,
+				0C1E5FFE2181B23E00DC8750 /* LogsTableViewCell.swift in Sources */,
 				0CBFA0E321534A8C0028750B /* MapMarkerWindow.swift in Sources */,
 				2450D38921420B4000F5F61F /* StoreManager.swift in Sources */,
 				D639EACF2148B7980053894C /* UserViewModel.swift in Sources */,
@@ -1007,6 +1030,7 @@
 				0CBFA0F32158D2F60028750B /* AddContactViewObject.swift in Sources */,
 				248B839A2141014600119D9D /* ActionButton.swift in Sources */,
 				2455FBBB21508E8D00881541 /* DetailsTodoListViewController.swift in Sources */,
+				0C1E60042181B2B900DC8750 /* FilesTableViewCell.swift in Sources */,
 				2455FBC32150C92B00881541 /* NotesPopUpControllerView.swift in Sources */,
 				2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */,
 				2455FBC72150D6FD00881541 /* ColorExtension.swift in Sources */,
@@ -1149,7 +1173,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A9LH66DXBS;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1174,7 +1198,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A9LH66DXBS;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

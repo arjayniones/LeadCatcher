@@ -17,6 +17,7 @@ class ContactListTableViewCell: UITableViewCell {
         img.layer.borderWidth = 1
         img.layer.shadowRadius = 10
         img.layer.shadowOpacity = 0.5
+        img.clipsToBounds = true
         
         return img
     }()
@@ -47,8 +48,7 @@ class ContactListTableViewCell: UITableViewCell {
     let rating : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 15)
-        //label.textAlignment = .center
-        
+        label.textColor = .yellow
         return label
     }()
     var lastCom : UILabel = {
@@ -82,17 +82,12 @@ class ContactListTableViewCell: UITableViewCell {
        
         
         imgUser.backgroundColor = .red
-//        mainStackView.axis = .horizontal
-//        mainStackView.spacing = 5
-//        mainStackView.distribution = .equalSpacing
-//        mainStackView.alignment = .fill
-   
+
         cellView.addSubview(imgUser)
-//        mainStackView.addArrangedSubview(imgUser)
         
         stackView1.axis = .vertical
         stackView1.spacing = 5
-//      mainStackView.addArrangedSubview(stackView1)
+
         cellView.addSubview(stackView1)
         
         stackView1.addArrangedSubview(customerName)
@@ -103,10 +98,10 @@ class ContactListTableViewCell: UITableViewCell {
         
         
         stackView2.axis = .vertical
-        stackView2.spacing = 5
+        stackView2.spacing = 3
         cellView.addSubview(stackView2)
         
-//        mainStackView.addArrangedSubview(stackView2)
+
         stackView2.addArrangedSubview(rating)
         stackView2.addArrangedSubview(lastCom)
         stackView2.addArrangedSubview(toFollow)
@@ -153,7 +148,8 @@ class ContactListTableViewCell: UITableViewCell {
         
         stackView2.snp.makeConstraints { make in
           
-            make.top.bottom.equalTo(cellView).inset(5)
+            make.top.equalTo(cellView).inset(20)
+            make.bottom.equalTo(cellView).inset(5)
             //make.left.equalTo(stackView1.snp.right).offset(5)
             make.right.equalTo(cellView).inset(5)
         }

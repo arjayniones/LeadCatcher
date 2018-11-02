@@ -13,9 +13,26 @@ import Kingfisher
 class ContactDetailsViewModel {
     var detailRows:[AddContactViewObject] = []
     var addContactModel:AddContactModel?
+    var logDetails:[AddContactViewObject] = []
+    var addLogDetails:LogsModel?
     var profileImage:UIImage?
     init() {
         
+        
+        //log init
+        self.addLogDetails = LogsModel()
+        
+        let log1 = AddContactViewObject()
+        log1.title = "Called"
+        log1.desc = "Had a successful call"
+        self.logDetails.append(log1)
+        
+        let log2 = AddContactViewObject()
+        log2.title = "Emailed"
+        log2.desc = "Had sent Birthday Greetings email"
+        self.logDetails.append(log2)
+     
+        //about init
         self.addContactModel = AddContactModel()
         
         let row1 = AddContactViewObject()
@@ -57,7 +74,7 @@ class ContactDetailsViewModel {
         let row8 = AddContactViewObject()
         row8.icon = "task-icon"
         row8.title = "Status"
-        row8.alertOptions = ["Potential","Nurture","Disqualify","Customer"]
+        row8.alertOptions = ["Potential","Nurture","Disqualified","Customer"]
         
         self.detailRows.append(row8)
         
@@ -98,6 +115,18 @@ class ContactDetailsViewModel {
             return false
         }
         
+//        guard let dateAdded = self.addContactModel?.addContact_dateAdded else {
+//            return false
+//        }
+//        
+//        guard let lastComm = self.addContactModel?.addContact_lastComm else {
+//            return false
+//        }
+//        
+//        guard let toFollow = self.addContactModel?.addContact_toFollow else {
+//            return false
+//        }
+        
         print("Customer Details:  \n\nName: \(contactName)\nDate of Birth: \(dateOfBirth)\nAddress: \(address)\nPhone Number: \(phoneNum)\nEmail: \(email)\nLead Score: \(leadScore)\nRemarks: \(remarks)\nStatus: \(status)")
         
         return true
@@ -134,7 +163,9 @@ class ContactDetailsViewModel {
                 addContact.C_Remark = addContactMod.addContact_remarks
                 addContact.C_Scoring = addContactMod.addContact_leadScore
                 addContact.C_Status = addContactMod.addContact_status
-                
+                addContact.C_DateAdded = addContactMod.addContact_dateAdded
+                addContact.C_LastComm = addContactMod.addContact_lastComm
+                addContact.C_ToFollow = addContactMod.addContact_toFollow
 //                if let location = addContactMod.addContact_address{
 //                    addContact.C_Address = location
 //                }
@@ -157,5 +188,17 @@ class AddContactModel {
     var addContact_leadScore: Int = 0
     var addContact_remarks: String = ""
     var addContact_status: String = ""
+    var addContact_dateAdded: Date?
+    var addContact_lastComm: String = ""
+    var addContact_toFollow: String = ""
     
 }
+
+class LogsModel {
+    
+    var log_date: Date?
+    var log_task: String = ""
+    var log_details: String = ""
+    
+}
+

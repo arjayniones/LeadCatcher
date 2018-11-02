@@ -13,7 +13,7 @@ class SummaryCollectionViewCell: UICollectionViewCell {
     
     let textLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.white
         label.text = "label name"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ class SummaryCollectionViewCell: UICollectionViewCell {
     
     let outerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.red
+        view.backgroundColor = UIColor.lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

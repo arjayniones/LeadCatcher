@@ -13,5 +13,12 @@ class AddContactViewObject: NSObject {
     
     var icon:String = ""
     var title:String = ""
+    var desc:String = ""
     var alertOptions:[String] = []
+}
+
+class SummaryCollectionViewObjects: NSObject {
+    
+    var nameLbl:String = ""
+    var valueLbl:Int = 0
 }

@@ -34,11 +34,19 @@ class ContactListViewModel {
         ImageCache.default.removeImage(forKey: "profile_"+id, fromDisk: true)
     }
     
-    func filterContact(isPotential:Bool) {
+    func filterContact(isPotential:Bool,isCustomer:Bool,isDisqualified:Bool) {
         
         if isPotential {
-            contactList = realmStore.models(query: "C_Scoring >= 3 && deleted_at == nil")?
+            contactList = realmStore.models(query: "C_Status == 'Potential' && deleted_at == nil")?
                 .sorted(byKeyPath: "C_Scoring", ascending: false)
+        } else if isCustomer {
+            contactList = realmStore.models(query: "C_Status == 'Customer' && deleted_at == nil")?
+                .sorted(byKeyPath: "C_Scoring", ascending: false)
+            
+        } else if isDisqualified {
+            contactList = realmStore.models(query: "C_Status == 'Disqualified' && deleted_at == nil")
+            
+            
         } else {
             contactList = realmStore.models(query: "deleted_at == nil")
         }

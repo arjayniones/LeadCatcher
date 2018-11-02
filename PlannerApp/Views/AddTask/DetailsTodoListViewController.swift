@@ -11,6 +11,7 @@ import CoreLocation
 
 class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
+    var textFieldRealYPosition: CGFloat = 0.0
     var selectedDate: Date = Date()
     
     let tableView = UITableView()
@@ -37,6 +38,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         
         view.backgroundColor = .white
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
@@ -68,6 +73,31 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    
+    //keyboard
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            let distanceBetweenTextfielAndKeyboard = self.view.frame.height - textFieldRealYPosition - keyboardSize.height
+            if distanceBetweenTextfielAndKeyboard < 0 {
+                UIView.animate(withDuration: 0.4) {
+                    self.view.transform = CGAffineTransform(translationX: 0.0, y: distanceBetweenTextfielAndKeyboard)
+                }
+            }
+        }
+    }
+    
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.4) {
+            self.view.transform = .identity
+        }
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textFieldRealYPosition = textField.frame.origin.y + textField.frame.height
+        //take in account all superviews from textfield and potential contentOffset if you are using tableview to calculate the real position
     }
     
     @objc func save() {

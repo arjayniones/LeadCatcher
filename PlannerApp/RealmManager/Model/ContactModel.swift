@@ -20,6 +20,7 @@ class ContactModel:Model{
     @objc dynamic var C_Scoring:Int = 0;
     @objc dynamic var C_Remark:String = "";
     @objc dynamic var C_Status:String = "";
+    @objc dynamic var C_DateAdded:Date?;
     @objc dynamic var C_From:String = "";
     @objc dynamic var C_LastComm:String = "";
     @objc dynamic var C_ToFollow:String = "";
