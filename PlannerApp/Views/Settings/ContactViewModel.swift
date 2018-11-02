@@ -120,7 +120,7 @@ class ContactViewModel {
     class func insertDataContactHistoryModel(cID:String, cHistoryType:String)->Bool
     {
         let data = ContactHistory().newInstance();
-        data.CH_CID = cID;
+        data.CH_CID = cID; 
         data.CH_CallingDate = Date();
         data.CH_HistoryType = cHistoryType;
         
