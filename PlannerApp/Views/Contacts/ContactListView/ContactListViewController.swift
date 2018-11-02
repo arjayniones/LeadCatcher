@@ -314,11 +314,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         
         let callAction = UIContextualAction(style: .normal, title: "Call") { (action, view, handler) in
-            let contactNum = contactData.C_PhoneNo
-            
+            let contactNum = contactData.C_PhoneNo.replacingOccurrences(of: " ", with: "")
+            Defaults[.ContactID] = contactData.id;
             print(contactNum)
-            let url:URL = URL(string: "tel://\(contactNum)")!
-            UIApplication.shared.open(url, options: [:], completionHandler: { val in
+            let url:NSURL = URL(string: "tel://\(contactNum)")! as NSURL
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: { val in
                 
             })
             
@@ -608,12 +608,32 @@ extension ContactListViewController: UISearchResultsUpdating {
 
 extension ContactListViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result {
+        case .sent:
+            if !ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "SMS")
+            {
+                print("Something wrong");
+            }
+            break;
+        default:
+            print("Send SMS fail");
+        }
         controller.dismiss(animated: true)
     }
     
     
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .sent:
+            if !ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "Email")
+            {
+                print("Something wrong");
+            }
+            break;
+        default:
+            print("Send Email fail");
+        }
         controller.dismiss(animated: true)
     }
     
