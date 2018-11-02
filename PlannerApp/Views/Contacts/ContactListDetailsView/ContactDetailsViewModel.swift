@@ -16,6 +16,7 @@ class ContactDetailsViewModel {
     var logDetails:[AddContactViewObject] = []
     var addLogDetails:LogsModel?
     var profileImage:UIImage?
+    
     init() {
         
         

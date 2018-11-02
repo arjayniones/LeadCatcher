@@ -11,7 +11,7 @@ import UIKit
 class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     fileprivate var didSetupContraints = false
-    fileprivate let iconImage = UIImageView()
+    let iconImage = UIImageView()
     let labelTitle = UITextField()
     
     let nextIcon:UIImageView = {
@@ -20,11 +20,22 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         return imageView
     }()
     
+    let addIcon:UIImageView = {
+        let imageView = UIImageView()
+        imageView.isUserInteractionEnabled = true
+        imageView.image = UIImage(named: "add-icon")
+        return imageView
+    }()
+    
+    let stackView = UIStackView()
+    
     var leftIcon:String = "" {
         didSet {
             iconImage.image = UIImage(named: leftIcon)
         }
     }
+    
+    let iconImage2 = UIImageView(image:UIImage(named: "check-icon"))
     
     var title:String = "" {
         didSet {
@@ -33,18 +44,29 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     }
     
     var subjectCallback:((String) -> ())?
+    var checkListCallback:(() -> ())?
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.addSubview(iconImage)
         
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
         labelTitle.returnKeyType = .done
         labelTitle.textColor = .lightGray
         labelTitle.delegate = self
         labelTitle.isEnabled = false
-        contentView.addSubview(labelTitle)
+        
+        iconImage2.isHidden = true
+        
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.addArrangedSubview(iconImage2)
+        stackView.addArrangedSubview(iconImage)
+        stackView.addArrangedSubview(labelTitle)
+        contentView.addSubview(stackView)
+        
+        addIcon.isHidden = true
+        addIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addCheckList)))
+        contentView.addSubview(addIcon)
         
         contentView.addSubview(nextIcon)
         
@@ -54,6 +76,12 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func addCheckList() {
+        if let callback = checkListCallback {
+            callback()
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -83,19 +111,29 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
             
             iconImage.snp.makeConstraints { make in
                 make.width.height.equalTo(32)
-                make.left.top.bottom.equalTo(contentView).inset(10)
             }
             
-            labelTitle.snp.makeConstraints { make in
-                make.left.equalTo(iconImage.snp.right).offset(10)
-                make.right.equalTo(nextIcon.snp.left).offset(10)
-                make.centerY.equalTo(iconImage.snp.centerY)
+            iconImage2.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 20, height: 27))
+            }
+            
+            stackView.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview().inset(10)
+                make.left.equalToSuperview().inset(20)
             }
             
             nextIcon.snp.makeConstraints { make in
-                make.width.height.equalTo(15)
+                make.size.equalTo(CGSize(width: 15, height: 15))
                 make.right.equalTo(contentView).inset(10)
                 make.centerY.equalTo(iconImage.snp.centerY)
+                make.left.equalTo(stackView.snp.right).offset(10)
+            }
+            
+            addIcon.snp.makeConstraints { make in
+                make.width.height.equalTo(30)
+                make.right.equalTo(contentView).inset(10)
+                make.centerY.equalTo(self.snp.centerY)
+                make.left.equalTo(stackView.snp.right).offset(10)
             }
             
             didSetupContraints = true

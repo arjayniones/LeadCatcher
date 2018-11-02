@@ -56,6 +56,11 @@ class DetailsTodoListViewModel {
         row7.icon = "location-icon"
         row7.title = "location".localized
         self.detailRows.append(row7)
+        
+        let row8 = AddTodoViewObject()
+        row8.icon = "checklist-icon"
+        row8.title = "Checklist"
+        self.detailRows.append(row8)
     }
     
     func verifyRepeatTime(date: Date) -> Bool {
@@ -214,6 +219,9 @@ class DetailsTodoListViewModel {
             addNote.addNote_customerId = addNoteMod.addNote_customer?.id
             addNote.addNote_taskType = addNoteMod.addNote_taskType
             addNote.addNote_notes = addNoteMod.addNote_notes
+            for x in addNoteMod.addNote_checkList {
+                addNote.addNote_checklist.append(x)
+            }
             
             if let location = addNoteMod.addNote_location {
                 addNote.addNote_location = location
@@ -237,6 +245,7 @@ class AddNoteModel {
     var addNote_taskType: String = ""
     var addNote_notes: String = ""
     var addNote_location:LocationModel?
+    var addNote_checkList:[Checklist] = []
 }
 
 

@@ -11,6 +11,7 @@ import RealmSwift
 import MessageUI
 import ImagePicker
 import Kingfisher
+import SwiftyUserDefaults
 
 protocol ContactListViewControllerDelegate:class {
     func didSelectCustomer(user:ContactModel)

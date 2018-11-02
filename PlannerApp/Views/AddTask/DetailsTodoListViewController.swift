@@ -183,8 +183,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             self.openContactListViewController()
         } else if data.title == "location".localized {
             self.openMapView()
+        } else if data.title == "Checklist"{
+            print("pumasok dito")
         }
-        
     }
     
     func populateData(cell:DetailsTodoTableViewCell,index:IndexPath,data:AddTodoViewObject) {
@@ -205,6 +206,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
             case 6:
                 cell.title = viewmod.addNote_location == nil ? data.title:"\(viewmod.addNote_location?.name ?? data.title)"
+            case 7:
+                cell.title = "Checklist"
             default:
                 break
             }
@@ -213,26 +216,89 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return viewModel.detailRows.count
+        }
+        
+        return viewModel.addNoteModel?.addNote_checkList.count ?? 0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
-        let data = viewModel.detailRows[indexPath.row]
-        cell.leftIcon = data.icon
-        self.populateData(cell: cell, index: indexPath, data:data)
-        cell.selectionStyle = .none
         
-        if data.title == "subject".localized {
+        if indexPath.section == 0 {
+            let data = viewModel.detailRows[indexPath.row]
+            cell.leftIcon = data.icon
+            cell.iconImage2.isHidden = true
+            self.populateData(cell: cell, index: indexPath, data:data)
+            cell.selectionStyle = .none
+            
+            if data.title == "subject".localized {
+                cell.labelTitle.isEnabled = true
+                cell.nextIcon.isHidden = true
+                cell.subjectCallback = { val in
+                    self.viewModel.addNoteModel?.addNote_subject = val
+                }
+            } else if data.title == "Checklist" {
+                cell.addIcon.isHidden = false
+                cell.nextIcon.isHidden = true
+                cell.checkListCallback = {
+                    self.addCell(tableView: tableView)
+                }
+            }
+        }
+        
+        if indexPath.section == 1 {
             cell.labelTitle.isEnabled = true
             cell.nextIcon.isHidden = true
+            cell.iconImage.isHidden = true
+            cell.iconImage2.isHidden = false
+            cell.labelTitle.placeholder = "Insert checklist"
             cell.subjectCallback = { val in
-                self.viewModel.addNoteModel?.addNote_subject = val
+                if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
+                    checkData.title = val
+                }
             }
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.detailRows.count
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        if indexPath.section == 1 {
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete".localized) { (deleteAction, indexPath) -> Void in
+                if let _ = self.viewModel.addNoteModel?.addNote_checkList {
+                    self.viewModel.addNoteModel?.addNote_checkList.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
+            }
+            return [deleteAction]
+        } else {
+            return nil
+        }
+    }
+    
+    func addCell(tableView: UITableView) {
+        
+        let checkList = Checklist()
+        checkList.newInstance()
+        
+        let indexBefore = viewModel.addNoteModel?.addNote_checkList.count ?? 0
+        
+        viewModel.addNoteModel?.addNote_checkList.append(checkList)
+        
+        let indexPath = IndexPath(item: indexBefore, section: 1)
+        tableView.insertRows(at: [indexPath], with: .automatic)
     }
 }
 

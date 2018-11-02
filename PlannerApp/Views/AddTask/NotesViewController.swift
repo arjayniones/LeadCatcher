@@ -53,7 +53,7 @@ class NotesViewController: ViewControllerProtocol {
         
         if !didSetupConstraints {
             doneButton.snp.makeConstraints { make in
-                make.top.equalTo(view).inset(20)
+                make.top.equalTo(view.safeArea.top).inset(10)
                 make.right.equalTo(view).inset(10)
                 make.size.equalTo(CGSize(width: 100, height: 40))
             }

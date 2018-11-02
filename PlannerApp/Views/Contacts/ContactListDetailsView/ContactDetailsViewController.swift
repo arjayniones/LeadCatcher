@@ -9,6 +9,8 @@
 import UIKit
 import ImagePicker
 import Kingfisher
+import SwiftyUserDefaults
+import CallKit
 
 import RealmSwift
 import MessageUI
@@ -44,7 +46,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let smsButton = ActionButton()
     let realmStoreContact = RealmStore<ContactModel>()
     var selectedTab = String()
-    
+    var callObServer:CXCallObserver!
+
     
     fileprivate let profileImageView = UIImageView()
     
@@ -79,12 +82,19 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+
+        callObServer = CXCallObserver();
+        callObServer.setDelegate(self, queue: DispatchQueue.main);
+
         
         view.backgroundColor = .white
         title = "Contact Details"
@@ -292,6 +302,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     @objc func save() {
+//        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
+//        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        
         viewModel.saveContact(completion: { val in
             if val {
                 let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
@@ -871,6 +884,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             case 0:
                 cell.title = viewmod.addContact_contactName == "" ? data.title :
                 viewmod.addContact_contactName
+                Defaults[.ContactID] = viewmod.addContact_id;
             case 1:
                 cell.title = viewmod.addContact_dateOfBirth == nil ? data.title:
                 convertDateTimeToString(date: viewmod.addContact_dateOfBirth!)
@@ -1017,6 +1031,7 @@ extension ContactDetailsViewController:DateAndTimePickerViewControllerDelegate {
     }
 }
 extension ContactDetailsViewController: ImagePickerDelegate {
+    
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         if images.count > 0 {
             profileImageView.image = images[0]
@@ -1030,7 +1045,7 @@ extension ContactDetailsViewController: ImagePickerDelegate {
             profileImageView.image = images[0]
             viewModel.profileImage = images[0]
         }
-        
+
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -1040,6 +1055,7 @@ extension ContactDetailsViewController: ImagePickerDelegate {
     
     
 }
+
 
 extension ContactDetailsViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -1053,4 +1069,31 @@ extension ContactDetailsViewController : MFMailComposeViewControllerDelegate, MF
     }
     
     
+}
+
+
+extension ContactDetailsViewController:CXCallObserverDelegate
+{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        if call.hasEnded == true {
+            // user hang up the phone
+            print("Disconnected")
+            if (ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "Call"))
+            {
+                self.tableView.reloadData();
+            }
+            
+        }
+        if call.isOutgoing == true && call.hasConnected == false {
+            print("azlim Dialing")
+        }
+        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false {
+            print("azlim Incoming")
+        }
+        
+        if call.hasConnected == true && call.hasEnded == false {
+            // user pick up phone call
+            print("azlim Connected")
+        }
+    }
 }

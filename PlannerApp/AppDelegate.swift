@@ -14,11 +14,13 @@ import GoogleMaps
 import RealmSwift
 import GooglePlaces
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
-
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let center = UNUserNotificationCenter.current()
@@ -123,6 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         completionHandler([.alert,.sound,.badge])
     }
 
-
 }
+
 

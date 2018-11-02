@@ -9,6 +9,7 @@
 import UIKit
 import ObjectMapper
 import CoreLocation
+import RealmSwift
 
 class AddNote: Model {
     @objc dynamic var addNote_alertDateTime: Date?
@@ -18,6 +19,7 @@ class AddNote: Model {
     @objc dynamic var addNote_taskType: String = ""
     @objc dynamic var addNote_notes: String = ""
     @objc dynamic var addNote_location:LocationModel?
+    var addNote_checklist = List<Checklist>()
     @objc dynamic var status:String = ""
     
     override func mapping(map: Map) {
