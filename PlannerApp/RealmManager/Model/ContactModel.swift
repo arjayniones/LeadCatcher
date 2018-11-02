@@ -40,6 +40,7 @@ class ContactModel:Model{
 class ContactHistory:Model{
     @objc dynamic var CH_CID:String = "";
     @objc dynamic var CH_CallingDate:Date?;
+    @objc dynamic var CH_HistoryType:String = "";
     
     func newInstance() -> ContactHistory{
         let contactHistory = ContactHistory();

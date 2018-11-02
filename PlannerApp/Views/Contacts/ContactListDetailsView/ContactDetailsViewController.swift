@@ -10,6 +10,7 @@ import UIKit
 import ImagePicker
 import Kingfisher
 import SwiftyUserDefaults
+import CallKit
 
 class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
@@ -23,6 +24,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     var remarks = String()
     var status = String()
     var isControllerEditing:Bool = false
+    var callObServer:CXCallObserver!
     
     fileprivate let profileImageView = UIImageView()
     
@@ -61,6 +63,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        callObServer = CXCallObserver();
+        callObServer.setDelegate(self, queue: DispatchQueue.main);
         
         view.backgroundColor = .white
         title = "Contact Details"
@@ -123,8 +128,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     @objc func save() {
-        //let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
-        //UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+//        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
+//        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         
         viewModel.saveContact(completion: { val in
             if val {
@@ -414,5 +419,32 @@ extension ContactDetailsViewController: ImagePickerDelegate {
     }
     
     
+}
+
+
+extension ContactDetailsViewController:CXCallObserverDelegate
+{
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        if call.hasEnded == true {
+            // user hang up the phone
+            print("Disconnected")
+            if (ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "Call"))
+            {
+                self.tableView.reloadData();
+            }
+            
+        }
+        if call.isOutgoing == true && call.hasConnected == false {
+            print("azlim Dialing")
+        }
+        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false {
+            print("azlim Incoming")
+        }
+        
+        if call.hasConnected == true && call.hasEnded == false {
+            // user pick up phone call
+            print("azlim Connected")
+        }
+    }
 }
 
