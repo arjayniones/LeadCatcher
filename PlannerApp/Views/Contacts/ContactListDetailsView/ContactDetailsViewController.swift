@@ -46,7 +46,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let smsButton = ActionButton()
     let realmStoreContact = RealmStore<ContactModel>()
     var selectedTab = String()
-    var callObServer:CXCallObserver!
 
     
     fileprivate let profileImageView = UIImageView()
@@ -90,11 +89,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 
         NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-
-        callObServer = CXCallObserver();
-        callObServer.setDelegate(self, queue: DispatchQueue.main);
-
         
         view.backgroundColor = .white
         title = "Contact Details"
@@ -517,11 +511,14 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     @objc func actionCall() {
         
         //trigger button call
-        let contactNum = viewModel.addContactModel?.addContact_phoneNum
+        Defaults[.ContactID] = viewModel.addContactModel?.addContact_id;
+        let contactNum = viewModel.addContactModel?.addContact_phoneNum.replacingOccurrences(of: " ", with: "")
+        print(contactNum!);
         
-        print(contactNum!)
-        let url:URL = URL(string: "tel://\(contactNum!)")!
-        UIApplication.shared.open(url, options: [:], completionHandler: { val in
+        //        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
+        //        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        let url:NSURL = URL(string: "tel://\(contactNum!)")! as NSURL
+        UIApplication.shared.open(url as URL, options: [:], completionHandler: { val in
             
         })
     }
@@ -531,7 +528,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         //trigger button sms
         let contactNum = viewModel.addContactModel?.addContact_phoneNum
         let contactName = viewModel.addContactModel?.addContact_contactName
-        
+        Defaults[.ContactID] = viewModel.addContactModel?.addContact_id;
         let actionSheet = UIAlertController(title: "Choose options", message: "Send SMS greetings to your lead.", preferredStyle: .actionSheet)
         
         
@@ -556,7 +553,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         //trigger button email
         let emailAddress = viewModel.addContactModel?.addContact_email
         let customerName = viewModel.addContactModel?.addContact_contactName
-        
+        Defaults[.ContactID] = viewModel.addContactModel?.addContact_id;
         if MFMailComposeViewController.canSendMail() {
             
             
@@ -1059,12 +1056,33 @@ extension ContactDetailsViewController: ImagePickerDelegate {
 
 extension ContactDetailsViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result {
+        case .sent:
+            print("azlim : " + Defaults[.ContactID]!);
+            if !ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "SMS")
+            {
+                print("Something wrong");
+            }
+            break;
+        default:
+            print("Send SMS fail");
+        }
         controller.dismiss(animated: true)
     }
     
     
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .sent:
+            if !ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "Email")
+            {
+                print("Something wrong");
+            }
+            break;
+        default:
+            print("Send SMS fail");
+        }
         controller.dismiss(animated: true)
     }
     
@@ -1072,28 +1090,4 @@ extension ContactDetailsViewController : MFMailComposeViewControllerDelegate, MF
 }
 
 
-extension ContactDetailsViewController:CXCallObserverDelegate
-{
-    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
-        if call.hasEnded == true {
-            // user hang up the phone
-            print("Disconnected")
-            if (ContactViewModel.insertDataContactHistoryModel(cID: Defaults[.ContactID]!, cHistoryType: "Call"))
-            {
-                self.tableView.reloadData();
-            }
-            
-        }
-        if call.isOutgoing == true && call.hasConnected == false {
-            print("azlim Dialing")
-        }
-        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false {
-            print("azlim Incoming")
-        }
-        
-        if call.hasConnected == true && call.hasEnded == false {
-            // user pick up phone call
-            print("azlim Connected")
-        }
-    }
-}
+
