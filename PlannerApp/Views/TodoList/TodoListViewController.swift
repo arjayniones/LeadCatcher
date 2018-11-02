@@ -188,6 +188,13 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         todoModel.addNote_taskType = model.addNote_taskType
         todoModel.addNote_notes = model.addNote_notes
         todoModel.addNote_location = model.addNote_location
+        var checklist:[Checklist] = []
+        
+        for x in model.addNote_checklist {
+            checklist.append(x)
+        }
+        
+        todoModel.addNote_checkList = checklist
         
         detailController.setupModel = todoModel
         
