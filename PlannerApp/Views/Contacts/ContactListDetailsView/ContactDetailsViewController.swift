@@ -231,6 +231,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(ContactDetailTableViewCell.self, forCellReuseIdentifier: "contactDetailCell")
+        tableView.register(LogsTableViewCell.self, forCellReuseIdentifier: "cellLog")
+        
         view.addSubview(tableView)
         
         
@@ -628,20 +630,21 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         
         //add rows details here
         
-        if indexPath.row == 1{
-            //self.showDateTimePicker()
+        if selectedTab == "info" {
+                if indexPath.row == 1{
+                    //self.showDateTimePicker()
+                    
+                }else  if indexPath.row == 5 {
+                    //scoring here
+                     self.sheetPressedScoring(data: data)
+                } else  if indexPath.row == 6 {
+                   self.openRemarksController()
+                } else  if indexPath.row == 7 {
+                   // status alert view
+                    self.sheetPressedStatus(data: data)
+                }
             
-        }else  if indexPath.row == 5 {
-            //scoring here
-             self.sheetPressedScoring(data: data)
-        } else  if indexPath.row == 6 {
-           self.openRemarksController()
-        } else  if indexPath.row == 7 {
-           // status alert view
-            self.sheetPressedStatus(data: data)
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -657,18 +660,19 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             
         case "log":
-            let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
-            let data = viewModel.detailRows[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
+            let data = viewModel.logDetails[indexPath.row]
             //cell.leftIcon = data.icon
+//             populateLogData(cell: cell, index: indexPath, data: data)
             cell.leftIcon = "message-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
             
             cell.selectionStyle = .none
             
            //populate logs here using the customer logs info from database
             
             cell.labelTitle.text = "Call log \(indexPath.row)"
-            
+            cell.labelDesc.text = "Called"
+            cell.labelDate.text = "5 minutes ago"
             return cell
            
             
@@ -677,9 +681,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             //cell.leftIcon = data.icon
+           
             cell.leftIcon = "meeting-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
-            
+//            self.populateInfoData(cell: cell, index: indexPath, data:data)
+           
             cell.selectionStyle = .none
             
             if indexPath.row == 0 {
@@ -724,8 +729,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let data = viewModel.detailRows[indexPath.row]
             //cell.leftIcon = data.icon
             cell.leftIcon = "message-template-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
-            
+//            self.populateInfoData(cell: cell, index: indexPath, data:data)
+         
             cell.selectionStyle = .none
             
             if indexPath.row == 0 {
@@ -771,8 +776,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let data = viewModel.detailRows[indexPath.row]
             //cell.leftIcon = data.icon
             cell.leftIcon = "archive-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
-            
+//            self.populateInfoData(cell: cell, index: indexPath, data:data)
+           
             cell.selectionStyle = .none
             
             cell.labelTitle.text = "File \(indexPath.row)"
@@ -785,7 +790,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
-            self.populateData(cell: cell, index: indexPath, data:data)
+            self.populateInfoData(cell: cell, index: indexPath, data:data)
             
             cell.selectionStyle = .none
             
@@ -822,7 +827,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
-            self.populateData(cell: cell, index: indexPath, data:data)
+            self.populateInfoData(cell: cell, index: indexPath, data:data)
             
             cell.selectionStyle = .none
             
@@ -877,7 +882,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
     
-    func populateData(cell:ContactDetailTableViewCell,index:IndexPath,data:AddContactViewObject) {
+    func populateInfoData(cell:ContactDetailTableViewCell,index:IndexPath,data:AddContactViewObject) {
         
         if let viewmod = viewModel.addContactModel {
             switch index.row {
@@ -917,6 +922,18 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
     
+    func populateLogData(cell:LogsTableViewCell,index:IndexPath,data:AddContactViewObject) {
+        
+        if let viewmod = viewModel.addLogDetails {
+            
+            cell.title = viewmod.log_task
+            cell.date = "\(viewmod.log_date)"
+            cell.desc = viewmod.log_details
+
+        } else {
+            cell.title = data.title
+        }
+    }
 //    //Date Picker
 //    func showDatePicker(){
 //        //Formate Date
