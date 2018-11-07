@@ -109,6 +109,9 @@
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
 		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
 		D639EACF2148B7980053894C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D639EACE2148B7980053894C /* UserViewModel.swift */; };
+		D66DDB5121901FD5002077A2 /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB4E21901FD5002077A2 /* CSVExport.swift */; };
+		D66DDB5221901FD5002077A2 /* CSVValidateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */; };
+		D66DDB5321901FD5002077A2 /* CSVConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB5021901FD5002077A2 /* CSVConstants.swift */; };
 		D66E10CE215081D7005625BF /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E10CD215081D7005625BF /* ContactModel.swift */; };
 		D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66E10CF2150C2E2005625BF /* ContactViewModel.swift */; };
 		D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715D872140C82E00957E86 /* LoginViewController.swift */; };
@@ -238,6 +241,9 @@
 		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
 		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		D639EACE2148B7980053894C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		D66DDB4E21901FD5002077A2 /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVExport.swift; sourceTree = "<group>"; };
+		D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVValidateProtocol.swift; sourceTree = "<group>"; };
+		D66DDB5021901FD5002077A2 /* CSVConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVConstants.swift; sourceTree = "<group>"; };
 		D66E10CD215081D7005625BF /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		D66E10CF2150C2E2005625BF /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		D6715D872140C82E00957E86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -596,6 +602,7 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				D66DDB4D21901FBA002077A2 /* CSVExport */,
 				24775F60217F1183004319B1 /* PlannerApp.entitlements */,
 				248473962167110200C6AFE7 /* LanguageSettings */,
 				2491C0DF2165B12700037578 /* Resources */,
@@ -680,6 +687,16 @@
 				02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D66DDB4D21901FBA002077A2 /* CSVExport */ = {
+			isa = PBXGroup;
+			children = (
+				D66DDB5021901FD5002077A2 /* CSVConstants.swift */,
+				D66DDB4E21901FD5002077A2 /* CSVExport.swift */,
+				D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */,
+			);
+			path = CSVExport;
 			sourceTree = "<group>";
 		};
 		D6715D8B2140DE8700957E86 /* Login */ = {
@@ -949,6 +966,7 @@
 				24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */,
 				0C8DBA41216AF2C4009A1475 /* PanelListModel.swift in Sources */,
 				24D1B80521636816001D519C /* HomeViewModel.swift in Sources */,
+				D66DDB5221901FD5002077A2 /* CSVValidateProtocol.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
 				0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */,
 				2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */,
@@ -995,6 +1013,7 @@
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
 				0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */,
+				D66DDB5121901FD5002077A2 /* CSVExport.swift in Sources */,
 				0C8DBA2021631E88009A1475 /* SummaryCollectionViewCell.swift in Sources */,
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
@@ -1011,6 +1030,7 @@
 				2450D38321420A7400F5F61F /* Model.swift in Sources */,
 				0C8DBA24216359A6009A1475 /* SummaryBarChart.swift in Sources */,
 				24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */,
+				D66DDB5321901FD5002077A2 /* CSVConstants.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				242717D821491150001792BD /* HomeViewController.swift in Sources */,
 				0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */,
