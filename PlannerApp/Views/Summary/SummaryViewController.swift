@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var resultContactList:Results<ContactModel>!;
     let summaryCell = SummaryCollectionViewCell()
     var collectionview: UICollectionView!
     var cellId = "Cell"
@@ -66,6 +68,10 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         collectionview.backgroundColor = UIColor.white
         //collectionview.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3)
         
+        // azlim : temp btn to generate excel file
+        let exportBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportCustomerData));
+        navigationItem.rightBarButtonItem = exportBtn;
+        
         barChart.backgroundColor = UIColor.white
         //barChart.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3)
         self.view.addSubview(collectionview)
@@ -120,13 +126,19 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         
         myCell.numberLabel.text = data.valueLbl == 0 ? "0": "\(data.valueLbl)"
         
-        
         return myCell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         print("User tapped on item \(indexPath.row)")
+    }
+    
+    @objc func exportCustomerData()
+    {
+        let viewModel = SummaryViewModel()
+        viewModel.exportContactData(); // used to export contact info
+        viewModel.exportToDoData(); // used to export to do data
     }
     
     

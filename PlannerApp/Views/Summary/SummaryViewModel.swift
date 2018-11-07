@@ -62,6 +62,119 @@ class SummaryViewModel {
         
     }
     
+    func exportContactData() {
+        
+        let data:NSMutableArray  = NSMutableArray()
+        contactList = ContactListViewModel.init().contactList;
+        
+        // prepare excel data row
+        for i in 0..<contactList!.count{
+            let exportData:NSMutableDictionary = NSMutableDictionary()
+            exportData.setObject(contactList![i].C_Name, forKey: "Name" as NSCopying);
+            exportData.setObject("\"\(contactList![i].C_Address)\"", forKey: "Address" as NSCopying);
+            exportData.setObject(contactList![i].C_DOB ?? "", forKey: "DOB" as NSCopying);
+            exportData.setObject(contactList![i].C_PhoneNo, forKey: "PhoneNo" as NSCopying);
+            exportData.setObject(contactList![i].C_Scoring, forKey: "Scoring" as NSCopying);
+            exportData.setObject(contactList![i].C_PhoneNo, forKey: "PhoneNo" as NSCopying);
+            exportData.setObject(contactList![i].C_Status, forKey: "Status" as NSCopying);
+            data.add(exportData);
+        }
+        
+        if contactList!.count > 0
+        {
+            // prepare excel header
+            let fields:NSMutableArray = NSMutableArray()
+            fields.add("Name");
+            fields.add("Address");
+            fields.add("PhoneNo")
+            fields.add("DOB");
+            fields.add("Scoring");
+            fields.add("Status");
+            
+            // prepare export info
+            let writeCSVObj = CSV();
+            writeCSVObj.rows = data;
+            writeCSVObj.delimiter = DividerType.comma.rawValue;
+            writeCSVObj.fields = fields as NSArray;
+            writeCSVObj.name = "CustomerInfo";
+            
+            let result = CSVExport.export(writeCSVObj);
+            
+            if result.result.isSuccess
+            {
+                print("File Path: \(String(describing: result.filePath))");
+            }
+            else
+            {
+                print("fail to create excel file");
+            }
+        }
+        else
+        {
+            print("Empty database");
+        }
+        
+    
+    }
+    
+    func exportToDoData() {
+        
+        let data:NSMutableArray  = NSMutableArray()
+        let viewModel = TodoListViewModel()
+        contactList = ContactListViewModel.init().contactList;
+        
+        for j in 0..<contactList!.count
+        {
+            todoList = viewModel.getToDoListByContactID(test: contactList![j].id);
+            
+            for i in 0..<todoList!.count{
+                let exportData:NSMutableDictionary = NSMutableDictionary()
+                exportData.setObject("\"\(todoList![i].addNote_subject)\"", forKey: "Subject" as NSCopying);
+                exportData.setObject(todoList![i].addNote_notes, forKey: "Notes" as NSCopying);
+                exportData.setObject(todoList![i].addNote_taskType, forKey: "TaskType" as NSCopying);
+                exportData.setObject(todoList![i].addNote_location?.name, forKey: "Location" as NSCopying);
+                exportData.setObject(todoList![i].status, forKey: "Status" as NSCopying);
+                data.add(exportData);
+            }
+            
+        }
+        
+        if contactList!.count > 0
+        {
+            // prepare excel header
+            let fields:NSMutableArray = NSMutableArray()
+            fields.add("Subject");
+            fields.add("Notes");
+            fields.add("TaskType")
+            fields.add("Location");
+            fields.add("Status");
+            
+            // prepare export info
+            let writeCSVObj = CSV();
+            writeCSVObj.rows = data;
+            writeCSVObj.delimiter = DividerType.comma.rawValue;
+            writeCSVObj.fields = fields as NSArray;
+            writeCSVObj.name = "ToDoInfo";
+            
+            let result = CSVExport.export(writeCSVObj);
+            
+            if result.result.isSuccess
+            {
+                print("File Path: \(String(describing: result.filePath))");
+            }
+            else
+            {
+                print("fail to create excel file");
+            }
+        }
+        else
+        {
+            print("Empty database");
+        }
+        
+        
+    }
+    
     
 }
 

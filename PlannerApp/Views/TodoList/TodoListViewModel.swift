@@ -85,4 +85,9 @@ class TodoListViewModel {
         }
     }
     
+    func getToDoListByContactID(test:String) -> Results<AddNote>?
+    {
+        return realmStore.models(query: "addNote_customerId == '\(test)'");
+    }
+    
 }
