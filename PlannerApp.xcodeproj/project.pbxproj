@@ -58,6 +58,7 @@
 		24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */; };
 		24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A632148AF9B007687EB /* SettingsNavViewController.swift */; };
 		24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A662148AF9B007687EB /* SettingsViewController.swift */; };
+		24141FAB2193CDEF00FB9B2A /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24141FAA2193CDEF00FB9B2A /* OnboardingViewController.swift */; };
 		242717D821491150001792BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242717D721491150001792BD /* HomeViewController.swift */; };
 		2450D380214209FA00F5F61F /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D37F214209FA00F5F61F /* RealmStore.swift */; };
 		2450D38321420A7400F5F61F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38221420A7400F5F61F /* Model.swift */; };
@@ -183,6 +184,7 @@
 		24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasscodeViewController.swift; sourceTree = "<group>"; };
 		24140A632148AF9B007687EB /* SettingsNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
 		24140A662148AF9B007687EB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		24141FAA2193CDEF00FB9B2A /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		242717D721491150001792BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2450D37F214209FA00F5F61F /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		2450D38221420A7400F5F61F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 		0C7C490A21410EB900DBD4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24141FA92193CDD000FB9B2A /* Onboarding */,
 				24775F5D217F042E004319B1 /* ResourcesAndFiles */,
 				0C8DBA3721647351009A1475 /* Message Templates */,
 				0C8DBA3421647128009A1475 /* Language Settings */,
@@ -476,6 +479,14 @@
 				24140A612148AF9B007687EB /* ChangePasscodeViewController.swift */,
 			);
 			path = ChangePasscode;
+			sourceTree = "<group>";
+		};
+		24141FA92193CDD000FB9B2A /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				24141FAA2193CDEF00FB9B2A /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		2450D37D214209C500F5F61F /* RealmManager */ = {
@@ -989,6 +1000,7 @@
 				D6715DA821411BD800957E86 /* CommonColor.swift in Sources */,
 				2455FBC92150DCBB00881541 /* TodoListViewController.swift in Sources */,
 				0C8DBA47216B3A29009A1475 /* PanelListDetailViewModel.swift in Sources */,
+				24141FAB2193CDEF00FB9B2A /* OnboardingViewController.swift in Sources */,
 				24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */,
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
 				24FE315F2164B1C500A4EB96 /* UIViewExtensions.swift in Sources */,

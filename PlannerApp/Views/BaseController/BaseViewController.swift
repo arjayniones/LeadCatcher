@@ -111,7 +111,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        checkToLogin()
+//        checkToLogin()
+        checkIfNeedOnboarding()
     }
     
     override func viewDidLayoutSubviews() {
@@ -123,6 +124,16 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     func checkToLogin() {
         if !SessionService.isLoggedIn {
             self.present(LoginViewController(), animated: false, completion: nil)
+        }
+    }
+    
+    func checkIfNeedOnboarding() {
+        if let needOnboarding = Defaults[.NeedOnboarding] {
+            if needOnboarding == true {
+                self.present(OnboardingViewController(), animated: false, completion: nil)
+            }
+        } else {
+            self.present(OnboardingViewController(), animated: false, completion: nil)
         }
     }
     
@@ -192,7 +203,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
             break
         }
         
-        checkToLogin()
+//        checkToLogin()
     }
     
     func activeTabColor() {

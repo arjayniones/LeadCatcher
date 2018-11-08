@@ -183,8 +183,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             self.openContactListViewController()
         } else if data.title == "location".localized {
             self.openMapView()
-        } else if data.title == "Checklist"{
-            print("pumasok dito")
         }
     }
     
@@ -235,6 +233,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
             cell.iconImage2.isHidden = true
+            cell.iconImage.isHidden = false
+            cell.addIcon.isHidden = true
+            cell.labelTitle.isEnabled = false
             self.populateData(cell: cell, index: indexPath, data:data)
             cell.selectionStyle = .none
             
@@ -257,8 +258,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.labelTitle.isEnabled = true
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
+            cell.addIcon.isHidden = true
             cell.iconImage2.isHidden = false
-            cell.labelTitle.placeholder = "Insert checklist"
+            cell.title = "Insert checklist"
             cell.subjectCallback = { val in
                 if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
                     checkData.title = val

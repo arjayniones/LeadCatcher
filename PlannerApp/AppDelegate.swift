@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var window: UIWindow?
     var callObServer:CXCallObserver!;
     
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         callObServer = CXCallObserver();
@@ -51,10 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
         self.window?.backgroundColor = .white
-        
-        SessionService.onLogout(performAlways: true) {
-            self.window?.rootViewController?.present(LoginViewController(), animated: true, completion: nil)
-        }
+    
+//        SessionService.onLogout(performAlways: true) {
+//            self.window?.rootViewController?.present(LoginViewController(), animated: true, completion: nil)
+//        }
         
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
