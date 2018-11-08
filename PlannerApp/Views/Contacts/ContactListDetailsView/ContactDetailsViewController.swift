@@ -14,6 +14,7 @@ import CallKit
 
 import RealmSwift
 import MessageUI
+import WebKit
 
 
 class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
@@ -46,7 +47,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let smsButton = ActionButton()
     let realmStoreContact = RealmStore<ContactModel>()
     var selectedTab = String()
-
+    var webView:UIWebView!;
     
     fileprivate let profileImageView = UIImageView()
     
@@ -621,6 +622,20 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 
 extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch selectedTab {
+            case "files":
+                print("did select files tableview cell");
+                let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                let documentsDirectory = paths[0]
+                
+                print(documentsDirectory);
+                break;
+            default:
+                print("Print nothing");
+            
+        }
+        
         let data = viewModel.detailRows[indexPath.row]
         
         //add rows details here
@@ -630,14 +645,13 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
         }else  if indexPath.row == 5 {
             //scoring here
-             self.sheetPressedScoring(data: data)
+            self.sheetPressedScoring(data: data)
         } else  if indexPath.row == 6 {
-           self.openRemarksController()
+            self.openRemarksController()
         } else  if indexPath.row == 7 {
-           // status alert view
+            // status alert view
             self.sheetPressedStatus(data: data)
         }
-        
         
     }
     

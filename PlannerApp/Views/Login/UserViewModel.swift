@@ -86,6 +86,13 @@ class UserViewModel{
         }
     }
     
+    class func getDocumentsDirectory()
+    {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask);
+        let documentsDirectory = paths[0];
+        print(documentsDirectory);
+    }
+    
 }
 
 // MARK: - Extension for LoginVC and UIVC
