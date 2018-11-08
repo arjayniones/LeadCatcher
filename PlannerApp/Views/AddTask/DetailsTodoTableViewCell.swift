@@ -39,7 +39,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     var title:String = "" {
         didSet {
-            labelTitle.text = title
+            labelTitle.placeholder = title
         }
     }
     
@@ -64,7 +64,6 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         stackView.addArrangedSubview(labelTitle)
         contentView.addSubview(stackView)
         
-        addIcon.isHidden = true
         addIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addCheckList)))
         contentView.addSubview(addIcon)
         
@@ -130,10 +129,8 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
             }
             
             addIcon.snp.makeConstraints { make in
-                make.width.height.equalTo(30)
-                make.right.equalTo(contentView).inset(10)
-                make.centerY.equalTo(self.snp.centerY)
-                make.left.equalTo(stackView.snp.right).offset(10)
+                make.center.equalTo(nextIcon)
+                make.size.equalTo(CGSize(width: 30, height: 30))
             }
             
             didSetupContraints = true

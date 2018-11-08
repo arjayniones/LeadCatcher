@@ -116,10 +116,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
                 let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved.")
                 self.present(alert, animated: true, completion: nil);
             }
-            
-           
         })
-        
     }
     
     @objc func clear() {
