@@ -235,6 +235,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
             cell.iconImage2.isHidden = true
+            cell.addIcon.isHidden = true
             self.populateData(cell: cell, index: indexPath, data:data)
             cell.selectionStyle = .none
             
@@ -257,6 +258,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.labelTitle.isEnabled = true
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
+            cell.addIcon.isHidden = true
             cell.iconImage2.isHidden = false
             cell.labelTitle.placeholder = "Insert checklist"
             cell.subjectCallback = { val in
