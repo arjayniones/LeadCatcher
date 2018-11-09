@@ -14,7 +14,7 @@ import CallKit
 
 import RealmSwift
 import MessageUI
-import WebKit
+import QuickLook
 
 
 class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
@@ -47,7 +47,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let smsButton = ActionButton()
     let realmStoreContact = RealmStore<ContactModel>()
     var selectedTab = String()
-    var webView:UIWebView!;
+    var previewItem = NSURL()
     
     fileprivate let profileImageView = UIImageView()
     
@@ -616,20 +616,43 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         
     }
+    
+    func openCSVFile(fileName:String)->NSURL {
+        let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        // destination file url
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent("Exports/\(fileName)")
+        
+        let url = destinationUrl as NSURL;
+        
+        return url;
+        //print(documentsDirectory);
+    }
 }
 
-
+//MARK:- QLPreviewController Datasource
+extension ContactDetailsViewController: QLPreviewControllerDataSource {
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return 1
+    }
+    
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        return self.previewItem as QLPreviewItem
+    }
+}
 
 extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         switch selectedTab {
             case "files":
-                print("did select files tableview cell");
-                let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                let documentsDirectory = paths[0]
                 
-                print(documentsDirectory);
+                let previewController = QLPreviewController()
+                // Set the preview item to display
+                previewItem = self.openCSVFile(fileName: "CustomerInfo.csv");
+                previewController.dataSource = self
+                self.present(previewController, animated: true, completion: nil)
+                
                 break;
             default:
                 print("Print nothing");

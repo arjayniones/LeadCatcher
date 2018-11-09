@@ -469,10 +469,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             }
         }
         
-        
-        
-        
-        
         return cell
     }
     
