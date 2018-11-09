@@ -616,17 +616,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         
     }
-    
-    func openCSVFile(fileName:String)->NSURL {
-        let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        // destination file url
-        let destinationUrl = documentsDirectoryURL.appendingPathComponent("Exports/\(fileName)")
-        
-        let url = destinationUrl as NSURL;
-        
-        return url;
-        //print(documentsDirectory);
-    }
 }
 
 //MARK:- QLPreviewController Datasource
@@ -646,16 +635,19 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         
         switch selectedTab {
             case "files":
-                
+                // Setup QuickLook view controller
+                // QuickPreviewDelegate at the extension part
                 let previewController = QLPreviewController()
-                // Set the preview item to display
-                previewItem = self.openCSVFile(fileName: "CustomerInfo.csv");
+                
+                // "Exports" is the folder to keep csv file
+                previewItem = ContactDetailsViewModel.getDirectoryInNSURL(fileName: "Exports/ToDoInfo.csv")
                 previewController.dataSource = self
+                // open csv/excel file
                 self.present(previewController, animated: true, completion: nil)
                 
                 break;
             default:
-                print("Print nothing");
+                print("select nothing");
             
         }
         
