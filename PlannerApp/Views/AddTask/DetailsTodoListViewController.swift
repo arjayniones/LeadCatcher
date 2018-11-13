@@ -399,6 +399,3 @@ extension DetailsTodoListViewController: MapViewControllerDelegate {
         }
     }
 }
-
-
-
