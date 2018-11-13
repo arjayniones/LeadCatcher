@@ -122,6 +122,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
         controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             self.viewModel.addNoteModel = AddNoteModel()
+            print(self.viewModel.addNoteModel?.addNote_subject);
             self.tableView.reloadData()
         }))
         
@@ -192,22 +193,38 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             switch index.row {
             case 0:
                 cell.title = viewmod.addNote_alertDateTime == nil ? data.title : convertDateTimeToString(date: viewmod.addNote_alertDateTime!)
+                break;
             case 1:
                 cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
+                break;
             case 2:
-                cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
+                if viewmod.addNote_subject == ""
+                {
+                    cell.title = data.title;
+                }
+                else
+                {
+                    cell.title = viewmod.addNote_subject;
+                }
+                //cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
+                break;
             case 3:
                 cell.title = viewmod.addNote_customer?.C_Name == "" ? data.title: viewmod.addNote_customer?.C_Name ?? data.title
+                break;
             case 4:
                 cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
+                break;
             case 5:
                 cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
+                break;
             case 6:
                 cell.title = viewmod.addNote_location == nil ? data.title:"\(viewmod.addNote_location?.name ?? data.title)"
+                break;
             case 7:
                 cell.title = "Checklist"
+                break;
             default:
-                break
+                break;
             }
         } else {
             cell.title = data.title
@@ -236,13 +253,16 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.iconImage.isHidden = false
             cell.addIcon.isHidden = true
             cell.labelTitle.isEnabled = false
+            cell.labelTitle.text = "";
             self.populateData(cell: cell, index: indexPath, data:data)
+            
             cell.selectionStyle = .none
             
             if data.title == "subject".localized {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.subjectCallback = { val in
+                    // todo here got bug
                     self.viewModel.addNoteModel?.addNote_subject = val
                 }
             } else if data.title == "Checklist" {
@@ -250,6 +270,12 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.nextIcon.isHidden = true
                 cell.checkListCallback = {
                     self.addCell(tableView: tableView)
+                }
+            }
+            else
+            {
+                cell.subjectCallback = { val in
+                    print(val);
                 }
             }
         }
