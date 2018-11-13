@@ -130,10 +130,10 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     func checkIfNeedOnboarding() {
         if let needOnboarding = Defaults[.NeedOnboarding] {
             if needOnboarding == true {
-                self.present(OnboardingViewController(), animated: false, completion: nil)
+                self.present(OnboardingInfoViewController(), animated: false, completion: nil)
             }
         } else {
-            self.present(OnboardingViewController(), animated: false, completion: nil)
+            self.present(OnboardingInfoViewController(), animated: false, completion: nil)
         }
     }
     
