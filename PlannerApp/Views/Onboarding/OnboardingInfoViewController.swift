@@ -41,6 +41,8 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
     
     let nameTextField: UITextField = UITextField()
     let onboarding = PaperOnboarding()
+    let imageLastImageView = UIImageView(image:UIImage(named: "man-woman-icon"))
+    let welcomeLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,16 +54,28 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
         onboarding.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(onboarding)
         
+        welcomeLabel.textAlignment = .center
+        welcomeLabel.text = "Welcome!"
+        welcomeLabel.font = OnboardingInfoViewController.titleFont
+        welcomeLabel.textColor = .white
+        welcomeLabel.isHidden = true
+        view.addSubview(welcomeLabel)
+        
         nameTextField.delegate = self
         nameTextField.returnKeyType = .done
         nameTextField.keyboardType = .alphabet
-        nameTextField.layer.borderColor = UIColor.lightGray.cgColor
+        nameTextField.layer.borderColor = UIColor.white.cgColor
         nameTextField.layer.borderWidth = 1
         nameTextField.layer.cornerRadius = 10
+        nameTextField.textAlignment = .center
         nameTextField.isHidden = true
         nameTextField.clipsToBounds = true
+        nameTextField.textColor = .white
         nameTextField.placeholder = "What should I call you?"
         view.addSubview(nameTextField)
+        
+        imageLastImageView.isHidden = true
+        view.addSubview(imageLastImageView)
         
         view.updateConstraintsIfNeeded()
         view.setNeedsUpdateConstraints()
@@ -71,14 +85,23 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
         
         if !didSetupConstraints {
             
+            welcomeLabel.snp.makeConstraints{ make in
+                make.top.equalTo(view.safeArea.top).inset(30)
+                make.centerX.equalToSuperview()
+            }
+            
             onboarding.snp.makeConstraints {make in
                 make.edges.equalToSuperview()
+            }
+            imageLastImageView.snp.makeConstraints { make in
+                make.centerX.equalTo(nameTextField.snp.centerX)
             }
             
             nameTextField.snp.makeConstraints { make in
                 make.height.equalTo(40)
                 make.centerY.equalToSuperview()
                 make.left.right.equalTo(view).inset(20)
+                make.top.equalTo(imageLastImageView.snp.bottom).offset(20)
             }
             
             didSetupConstraints = true
@@ -96,6 +119,8 @@ extension OnboardingInfoViewController: PaperOnboardingDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.onboarding.isHidden = true
                 self.nameTextField.isHidden = false
+                self.imageLastImageView.isHidden = false
+                self.welcomeLabel.isHidden = false
             }
         }
     }
