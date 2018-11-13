@@ -14,6 +14,7 @@ import CallKit
 
 import RealmSwift
 import MessageUI
+import QuickLook
 
 
 class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
@@ -46,7 +47,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let smsButton = ActionButton()
     let realmStoreContact = RealmStore<ContactModel>()
     var selectedTab = String()
-
+    var previewItem = NSURL()
     
     fileprivate let profileImageView = UIImageView()
     
@@ -617,10 +618,39 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
 }
 
-
+//MARK:- QLPreviewController Datasource
+extension ContactDetailsViewController: QLPreviewControllerDataSource {
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return 1
+    }
+    
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        return self.previewItem as QLPreviewItem
+    }
+}
 
 extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch selectedTab {
+            case "files":
+                // Setup QuickLook view controller
+                // QuickPreviewDelegate at the extension part
+                let previewController = QLPreviewController()
+                
+                // "Exports" is the folder to keep csv file
+                previewItem = ContactDetailsViewModel.getDirectoryInNSURL(fileName: "Exports/ToDoInfo.csv")
+                previewController.dataSource = self
+                // open csv/excel file
+                self.present(previewController, animated: true, completion: nil)
+                
+                break;
+            default:
+                print("select nothing");
+            
+        }
+        
         let data = viewModel.detailRows[indexPath.row]
         
         //add rows details here
@@ -630,14 +660,13 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
         }else  if indexPath.row == 5 {
             //scoring here
-             self.sheetPressedScoring(data: data)
+            self.sheetPressedScoring(data: data)
         } else  if indexPath.row == 6 {
-           self.openRemarksController()
+            self.openRemarksController()
         } else  if indexPath.row == 7 {
-           // status alert view
+            // status alert view
             self.sheetPressedStatus(data: data)
         }
-        
         
     }
     

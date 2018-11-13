@@ -110,6 +110,7 @@
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
 		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
 		D639EACF2148B7980053894C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D639EACE2148B7980053894C /* UserViewModel.swift */; };
+		D64881F521941623009A6C8D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D64881F421941623009A6C8D /* test.pdf */; };
 		D66DDB5121901FD5002077A2 /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB4E21901FD5002077A2 /* CSVExport.swift */; };
 		D66DDB5221901FD5002077A2 /* CSVValidateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */; };
 		D66DDB5321901FD5002077A2 /* CSVConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB5021901FD5002077A2 /* CSVConstants.swift */; };
@@ -243,6 +244,7 @@
 		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
 		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		D639EACE2148B7980053894C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		D64881F421941623009A6C8D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
 		D66DDB4E21901FD5002077A2 /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVExport.swift; sourceTree = "<group>"; };
 		D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVValidateProtocol.swift; sourceTree = "<group>"; };
 		D66DDB5021901FD5002077A2 /* CSVConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVConstants.swift; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 		D66DDB4D21901FBA002077A2 /* CSVExport */ = {
 			isa = PBXGroup;
 			children = (
+				D64881F421941623009A6C8D /* test.pdf */,
 				D66DDB5021901FD5002077A2 /* CSVConstants.swift */,
 				D66DDB4E21901FD5002077A2 /* CSVExport.swift */,
 				D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */,
@@ -857,6 +860,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D64881F521941623009A6C8D /* test.pdf in Resources */,
 				2491C0E62165E37700037578 /* morning.jpg in Resources */,
 				2491C0EC2165E75300037578 /* noon.jpg in Resources */,
 				D6715DA42140FBA900957E86 /* SF-Pro-Text-Heavy.otf in Resources */,

@@ -176,6 +176,18 @@ class ContactDetailsViewModel {
         }
     }
     
+    //azlim: return NSURL for QuickLook
+    class func getDirectoryInNSURL(fileName:String)->NSURL
+    {
+        let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        // destination file url
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent(fileName)
+        
+        let url = destinationUrl as NSURL;
+        
+        return url;
+    }
+    
 }
 
 class AddContactModel {
