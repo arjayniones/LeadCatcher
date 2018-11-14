@@ -13,16 +13,16 @@ import SwiftyUserDefaults
 class SettingsViewModel {
     static func getSettingsLabels() -> [SettingsLabels]{
         let labelNames = [
-            SettingsLabels(labelName: "Security"),
+            //SettingsLabels(labelName: "Security"),
             SettingsLabels(labelName: "Summary"),
-            SettingsLabels(labelName: "Panel List"),
+            //SettingsLabels(labelName: "Panel List"),
             SettingsLabels(labelName: "Map"),
             SettingsLabels(labelName: "Sync Phone Book Contacts"),
             SettingsLabels(labelName: "Message Templates"),
-            SettingsLabels(labelName: "Language"),
+            //SettingsLabels(labelName: "Language"),
             SettingsLabels(labelName: "Resources"),
             //SettingsLabels(labelName: "Archives"),
-            SettingsLabels(labelName: "Log Out")
+            //SettingsLabels(labelName: "Log Out")
         ]
         return labelNames
         
