@@ -122,7 +122,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
         controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             self.viewModel.addNoteModel = AddNoteModel()
-            print(self.viewModel.addNoteModel?.addNote_subject);
             self.tableView.reloadData()
         }))
         

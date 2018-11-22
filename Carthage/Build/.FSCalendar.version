@@ -1,9 +1,18 @@
 {
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
   "commitish" : "2.8.0",
   "iOS" : [
     {
       "name" : "FSCalendar",
-      "hash" : "e1b01aa6eae510fd33d1142c92d4ade80852d98db93bfa748465ca4114781726"
+      "hash" : "e086b7e2faf5a06f541f99ba537e66ff1b8300e376960abe54ec2fdf2b3afe31"
     }
   ]
 }
