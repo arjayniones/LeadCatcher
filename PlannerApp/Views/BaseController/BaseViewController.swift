@@ -115,11 +115,7 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         self.activeTab = .home
         self.activeTabColor()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        checkToLogin()
-        checkIfNeedOnboarding()
-    }
+  
     
     override func updateViewConstraints() {
         if !didSetupConstraints {
@@ -134,22 +130,6 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         
         super.updateViewConstraints()
         
-    }
-    
-    func checkToLogin() {
-        if !SessionService.isLoggedIn {
-            self.present(LoginViewController(), animated: false, completion: nil)
-        }
-    }
-    
-    func checkIfNeedOnboarding() {
-        if let needOnboarding = Defaults[.NeedOnboarding] {
-            if needOnboarding == true {
-                self.present(OnboardingInfoViewController(), animated: false, completion: nil)
-            }
-        } else {
-            self.present(OnboardingInfoViewController(), animated: false, completion: nil)
-        }
     }
     
     override func didReceiveMemoryWarning() {
