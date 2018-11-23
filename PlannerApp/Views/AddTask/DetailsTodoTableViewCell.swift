@@ -46,7 +46,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     var subjectCallback:((String) -> ())?
     var checkListCallback:(() -> ())?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)

@@ -75,7 +75,7 @@ class ContactListTableViewCell: UITableViewCell {
     var stackView1 = UIStackView()
     var stackView2 = UIStackView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(cellView)
@@ -120,7 +120,7 @@ class ContactListTableViewCell: UITableViewCell {
       if !didSetupConstraints {
         cellView.snp.makeConstraints { make in
             
-            make.edges.equalTo(contentView).inset(UIEdgeInsetsMake(5, 5, 5, 5))
+            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         }
         
 //        mainStackView.snp.makeConstraints { make in
@@ -165,7 +165,7 @@ class ContactListTableViewCell: UITableViewCell {
 
 
 extension UIFont {
-    func withTraits(traits:UIFontDescriptorSymbolicTraits) -> UIFont {
+    func withTraits(traits:UIFontDescriptor.SymbolicTraits) -> UIFont {
         let descriptor = fontDescriptor.withSymbolicTraits(traits)
         return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
     }

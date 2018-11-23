@@ -83,6 +83,12 @@
 		2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */; };
 		2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC492176CBA200DBF03B /* ImagePicker.framework */; };
 		2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */; };
+		246714EC21A78D0900518228 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246714EB21A78D0900518228 /* SnapKit.framework */; };
+		246714EE21A793EA00518228 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246714ED21A793EA00518228 /* ObjectMapper.framework */; };
+		246714F021A7952300518228 /* SwiftyUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246714EF21A7952300518228 /* SwiftyUserDefaults.framework */; };
+		246714F321A79D5700518228 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246714F121A79D5700518228 /* RealmSwift.framework */; };
+		246714F421A79D5700518228 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246714F221A79D5700518228 /* Realm.framework */; };
+		246714F621A7A41100518228 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246714F521A7A41100518228 /* Alamofire.framework */; };
 		2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2468C4C42182A50D0062D3FF /* Checklist.swift */; };
 		24701A44219A6BBE00028F43 /* PaperOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24701A43219A6BBE00028F43 /* PaperOnboarding.framework */; };
 		24701A46219A71F800028F43 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */; };
@@ -212,6 +218,12 @@
 		2455FBD5215227E700881541 /* DateAndTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerViewController.swift; sourceTree = "<group>"; };
 		2460FC492176CBA200DBF03B /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Carthage/Build/iOS/ImagePicker.framework; sourceTree = "<group>"; };
 		2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		246714EB21A78D0900518228 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		246714ED21A793EA00518228 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		246714EF21A7952300518228 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyUserDefaults.framework; path = Carthage/Build/iOS/SwiftyUserDefaults.framework; sourceTree = "<group>"; };
+		246714F121A79D5700518228 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		246714F221A79D5700518228 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		246714F521A7A41100518228 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		2468C4C42182A50D0062D3FF /* Checklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
 		246F01782167346D008EBE76 /* ms-MY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ms-MY"; path = "ms-MY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		24701A43219A6BBE00028F43 /* PaperOnboarding.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PaperOnboarding.framework; path = Carthage/Build/iOS/PaperOnboarding.framework; sourceTree = "<group>"; };
@@ -274,6 +286,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				246714F621A7A41100518228 /* Alamofire.framework in Frameworks */,
+				246714F321A79D5700518228 /* RealmSwift.framework in Frameworks */,
+				246714F421A79D5700518228 /* Realm.framework in Frameworks */,
+				246714F021A7952300518228 /* SwiftyUserDefaults.framework in Frameworks */,
+				246714EE21A793EA00518228 /* ObjectMapper.framework in Frameworks */,
+				246714EC21A78D0900518228 /* SnapKit.framework in Frameworks */,
 				24701A44219A6BBE00028F43 /* PaperOnboarding.framework in Frameworks */,
 				2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */,
 				2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */,
@@ -783,6 +801,12 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				246714F521A7A41100518228 /* Alamofire.framework */,
+				246714F221A79D5700518228 /* Realm.framework */,
+				246714F121A79D5700518228 /* RealmSwift.framework */,
+				246714EF21A7952300518228 /* SwiftyUserDefaults.framework */,
+				246714ED21A793EA00518228 /* ObjectMapper.framework */,
+				246714EB21A78D0900518228 /* SnapKit.framework */,
 				24701A43219A6BBE00028F43 /* PaperOnboarding.framework */,
 				2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */,
 				2460FC492176CBA200DBF03B /* ImagePicker.framework */,
@@ -805,7 +829,6 @@
 				248B83742140B29D00119D9D /* Sources */,
 				248B83752140B29D00119D9D /* Frameworks */,
 				248B83762140B29D00119D9D /* Resources */,
-				4E83F632AD252D4F323F9CA0 /* [CP] Embed Pods Frameworks */,
 				3C56C0A9E28170B15171EA4E /* [CP] Copy Pods Resources */,
 				24D1B80121635A57001D519C /* ShellScript */,
 			);
@@ -899,6 +922,12 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ImagePicker.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PaperOnboarding.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ObjectMapper.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyUserDefaults.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			outputPaths = (
 			);
@@ -926,36 +955,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4E83F632AD252D4F323F9CA0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CC9F3E9E08915BF44EB1D6A4 /* [CP] Check Pods Manifest.lock */ = {
@@ -1222,7 +1221,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 798C6YELQF;
+				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1230,10 +1229,10 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sicmsb.PlannerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = PlannerApp;
-				SWIFT_VERSION = 4.0;
+				PROVISIONING_PROFILE_SPECIFIER = sampleapp;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1247,7 +1246,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 798C6YELQF;
+				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1255,10 +1254,10 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sicmsb.PlannerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = PlannerApp;
-				SWIFT_VERSION = 4.0;
+				PROVISIONING_PROFILE_SPECIFIER = sampleapp;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

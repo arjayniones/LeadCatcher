@@ -9,13 +9,12 @@
 import UIKit
 import SwiftyUserDefaults
 
-class BaseViewController: UIViewController,UINavigationControllerDelegate {
+class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate {
     
     enum ActiveTab: Equatable {
         case home,contact,addNote,todoList,addMore
     }
     
-    let tabView = PassThroughView()
     fileprivate let bottomGradient = CAGradientLayer()
     
     fileprivate var homeNavController: BaseNavigationController
@@ -34,6 +33,8 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     
     var activeTab:ActiveTab = .home
     
+    let tabView = UIStackView()
+    
     required init() {
         homeNavController = HomeNavController()
         settingsNavController = SettingsNavController()
@@ -43,7 +44,7 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         
         activeNavViewController = homeNavController
         
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,45 +54,50 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChildViewController(homeNavController)
+        addChild(homeNavController)
         view.insertSubview(homeNavController.view, at: 0)
         
-        tabView.frame = CGRect(x: 0, y: view.height - 50, width: view.width, height: 50)
         bottomGradient.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.5).cgColor]
         tabView.layer.addSublayer(bottomGradient)
         
+        tabView.spacing = 0
+        tabView.axis = .horizontal
+        tabView.distribution = .fillEqually
         self.view.addSubview(tabView)
         
         homeButton.setImage(UIImage(named:"home-icon-inactive"), for: .normal)
         homeButton.setImage(UIImage(named:"home-icon-active"), for: .selected)
         homeButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
-        tabView.addSubview(homeButton)
+        tabView.addArrangedSubview(homeButton)
         
         contactButton.setImage(UIImage(named:"profile-icon-inactive"), for: .normal)
         contactButton.setImage(UIImage(named:"profile-icon-active"), for: .selected)
         contactButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
-        tabView.addSubview(contactButton)
+        tabView.addArrangedSubview(contactButton)
         
         addNoteButton.setImage(UIImage(named:"plus-icon-inactive"), for: .normal)
         addNoteButton.setImage(UIImage(named:"plus-icon-active"), for: .selected)
         addNoteButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
-        tabView.addSubview(addNoteButton)
+        tabView.addArrangedSubview(addNoteButton)
         
         todoListButton.setImage(UIImage(named:"book-icon-inactive"), for: .normal)
         todoListButton.setImage(UIImage(named:"book-icon-active"), for: .selected)
         todoListButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
-        tabView.addSubview(todoListButton)
+        tabView.addArrangedSubview(todoListButton)
         
         addMoreButton.setImage(UIImage(named:"more-icon-inactive"), for: .normal)
         addMoreButton.setImage(UIImage(named:"more-icon-active"), for: .selected)
         addMoreButton.addTarget(self, action: #selector(tabButtonPressed(sender:)), for: .touchUpInside)
-        tabView.addSubview(addMoreButton)
+        tabView.addArrangedSubview(addMoreButton)
         
         activeTabColor()
         
         SessionService.onLogout(performAlways: true) {
             self.resetTabController()
         }
+        
+        view.updateConstraintsIfNeeded()
+        view.setNeedsUpdateConstraints()
     }
     
     func resetTabController() {
@@ -115,10 +121,19 @@ class BaseViewController: UIViewController,UINavigationControllerDelegate {
         checkIfNeedOnboarding()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func updateViewConstraints() {
+        if !didSetupConstraints {
+            
+            tabView.snp.makeConstraints { make in
+                make.left.right.bottom.equalToSuperview().inset(0)
+                make.height.equalTo(50)
+            }
+            
+            didSetupConstraints = true
+        }
         
-        tabView.groupInCenter(group: .horizontal, views: [homeButton,contactButton,addNoteButton,todoListButton,addMoreButton], padding: 0, width: view.width/5, height: 50)
+        super.updateViewConstraints()
+        
     }
     
     func checkToLogin() {

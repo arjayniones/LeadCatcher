@@ -13,7 +13,7 @@ private let rfc3339DateFormatter1: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
     dateFormatter.timeZone = TimeZone(identifier: "UTC")!
-    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale!
+    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
     return dateFormatter
 }()
 
@@ -21,7 +21,7 @@ private let rfc3339DateFormatter3: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     dateFormatter.timeZone = TimeZone(identifier: "UTC")!
-    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale!
+    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
     return dateFormatter
 }()
 

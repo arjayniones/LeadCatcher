@@ -71,7 +71,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     let copyButton: UIButton = {
         let copyBtn = UIButton()
-        copyBtn.setTitle("Send", for: UIControlState.normal)
+        copyBtn.setTitle("Send", for: UIControl.State.normal)
         copyBtn.titleLabel?.textColor = .white
         copyBtn.tintColor = .white
         copyBtn.backgroundColor = .black
@@ -163,7 +163,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         saveButton.sizeToFit()
-        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         
         

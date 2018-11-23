@@ -58,7 +58,6 @@ class ChangePasscodeViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         view.setNeedsUpdateConstraints()
 
-         self.hideKeyboardWhenTappedAround();
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,7 +147,7 @@ class ChangePasscodeViewController: ViewControllerProtocol,LargeNativeNavbar {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         
-        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: { val in
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: { val in
             SessionService.logout()
         }))
         self.present(alert, animated: true, completion: nil)
@@ -159,9 +158,9 @@ class ChangePasscodeViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     func popUpNotMatched(title: String, message: String){
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         
         //self.newPassCodeField.text = ""
         self.confirmPassCodeField.text = ""

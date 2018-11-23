@@ -33,7 +33,6 @@ class LoginViewController: ViewControllerProtocol {
         super.viewDidLoad()
         
 //        edgesForExtendedLayout=[];
-        self.hideKeyboardWhenTappedAround();
         view.backgroundColor = .white
         
         loginUsernameField.placeholder = "Login ID";

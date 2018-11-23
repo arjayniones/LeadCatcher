@@ -65,8 +65,6 @@ class DetailsTodoListViewModel {
     
     func verifyRepeatTime(date: Date) -> Bool {
         
-        return true
-        
         if let repeatTime = self.addNoteModel?.addNote_repeat {
             
             let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
@@ -150,7 +148,7 @@ class DetailsTodoListViewModel {
         content.body = message.body
         content.badge = 1
         content.userInfo = ["id": "\(id)"]
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in
