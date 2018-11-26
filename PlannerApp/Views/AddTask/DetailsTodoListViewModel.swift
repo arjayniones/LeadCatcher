@@ -21,51 +21,49 @@ class DetailsTodoListViewModel {
         self.addNoteModel = AddNoteModel()
         
         let row1 = AddTodoViewObject()
-        row1.icon = "calendar-icon"
+        row1.icon = "calendar-iconx2"
         row1.title = "start_date_time".localized
         self.detailRows.append(row1)
         
         let row2 = AddTodoViewObject()
-        row2.icon = "repeat-icon"
+        row2.icon = "repeat-iconx2"
         row2.title = "alert".localized
         row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
         self.detailRows.append(row2)
         
         let row3 = AddTodoViewObject()
-        row3.icon = "subject-icon"
+        row3.icon = "subject-iconx2"
         row3.title = "subject".localized
         self.detailRows.append(row3)
         
         let row4 = AddTodoViewObject()
-        row4.icon = "person-icon"
+        row4.icon = "person-iconx2"
         row4.title = "customer".localized
         self.detailRows.append(row4)
         
         let row5 = AddTodoViewObject()
-        row5.icon = "task-icon"
+        row5.icon = "task-iconx2"
         row5.title = "task_type".localized
         row5.alertOptions = ["Appointment","Customer Birthday","Other"]
         self.detailRows.append(row5)
         
         let row6 = AddTodoViewObject()
-        row6.icon = "notes-icon"
+        row6.icon = "notes-iconx2"
         row6.title = "notes".localized
         self.detailRows.append(row6)
         
         let row7 = AddTodoViewObject()
-        row7.icon = "location-icon"
+        row7.icon = "location-iconx2"
         row7.title = "location".localized
         self.detailRows.append(row7)
         
         let row8 = AddTodoViewObject()
-        row8.icon = "checklist-icon"
+        row8.icon = "checklist-iconx2"
         row8.title = "Checklist"
         self.detailRows.append(row8)
     }
     
     func verifyRepeatTime(date: Date) -> Bool {
-        
-        return true
         
         if let repeatTime = self.addNoteModel?.addNote_repeat {
             
@@ -150,7 +148,7 @@ class DetailsTodoListViewModel {
         content.body = message.body
         content.badge = 1
         content.userInfo = ["id": "\(id)"]
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in
@@ -165,6 +163,11 @@ class DetailsTodoListViewModel {
     }
     
     func prepareData() -> NotificationMessage? {
+        
+        guard setupNotificationDateSettings() && self.dateChosen != nil else {
+            return nil
+        }
+        
         guard let messageTitle = self.addNoteModel?.addNote_taskType,messageTitle != "" else {
             return nil
         }
@@ -185,9 +188,7 @@ class DetailsTodoListViewModel {
             return nil
         }
         
-        guard setupNotificationDateSettings() && self.dateChosen != nil else {
-            return nil
-        }
+        
         
         let message = NotificationMessage()
         message.title = messageTitle + " with \(customerName)"

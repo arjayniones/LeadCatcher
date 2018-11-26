@@ -19,7 +19,7 @@ class LanguageSettingsViewController: ViewControllerProtocol,UITableViewDelegate
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)

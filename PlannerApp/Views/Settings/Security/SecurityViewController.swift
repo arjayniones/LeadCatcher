@@ -25,7 +25,7 @@ class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "securityCell")
          view.addSubview(tableView)
@@ -64,7 +64,7 @@ class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         cell.textLabel?.text = securityLabels[indexPath.row].labelName
         
         if indexPath.row == 0 {
-            cell.accessoryType = UITableViewCellAccessoryType.none
+            cell.accessoryType = UITableViewCell.AccessoryType.none
             
             //here is programatically switch make to the table view
             let switchView = UISwitch(frame: .zero)
@@ -74,7 +74,7 @@ class SecurityViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             cell.accessoryView = switchView
             
         }else {
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         }
         return cell
     }

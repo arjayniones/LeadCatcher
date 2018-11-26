@@ -82,7 +82,7 @@ class MapViewController: ViewControllerProtocol {
         doneButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         doneButton.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
         doneButton.sizeToFit()
-        doneButton.frame = CGRect(x: 0, y: -2, width: doneButton.width, height: doneButton.height)
+        doneButton.frame = CGRect(x: 0, y: -2, width: doneButton.frame.width, height: doneButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
         
         isAuthorizedtoGetUserLocation()
@@ -173,7 +173,7 @@ class MapViewController: ViewControllerProtocol {
     
     func setupTextField(){
         let img = UIImage(named: "map-pin-icon")
-        txtFieldSearch.leftViewMode = UITextFieldViewMode.always
+        txtFieldSearch.leftViewMode = UITextField.ViewMode.always
         let imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
         imageView.image = img
         let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 30, height: 30))

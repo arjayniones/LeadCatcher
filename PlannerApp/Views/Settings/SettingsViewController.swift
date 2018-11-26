@@ -25,7 +25,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
@@ -35,6 +35,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
+        view.updateConstraintsIfNeeded()
         tableView.reloadData()
     }
     
@@ -62,7 +63,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
         cell.textLabel?.text = settingsLabels[indexPath.row].labelName
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
         
@@ -117,10 +118,10 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func popUpLogOut(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default,handler: { val in
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default,handler: { val in
             SessionService.logout()
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -170,7 +171,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func presentSettingsActionSheet() {
         let alert = UIAlertController(title: "Permission to Contacts", message: "This app needs access to contacts in order to ...", preferredStyle: .actionSheet);
         alert.addAction(UIAlertAction(title: "Go to Settings", style: .default) { _ in
-            let url = URL(string: UIApplicationOpenSettingsURLString)!;
+            let url = URL(string: UIApplication.openSettingsURLString)!;
             UIApplication.shared.open(url);
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel));

@@ -35,7 +35,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         }
     }
     
-    let iconImage2 = UIImageView(image:UIImage(named: "check-icon"))
+    let iconImage2 = UIImageView(image:UIImage(named: "check-iconx2"))
     
     var title:String = "" {
         didSet {
@@ -46,7 +46,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     var subjectCallback:((String) -> ())?
     var checkListCallback:(() -> ())?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)

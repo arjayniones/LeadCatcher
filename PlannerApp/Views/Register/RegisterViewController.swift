@@ -24,7 +24,7 @@ class RegisterViewController: ViewControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white;
-        self.hideKeyboardWhenTappedAround();
+        
         naviBar.backgroundColor = CommonColor.naviBarBlackColor;
         view.addSubview(naviBar);
         

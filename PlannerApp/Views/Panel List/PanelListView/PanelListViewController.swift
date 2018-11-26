@@ -38,7 +38,7 @@ class PanelListViewController: ViewControllerProtocol,LargeNativeNavbar {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
@@ -48,7 +48,7 @@ class PanelListViewController: ViewControllerProtocol,LargeNativeNavbar {
         addButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         addButton.addTarget(self, action: #selector(add), for: .touchUpInside)
         addButton.sizeToFit()
-        addButton.frame = CGRect(x: 0, y: -2, width: addButton.width, height: addButton.height)
+        addButton.frame = CGRect(x: 0, y: -2, width: addButton.frame.width, height: addButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
         
         viewModel.notificationToken = viewModel.panelList?.observe { [weak self] (changes: RealmCollectionChange) in
@@ -157,7 +157,7 @@ extension PanelListViewController : UITableViewDelegate,UITableViewDataSource {
        
         cell.textLabel?.text = panelData.panelName
         cell.imageView?.image = UIImage(named: "hospital-icon")
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
         

@@ -10,6 +10,7 @@ import Foundation
 import LocalAuthentication
 import RealmSwift
 import SwiftyUserDefaults
+import UIKit
 
 class UserViewModel{
     

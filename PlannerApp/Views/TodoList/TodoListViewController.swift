@@ -38,7 +38,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.tableFooterView = searchFooter
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -78,7 +78,9 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func updateViewConstraints() {
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
-                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                make.top.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
             }
             
             didSetupConstraints = true
@@ -219,7 +221,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
+        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
         
         guard let data = viewModel.todoListData else {
             return cell
@@ -234,7 +236,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: "dashboard-task-icon")
+        cell.imageView?.image = UIImage(named: "tasklist-iconx2")
         cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
         cell.detailTextLabel?.textColor = .red
         return cell

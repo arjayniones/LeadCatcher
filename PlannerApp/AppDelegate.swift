@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Neon
 import SnapKit
 import UserNotifications
 import GoogleMaps
@@ -23,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var window: UIWindow?
     var callObServer:CXCallObserver!;
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         callObServer = CXCallObserver();
         callObServer.setDelegate(self, queue: DispatchQueue.main);

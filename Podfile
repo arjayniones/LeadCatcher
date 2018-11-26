@@ -8,15 +8,8 @@ target 'PlannerApp' do
 
   # Pods for PlannerApp
 
-pod 'ObjectMapper', '~> 3.3'
-pod 'SnapKit','~> 4.0.1'
-pod 'RealmSwift','~> 3.10'
-pod 'Neon'
-pod 'SwiftyUserDefaults'
-pod 'Alamofire', '~> 4.7'
 pod 'GoogleMaps'
 pod 'GooglePlaces'
 pod 'GooglePlacePicker'
-pod ‘Charts/Realm’
  
 end

@@ -36,8 +36,8 @@ extension NativeNavbar where Self: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.font: UIFont.ofSize(fontSize: 17, withType: .bold),
-            NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor,
+            NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
+            NSAttributedString.Key.foregroundColor: CommonColor.systemWhiteColor,
         ]
         
         if #available(iOS 11.0, *) {
@@ -56,6 +56,7 @@ protocol LargeNativeNavbar {
 extension LargeNativeNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
+        
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = CommonColor.naviBarBlackColor
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
@@ -67,13 +68,14 @@ extension LargeNativeNavbar where Self: UIViewController {
         
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor]
+            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: CommonColor.systemWhiteColor]
         } else {
             navigationController?.navigationBar.titleTextAttributes = [
-                NSAttributedStringKey.font: UIFont.ofSize(fontSize: 17, withType: .bold),
-                NSAttributedStringKey.foregroundColor: CommonColor.systemWhiteColor,
+                NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
+                NSAttributedString.Key.foregroundColor: CommonColor.systemWhiteColor,
             ]
         }
+        
         
     }
 }
