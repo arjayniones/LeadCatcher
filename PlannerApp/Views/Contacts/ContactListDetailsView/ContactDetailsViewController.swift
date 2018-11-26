@@ -48,6 +48,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let realmStoreContact = RealmStore<ContactModel>()
     var selectedTab = String()
     var previewItem = NSURL()
+    let topView = UIView()
     
     fileprivate let profileImageView = UIImageView()
     
@@ -87,92 +88,129 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+
+//        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
+//        
+       
+
         view.backgroundColor = .white
+
         title = "Contact Details"
         
         imagePickerController.delegate = self
+        
+        
+        view.addSubview(topView)
+        topView.addBackground()
         
         profileImageView.layer.cornerRadius = 45
         profileImageView.layer.borderColor = UIColor.black.cgColor
         profileImageView.layer.borderWidth = 2
         profileImageView.isUserInteractionEnabled = true
-        profileImageView.image = UIImage(named:"profile-icon")
+        profileImageView.image = UIImage(named:"user-circle-big-icon")
         profileImageView.layer.masksToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editProfileImage)))
-        view.addSubview(profileImageView)
+        topView.addSubview(profileImageView)
         let name = viewModel.addContactModel?.addContact_contactName
         nameLabel.text = name == "" ? "No Name" : name
         nameLabel.textAlignment = .center
-        
+        nameLabel.textColor = .white
+        nameLabel.font = nameLabel.font.withSize(25)
         
         companyLabel.text = viewModel.addContactModel?.addContact_address
         companyLabel.textAlignment = .center
-        companyLabel.adjustsFontSizeToFitWidth = true 
+        companyLabel.adjustsFontSizeToFitWidth = true
+        companyLabel.textColor = .white
+        companyLabel.font = companyLabel.font.withSize(20)
         
         let score = viewModel.addContactModel?.addContact_leadScore
-        scoreLabel.textColor = .orange
-        
+        scoreLabel.textColor = .yellow
+        scoreLabel.font = scoreLabel.font.withSize(22)
         if score == 0 {
-              scoreLabel.text = "No Ratings"
+              scoreLabel.text = "✩ ✩ ✩ ✩ ✩"
         } else if score == 1 {
-              scoreLabel.text = "★✩✩✩✩"
+              scoreLabel.text = "★ ✩ ✩ ✩ ✩"
         } else if score == 2 {
-            scoreLabel.text = "★★✩✩✩"
+            scoreLabel.text = "★ ★ ✩ ✩ ✩"
         } else if score == 3 {
-            scoreLabel.text = "★★★✩✩"
+            scoreLabel.text = "★ ★ ★ ✩ ✩"
         } else if score == 4 {
-            scoreLabel.text = "★★★★✩"
+            scoreLabel.text = "★ ★ ★ ★ ✩"
         }  else if score == 5 {
-            scoreLabel.text = "★★★★★"
+            scoreLabel.text = "★ ★ ★ ★ ★"
         }
         
-        let status = viewModel.addContactModel?.addContact_status
-        statusLabel.text = status == "" ? "No Meeting Yet" : status 
         
-        view.addSubview(nameLabel)
-        view.addSubview(companyLabel)
-        view.addSubview(scoreLabel)
-        view.addSubview(statusLabel)
-//        view.addSubview(callButton)
-//        view.addSubview(smsButton)
-//        view.addSubview(emailButton)
+        let status = viewModel.addContactModel?.addContact_status
+        
+        if status == "Potential" {
+            statusLabel.backgroundColor = .yellow
+            statusLabel.text = status
+        } else if status == "Disqualified" {
+            statusLabel.backgroundColor = .red
+            statusLabel.text = status
+        } else if status == "Customer" {
+            statusLabel.backgroundColor = .green
+            statusLabel.text = status
+        }else {
+            statusLabel.text = status == "" ? "No Meeting Yet" : status
+            statusLabel.backgroundColor = .white
+        }
+        statusLabel.font = statusLabel.font.withSize(15)
+        statusLabel.textColor = .lightGray
+        statusLabel.textAlignment = .center
+        statusLabel.roundBottomRight()
+        
+
+        topView.addSubview(nameLabel)
+        topView.addSubview(companyLabel)
+        topView.addSubview(scoreLabel)
+        topView.addSubview(statusLabel)
 
         
-        let imageCall = UIImage(named: "phone-icon")
+        
+        let imageCall = UIImage(named: "phone-gray")
         callButton.setImage(imageCall, for: .normal)
         callButton.isSelected = true
         callButton.backgroundColor = .white
+        callButton.layer.cornerRadius = 10
         callButton.addTarget(self, action: #selector(actionCall), for: .touchUpInside)
         
-        let imageSMS = UIImage(named: "message-template-icon")
+        let imageSMS = UIImage(named: "chat-icon")
         smsButton.setImage(imageSMS, for: .normal)
         smsButton.isSelected = true
         smsButton.backgroundColor = .white
+        smsButton.layer.cornerRadius = 10
         smsButton.addTarget(self, action: #selector(actionSMS), for: .touchUpInside)
         
-        let imageEmail = UIImage(named: "email-icon")
+        let imageEmail = UIImage(named: "mail-icon")
         emailButton.setImage(imageEmail, for: .normal)
         emailButton.isSelected = true
         emailButton.backgroundColor = .white
+        emailButton.layer.cornerRadius = 10
         emailButton.addTarget(self, action: #selector(actionEmail), for: .touchUpInside)
         
         
         
-        buttonStackView.axis = .horizontal
+        buttonStackView.axis = .vertical
         buttonStackView.distribution = .fillEqually
+        buttonStackView.spacing = 10
         buttonStackView.addArrangedSubview(callButton)
         buttonStackView.addArrangedSubview(smsButton)
         buttonStackView.addArrangedSubview(emailButton)
-        view.addSubview(buttonStackView)
+        topView.addSubview(buttonStackView)
         
         logButton.setTitle("Logs", for: .normal)
         logButton.setTitleColor(.white, for: .normal)
         logButton.setTitleColor(.black, for: .selected)
         logButton.titleLabel?.font =  .systemFont(ofSize: 11)
         logButton.isSelected = true
-        logButton.backgroundColor = .white
+        logButton.backgroundColor = .lightGray
+        logButton.roundTop()
         logButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         todoButton.setTitle("To Do", for: .normal)
@@ -180,7 +218,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         todoButton.setTitleColor(.black, for: .selected)
         todoButton.titleLabel?.font =  .systemFont(ofSize: 11)
         todoButton.isSelected = true
-        todoButton.backgroundColor = .white
+        todoButton.backgroundColor = .lightGray
+        todoButton.roundTop()
         todoButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         socialButton.setTitle("Socials", for: .normal)
@@ -188,7 +227,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         socialButton.setTitleColor(.black, for: .selected)
         socialButton.titleLabel?.font =  .systemFont(ofSize: 11)
         socialButton.isSelected = true
-        socialButton.backgroundColor = .white
+        socialButton.backgroundColor = .lightGray
+        socialButton.roundTop()
         socialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         filesButton.setTitle("Files", for: .normal)
@@ -196,7 +236,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         filesButton.setTitleColor(.black, for: .selected)
         filesButton.titleLabel?.font =  .systemFont(ofSize: 11)
         filesButton.isSelected = true
-        filesButton.backgroundColor = .white
+        filesButton.backgroundColor = .lightGray
+        filesButton.roundTop()
         filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         infoButton.setTitle("Info", for: .normal)
@@ -205,6 +246,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         infoButton.titleLabel?.font =  .systemFont(ofSize: 11)
         infoButton.isSelected = true
         infoButton.backgroundColor = .white
+        infoButton.roundTop()
         infoButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         
@@ -215,14 +257,16 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topStackView.addArrangedSubview(socialButton)
         topStackView.addArrangedSubview(filesButton)
         topStackView.addArrangedSubview(infoButton)
-        view.addSubview(topStackView)
+        topView.addSubview(topStackView)
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(ContactDetailTableViewCell.self, forCellReuseIdentifier: "contactDetailCell")
-        view.addSubview(tableView)
+        tableView.register(LogsTableViewCell.self, forCellReuseIdentifier: "cellLog")
+        
+        topView.addSubview(tableView)
         
         
         
@@ -358,45 +402,53 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         if !didSetupConstraints {
             
+            topView.snp.makeConstraints{ make in
+                make.top.equalTo(view)
+                make.left.right.equalTo(view)
+                make.bottom.equalTo(tableView.snp.bottom)
+            }
+            
             profileImageView.snp.makeConstraints { make in
-                make.top.equalTo(view).inset(10)
+                make.top.equalTo(topView).inset(10)
                 make.size.equalTo(CGSize(width: 90, height: 90))
-                make.centerX.equalTo(view.snp.centerX)
+                make.centerX.equalTo(topView.snp.centerX)
             }
             scoreLabel.snp.makeConstraints{ make in
-                make.top.equalTo(view).inset(10)
-                make.right.equalTo(view).inset(10)
+                make.top.equalTo(topView).inset(10)
+                make.right.equalTo(topView).inset(5)
                 make.size.equalTo(CGSize(width: 120, height: 30))
             }
             
             statusLabel.snp.makeConstraints{ make in
                 make.top.equalTo(scoreLabel.snp.bottom).offset(5)
-                make.right.equalTo(view).inset(10)
+                make.right.equalTo(topView)
                 make.size.equalTo(CGSize(width: 120, height: 30))
             }
             
             buttonStackView.snp.makeConstraints{ make in
-                make.top.equalTo(view).offset(20)
-                make.left.equalTo(view).inset(10)
-                make.size.equalTo(CGSize(width: 100, height: 50))
+                make.top.equalTo(topView).offset(20)
+                make.left.equalTo(topView).inset(20)
+                make.size.equalTo(CGSize(width: 40, height: 130))
             }
             
             nameLabel.snp.makeConstraints{ make in
                 make.top.equalTo(profileImageView.snp.bottom).offset(5)
-                 make.centerX.equalTo(view.snp.centerX)
+                 make.centerX.equalTo(topView.snp.centerX)
                 make.size.equalTo(CGSize(width: 300, height: 50))
             }
             
             companyLabel.snp.makeConstraints{ make in
                 make.top.equalTo(nameLabel.snp.bottom).offset(5)
-                make.centerX.equalTo(view.snp.centerX)
+                make.centerX.equalTo(topView.snp.centerX)
                 make.size.equalTo(CGSize(width: 300, height: 30))
             }
             
             topStackView.snp.makeConstraints{ make in
-                make.top.equalTo(companyLabel.snp.bottom).offset(5)
-                make.left.right.equalTo(view)
-                make.height.equalTo(50)
+                make.top.equalTo(companyLabel.snp.bottom).offset(10)
+                make.bottom.equalTo(tableView.snp.top)
+                make.left.equalTo(topView).offset(20)
+                make.right.equalTo(topView).inset(20)
+                make.height.equalTo(40)
             }
             
             
@@ -431,10 +483,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     infoButton.isSelected = false
                     selectedTab = "log"
                     logButton.backgroundColor = .white
-                    todoButton.backgroundColor = CommonColor.naviBarBlackColor
-                    socialButton.backgroundColor = CommonColor.naviBarBlackColor
-                    filesButton.backgroundColor = CommonColor.naviBarBlackColor
-                    infoButton.backgroundColor = CommonColor.naviBarBlackColor
+                    todoButton.backgroundColor = .lightGray
+                    socialButton.backgroundColor = .lightGray
+                    filesButton.backgroundColor = .lightGray
+                    infoButton.backgroundColor = .lightGray
             //viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
             
                    
@@ -447,11 +499,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = false
                     selectedTab = "todo"
-                    logButton.backgroundColor = CommonColor.naviBarBlackColor
+                    logButton.backgroundColor = .lightGray
                     todoButton.backgroundColor = .white
-                    socialButton.backgroundColor = CommonColor.naviBarBlackColor
-                    filesButton.backgroundColor = CommonColor.naviBarBlackColor
-                    infoButton.backgroundColor = CommonColor.naviBarBlackColor
+                    socialButton.backgroundColor = .lightGray
+                    filesButton.backgroundColor = .lightGray
+                    infoButton.backgroundColor = .lightGray
             break
             
         case socialButton :
@@ -461,11 +513,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = false
                     selectedTab = "social"
-                    logButton.backgroundColor = CommonColor.naviBarBlackColor
-                    todoButton.backgroundColor = CommonColor.naviBarBlackColor
+                    logButton.backgroundColor = .lightGray
+                    todoButton.backgroundColor = .lightGray
                     socialButton.backgroundColor = .white
-                    filesButton.backgroundColor = CommonColor.naviBarBlackColor
-                    infoButton.backgroundColor = CommonColor.naviBarBlackColor
+                    filesButton.backgroundColor = .lightGray
+                    infoButton.backgroundColor = .lightGray
             break
             
         case filesButton :
@@ -475,11 +527,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = true
                     infoButton.isSelected = false
                     selectedTab = "files"
-                    logButton.backgroundColor = CommonColor.naviBarBlackColor
-                    todoButton.backgroundColor = CommonColor.naviBarBlackColor
-                    socialButton.backgroundColor = CommonColor.naviBarBlackColor
+                    logButton.backgroundColor = .lightGray
+                    todoButton.backgroundColor = .lightGray
+                    socialButton.backgroundColor = .lightGray
                     filesButton.backgroundColor = .white
-                    infoButton.backgroundColor = CommonColor.naviBarBlackColor
+                    infoButton.backgroundColor = .lightGray
                     
             break
             
@@ -490,10 +542,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = true
                     selectedTab = "info"
-                    logButton.backgroundColor = CommonColor.naviBarBlackColor
-                    todoButton.backgroundColor = CommonColor.naviBarBlackColor
-                    socialButton.backgroundColor = CommonColor.naviBarBlackColor
-                    filesButton.backgroundColor = CommonColor.naviBarBlackColor
+                    logButton.backgroundColor = .lightGray
+                    todoButton.backgroundColor = .lightGray
+                    socialButton.backgroundColor = .lightGray
+                    filesButton.backgroundColor = .lightGray
                     infoButton.backgroundColor = .white
             
             
@@ -505,10 +557,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     infoButton.isSelected = false
                     selectedTab = "log"
                     logButton.backgroundColor = .white
-                    todoButton.backgroundColor = CommonColor.naviBarBlackColor
-                    socialButton.backgroundColor = CommonColor.naviBarBlackColor
-                    filesButton.backgroundColor = CommonColor.naviBarBlackColor
-                    infoButton.backgroundColor = CommonColor.naviBarBlackColor
+                    todoButton.backgroundColor = .lightGray
+                    socialButton.backgroundColor = .lightGray
+                    filesButton.backgroundColor = .lightGray
+                    infoButton.backgroundColor = .lightGray
         }
         
         tableView.reloadData()
@@ -661,19 +713,23 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         
         //add rows details here
         
-        if indexPath.row == 1{
-            //self.showDateTimePicker()
+        if selectedTab == "info" {
+                if indexPath.row == 1{
+                    //self.showDateTimePicker()
+                    
+                }else  if indexPath.row == 5 {
+                    //scoring here
+                     self.sheetPressedScoring(data: data)
+                } else  if indexPath.row == 6 {
+                   self.openRemarksController()
+                } else  if indexPath.row == 7 {
+                   // status alert view
+                    self.sheetPressedStatus(data: data)
+                }
             
-        }else  if indexPath.row == 5 {
-            //scoring here
-            self.sheetPressedScoring(data: data)
-        } else  if indexPath.row == 6 {
-            self.openRemarksController()
-        } else  if indexPath.row == 7 {
-            // status alert view
-            self.sheetPressedStatus(data: data)
+
         }
-        
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -689,18 +745,19 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             
         case "log":
-            let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
-            let data = viewModel.detailRows[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
+            let data = viewModel.logDetails[indexPath.row]
             //cell.leftIcon = data.icon
+//             populateLogData(cell: cell, index: indexPath, data: data)
             cell.leftIcon = "message-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
             
             cell.selectionStyle = .none
             
            //populate logs here using the customer logs info from database
             
             cell.labelTitle.text = "Call log \(indexPath.row)"
-            
+            cell.labelDesc.text = "Called"
+            cell.labelDate.text = "5 minutes ago"
             return cell
            
             
@@ -709,9 +766,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             //cell.leftIcon = data.icon
+           
             cell.leftIcon = "meeting-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
-            
+//            self.populateInfoData(cell: cell, index: indexPath, data:data)
+           
             cell.selectionStyle = .none
             
             if indexPath.row == 0 {
@@ -755,14 +813,15 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             //cell.leftIcon = data.icon
-            cell.leftIcon = "message-template-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
             
+//            self.populateInfoData(cell: cell, index: indexPath, data:data)
+         
             cell.selectionStyle = .none
             
             if indexPath.row == 0 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
+                cell.leftIcon = "facebook-icon"
 //                cell.textFieldsCallback = { val in
 //                    self.viewModel.addContactModel?.addContact_contactName = val
 //                }
@@ -771,6 +830,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             } else if indexPath.row == 1 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
+                cell.leftIcon = "whatsapp-icon"
 //                cell.textFieldsCallback = { val in
 //                    self.viewModel.addContactModel?.addContact_address = val
 //                }
@@ -779,6 +839,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             } else if indexPath.row == 2 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
+                cell.leftIcon = "twitter-icon"
 //                cell.textFieldsCallback = { val in
 //                    self.viewModel.addContactModel?.addContact_phoneNum = val
 //                }
@@ -787,6 +848,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             } else if indexPath.row == 3 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
+                cell.leftIcon = "linkedin-icon"
 //                cell.textFieldsCallback = { val in
 //                    self.viewModel.addContactModel?.addContact_email = val
 //                }
@@ -803,8 +865,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let data = viewModel.detailRows[indexPath.row]
             //cell.leftIcon = data.icon
             cell.leftIcon = "archive-icon"
-            self.populateData(cell: cell, index: indexPath, data:data)
-            
+//            self.populateInfoData(cell: cell, index: indexPath, data:data)
+           
             cell.selectionStyle = .none
             
             cell.labelTitle.text = "File \(indexPath.row)"
@@ -817,7 +879,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
-            self.populateData(cell: cell, index: indexPath, data:data)
+            self.populateInfoData(cell: cell, index: indexPath, data:data)
             
             cell.selectionStyle = .none
             
@@ -854,7 +916,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
-            self.populateData(cell: cell, index: indexPath, data:data)
+            self.populateInfoData(cell: cell, index: indexPath, data:data)
             
             cell.selectionStyle = .none
             
@@ -909,7 +971,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
     
-    func populateData(cell:ContactDetailTableViewCell,index:IndexPath,data:AddContactViewObject) {
+    func populateInfoData(cell:ContactDetailTableViewCell,index:IndexPath,data:AddContactViewObject) {
         
         if let viewmod = viewModel.addContactModel {
             switch index.row {
@@ -949,6 +1011,18 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
     
+    func populateLogData(cell:LogsTableViewCell,index:IndexPath,data:AddContactViewObject) {
+        
+        if let viewmod = viewModel.addLogDetails {
+            
+            cell.title = viewmod.log_task
+            cell.date = "\(viewmod.log_date)"
+            cell.desc = viewmod.log_details
+
+        } else {
+            cell.title = data.title
+        }
+    }
 //    //Date Picker
 //    func showDatePicker(){
 //        //Formate Date
@@ -1125,4 +1199,40 @@ extension ContactDetailsViewController : MFMailComposeViewControllerDelegate, MF
 }
 
 
+extension UIView {
+    
+    func roundTop(radius:CGFloat = 10){
+        self.clipsToBounds = true
+        self.layer.cornerRadius = radius
+        if #available(iOS 11.0, *) {
+            self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    func roundBottomRight(radius:CGFloat = 20){
+        self.clipsToBounds = true
+        self.layer.cornerRadius = radius
+        if #available(iOS 11.0, *) {
+            self.layer.maskedCorners = [.layerMinXMaxYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    func addBackground() {
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
+        
+        let imageViewBackground = UIImageView(frame: CGRect(x:0, y:0, width: width, height: height))
+        imageViewBackground.image = UIImage(named: "contact-details-gradiant-bg")
+        
+        // you can change the content mode:
+        imageViewBackground.contentMode = UIView.ContentMode.scaleAspectFill
+        
+        self.addSubview(imageViewBackground)
+        self.sendSubviewToBack(imageViewBackground)
+    }
+}
 

@@ -80,51 +80,37 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-            let securityVC = SecurityViewController()
-            self.navigationController?.pushViewController(securityVC, animated: true) //call security navigation view controller
-        } else if indexPath.row == 1{
             //SummaryViewController
             let summaryVC = SummaryViewController()
             self.navigationController?.pushViewController(summaryVC, animated: true)
 
-        } else if indexPath.row == 2{
-            //SummaryViewController
-            let panelListVC = PanelListViewController()
-            self.navigationController?.pushViewController(panelListVC, animated: true)
-            
-        } else if indexPath.row == 3{
+        } else if indexPath.row == 1{
             self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
-        } else if indexPath.row == 4{
-            self.getTheContact();
-        } else if indexPath.row == 5{
+        } else if indexPath.row == 2{
+             self.getTheContact();
+           
+        } else if indexPath.row == 3{
             let messageTempVC = MessageTemplatesViewController()
             self.navigationController?.pushViewController(messageTempVC, animated: true)
-        } else if indexPath.row == 6{
-            let langSetVC = LanguageSettingsViewController()
-            self.navigationController?.pushViewController(langSetVC, animated: true)
-        } else if indexPath.row == 7{
+        } else if indexPath.row == 4{
             let resourcesVC = ResourceViewController()
             self.navigationController?.pushViewController(resourcesVC, animated: true)
         }
-//            else if indexPath.row == 7{
-//            let archivesVC = ArchivesViewController()
-//            self.navigationController?.pushViewController(archivesVC, animated: true)
-//        }
-        else if indexPath.row == 8{
-            popUpLogOut(title: "Log out", message: "Are you sure you want to log out?")
-        }
+
     }
     
-    func popUpLogOut(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default,handler: { val in
-            SessionService.logout()
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-        
-    }
+
+//    func popUpLogOut(title: String, message: String) {
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//
+//        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default,handler: { val in
+//            SessionService.logout()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+//
+//    }
+
     
     // MARK: - import phonebook
     func getTheContact()
@@ -180,3 +166,4 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
 }
 
 
+ 

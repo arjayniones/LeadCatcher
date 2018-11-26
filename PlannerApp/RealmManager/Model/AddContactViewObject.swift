@@ -14,6 +14,7 @@ class AddContactViewObject: NSObject {
     var icon:String = ""
     var title:String = ""
     var desc:String = ""
+    var dateTime:String = ""
     var alertOptions:[String] = []
 }
 

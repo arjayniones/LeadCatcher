@@ -26,6 +26,7 @@ class ContactDetailsViewModel {
         let log1 = AddContactViewObject()
         log1.title = "Called"
         log1.desc = "Had a successful call"
+        log1.dateTime = "3 minutes ago"
         self.logDetails.append(log1)
         
         let log2 = AddContactViewObject()
@@ -33,6 +34,8 @@ class ContactDetailsViewModel {
         log2.desc = "Had sent Birthday Greetings email"
         self.logDetails.append(log2)
      
+        
+        
         //about init
         self.addContactModel = AddContactModel()
         
@@ -209,7 +212,7 @@ class AddContactModel {
 
 class LogsModel {
     
-    var log_date: Date?
+    var log_date: String = ""
     var log_task: String = ""
     var log_details: String = ""
     

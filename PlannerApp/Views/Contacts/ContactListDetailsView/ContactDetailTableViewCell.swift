@@ -10,6 +10,7 @@ import UIKit
 
 class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
     
+    
     fileprivate var didSetupContraints = false
     fileprivate let iconImage = UIImageView()
     let labelTitle = UITextField()
@@ -106,5 +107,4 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
     }
     
 }
-
 
