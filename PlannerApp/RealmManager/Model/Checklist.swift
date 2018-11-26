@@ -13,6 +13,7 @@ import RealmSwift
 class Checklist: Model {
     @objc dynamic var title: String = "";
     @objc dynamic var status: String = "";
+    @objc dynamic var textTag: String = "";
     
     func newInstance() {
         id = uuid()

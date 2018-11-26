@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 import CoreLocation
+import RealmSwift
 
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
@@ -134,7 +135,7 @@ class DetailsTodoListViewModel {
         //            region.notifyOnExit = false;
         //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
     }
-    
+    // error here
     func setupNotificationInfoSettings(message:NotificationMessage,completion: @escaping ((_ success:Bool) -> Void)) {
         
         guard let id = self.saveToRealm() else {
@@ -188,8 +189,6 @@ class DetailsTodoListViewModel {
             return nil
         }
         
-        
-        
         let message = NotificationMessage()
         message.title = messageTitle + " with \(customerName)"
         message.subtitle = messageSubject
@@ -213,6 +212,7 @@ class DetailsTodoListViewModel {
     func saveToRealm() -> UUID? {
         if let addNoteMod = self.addNoteModel {
             let addNote = AddNote()
+            
             let id = addNote.newInstance()
             addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
             addNote.addNote_repeat = addNoteMod.addNote_repeat
@@ -220,14 +220,14 @@ class DetailsTodoListViewModel {
             addNote.addNote_customerId = addNoteMod.addNote_customer?.id
             addNote.addNote_taskType = addNoteMod.addNote_taskType
             addNote.addNote_notes = addNoteMod.addNote_notes
+            if let location = addNoteMod.addNote_location {
+                addNote.addNote_location = location
+            }
+            
             for x in addNoteMod.addNote_checkList {
                 addNote.addNote_checklist.append(x)
             }
             
-            if let location = addNoteMod.addNote_location {
-                addNote.addNote_location = location
-            }
-
             addNote.add()
             
             return id
@@ -236,6 +236,7 @@ class DetailsTodoListViewModel {
 
         }
     }
+    
 }
 
 class AddNoteModel {

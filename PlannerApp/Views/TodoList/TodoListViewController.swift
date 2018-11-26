@@ -94,7 +94,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         super.viewWillAppear(animated)
         
-        updateNavbarAppear()
+        //updateNavbarAppear()
     }
     
     override func didReceiveMemoryWarning() {
@@ -151,11 +151,11 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         }
         
-        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
-            self.openDetailsNoteForEditing(model: note)
-        }
+//        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
+//            self.openDetailsNoteForEditing(model: note)
+//        }
         
-        return [deleteAction, editAction]
+        return [deleteAction]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

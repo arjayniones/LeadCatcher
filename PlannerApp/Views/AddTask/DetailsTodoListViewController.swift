@@ -13,7 +13,9 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     var textFieldRealYPosition: CGFloat = 0.0
     var selectedDate: Date = Date()
-    
+    var clearStatus:Bool = false;
+    var checkListStartCount:Int = 20;
+    var isCellEditing:Bool = false;
     let tableView = UITableView()
     
     fileprivate let viewModel:DetailsTodoListViewModel
@@ -39,6 +41,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        
         view.backgroundColor = .white
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
         
@@ -50,9 +56,22 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.addSubview(tableView)
         
         let saveButton = UIButton()
-        saveButton.setTitle("save".localized, for: .normal)
+        if isControllerEditing
+        {
+            isCellEditing = false;
+            saveButton.setTitle("Edit".localized, for: .normal)
+            saveButton.addTarget(self, action: #selector(changeRightNavigatorButtonName), for: .touchUpInside)
+            //navigationItem.rightBarButtonItem = self.editButtonItem;
+        }
+        else
+        {
+            isCellEditing = true;
+            saveButton.setTitle("save".localized, for: .normal)
+            saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        }
+        saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        
         saveButton.sizeToFit()
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
@@ -83,6 +102,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         }
     }
     
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.4) {
             self.view.transform = .identity
@@ -95,21 +115,56 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         //take in account all superviews from textfield and potential contentOffset if you are using tableview to calculate the real position
     }
     
+    /*
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        if editing
+        {
+            print("change to save")
+        }
+        else
+        {
+            save();
+        }
+    }
+    */
+    
+    @objc func changeRightNavigatorButtonName()
+    {
+        isCellEditing = true;
+        let saveButton = UIButton()
+        
+        saveButton.setTitle("save".localized, for: .normal)
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        
+        saveButton.sizeToFit()
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        self.tableView.reloadData();
+    }
+    
     @objc func save() {
+        
         viewModel.saveSchedule(completion: { val in
             if val {
-                let alert = UIAlertController(title: "add_task_success".localized, message: "clear_the_fields".localized, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
-                alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
-                    self.viewModel.addNoteModel = AddNoteModel()
-                    self.tableView.reloadData()
-                }))
-                self.present(alert, animated: true, completion:nil);
+                //DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "add_task_success".localized, message: "clear_the_fields".localized, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                        self.viewModel.addNoteModel = AddNoteModel()
+                        self.tableView.reloadData()
+                    }))
+                    self.present(alert, animated: true, completion:nil);
+                //}
+                
             } else {
                 let alert = UIAlertController.alertControllerWithTitle(title: "error".localized, message: "add_task_failed".localized)
                 self.present(alert, animated: true, completion: nil);
             }
         })
+ 
     }
     
     @objc func clear() {
@@ -127,7 +182,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        updateNavbarAppear()
+        //updateNavbarAppear()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -205,11 +260,13 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             case 2:
                 if viewmod.addNote_subject == ""
                 {
+                    print("data.title = " + data.title);
                     cell.title = data.title;
                 }
                 else
                 {
-                    cell.title = viewmod.addNote_subject;
+                    print("viewmod = " + viewmod.addNote_subject);
+                    cell.labelTitle.text = viewmod.addNote_subject;
                 }
                 //cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
                 break;
@@ -227,6 +284,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 break;
             case 7:
                 cell.title = "Checklist"
+                clearStatus = false; // used at tableview cellforrow to prevent callback overwrite structure value (subject field)
                 break;
             default:
                 break;
@@ -251,6 +309,17 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         
+        if !isCellEditing
+        {
+            cell.contentView.alpha = 0.5;
+            cell.isUserInteractionEnabled = false;
+        }
+        else
+        {
+            cell.contentView.alpha = 1.0;
+            cell.isUserInteractionEnabled = true;
+        }
+        
         if indexPath.section == 0 {
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
@@ -268,7 +337,10 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.nextIcon.isHidden = true
                 cell.subjectCallback = { val in
                     // todo here got bug
-                    self.viewModel.addNoteModel?.addNote_subject = val
+                    if !self.clearStatus {
+                        self.viewModel.addNoteModel?.addNote_subject = val
+                    }
+                    
                 }
             } else if data.title == "Checklist" {
                 cell.addIcon.isHidden = false
@@ -287,15 +359,41 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         
         if indexPath.section == 1 {
             cell.labelTitle.isEnabled = true
+            cell.labelTitle.tag = checkListStartCount;
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
             cell.iconImage2.isHidden = false
-            cell.title = "Insert checklist"
-            cell.subjectCallback = { val in
-                if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
-                    checkData.title = val
+            //cell.title = "Insert checklist"
+            cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
+            cell.subjectCallback2 = { val, index in
+                
+                for x in (self.viewModel.addNoteModel?.addNote_checkList)! {
+                    if x.textTag == String(index){
+                        x.title = val
+                    }
                 }
+                
+                var j:String? = "ff";
+                if var k = j{
+                    k = "abc"
+                    print(j!);
+                    print(k);
+                }
+                else
+                {
+                    j = "fx";
+                    print("j are nil");
+                }
+                
+                //print(self.viewModel.addNoteModel?.addNote_checkList[0].title);
+//                if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
+//                    print("1 \(checkData)");
+//                    checkData.title = val
+//                    print("2 \(checkData)");
+//                }
+                
+                
             }
         }
         
@@ -325,7 +423,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         
         let checkList = Checklist()
         checkList.newInstance()
-        
+        checkListStartCount += 1;
+        checkList.textTag = String(checkListStartCount);
         let indexBefore = viewModel.addNoteModel?.addNote_checkList.count ?? 0
         
         viewModel.addNoteModel?.addNote_checkList.append(checkList)
@@ -381,35 +480,9 @@ extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate 
     }
     
     func showDateTimePicker() {
-        
         let datePickerController = DateAndTimePickerViewController()
         datePickerController.delegate = self
         self.present(datePickerController, animated: true, completion: nil)
-    }
-}
-
-extension DetailsTodoListViewController:UIPickerViewDelegate, UIPickerViewDataSource
-{
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 4
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 60
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(format: "%02d", row)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0{
-            let minute = row
-            print("minute: \(minute)")
-        }else{
-            let second = row
-            print("second: \(second)")
-        }
     }
 }
 

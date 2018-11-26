@@ -44,6 +44,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     }
     
     var subjectCallback:((String) -> ())?
+    var subjectCallback2:((String,Int) -> ())?
     var checkListCallback:(() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -84,6 +85,14 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if let callback = subjectCallback2{
+            if let text = textField.text
+            {
+                callback(text,textField.tag);
+            }
+        }
+        
         if let callback = subjectCallback {
             if let text = textField.text {
                 callback(text)
@@ -93,6 +102,13 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if let callback = subjectCallback2 {
+            if let text = textField.text {
+                callback(text,textField.tag);
+            }
+        }
+        
         if let callback = subjectCallback {
             if let text = textField.text {
                 callback(text)
