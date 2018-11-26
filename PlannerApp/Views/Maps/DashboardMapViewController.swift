@@ -1,21 +1,23 @@
 //
-//  ClusterMapViewController.swift
+//  DashboardMapViewController.swift
 //  PlannerApp
 //
-//  Created by Alkuino Robert John Matias on 26/09/2018.
+//  Created by Alkuino Robert John Matias on 26/11/2018.
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
+import UIKit
+import PreviewTransition
 import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
-import UIKit
 
-class ClusterMapViewController: ViewControllerProtocol {
+class DashboardMapViewController: PTDetailViewController {
     
     private var mapView:GMSMapView!
     private var locationManager = CLLocationManager()
     private let realmStore = RealmStore<AddNote>()
+    private var didSetupConstraints:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +50,12 @@ class ClusterMapViewController: ViewControllerProtocol {
                      lat: (x.addNote_location?.lat)!,
                      name: (x.addNote_location?.name)!)
         }
+        
+        //        let _ = data.map{
+        //            self.pin(long: ($0.addNote_location?.long)!,
+        //                     lat: ($0.addNote_location?.lat)!,
+        //                     name: ($0.addNote_location?.name)!)
+        //        }
     }
     
     override func updateViewConstraints() {
@@ -91,7 +99,7 @@ class ClusterMapViewController: ViewControllerProtocol {
     
 }
 
-extension ClusterMapViewController: CLLocationManagerDelegate {
+extension DashboardMapViewController: CLLocationManagerDelegate {
     func isAuthorizedtoGetUserLocation() {
         
         if CLLocationManager.authorizationStatus() != .authorizedWhenInUse     {
@@ -122,6 +130,7 @@ extension ClusterMapViewController: CLLocationManagerDelegate {
         print("Did location updates is called but failed getting location \(error)")
     }
 }
+
 
 
 

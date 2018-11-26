@@ -40,6 +40,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     
     fileprivate let calendarStackView = UIStackView()
     fileprivate let calendarView = FSCalendar()
+    fileprivate let mapView = MapView()
+    fileprivate let buttonMapView = UIView()
+    fileprivate let buttonExpand = RightIconButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,6 +104,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         contentView.addSubview(calendarLabelRightButton)
         
         calendarStackView.distribution = .fillEqually
+        calendarStackView.axis = .vertical
         contentView.addSubview(calendarStackView)
         
         calendarView.dataSource = self
@@ -121,11 +125,20 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
-        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        contentView.addSubview(tableView)
+        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cell")
+        calendarStackView.addArrangedSubview(tableView)
+        
+        contentView.addSubview(mapView)
+        
+        buttonMapView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        mapView.addSubview(buttonMapView)
+        
+        buttonExpand.setTitle("Full view", for: .normal)
+        buttonExpand.setTitleColor(.white, for: .normal)
+        buttonExpand.setImage(UIImage(named: "expand-icon"), for: .normal)
+        buttonExpand.addTarget(self, action: #selector(showMap), for: .touchUpInside)
+        buttonMapView.addSubview(buttonExpand)
         
         let notificationImage = UIImageView()
         notificationImage.image = UIImage(named:"bell-icon-inactive")
@@ -185,6 +198,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         view.setNeedsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    @objc func showMap() {
+        navigationController?.pushViewController(DashboardMapViewController(), animated: true)
     }
     
     @objc func hideShowCalendar() {
@@ -283,17 +299,33 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.height.equalTo(400)
             }
             
+            tableView.snp.makeConstraints { (make) in
+                make.height.equalTo(300)
+            }
+            
             calendarStackView.snp.updateConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(20)
                 make.top.equalTo(calendarLabelLeftButton.snp.bottom).offset(10)
             }
             
-            tableView.snp.makeConstraints { (make) in
+            mapView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(20)
                 make.top.equalTo(calendarStackView.snp.bottom).offset(10)
                 make.height.equalTo(300)
                 make.bottom.equalTo(contentView).offset(-50)
             }
+            
+            buttonMapView.snp.makeConstraints{ make in
+                make.left.top.right.equalToSuperview()
+                make.height.equalTo(40)
+            }
+            
+            buttonExpand.snp.makeConstraints{ make in
+                make.right.equalToSuperview().inset(10)
+                make.size.equalTo(CGSize(width: 100, height: 35))
+                make.centerY.equalToSuperview()
+            }
+            
             didSetupConstraints = true
         }
         
@@ -380,27 +412,34 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
 
 extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let dataCount = viewModel.filteredDates.count
+        tableView.isHidden = dataCount == 0 ? true:false
+        
         return viewModel.filteredDates.count
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 999
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
         
         let data = viewModel.filteredDates[indexPath.row]
         
-        cell?.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-        cell?.textLabel?.text = data.addNote_subject
-        cell?.textLabel?.textColor = viewModel.fontColorByTime()
-        cell?.textLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
+        cell.titleLabel.text = data.addNote_subject
         let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
-        cell?.imageView?.image = UIImage(named: imageNamed)
-        let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!)) \n\(data.addNote_location?.name ?? "")"
-        cell?.detailTextLabel?.text = subText
-        cell?.detailTextLabel?.textColor = viewModel.fontColorByTime()
-        cell?.detailTextLabel?.font = UIFont.ofSize(fontSize: 11, withType: .regular)
+        cell.leftImageView.image = UIImage(named: imageNamed)
+        let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!))"
+        cell.descriptionLabel.text = subText
+        cell.descriptionLabel2.text = "\(data.addNote_location?.name ?? "")"
+        cell.descriptionLabel3.text = "\(data.addNote_notes)"
         
-        return cell!
+        return cell
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
