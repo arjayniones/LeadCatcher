@@ -150,7 +150,7 @@ class DetailsTodoListViewModel {
         content.body = message.body
         content.badge = 1
         content.userInfo = ["id": "\(id)"]
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in

@@ -101,7 +101,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.allowsMultipleSelection = false
         //tableView.estimatedRowHeight = 200
         tableView.register(ContactListTableViewCell.self, forCellReuseIdentifier: "contactListCell")

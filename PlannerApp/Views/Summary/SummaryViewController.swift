@@ -18,9 +18,9 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     fileprivate let viewModel = SummaryViewModel()
     let stackView: UIStackView = {
         let sv = UIStackView()
-        sv.axis  = UILayoutConstraintAxis.vertical
-        sv.alignment = UIStackViewAlignment.center
-        sv.distribution = UIStackViewDistribution.fillEqually
+        sv.axis  = NSLayoutConstraint.Axis.vertical
+        sv.alignment = UIStackView.Alignment.center
+        sv.distribution = UIStackView.Distribution.fillEqually
         sv.translatesAutoresizingMaskIntoConstraints = false;
         return sv
     }()
@@ -95,13 +95,13 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         }
         
         collectionview.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: view.width, height: view.height/2))
+            make.size.equalTo(CGSize(width: view.frame.width, height: view.frame.height/2))
             
             
         }
         
             barChart.snp.makeConstraints { make in
-                make.size.equalTo(CGSize(width: view.width, height: view.height/3))
+                make.size.equalTo(CGSize(width: view.frame.width, height: view.frame.height/3))
              
             }
    

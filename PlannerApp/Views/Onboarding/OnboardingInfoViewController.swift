@@ -137,7 +137,7 @@ extension OnboardingInfoViewController: PaperOnboardingDelegate {
             if name.count >= 4 && name.count <= 8{
                 Defaults[.SessionUsername] = textField.text
                 Defaults[.NeedOnboarding] = false
-                self.dismiss(animated: true, completion: nil)
+                self.view.window?.rootViewController = BaseViewController()
             } else {
                 self.alert()
             }

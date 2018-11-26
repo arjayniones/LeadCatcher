@@ -52,25 +52,43 @@ var date:String = "" {
 
 var textFieldsCallback:((String) -> ())?
 
-override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+//override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+//    super.init(style: style, reuseIdentifier: reuseIdentifier)
+//
+//    contentView.addSubview(iconImage)
+//
+//    labelTitle.font = UIFont.ofSize(fontSize: 18, withType: .bold)
+//    labelTitle.textColor = .black
+//    labelTitle.textAlignment = .left
+//
+//    labelDesc.font = UIFont.ofSize(fontSize: 12, withType: .bold)
+//    labelDesc.textColor = .gray
+//    labelDesc.textAlignment = .left
+//
+//    labelDate.font = UIFont.ofSize(fontSize: 12, withType: .bold)
+//    labelDate.textColor = .lightGray
+//    labelDate.textAlignment = .left
+//
+//    }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        contentView.addSubview(iconImage)
+        
+        labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
+        //labelTitle.returnKeyType = .done
+        labelTitle.textColor = .lightGray
+        //labelTitle.delegate = self
+        labelTitle.isEnabled = false
+        contentView.addSubview(labelTitle)
+        
+        contentView.addSubview(nextIcon)
+        
+        needsUpdateConstraints()
+        setNeedsUpdateConstraints()
     
-    contentView.addSubview(iconImage)
-    
-    labelTitle.font = UIFont.ofSize(fontSize: 18, withType: .bold)
-    labelTitle.textColor = .black
-    labelTitle.textAlignment = .left
-    
-    labelDesc.font = UIFont.ofSize(fontSize: 12, withType: .bold)
-    labelDesc.textColor = .gray
-    labelDesc.textAlignment = .left
-    
-    labelDate.font = UIFont.ofSize(fontSize: 12, withType: .bold)
-    labelDate.textColor = .lightGray
-    labelDate.textAlignment = .left
-    
-    
-    
+
     
     //        contentView.addSubview(labelTitle)
     //        contentView.addSubview(labelDesc)

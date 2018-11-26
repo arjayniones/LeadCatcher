@@ -7,8 +7,7 @@
 //
 
 import RealmSwift
-
-
+import UIKit
 
 class TodoListViewModel {
     
@@ -40,6 +39,18 @@ class TodoListViewModel {
     
     func searchAppointmentByDay(fromDate:Date,toDate:Date) -> Results<AddNote>? {
         return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Appointment")
+    }
+    
+    func getGreetingByTime() {
+        let hour = Calendar.current.component(.hour, from: Date())
+        
+        switch hour {
+        case 6..<12 : self.timeByString = .morning
+        case 12 : self.timeByString = .noon
+        case 13..<17 : self.timeByString = .afternoon
+        case 17..<22 : self.timeByString = .evening
+        default: self.timeByString = .evening
+        }
     }
     
     func getAppointmentHeaderMessage() -> String {

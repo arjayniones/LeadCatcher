@@ -1,4 +1,9 @@
 github "WenchaoD/FSCalendar"
 github "onevcat/Kingfisher"
 github "Ramotion/paper-onboarding"
+github "SnapKit/SnapKit" ~> 4.2.0
+github "realm/realm-cocoa" ~> 3.11.2
+github "tristanhimmelman/ObjectMapper"
+github "radex/SwiftyUserDefaults" "4.0.0-alpha.1"
+github "Alamofire/Alamofire" ~> 4.7.3
 github "hyperoslo/ImagePicker"

@@ -38,7 +38,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.tableFooterView = searchFooter
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -219,7 +219,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
+        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
         
         guard let data = viewModel.todoListData else {
             return cell

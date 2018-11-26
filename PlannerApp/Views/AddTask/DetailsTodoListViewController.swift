@@ -39,16 +39,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        
         view.backgroundColor = .white
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(DetailsTodoTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
@@ -58,7 +54,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         saveButton.sizeToFit()
-        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         
         if !isControllerEditing {
@@ -67,7 +63,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
             clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
             clearButton.sizeToFit()
-            clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.width, height: clearButton.height)
+            clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.frame.width, height: clearButton.frame.height)
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
         }
         
@@ -77,7 +73,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     //keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             let distanceBetweenTextfielAndKeyboard = self.view.frame.height - textFieldRealYPosition - keyboardSize.height
             if distanceBetweenTextfielAndKeyboard < 0 {
                 UIView.animate(withDuration: 0.4) {
@@ -86,7 +82,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             }
         }
     }
-    
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.4) {
@@ -129,7 +124,16 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         updateNavbarAppear()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
     }
     
     override func viewDidAppear(_ animated: Bool) {

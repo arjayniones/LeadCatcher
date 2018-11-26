@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Neon
 import SnapKit
 import UserNotifications
 import GoogleMaps
@@ -23,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var window: UIWindow?
     var callObServer:CXCallObserver!;
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         callObServer = CXCallObserver();
         callObServer.setDelegate(self, queue: DispatchQueue.main);
@@ -37,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 //                    application.registerForRemoteNotifications()
 //                }
             }
+        }
+        
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if !launchedBefore  {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            Defaults[.NeedOnboarding] = true
         }
         
         prepareAndExecute() {
@@ -78,7 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         GMSServices.provideAPIKey("AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA")
         GMSPlacesClient.provideAPIKey("AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA")
         
-        fn()
+        if Defaults[.NeedOnboarding] == true {
+            self.window?.rootViewController = OnboardingInfoViewController()
+        } else {
+            fn()
+        }
         
         self.window?.makeKeyAndVisible()
     }

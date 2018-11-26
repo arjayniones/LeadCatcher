@@ -42,9 +42,9 @@ class SummaryCollectionViewCell: UICollectionViewCell {
 
     let stackView: UIStackView = {
         let sv = UIStackView()
-        sv.axis  = UILayoutConstraintAxis.vertical
-        sv.alignment = UIStackViewAlignment.center
-        sv.distribution = UIStackViewDistribution.fillProportionally
+        sv.axis  = NSLayoutConstraint.Axis.vertical
+        sv.alignment = UIStackView.Alignment.center
+        sv.distribution = UIStackView.Distribution.fillProportionally
         sv.translatesAutoresizingMaskIntoConstraints = false;
         return sv
     }()

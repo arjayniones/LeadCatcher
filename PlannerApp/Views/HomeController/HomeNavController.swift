@@ -10,7 +10,7 @@ import UIKit
 
 class HomeNavController: BaseNavigationController {
 
-    let controller = HomeViewController()
+    let controller = HomeViewControllerV2()
     
     override func viewDidLoad() {
         super.viewDidLoad()

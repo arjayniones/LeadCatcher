@@ -149,9 +149,9 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
             }
         }
         
-        view.updateConstraintsIfNeeded()
         view.setNeedsUpdateConstraints()
     }
+    
     
     @objc func openNotificationPage() {
         let notifVC = NotificationsListViewController()
@@ -205,7 +205,12 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         if !didSetupConstraints {
             
             headerView.snp.makeConstraints {make in
-                make.top.equalTo(view.safeArea.top).inset(5)
+                if #available(iOS 11.0, *) {
+                    make.top.equalTo(view.safeArea.top).inset(5)
+                } else {
+                    make.top.equalTo(view).inset(5)
+                }
+                
                 make.left.right.equalTo(contentView).inset(20)
             }
             
@@ -247,6 +252,8 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
         self.appointmentLabel.text = self.viewModel.getAppointmentHeaderMessage()
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        
+        view.updateConstraintsIfNeeded()
     }
 
     override func didReceiveMemoryWarning() {
@@ -322,7 +329,7 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier: "cell")
+        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
         
         let data = viewModel.filteredDates[indexPath.row]
         
@@ -343,7 +350,7 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
         let yOffset = scrollView.contentOffset.y
         
         if scrollView == self.scrollView {
-            if yOffset >= scrollView.contentSize.height - view.height {
+            if yOffset >= scrollView.contentSize.height - view.frame.height {
                 scrollView.isScrollEnabled = false
                 tableView.isScrollEnabled = true
             }

@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (4.7.3)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -10,52 +9,23 @@ PODS:
     - GooglePlaces (= 2.7.0)
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
-  - Neon (0.4.0)
-  - ObjectMapper (3.3.0)
-  - Realm (3.10.0):
-    - Realm/Headers (= 3.10.0)
-  - Realm/Headers (3.10.0)
-  - RealmSwift (3.10.0):
-    - Realm (= 3.10.0)
-  - SnapKit (4.0.1)
-  - SwiftyUserDefaults (3.0.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.7)
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
-  - Neon
-  - ObjectMapper (~> 3.3)
-  - RealmSwift (~> 3.10)
-  - SnapKit (~> 4.0.1)
-  - SwiftyUserDefaults
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
     - GoogleMaps
     - GooglePlacePicker
     - GooglePlaces
-    - Neon
-    - ObjectMapper
-    - Realm
-    - RealmSwift
-    - SnapKit
-    - SwiftyUserDefaults
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlacePicker: 59ea44db173c58486ad6123993e81feefcbce9c3
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
-  Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
-  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  Realm: 85ab9e4f779d66f6e9ffeb118dc25b7f130c96ac
-  RealmSwift: 69121c8b86d0ae005fb779efdb10e606732e1c74
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
-  SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
 
-PODFILE CHECKSUM: 6a33518fe515bc4a167cd50208c47067f853e167
+PODFILE CHECKSUM: 38fb095c478ef1136c5f6307f12e26dd97dc95a5
 
 COCOAPODS: 1.5.3

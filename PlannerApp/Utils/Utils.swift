@@ -9,6 +9,12 @@
 import UIKit
 import CoreLocation
 
+class FileData {
+    var filename:String = ""
+    var data:Data?
+    var url:URL?
+}
+
 func uuid() -> UUID {
     return NSUUID().uuidString.lowercased()
 }
@@ -21,6 +27,36 @@ func convertDateTimeToString(date:Date,dateFormat:String = "EEEE,dd MMM yyyy hh:
     
     return selectedDate
 }
+
+func saveFileToDisk (fileData:FileData) {
+    
+    let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+    let logsPath = documentsPath.appendingPathComponent("MyFiles")
+    let fileManager = FileManager.default
+    
+    do {
+        try fileManager.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
+    } catch {
+        print("Unable to create directory",error)
+    }
+    
+    let path = logsPath.appendingPathComponent("\(fileData.filename)")
+    
+    guard let fileURL = fileData.url else {
+        return
+    }
+    
+    if !fileManager.fileExists(atPath: path.path) {
+        do {
+            let file = try! Data(contentsOf:  fileURL)
+            try file.write(to: path, options:.atomic)
+            try fileManager.removeItem(at: fileURL)
+        } catch {
+            print(error)
+        }
+    }
+}
+
 
 func getPlaceDetails(coordinate:CLLocationCoordinate2D,complete: @escaping ((String?) -> Void)) {
     let geoCoder = CLGeocoder()

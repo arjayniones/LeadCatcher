@@ -200,7 +200,7 @@ class PanelListDetailsViewController: ViewControllerProtocol, LargeNativeNavbar 
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         saveButton.sizeToFit()
-        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.width, height: saveButton.height)
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         
         
