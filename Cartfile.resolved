@@ -1,3 +1,4 @@
+github "Ramotion/paper-onboarding" "5.0.0"
 github "WenchaoD/FSCalendar" "2.8.0"
 github "hyperoslo/ImagePicker" "3.1.0"
 github "onevcat/Kingfisher" "4.10.0"

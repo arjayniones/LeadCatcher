@@ -54,15 +54,23 @@ class OnboardingViewController: ViewControllerProtocol ,UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if let name = textField.text {
-            if name != "" && name.count > 4 {
+            if name.count >= 4 && name.count <= 8{
                 Defaults[.SessionUsername] = textField.text
                 Defaults[.NeedOnboarding] = false
                 self.dismiss(animated: true, completion: nil)
+            } else {
+                self.alert()
             }
+        } else {
+            self.alert()
         }
         
         return true
     }
-
-
+    
+    func alert() {
+        let alert = UIAlertController(title: "Info", message: "Name must be in 4 to 8 characters.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style:.cancel, handler: nil));
+        present(alert, animated: true, completion: nil)
+    }
 }

@@ -84,6 +84,8 @@
 		2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC492176CBA200DBF03B /* ImagePicker.framework */; };
 		2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */; };
 		2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2468C4C42182A50D0062D3FF /* Checklist.swift */; };
+		24701A44219A6BBE00028F43 /* PaperOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24701A43219A6BBE00028F43 /* PaperOnboarding.framework */; };
+		24701A46219A71F800028F43 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */; };
 		24775F5F217F0451004319B1 /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24775F5E217F0451004319B1 /* ResourceViewController.swift */; };
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
@@ -110,6 +112,7 @@
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
 		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
 		D639EACF2148B7980053894C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D639EACE2148B7980053894C /* UserViewModel.swift */; };
+		D64881F521941623009A6C8D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D64881F421941623009A6C8D /* test.pdf */; };
 		D66DDB5121901FD5002077A2 /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB4E21901FD5002077A2 /* CSVExport.swift */; };
 		D66DDB5221901FD5002077A2 /* CSVValidateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */; };
 		D66DDB5321901FD5002077A2 /* CSVConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66DDB5021901FD5002077A2 /* CSVConstants.swift */; };
@@ -211,6 +214,8 @@
 		2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		2468C4C42182A50D0062D3FF /* Checklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
 		246F01782167346D008EBE76 /* ms-MY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ms-MY"; path = "ms-MY.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		24701A43219A6BBE00028F43 /* PaperOnboarding.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PaperOnboarding.framework; path = Carthage/Build/iOS/PaperOnboarding.framework; sourceTree = "<group>"; };
+		24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
 		24775F5E217F0451004319B1 /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		24775F60217F1183004319B1 /* PlannerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlannerApp.entitlements; sourceTree = "<group>"; };
 		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +248,7 @@
 		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
 		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		D639EACE2148B7980053894C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		D64881F421941623009A6C8D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
 		D66DDB4E21901FD5002077A2 /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVExport.swift; sourceTree = "<group>"; };
 		D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVValidateProtocol.swift; sourceTree = "<group>"; };
 		D66DDB5021901FD5002077A2 /* CSVConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVConstants.swift; sourceTree = "<group>"; };
@@ -268,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24701A44219A6BBE00028F43 /* PaperOnboarding.framework in Frameworks */,
 				2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */,
 				2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */,
 				24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */,
@@ -485,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				24141FAA2193CDEF00FB9B2A /* OnboardingViewController.swift */,
+				24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -703,6 +711,7 @@
 		D66DDB4D21901FBA002077A2 /* CSVExport */ = {
 			isa = PBXGroup;
 			children = (
+				D64881F421941623009A6C8D /* test.pdf */,
 				D66DDB5021901FD5002077A2 /* CSVConstants.swift */,
 				D66DDB4E21901FD5002077A2 /* CSVExport.swift */,
 				D66DDB4F21901FD5002077A2 /* CSVValidateProtocol.swift */,
@@ -774,6 +783,7 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24701A43219A6BBE00028F43 /* PaperOnboarding.framework */,
 				2460FC4B2176E1CB00DBF03B /* Kingfisher.framework */,
 				2460FC492176CBA200DBF03B /* ImagePicker.framework */,
 				24D1B7FE216359AC001D519C /* FSCalendar.framework */,
@@ -857,6 +867,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D64881F521941623009A6C8D /* test.pdf in Resources */,
 				2491C0E62165E37700037578 /* morning.jpg in Resources */,
 				2491C0EC2165E75300037578 /* noon.jpg in Resources */,
 				D6715DA42140FBA900957E86 /* SF-Pro-Text-Heavy.otf in Resources */,
@@ -887,6 +898,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FSCalendar.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ImagePicker.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PaperOnboarding.framework",
 			);
 			outputPaths = (
 			);
@@ -1010,6 +1022,7 @@
 				0CBFA0ED215888650028750B /* CustomMarkerView.swift in Sources */,
 				0C8DBA43216AFBD3009A1475 /* PanelListViewModel.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
+				24701A46219A71F800028F43 /* OnboardingInfoViewController.swift in Sources */,
 				24D8B2C4214A193A00EC7DBE /* NavBarProtocols.swift in Sources */,
 				0C8DBA2E21646A66009A1475 /* PanelListViewController.swift in Sources */,
 				0C2C11AF215B5F39002479F1 /* ContactDetailTableViewCell.swift in Sources */,
