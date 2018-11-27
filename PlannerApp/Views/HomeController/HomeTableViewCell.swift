@@ -72,13 +72,10 @@ class HomeTableViewCell: UITableViewCell {
         
         stackView.addArrangedSubview(titleLabel)
         
-        descriptionLabel.numberOfLines = 0
         stackView.addArrangedSubview(descriptionLabel)
         
-        descriptionLabel2.numberOfLines = 0
         stackView.addArrangedSubview(descriptionLabel2)
         
-        descriptionLabel3.numberOfLines = 0
         stackView.addArrangedSubview(descriptionLabel3)
         
         setNeedsUpdateConstraints()

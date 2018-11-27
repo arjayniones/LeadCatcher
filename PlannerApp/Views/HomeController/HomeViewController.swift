@@ -278,7 +278,7 @@ extension HomeViewController: FSCalendarDataSource,FSCalendarDelegate {
             self.tableView.reloadData()
         }
         cell.titleLabel.textColor = .black
-        cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
+//        cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
         return cell
     }
     

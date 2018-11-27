@@ -55,11 +55,11 @@ class TodoListViewModel {
     
     func getAppointmentHeaderMessage() -> String {
         
-        var message = "📌 You have "
-        message += "\(self.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)?.count ?? 0)"
-        message += " appointment(s) today."
+//        var message = "📌 You have "
+//        message += "\(self.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)?.count ?? 0)"
+//        message += " appointment(s) today."
         
-        return message
+        return "Today overview :"
     }
     
     func fontColorByTime() -> UIColor {
@@ -81,18 +81,18 @@ class TodoListViewModel {
     
     func getHeaderMessage() -> String {
         guard let x = timeByString else {
-            return "Good Day,"
+            return "Good Day, "
         }
         
         switch x {
         case .morning:
-            return "Good Morning,"
+            return "Good Morning, "
         case .noon:
             return "Good Day,"
         case .afternoon:
-            return "Good Afternoon,"
+            return "Good Afternoon, "
         case .evening:
-            return "Good Evening,"
+            return "Good Evening, "
         }
     }
     

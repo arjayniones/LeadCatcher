@@ -90,8 +90,6 @@
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		24819DF421AB86E5001487A1 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24819DF321AB86E5001487A1 /* HomeTableViewCell.swift */; };
 		24819DF621ABD108001487A1 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24819DF521ABD108001487A1 /* GradientView.swift */; };
-		24819DF821ABD577001487A1 /* DashboardMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24819DF721ABD577001487A1 /* DashboardMapViewController.swift */; };
-		24819DFA21ABD72E001487A1 /* PreviewTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24819DF921ABD72E001487A1 /* PreviewTransition.framework */; };
 		24819DFC21ABD945001487A1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24819DFB21ABD945001487A1 /* MapView.swift */; };
 		2484739521670FF000C6AFE7 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484739421670FF000C6AFE7 /* Localizable.swift */; };
 		2484739E2167119D00C6AFE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 248473A02167119D00C6AFE7 /* Localizable.strings */; };
@@ -104,6 +102,11 @@
 		2491C0F02165EEB100037578 /* evening.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2491C0EF2165EEB100037578 /* evening.jpeg */; };
 		24A2F2CD2158BBF100277DA8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2CC2158BBF100277DA8 /* LocationModel.swift */; };
 		24A2F2D32158DDF000277DA8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F2D22158DDF000277DA8 /* MapViewController.swift */; };
+		24AE1BF321ACD55F00D74186 /* CCZoomAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BEF21ACD55E00D74186 /* CCZoomAnimatedTransitioning.swift */; };
+		24AE1BF421ACD55F00D74186 /* CCSwipBackPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF021ACD55E00D74186 /* CCSwipBackPresentationController.swift */; };
+		24AE1BF521ACD55F00D74186 /* CCZoomTransitionVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF121ACD55E00D74186 /* CCZoomTransitionVCExtension.swift */; };
+		24AE1BF621ACD55F00D74186 /* CCZoomTransitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF221ACD55F00D74186 /* CCZoomTransitioner.swift */; };
+		24AE1BF821ACF30D00D74186 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF721ACF30D00D74186 /* SelfSizedTableView.swift */; };
 		24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */; };
 		24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D1B7FE216359AC001D519C /* FSCalendar.framework */; };
 		24D1B80521636816001D519C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D1B80421636816001D519C /* HomeViewModel.swift */; };
@@ -226,8 +229,6 @@
 		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
 		24819DF321AB86E5001487A1 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		24819DF521ABD108001487A1 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		24819DF721ABD577001487A1 /* DashboardMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardMapViewController.swift; sourceTree = "<group>"; };
-		24819DF921ABD72E001487A1 /* PreviewTransition.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreviewTransition.framework; path = Carthage/Build/iOS/PreviewTransition.framework; sourceTree = "<group>"; };
 		24819DFB21ABD945001487A1 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2484739421670FF000C6AFE7 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		2484739F2167119D00C6AFE7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -244,6 +245,11 @@
 		2491C0EF2165EEB100037578 /* evening.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = evening.jpeg; sourceTree = "<group>"; };
 		24A2F2CC2158BBF100277DA8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		24A2F2D22158DDF000277DA8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		24AE1BEF21ACD55E00D74186 /* CCZoomAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCZoomAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		24AE1BF021ACD55E00D74186 /* CCSwipBackPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCSwipBackPresentationController.swift; sourceTree = "<group>"; };
+		24AE1BF121ACD55E00D74186 /* CCZoomTransitionVCExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCZoomTransitionVCExtension.swift; sourceTree = "<group>"; };
+		24AE1BF221ACD55F00D74186 /* CCZoomTransitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCZoomTransitioner.swift; sourceTree = "<group>"; };
+		24AE1BF721ACF30D00D74186 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
 		24D1B7FE216359AC001D519C /* FSCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FSCalendar.framework; path = Carthage/Build/iOS/FSCalendar.framework; sourceTree = "<group>"; };
 		24D1B80421636816001D519C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -284,7 +290,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24819DFA21ABD72E001487A1 /* PreviewTransition.framework in Frameworks */,
 				246714F621A7A41100518228 /* Alamofire.framework in Frameworks */,
 				246714F321A79D5700518228 /* RealmSwift.framework in Frameworks */,
 				246714F421A79D5700518228 /* Realm.framework in Frameworks */,
@@ -462,7 +467,6 @@
 			children = (
 				24A2F2D22158DDF000277DA8 /* MapViewController.swift */,
 				24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */,
-				24819DF721ABD577001487A1 /* DashboardMapViewController.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -629,6 +633,7 @@
 		248B837A2140B29D00119D9D /* PlannerApp */ = {
 			isa = PBXGroup;
 			children = (
+				24AE1BEE21ACD54D00D74186 /* TransitionEffects */,
 				D66DDB4D21901FBA002077A2 /* CSVExport */,
 				24775F60217F1183004319B1 /* PlannerApp.entitlements */,
 				248473962167110200C6AFE7 /* LanguageSettings */,
@@ -681,6 +686,17 @@
 			path = bgCollections;
 			sourceTree = "<group>";
 		};
+		24AE1BEE21ACD54D00D74186 /* TransitionEffects */ = {
+			isa = PBXGroup;
+			children = (
+				24AE1BF021ACD55E00D74186 /* CCSwipBackPresentationController.swift */,
+				24AE1BEF21ACD55E00D74186 /* CCZoomAnimatedTransitioning.swift */,
+				24AE1BF221ACD55F00D74186 /* CCZoomTransitioner.swift */,
+				24AE1BF121ACD55E00D74186 /* CCZoomTransitionVCExtension.swift */,
+			);
+			path = TransitionEffects;
+			sourceTree = "<group>";
+		};
 		24B186C92154B8BA0028CE23 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -690,6 +706,7 @@
 				246714FD21A7D91900518228 /* RightIconButton.swift */,
 				24819DF521ABD108001487A1 /* GradientView.swift */,
 				24819DFB21ABD945001487A1 /* MapView.swift */,
+				24AE1BF721ACF30D00D74186 /* SelfSizedTableView.swift */,
 			);
 			name = CustomViews;
 			path = "New Group";
@@ -798,7 +815,6 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				24819DF921ABD72E001487A1 /* PreviewTransition.framework */,
 				246714F521A7A41100518228 /* Alamofire.framework */,
 				246714F221A79D5700518228 /* Realm.framework */,
 				246714F121A79D5700518228 /* RealmSwift.framework */,
@@ -925,7 +941,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PreviewTransition.framework",
 			);
 			outputPaths = (
 			);
@@ -988,6 +1003,8 @@
 				24D1B80521636816001D519C /* HomeViewModel.swift in Sources */,
 				D66DDB5221901FD5002077A2 /* CSVValidateProtocol.swift in Sources */,
 				D66E10D02150C2E2005625BF /* ContactViewModel.swift in Sources */,
+				24AE1BF521ACD55F00D74186 /* CCZoomTransitionVCExtension.swift in Sources */,
+				24AE1BF621ACD55F00D74186 /* CCZoomTransitioner.swift in Sources */,
 				0C8DBA392164737A009A1475 /* MessageTemplatesViewController.swift in Sources */,
 				2455FBBF2150956100881541 /* TodoListNavViewController.swift in Sources */,
 				D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */,
@@ -1031,17 +1048,18 @@
 				2455FBD6215227E700881541 /* DateAndTimePickerViewController.swift in Sources */,
 				0C8DBA3621647150009A1475 /* LanguageSettingsViewController.swift in Sources */,
 				0C1E5FFC2181551700DC8750 /* SummaryViewModel.swift in Sources */,
+				24AE1BF821ACF30D00D74186 /* SelfSizedTableView.swift in Sources */,
 				D6715DAE2141213C00957E86 /* BaseViewController.swift in Sources */,
 				24140A6B2148AF9B007687EB /* ChangePasscodeViewController.swift in Sources */,
 				0CBFA0D021509C050028750B /* ContactListNavViewController.swift in Sources */,
 				D66DDB5121901FD5002077A2 /* CSVExport.swift in Sources */,
 				0C8DBA2021631E88009A1475 /* SummaryCollectionViewCell.swift in Sources */,
 				D6715D8A2140DD8000957E86 /* RegisterViewController.swift in Sources */,
+				24AE1BF421ACD55F00D74186 /* CCSwipBackPresentationController.swift in Sources */,
 				2450D380214209FA00F5F61F /* RealmStore.swift in Sources */,
 				24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */,
 				2455FBC121509B4E00881541 /* DetailsTodoTableViewCell.swift in Sources */,
 				0C8DBA1E21630513009A1475 /* SummaryViewController.swift in Sources */,
-				24819DF821ABD577001487A1 /* DashboardMapViewController.swift in Sources */,
 				24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */,
 				0C1E60002181B25F00DC8750 /* ToDoTableViewCell.swift in Sources */,
 				0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */,
@@ -1079,6 +1097,7 @@
 				2450D38B21420DD600F5F61F /* ServiceManager.swift in Sources */,
 				2455FBC72150D6FD00881541 /* ColorExtension.swift in Sources */,
 				0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */,
+				24AE1BF321ACD55F00D74186 /* CCZoomAnimatedTransitioning.swift in Sources */,
 				0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */,
 				2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */,
 			);

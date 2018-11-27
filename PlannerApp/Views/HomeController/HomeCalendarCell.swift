@@ -11,7 +11,7 @@ import UIKit
 
 class HomeCalendarCell: FSCalendarCell {
     
-    weak var circleImageView: UIImageView!
+//    weak var circleImageView: UIImageView!
     
     required init!(coder aDecoder: NSCoder!) {
         fatalError("init(coder:) has not been implemented")
@@ -21,16 +21,16 @@ class HomeCalendarCell: FSCalendarCell {
         super.init(frame: frame)
         
         backgroundColor = .clear
-        let circleImageView = UIImageView(image: UIImage(named: "push-pin")!)
-        self.contentView.insertSubview(circleImageView, at: 0)
-        self.circleImageView = circleImageView
+//        let circleImageView = UIImageView(image: UIImage(named: "push-pin")!)
+//        self.contentView.insertSubview(circleImageView, at: 0)
+//        self.circleImageView = circleImageView
         
-        self.shapeLayer.isHidden = true
+        self.shapeLayer.isHidden = false
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.circleImageView.frame = CGRect(x: self.contentView.center.x, y: self.contentView.center.y - 32, width: 32, height: 32)
+//        self.circleImageView.frame = CGRect(x: self.contentView.center.x, y: self.contentView.center.y - 32, width: 32, height: 32)
     }
     
     override func configureAppearance() {

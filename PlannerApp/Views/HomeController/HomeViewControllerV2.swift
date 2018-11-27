@@ -19,7 +19,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     fileprivate let viewModel = TodoListViewModel()
     
     fileprivate var clonedData: [AddNote] = []
-    fileprivate let tableView = UITableView()
+    fileprivate let tableView = SelfSizedTableView()
     
     fileprivate let imageView = UIImageView()
     fileprivate var context = CIContext(options: nil)
@@ -60,11 +60,10 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         view.addSubview(headerView)
         
         greetingsLabel.textColor = viewModel.fontColorByTime()
-        greetingsLabel.font = UIFont.ofSize(fontSize: 27, withType: .bold)
         headerView.addArrangedSubview(greetingsLabel)
         
         appointmentLabel.textColor = viewModel.fontColorByTime()
-        appointmentLabel.font = UIFont.ofSize(fontSize: 20, withType: .bold)
+        appointmentLabel.font = UIFont.ofSize(fontSize: 17, withType: .regular)
         headerView.addArrangedSubview(appointmentLabel)
         
         headerCountsView.axis = .horizontal
@@ -89,8 +88,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         scrollView.addSubview(contentView)
         
-        calendarLabelLeftButton.setTitle("15 Nov 2018", for: .normal)
+        calendarLabelLeftButton.setTitle("\(convertDateTimeToString(date: Date(),dateFormat: "dd MMM yyyy"))", for: .normal)
         calendarLabelLeftButton.setTitleColor(.black, for: .normal)
+        calendarLabelLeftButton.isHidden = true
         calendarLabelLeftButton.setImage(UIImage(named: "calendar-dash-icon"), for: .normal)
         calendarLabelLeftButton.titleLabel?.font = UIFont.ofSize(fontSize: 15, withType: .regular)
         contentView.addSubview(calendarLabelLeftButton)
@@ -103,21 +103,32 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarLabelRightButton.titleLabel?.font = UIFont.ofSize(fontSize: 15, withType: .regular)
         contentView.addSubview(calendarLabelRightButton)
         
-        calendarStackView.distribution = .fillEqually
+        calendarStackView.distribution = .fillProportionally
+        calendarStackView.spacing = 10
         calendarStackView.axis = .vertical
         contentView.addSubview(calendarStackView)
+        
+        let previousCalendarButton = ActionButton()
+        previousCalendarButton.setBackgroundImage(UIImage(named: "chevron-left"), for: .normal)
+        
+        let nextCalendarButton = ActionButton()
+        nextCalendarButton.setBackgroundImage(UIImage(named: "chevron-right"), for: .normal)
+        
+        calendarView.calendarHeaderView.addSubview(previousCalendarButton)
+        calendarView.calendarHeaderView.addSubview(nextCalendarButton)
         
         calendarView.dataSource = self
         calendarView.delegate = self
         calendarView.allowsMultipleSelection = true
         calendarView.backgroundColor = .clear
-        calendarView.calendarHeaderView.backgroundColor = UIColor.clear
+        calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
+        calendarView.appearance.todayColor = .darkGray
+        calendarView.appearance.selectionColor = UIColor(rgb:0x9ACD32)
         calendarView.calendarWeekdayView.backgroundColor = UIColor.clear
-        calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 18, withType: .bold)
-        calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 18, withType: .bold)
+        calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 20, withType: .regular)
+        calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 15, withType: .regular)
         calendarView.appearance.weekdayTextColor = viewModel.fontColorByTime()
         calendarView.appearance.headerTitleColor = viewModel.fontColorByTime()
-        calendarView.appearance.borderRadius = 0
         calendarView.appearance.eventOffset = CGPoint(x: 0, y: -7)
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
         calendarStackView.addArrangedSubview(calendarView)
@@ -126,6 +137,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.maxHeight = 110
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cell")
         calendarStackView.addArrangedSubview(tableView)
         
@@ -199,14 +211,19 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         view.setNeedsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
+    
     @objc func showMap() {
-        navigationController?.pushViewController(DashboardMapViewController(), animated: true)
+        let controller = ClusterMapViewController()
+        controller.isControllerPresented = true
+        controller.cc_setZoomTransition(originalView: mapView)
+        self.present(controller, animated: true, completion: nil)
     }
     
     @objc func hideShowCalendar() {
         
         self.calendarView.isHidden = !self.calendarView.isHidden
         self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
+        self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
         
 //        let transitionOptions: UIView.AnimationOptions = self.calendarView.isHidden ? [.transitionCurlDown]:[.transitionCurlUp]
 //
@@ -299,10 +316,6 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.height.equalTo(400)
             }
             
-            tableView.snp.makeConstraints { (make) in
-                make.height.equalTo(300)
-            }
-            
             calendarStackView.snp.updateConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(20)
                 make.top.equalTo(calendarLabelLeftButton.snp.bottom).offset(10)
@@ -336,7 +349,17 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         updateNavbarAppear()
         
         if let name = Defaults[.SessionUsername] {
-            greetingsLabel.text = "\(viewModel.getHeaderMessage()) \(name)!"
+            
+            let msgAttributedText = NSMutableAttributedString(string: "")
+            let first = NSAttributedString(string: viewModel.getHeaderMessage(),
+                                           attributes: [.font: UIFont.ofSize(fontSize: 20, withType: .regular)])
+            msgAttributedText.append(first)
+            
+            let second = NSAttributedString(string: name+"!",
+                                           attributes: [.font: UIFont.ofSize(fontSize: 20, withType: .bold)])
+            msgAttributedText.append(second)
+            
+            greetingsLabel.attributedText = msgAttributedText
         }
         
         self.appointmentLabel.text = self.viewModel.getAppointmentHeaderMessage()
@@ -350,6 +373,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     }
 }
 extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        calendar.snp.updateConstraints { (make) in
+            make.height.equalTo(bounds.height)
+        }
+        self.view.layoutIfNeeded()
+    }
+    
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         return clonedData.filter({
             convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
@@ -366,13 +396,14 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
             self.tableView.reloadData()
         }
         cell.titleLabel.textColor = .black
-        cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
+//        cell.circleImageView.isHidden = calendar.selectedDates.contains(date) ? false:true
         return cell
     }
     
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-        return .clear
-    }
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+//        return .clear
+//    }
+    
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleSelectionColorFor date: Date) -> UIColor? {
         return .black
     }
