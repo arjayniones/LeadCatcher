@@ -237,6 +237,16 @@ class DetailsTodoListViewModel {
         }
     }
     
+    func convertDateToString(date:Date)->String
+    {
+        let df = DateFormatter();
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss";
+        let now = df.string(from: date);
+        
+        return now;
+        
+    }
+    
 }
 
 class AddNoteModel {

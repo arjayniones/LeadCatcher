@@ -18,6 +18,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     var isCellEditing:Bool = false;
     let tableView = UITableView()
     
+    // for date picker
+    let datePickerView = UIDatePicker();
+    let bottomView = UIView();
+    let buttonLeft = UIButton();
+    let buttonRight = UIButton();
+    
     fileprivate let viewModel:DetailsTodoListViewModel
     
     var isControllerEditing:Bool = false
@@ -54,6 +60,20 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         tableView.estimatedRowHeight = 100
         tableView.register(DetailsTodoTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
+        
+        // for datepicker
+        bottomView.backgroundColor = UIColor.lightGray;
+        buttonLeft.setTitle("Cancel", for: .normal);
+        buttonRight.setTitle("Done", for: .normal);
+        datePickerView.datePickerMode = .dateAndTime;
+        datePickerView.timeZone = NSTimeZone.local;
+        buttonRight.addTarget(self, action: #selector(doneButtonClick), for: .touchUpInside);
+        buttonLeft.addTarget(self, action: #selector(cancelButtonClick), for: .touchUpInside);
+        self.view.addSubview(bottomView);
+        self.bottomView.addSubview(datePickerView);
+        self.bottomView.addSubview(buttonLeft);
+        self.bottomView.addSubview(buttonRight);
+        self.bottomView.isHidden = true;
         
         let saveButton = UIButton()
         if isControllerEditing
@@ -204,6 +224,32 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 make.top.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
             }
+            
+            bottomView.snp.makeConstraints { (make) in
+                make.left.right.bottom.equalTo(self.view).inset(0);
+                make.height.equalTo(210)
+            }
+            
+            buttonLeft.snp.makeConstraints { (make) in
+                make.left.equalTo(0);
+                make.top.equalTo(self.bottomView).inset(5);
+                make.width.equalTo(70);
+                make.height.equalTo(36);
+            }
+            
+            buttonRight.snp.makeConstraints { (make) in
+                make.right.equalTo(0);
+                make.top.equalTo(self.bottomView).inset(5);
+                make.width.equalTo(70);
+                make.height.equalTo(36);
+            }
+            
+            datePickerView.snp.makeConstraints { (make) in
+                make.left.right.bottom.equalTo(self.bottomView).inset(0);
+                make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
+                make.height.equalTo(162);
+            }
+            
             
             didSetupConstraints = true
         }
@@ -432,6 +478,20 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         let indexPath = IndexPath(item: indexBefore, section: 1)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
+    
+    @objc func cancelButtonClick()
+    {
+        self.bottomView.isHidden = true;
+    }
+    
+    @objc func doneButtonClick()
+    {
+        viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
+        //convertDateTimeToString(date: self.datePickerView.date);
+        //self.textView.text = convertDateToString();
+        self.bottomView.isHidden = true;
+        self.tableView.reloadData();
+    }
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
@@ -480,9 +540,13 @@ extension DetailsTodoListViewController:DateAndTimePickerViewControllerDelegate 
     }
     
     func showDateTimePicker() {
+        /*
         let datePickerController = DateAndTimePickerViewController()
         datePickerController.delegate = self
         self.present(datePickerController, animated: true, completion: nil)
+         */
+        self.bottomView.isHidden = false;
+        
     }
 }
 
