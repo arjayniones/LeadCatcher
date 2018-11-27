@@ -37,8 +37,12 @@ class TodoListViewModel {
         self.filteredNotes = realmStore.models().filter(predicate)
     }
     
-    func searchAppointmentByDay(fromDate:Date,toDate:Date) -> Results<AddNote>? {
-        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Appointment")
+    func searchAppointmentByDay(fromDate:Date,toDate:Date) -> Int {
+        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Appointment").count
+    }
+    
+    func searchBirthdayByDay(fromDate:Date,toDate:Date) -> Int {
+        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Customer Birthday").count
     }
     
     func getGreetingByTime() {

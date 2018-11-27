@@ -37,12 +37,15 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     
     fileprivate let calendarLabelLeftButton = LeftIconButton()
     fileprivate let calendarLabelRightButton = RightIconButton()
+    fileprivate let buttonMapSubView = UIView()
     
     fileprivate let calendarStackView = UIStackView()
     fileprivate let calendarView = FSCalendar()
     fileprivate let mapView = MapView()
     fileprivate let buttonMapView = UIView()
     fileprivate let buttonExpand = RightIconButton()
+    fileprivate let moreLessButton = RightIconButton()
+    fileprivate let headerBGView = GradientView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +56,8 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
 //        view = imageView
         
         view.backgroundColor = .white
+      
+        view.addSubview(headerBGView)
         
         headerView.axis = .vertical
         headerView.alignment = .leading
@@ -72,28 +77,37 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         view.addSubview(headerCountsView)
         
         followUpsView.backgroundColor = .blue
+        followUpsView.labelBelow.text = "Follow-Ups"
         followUpsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(followUpsView)
         
         appointmentsView.backgroundColor = .orange
+        appointmentsView.labelCount.text = "\(viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay))"
+        appointmentsView.labelBelow.text = "Appointment"
         appointmentsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(appointmentsView)
         
         birthdayView.backgroundColor = .red
+        birthdayView.labelCount.text = "\(viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay))"
+        birthdayView.labelBelow.text = "Birthday"
         birthdayView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(birthdayView)
         
         scrollView.backgroundColor = .clear
         view.addSubview(scrollView)
         
+        contentView.backgroundColor = .lightGray
         scrollView.addSubview(contentView)
+        
+        buttonMapSubView.backgroundColor = .white
+        contentView.addSubview(buttonMapSubView)
         
         calendarLabelLeftButton.setTitle("\(convertDateTimeToString(date: Date(),dateFormat: "dd MMM yyyy"))", for: .normal)
         calendarLabelLeftButton.setTitleColor(.black, for: .normal)
         calendarLabelLeftButton.isHidden = true
         calendarLabelLeftButton.setImage(UIImage(named: "calendar-dash-icon"), for: .normal)
         calendarLabelLeftButton.titleLabel?.font = UIFont.ofSize(fontSize: 15, withType: .regular)
-        contentView.addSubview(calendarLabelLeftButton)
+        buttonMapSubView.addSubview(calendarLabelLeftButton)
         
         calendarLabelRightButton.setTitle("Calendar", for: .normal)
         calendarLabelRightButton.setTitleColor(.black, for: .normal)
@@ -101,10 +115,10 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarLabelRightButton.setImage(UIImage(named: "switch-off-icon"), for: .selected)
         calendarLabelRightButton.addTarget(self, action: #selector(hideShowCalendar), for: .touchUpInside)
         calendarLabelRightButton.titleLabel?.font = UIFont.ofSize(fontSize: 15, withType: .regular)
-        contentView.addSubview(calendarLabelRightButton)
+        buttonMapSubView.addSubview(calendarLabelRightButton)
         
         calendarStackView.distribution = .fillProportionally
-        calendarStackView.spacing = 10
+        calendarStackView.spacing = 0
         calendarStackView.axis = .vertical
         contentView.addSubview(calendarStackView)
         
@@ -120,7 +134,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarView.dataSource = self
         calendarView.delegate = self
         calendarView.allowsMultipleSelection = true
-        calendarView.backgroundColor = .clear
+        calendarView.backgroundColor = .white
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
         calendarView.appearance.todayColor = .darkGray
         calendarView.appearance.selectionColor = UIColor(rgb:0x9ACD32)
@@ -135,11 +149,24 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.maxHeight = 110
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cell")
         calendarStackView.addArrangedSubview(tableView)
+        
+        moreLessButton.setImage(UIImage(named: "down-arrow-icon"), for: .normal)
+        moreLessButton.setTitle("More", for: .normal)
+        moreLessButton.isHidden = true
+        moreLessButton.setTitleColor(.black, for: .normal)
+        moreLessButton.backgroundColor = UIColor(rgb:0xfbf6f6)
+        moreLessButton.layer.cornerRadius = 10
+        moreLessButton.layer.masksToBounds = true
+        moreLessButton.titleLabel?.font = UIFont.ofSize(fontSize: 15, withType: .regular)
+        moreLessButton.setImage(UIImage(named: "up-arrow-icon"), for: .selected)
+        moreLessButton.setTitle("Less", for: .selected)
+        moreLessButton.addTarget(self, action: #selector(addMoreButtonPressed), for: .touchUpInside)
+        contentView.addSubview(moreLessButton)
         
         contentView.addSubview(mapView)
         
@@ -167,8 +194,21 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                         notificationImage.image = UIImage(named:"bell-icon-active")
                     }
                 }
+                
+                let bday = self?.viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
+                let appCount = self?.viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
+                
+                self?.appointmentsView.labelCount.text = "\(appCount ?? 0)"
+                self?.birthdayView.labelCount.text = "\(bday ?? 0)"
+                
                 self?.calendarView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
+                
+                let bday = self?.viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
+                let appCount = self?.viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
+                
+                self?.appointmentsView.labelCount.text = "\(appCount ?? 0)"
+                self?.birthdayView.labelCount.text = "\(bday ?? 0)"
                 
                 _ = deletions.map({
                     if let date = self?.clonedData[$0].addNote_alertDateTime {
@@ -183,6 +223,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                         }
                     }
                 })
+                
                 _ = insertions.map({
                     self?.calendarView.select(self?.viewModel.todoListData?[$0].addNote_alertDateTime)
                     if let note = self?.viewModel.todoListData?[$0] {
@@ -232,6 +273,10 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
 //        }, completion: { _ in
 //
 //        })
+    }
+    
+    @objc func addMoreButtonPressed() {
+        self.moreLessButton.isSelected = !self.moreLessButton.isSelected
     }
     
     
@@ -290,6 +335,12 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.left.right.equalTo(view).inset(20)
             }
             
+            headerBGView.snp.makeConstraints {make in
+                make.center.equalTo(headerCountsView)
+                make.width.equalTo(view.snp.width)
+                make.height.equalTo(headerCountsView.snp.height).multipliedBy(1.2)
+            }
+            
             scrollView.snp.makeConstraints { (make) in
                 make.left.bottom.right.equalTo(view)
                 make.top.equalTo(headerCountsView.snp.bottom).offset(10)
@@ -300,32 +351,43 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.left.right.equalTo(view)
             }
             
+            buttonMapSubView.snp.makeConstraints{ make in
+                make.top.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
+                make.height.equalTo(60)
+            }
+            
             calendarLabelLeftButton.snp.makeConstraints {make in
                 make.size.equalTo(CGSize(width: 130, height: 40))
-                make.left.equalTo(contentView).inset(30)
-                make.top.equalTo(contentView).inset(10)
+                make.left.equalTo(buttonMapSubView).inset(30)
+                make.centerY.equalTo(buttonMapSubView.snp.centerY)
             }
             
             calendarLabelRightButton.snp.makeConstraints {make in
                 make.size.equalTo(CGSize(width: 110, height: 40))
-                make.right.equalTo(contentView).inset(30)
-                make.top.equalTo(contentView).inset(10)
+                make.right.equalTo(buttonMapSubView).inset(30)
+                make.centerY.equalTo(buttonMapSubView.snp.centerY)
             }
             
             calendarView.snp.updateConstraints { (make) in
                 make.height.equalTo(400)
             }
             
-            calendarStackView.snp.updateConstraints { (make) in
-                make.left.right.equalTo(contentView).inset(20)
-                make.top.equalTo(calendarLabelLeftButton.snp.bottom).offset(10)
+            calendarStackView.snp.makeConstraints { (make) in
+                make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
+                make.top.equalTo(buttonMapSubView.snp.bottom).offset(0)
+            }
+            
+            moreLessButton.snp.makeConstraints { (make) in
+                make.size.equalTo(CGSize(width: 80, height: 40))
+                make.centerX.equalToSuperview()
+                make.top.equalTo(calendarStackView.snp.bottom).offset(-10)
             }
             
             mapView.snp.makeConstraints { (make) in
-                make.left.right.equalTo(contentView).inset(20)
-                make.top.equalTo(calendarStackView.snp.bottom).offset(10)
+                make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
+                make.top.equalTo(moreLessButton.snp.bottom).offset(5)
                 make.height.equalTo(300)
-                make.bottom.equalTo(contentView).offset(-50)
+                make.bottom.equalTo(contentView).offset(-20)
             }
             
             buttonMapView.snp.makeConstraints{ make in
@@ -374,9 +436,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
 }
 extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        print(">>>>>> pumasok dito")
         calendar.snp.updateConstraints { (make) in
             make.height.equalTo(bounds.height)
         }
+        
         self.view.layoutIfNeeded()
     }
     
@@ -444,7 +508,9 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
 extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let dataCount = viewModel.filteredDates.count
+        
         tableView.isHidden = dataCount == 0 ? true:false
+        self.moreLessButton.isHidden = (dataCount == 0 || dataCount < 3) ? true:false
         
         return viewModel.filteredDates.count
     }
