@@ -49,7 +49,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        self.selectionStyle = UITableViewCell.SelectionStyle.default
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
         labelTitle.returnKeyType = .done
         labelTitle.textColor = .lightGray

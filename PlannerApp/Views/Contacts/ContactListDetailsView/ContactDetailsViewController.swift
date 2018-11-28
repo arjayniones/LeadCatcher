@@ -293,9 +293,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topView.addSubview(tableView)
         
         // for datepicker
-        bottomView.backgroundColor = UIColor.lightGray;
+        bottomView.backgroundColor = UIColor.white;
         buttonLeft.setTitle("Cancel", for: .normal);
         buttonRight.setTitle("Done", for: .normal);
+        buttonLeft.setTitleColor(self.view.tintColor, for: .normal);
+        buttonRight.setTitleColor(self.view.tintColor, for: .normal);
         datePickerView.datePickerMode = .date;
         datePickerView.timeZone = NSTimeZone.local;
         buttonRight.addTarget(self, action: #selector(doneButtonClick), for: .touchUpInside);
@@ -540,26 +542,28 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             }
             
             bottomView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalTo(self.view).inset(0);
+                make.left.right.equalTo(self.view).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
                 make.height.equalTo(210)
             }
             
             buttonLeft.snp.makeConstraints { (make) in
                 make.left.equalTo(0);
-                make.top.equalTo(self.bottomView).inset(5);
+                make.top.equalTo(self.bottomView).inset(10);
                 make.width.equalTo(70);
                 make.height.equalTo(36);
             }
             
             buttonRight.snp.makeConstraints { (make) in
                 make.right.equalTo(0);
-                make.top.equalTo(self.bottomView).inset(5);
+                make.top.equalTo(self.bottomView).inset(10);
                 make.width.equalTo(70);
                 make.height.equalTo(36);
             }
             
             datePickerView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalTo(self.bottomView).inset(0);
+                make.left.right.equalTo(self.bottomView).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
                 make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
                 make.height.equalTo(162);
                 

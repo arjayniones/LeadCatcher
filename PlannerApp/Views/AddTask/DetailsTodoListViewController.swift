@@ -66,9 +66,11 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.addSubview(tableView)
         
         // for datepicker
-        bottomView.backgroundColor = UIColor.lightGray;
+        bottomView.backgroundColor = UIColor.white;
         buttonLeft.setTitle("Cancel", for: .normal);
         buttonRight.setTitle("Done", for: .normal);
+        buttonLeft.setTitleColor(self.view.tintColor, for: .normal);
+        buttonRight.setTitleColor(self.view.tintColor, for: .normal);
         datePickerView.datePickerMode = .dateAndTime;
         datePickerView.timeZone = NSTimeZone.local;
         buttonRight.addTarget(self, action: #selector(doneButtonClick), for: .touchUpInside);
@@ -129,9 +131,9 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     @objc func doneButtonClick()
     {
-        //viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
+        viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
         //convertDateTimeToString(date: self.datePickerView.date);
-        //self.textView.text = convertDateToString();
+        //viewModel.addNoteModel?.addNote_alertDateTime  = convertDateTimeToString(date: self.datePickerView.date);
         self.bottomView.isHidden = true;
         self.tableView.reloadData();
     }
@@ -194,10 +196,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
     @objc func save() {
-        sheetPressed2();
+        
         //self.viewModel.updateDetailToDo(id:(self.viewModel.addNoteModel?.addNote_ID)!);
         view.endEditing(true)
-        /*
+        
         if !isControllerEditing
         {
             saveData();
@@ -206,9 +208,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         {
             self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
             //self.dismiss(animated: false, completion: nil);
+            //saveData();
             
         }
-        */
+        
         
     }
     
@@ -277,26 +280,28 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             }
             
             bottomView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalTo(self.view).inset(0);
+                make.left.right.equalTo(self.view).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
                 make.height.equalTo(210)
             }
             
             buttonLeft.snp.makeConstraints { (make) in
                 make.left.equalTo(0);
-                make.top.equalTo(self.bottomView).inset(5);
+                make.top.equalTo(self.bottomView).inset(10);
                 make.width.equalTo(70);
                 make.height.equalTo(36);
             }
             
             buttonRight.snp.makeConstraints { (make) in
                 make.right.equalTo(0);
-                make.top.equalTo(self.bottomView).inset(5);
+                make.top.equalTo(self.bottomView).inset(10);
                 make.width.equalTo(70);
                 make.height.equalTo(36);
             }
             
             datePickerView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalTo(self.bottomView).inset(0);
+                make.left.right.equalTo(self.bottomView).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
                 make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
                 make.height.equalTo(162);
 
