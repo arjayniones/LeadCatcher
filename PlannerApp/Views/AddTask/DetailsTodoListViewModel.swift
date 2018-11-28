@@ -248,16 +248,23 @@ class DetailsTodoListViewModel {
     func updateDetailToDo(id:String)
     {
         
-        //let dd:Results<AddNote>
+        //var dd:Results<AddNote>
         // realStore => uirealm
         // realstore.model(...) return results => uiRealm.objects(Person.self) return results
         //let realmStore = RealmStore<AddNote>() =>let dogs = uiRealm.objects(Dog.self);
         
-        if let dd = realmStore.queryToDo(id: id)?.first{
-            try! realmStore.write {
-                dd.addNote_subject = "324234324";
-            }
+        //if let dd = realmStore.queryToDo(id: id)?.first{
+        if let dd = realmStore.queryToDo(id: id){
+            realmStore.delete(modelToDelete: dd.first, hard: true);
+//            RealmStore<AddNote>().delete(modelToDelete: dd, hard: true)
         }
+        
+        
+        
+//            try! realmStore.write {
+//                dd.addNote_subject = "324234324";
+//            }
+        //}
         
         
         //print(dd[0].addNote_subject);

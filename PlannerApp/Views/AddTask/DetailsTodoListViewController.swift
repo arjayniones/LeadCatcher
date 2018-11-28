@@ -174,9 +174,26 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
     @objc func save() {
-        
+        sheetPressed2();
         //self.viewModel.updateDetailToDo(id:(self.viewModel.addNoteModel?.addNote_ID)!);
         view.endEditing(true)
+        /*
+        if !isControllerEditing
+        {
+            saveData();
+        }
+        else
+        {
+            self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
+            //self.dismiss(animated: false, completion: nil);
+            
+        }
+        */
+        
+    }
+    
+    @objc func saveData()
+    {
         self.viewModel.saveSchedule(completion: { val in
             if val {
                 //
@@ -194,7 +211,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 self.present(alert, animated: true, completion: nil);
             }
         })
-        
     }
     
     @objc func clear() {
@@ -320,14 +336,14 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
                 break;
             case 2:
-                if viewmod.addNote_subject == ""
+                if viewmod.addNote_subject == "" // if addnote_subject is empty then set placeholder only
                 {
-                    print("data.title = " + data.title);
                     cell.title = data.title;
                 }
                 else
                 {
-                    print("viewmod = " + viewmod.addNote_subject);
+                    // else set placeholder and data
+                    cell.title = data.title;
                     cell.labelTitle.text = viewmod.addNote_subject;
                 }
                 //cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
@@ -426,16 +442,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.addIcon.isHidden = true
             cell.tag = indexPath.row
             cell.iconImage2.isHidden = false
-            cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
+            cell.labelTitle.text = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
-                
-//                for x in (self.viewModel.addNoteModel?.addNote_checkList)! {
-//                    if x.textTag == String(index){
-//                        x.title = val
-//                    }
-//                }
 
-                print(self.viewModel.addNoteModel?.addNote_checkList.last);
                 if let checkData = self.viewModel.addNoteModel?.addNote_checkList[index]{
                     print("1 \(checkData)");
                     checkData.title = val
@@ -513,6 +522,14 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
 
         actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
 
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func sheetPressed2(){
+        let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
+        
         self.present(actionSheet, animated: true, completion: nil)
     }
 }

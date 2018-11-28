@@ -22,11 +22,13 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         super.viewDidLoad()
         
         title = "to_do_list".localized
-         view.addBackground()
+        view.addBackground()
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
         searchController.searchBar.isTranslucent = true
+        searchController.searchBar.backgroundColor = UIColor.clear;
+        //searchController.searchBar.barTintColor = UIColor.yellow;
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
@@ -150,6 +152,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "delete".localized) { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
             let identifier = "user_notification_\(note.id)"
+            //azlim : to do remember to apply function below when deleted data
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         }
         
