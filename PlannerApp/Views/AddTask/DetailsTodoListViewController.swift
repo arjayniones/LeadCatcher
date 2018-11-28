@@ -39,7 +39,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+         view.addBackground()
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
         
         tableView.delegate = self
@@ -145,7 +145,9 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
-                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
             }
             
             didSetupConstraints = true
@@ -377,3 +379,4 @@ extension DetailsTodoListViewController: MapViewControllerDelegate {
         }
     }
 }
+

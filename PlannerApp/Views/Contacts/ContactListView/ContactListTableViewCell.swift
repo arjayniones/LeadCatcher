@@ -12,11 +12,9 @@ class ContactListTableViewCell: UITableViewCell {
 
     let imgUser: UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .red
+        img.backgroundColor = .lightGray
         img.layer.cornerRadius = 25
-        img.layer.borderWidth = 1
-        img.layer.shadowRadius = 10
-        img.layer.shadowOpacity = 0.5
+        img.layer.borderWidth = 0.2
         img.clipsToBounds = true
         
         return img
@@ -54,16 +52,16 @@ class ContactListTableViewCell: UITableViewCell {
     var lastCom : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 10)
-        
+        label.textColor = .lightGray
         return label
     }()
     var toFollow = UILabel()
     var cellView:  UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         view.layer.cornerRadius = 10
-        view.layer.borderWidth = 1
-        view.layer.shadowRadius = 10
+        view.layer.borderWidth = 0.2
+        view.layer.shadowRadius = 5
         view.layer.shadowOpacity = 0.5
       
         return view
@@ -80,8 +78,8 @@ class ContactListTableViewCell: UITableViewCell {
         
         contentView.addSubview(cellView)
        
-        
-        imgUser.backgroundColor = .red
+        self.backgroundColor = .clear
+        imgUser.image = UIImage(named: "user-circle-big-icon")
 
         cellView.addSubview(imgUser)
         

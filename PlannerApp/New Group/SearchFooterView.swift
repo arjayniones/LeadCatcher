@@ -23,7 +23,7 @@ class SearchFooterView: UIView {
     }
     
     func configureView() {
-        backgroundColor = .lightGray
+        backgroundColor = .clear
         alpha = 0.0
         
         // Configure label

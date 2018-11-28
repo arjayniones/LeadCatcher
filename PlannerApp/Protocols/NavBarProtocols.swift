@@ -15,6 +15,7 @@ protocol NoNavbar {
 extension NoNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
+//         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
@@ -29,11 +30,11 @@ protocol NativeNavbar {
 extension NativeNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .clear //CommonColor.naviBarBlackColor
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
@@ -56,12 +57,11 @@ protocol LargeNativeNavbar {
 extension LargeNativeNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .clear //CommonColor.naviBarBlackColor
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         

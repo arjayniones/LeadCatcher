@@ -49,6 +49,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     var selectedTab = String()
     var previewItem = NSURL()
     let topView = UIView()
+    var editSelected = false
     
     fileprivate let profileImageView = UIImageView()
     
@@ -95,7 +96,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 //        
        
 
-        view.backgroundColor = .white
+        view.addBackground()
 
         title = "Contact Details"
         
@@ -103,7 +104,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         
         view.addSubview(topView)
-        topView.addBackground()
+        topView.backgroundColor = .clear
+        
         
         profileImageView.layer.cornerRadius = 45
         profileImageView.layer.borderColor = UIColor.black.cgColor
@@ -161,7 +163,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             statusLabel.backgroundColor = .white
         }
         statusLabel.font = statusLabel.font.withSize(15)
-        statusLabel.textColor = .lightGray
+        statusLabel.textColor = .black
         statusLabel.textAlignment = .center
         statusLabel.roundBottomRight()
         
@@ -210,6 +212,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         logButton.titleLabel?.font =  .systemFont(ofSize: 11)
         logButton.isSelected = true
         logButton.backgroundColor = .lightGray
+        logButton.layer.borderColor = UIColor.gray.cgColor
+        logButton.layer.borderWidth = 0.2
         logButton.roundTop()
         logButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
@@ -219,6 +223,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         todoButton.titleLabel?.font =  .systemFont(ofSize: 11)
         todoButton.isSelected = true
         todoButton.backgroundColor = .lightGray
+        todoButton.layer.borderColor = UIColor.gray.cgColor
+        todoButton.layer.borderWidth = 0.2
         todoButton.roundTop()
         todoButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
@@ -228,6 +234,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         socialButton.titleLabel?.font =  .systemFont(ofSize: 11)
         socialButton.isSelected = true
         socialButton.backgroundColor = .lightGray
+        socialButton.layer.borderColor = UIColor.gray.cgColor
+        socialButton.layer.borderWidth = 0.2
         socialButton.roundTop()
         socialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
@@ -237,6 +245,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         filesButton.titleLabel?.font =  .systemFont(ofSize: 11)
         filesButton.isSelected = true
         filesButton.backgroundColor = .lightGray
+        filesButton.layer.borderColor = UIColor.gray.cgColor
+        filesButton.layer.borderWidth = 0.2
         filesButton.roundTop()
         filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
@@ -246,6 +256,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         infoButton.titleLabel?.font =  .systemFont(ofSize: 11)
         infoButton.isSelected = true
         infoButton.backgroundColor = .white
+        infoButton.layer.borderColor = UIColor.gray.cgColor
+        infoButton.layer.borderWidth = 0.2
         infoButton.roundTop()
         infoButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
@@ -270,6 +282,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         
         
+        if editSelected {
         let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
@@ -277,6 +290,17 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         saveButton.sizeToFit()
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+            editSelected = false
+        } else {
+        let editButton = UIButton()
+        editButton.setTitle("Edit", for: .normal)
+        editButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        editButton.addTarget(self, action: #selector(edit), for: .touchUpInside)
+        editButton.sizeToFit()
+        editButton.frame = CGRect(x: 0, y: -2, width: editButton.frame.width, height: editButton.frame.height)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
+            editSelected = true
+        }
         
         if !isControllerEditing {
             let clearButton = UIButton()
@@ -356,6 +380,16 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         })
     }
     
+    @objc func edit() {
+        
+        if editSelected {
+            
+        }
+        else {
+            
+        }
+    }
+    
     @objc func clear() {
         let controller = UIAlertController(title: "Info", message: "Clear the fields?", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
@@ -403,7 +437,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         if !didSetupConstraints {
             
             topView.snp.makeConstraints{ make in
-                make.top.equalTo(view)
+                make.top.equalTo(view.safeArea.top)
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(tableView.snp.bottom)
             }
@@ -422,7 +456,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             statusLabel.snp.makeConstraints{ make in
                 make.top.equalTo(scoreLabel.snp.bottom).offset(5)
                 make.right.equalTo(topView)
-                make.size.equalTo(CGSize(width: 120, height: 30))
+                make.size.equalTo(CGSize(width: 130, height: 30))
             }
             
             buttonStackView.snp.makeConstraints{ make in
@@ -550,17 +584,17 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             
             
         default :
-                    logButton.isSelected = true
+                    logButton.isSelected = false
                     todoButton.isSelected = false
                     socialButton.isSelected = false
                     filesButton.isSelected = false
-                    infoButton.isSelected = false
-                    selectedTab = "log"
-                    logButton.backgroundColor = .white
+                    infoButton.isSelected = true
+                    selectedTab = "info"
+                    logButton.backgroundColor = .lightGray
                     todoButton.backgroundColor = .lightGray
                     socialButton.backgroundColor = .lightGray
                     filesButton.backgroundColor = .lightGray
-                    infoButton.backgroundColor = .lightGray
+                    infoButton.backgroundColor = .white
         }
         
         tableView.reloadData()
@@ -772,6 +806,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
            
             cell.selectionStyle = .none
             
+            if editSelected {
+            
             if indexPath.row == 0 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
@@ -804,6 +840,13 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
 //                }
                  cell.labelTitle.text = "Ask if intereseted or not"
             }
+        }
+        else {
+                
+                
+                cell.labelTitle.isEnabled = false
+               
+        }
             
             
             return cell
@@ -1023,6 +1066,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             cell.title = data.title
         }
     }
+    
+    
 //    //Date Picker
 //    func showDatePicker(){
 //        //Formate Date
