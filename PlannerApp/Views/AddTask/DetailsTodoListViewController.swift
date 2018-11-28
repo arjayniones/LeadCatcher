@@ -160,7 +160,9 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         saveButton.setTitle("save".localized, for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
-        saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
+        saveButton.setTitleColor(.white, for: .normal);
+        //saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
+        
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         
         saveButton.sizeToFit()
@@ -207,7 +209,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        //updateNavbarAppear()
+        updateNavbarAppear()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

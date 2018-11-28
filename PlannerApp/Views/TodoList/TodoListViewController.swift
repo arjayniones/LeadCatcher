@@ -96,7 +96,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         super.viewWillAppear(animated)
         
-        //updateNavbarAppear()
+        updateNavbarAppear()
     }
     
     override func didReceiveMemoryWarning() {

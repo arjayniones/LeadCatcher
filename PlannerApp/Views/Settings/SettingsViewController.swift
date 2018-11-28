@@ -22,7 +22,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         super.viewDidLoad()
         
         title = "Settings"
-         view.addBackground()
+        view.addBackground()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white

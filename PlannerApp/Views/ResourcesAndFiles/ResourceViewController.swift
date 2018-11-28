@@ -18,6 +18,7 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         super.viewDidLoad()
         
         title = "Resources"
+        view.addBackground()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 110)
@@ -50,7 +51,9 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         if !didSetupConstraints {
             
             collectionview.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
             }
             
             didSetupConstraints = true

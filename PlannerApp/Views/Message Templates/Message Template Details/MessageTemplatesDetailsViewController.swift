@@ -34,12 +34,12 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     let mainView: UIView = {
         let view = UIView()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
         view.layer.cornerRadius = 10
-        view.layer.borderWidth = 1
+        view.layer.borderWidth = 0.2
         view.layer.shadowRadius = 10
         view.layer.shadowOpacity = 0.5
-        //view.layer.shadowColor = UIColor.black as! CGColor
+       // view.layer.shadowColor = UIColor.black as! CGColor
         
         
         return view
@@ -85,6 +85,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         let bodyLbl = UILabel()
         bodyLbl.text = "Message:"
         bodyLbl.textColor = .black
+        
         return bodyLbl
     }()
     
@@ -92,6 +93,8 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         let nametxt = UITextView()
         nametxt.text = "Happy Birthday! \nEvery day is an opportunity for a fresh new start. \nMake this one counted. Take care!\n\nI send this birthday wishes earlier before you inbox get crowded,\nFirst of all, I would like to say thank you and good luck to the new chapter of your life.\n\nHappy birthday my friend!"
         nametxt.font = UIFont.ofSize(fontSize: 20, withType: .regular)
+        nametxt.textColor = .black
+        nametxt.backgroundColor = .lightGray
         return nametxt
     }()
     
@@ -149,6 +152,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         super.viewDidLoad()
 
         title = "Message Templates"
+        view.addBackground()
         
         view.addSubview(mainView)
         mainView.addSubview(titleLabel)
@@ -184,8 +188,9 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         if !didSetupConstraints {
             
             mainView.snp.makeConstraints { make in
-                make.top.left.right.equalTo(view).inset(10)
-                make.bottom.equalTo(view).inset(60)
+                make.top.equalTo(view.safeArea.top).inset(10)
+                make.left.right.equalTo(view).inset(20)
+                make.bottom.equalTo(view).inset(80)
             }
             titleLabel.snp.makeConstraints {  make in
                 make.top.left.equalTo(mainView).offset(10)

@@ -16,7 +16,7 @@ protocol MapViewControllerDelegate:class {
     func controllerDidExit(customerPlace: LocationModel)
 }
 
-class MapViewController: ViewControllerProtocol {
+class MapViewController: ViewControllerProtocol, LargeNativeNavbar {
 
     private var mapView:GMSMapView!
     weak var delegate: MapViewControllerDelegate?
@@ -71,10 +71,11 @@ class MapViewController: ViewControllerProtocol {
         super.viewDidLoad()
         
         self.title = "Pick A Location"
-        self.view.backgroundColor = UIColor.white
+        self.view.addBackground()
 
         self.setupMap()
         self.setupTextField()
+        view.addBackground()
         self.view.addSubview(btnMyLocation)
         
         let doneButton = UIButton()
@@ -108,6 +109,8 @@ class MapViewController: ViewControllerProtocol {
             
             self.mapView.animate(to: camera)
         }
+        
+        updateNavbarAppear()
     }
     
     override func updateViewConstraints() {
@@ -115,11 +118,14 @@ class MapViewController: ViewControllerProtocol {
         if !didSetupConstraints {
             
             mapView.snp.makeConstraints { make in
-                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
             }
             
             txtFieldSearch.snp.makeConstraints { make in
-                make.top.leading.trailing.equalTo(view).inset(10)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
                 make.height.equalTo(40)
             }
             

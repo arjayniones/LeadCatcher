@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate {
+class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate, LargeNativeNavbar {
     
     var resultContactList:Results<ContactModel>!;
     let summaryCell = SummaryCollectionViewCell()
@@ -90,7 +90,8 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     
     override func updateViewConstraints() {
         stackView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(view)
+            make.top.equalTo(view.safeArea.top)
+            make.left.right.equalTo(view)
             make.bottom.equalTo(view).inset(50)
         }
         
@@ -112,7 +113,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-       
+       updateNavbarAppear()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
