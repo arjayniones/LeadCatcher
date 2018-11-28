@@ -20,7 +20,7 @@ public enum TimeStatus {
     case afternoon
 }
 
-class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppearance,UIScrollViewDelegate {
+class HomeViewController: ViewControllerProtocol,LargeNativeNavbar,FSCalendarDelegateAppearance,UIScrollViewDelegate {
     
     fileprivate let calendarView = FSCalendar()
 //    fileprivate weak var eventLabel: UILabel!
@@ -46,7 +46,7 @@ class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppe
 //        self.blurredBGImage()
         self.getGreetingByTime()
         view = imageView
-        
+        view.addBackground()
         //let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         //print(paths[0]);
 

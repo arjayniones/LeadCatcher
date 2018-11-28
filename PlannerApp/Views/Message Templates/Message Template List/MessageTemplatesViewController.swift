@@ -20,6 +20,7 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
         title = "Message Templates"
+        view.addBackground()
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -85,7 +86,8 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
         if !didSetupConstraints {
             
             tableView.snp.makeConstraints { make in
-                make.top.left.right.equalTo(view)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
             }
             
