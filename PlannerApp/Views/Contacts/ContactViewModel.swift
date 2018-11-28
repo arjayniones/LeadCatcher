@@ -117,6 +117,12 @@ class ContactViewModel {
         return realmStore.models(query:  "id = '\(id)'")!
     }
     
+    class func queryContactHistoryTable( id:String)->Results<ContactHistory> {
+        // query particular contact info by id
+        let realmStore = RealmStore<ContactHistory>()
+        return realmStore.models(query:  "CH_CID = '\(id)'")!
+    }
+    
     class func insertDataContactHistoryModel(cID:String, cHistoryType:String)->Bool
     {
         let data = ContactHistory().newInstance();
@@ -127,6 +133,15 @@ class ContactViewModel {
         data.add();
         
         return true;
+    }
+    
+    // insert contact social data
+    class func insertDataContactSocialModel(id:String, url:String)
+    {
+        let data = ContactSocial().newInstance();
+        data.CS_CID = id;
+        data.CS_SocialUrl = "https://facebook.com";
+        data.add();
     }
     
 }

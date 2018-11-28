@@ -50,6 +50,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     var previewItem = NSURL()
     let topView = UIView()
     
+    // azlim
+    var resultHistoryList:Results<ContactHistory>!;
+    var contactSocialList:[SocialClass] = []
+    
     fileprivate let profileImageView = UIImageView()
     
     let tableView = UITableView()
@@ -75,7 +79,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     required init() {
         viewModel = ContactDetailsViewModel()
-        
         super.init()
     }
     
@@ -160,6 +163,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             statusLabel.text = status == "" ? "No Meeting Yet" : status
             statusLabel.backgroundColor = .white
         }
+        
         statusLabel.font = statusLabel.font.withSize(15)
         statusLabel.textColor = .lightGray
         statusLabel.textAlignment = .center
@@ -299,8 +303,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             }
         }
         
-        
-        
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
@@ -339,7 +341,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     @objc func save() {
 //        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
 //        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
-        
+        dismissKeyboard();
         viewModel.saveContact(completion: { val in
             if val {
                 let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
@@ -487,6 +489,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     socialButton.backgroundColor = .lightGray
                     filesButton.backgroundColor = .lightGray
                     infoButton.backgroundColor = .lightGray
+                    resultHistoryList = ContactViewModel.queryContactHistoryTable(id: Defaults[.ContactID]!);
+                    print(Defaults[.ContactID]!)
+                    print(resultHistoryList);
+                    self.tableView.reloadData();
             //viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
             
                    
@@ -674,6 +680,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         
     }
+    
+    override func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
 }
 
 //MARK:- QLPreviewController Datasource
@@ -739,14 +750,11 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         //add plus button to add check list
         //add check box at the accessory if task are finish it can be checked
         
-        
         switch selectedTab {
-            
-            
             
         case "log":
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
-            let data = viewModel.logDetails[indexPath.row]
+            //let data = viewModel.logDetails[indexPath.row]
             //cell.leftIcon = data.icon
 //             populateLogData(cell: cell, index: indexPath, data: data)
             cell.leftIcon = "message-icon"
@@ -755,9 +763,9 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
            //populate logs here using the customer logs info from database
             
-            cell.labelTitle.text = "Call log \(indexPath.row)"
-            cell.labelDesc.text = "Called"
-            cell.labelDate.text = "5 minutes ago"
+            cell.labelTitle.text = resultHistoryList[indexPath.row].CH_HistoryType; //"Call log \(indexPath.row)"
+            cell.labelDesc.text = ""
+            cell.labelDate.text = convertDateTimeToString(date: resultHistoryList[indexPath.row].CH_CallingDate!, dateFormat: "dd-MMM-yyyy HH:mm:ss") ;
             return cell
            
             
@@ -816,42 +824,65 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
 //            self.populateInfoData(cell: cell, index: indexPath, data:data)
          
+            let socialList = SocialClass()
             cell.selectionStyle = .none
             
             if indexPath.row == 0 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "facebook-icon"
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_contactName = val
-//                }
+                cell.textFieldsCallback = { val in
+                    //self.viewModel.addContactModel?.addContact_contactName = val
+                    
+                    socialList.socailUrl = val;
+                    socialList.socialName = "Facebook";
+                    //self.viewModel.socialList?.append(socialList);
+                    self.viewModel.socialList?[indexPath.row] = socialList;
+                    //self.contactSocialList.append(socialList);
+                    
+                }
                 
                 cell.labelTitle.text = "Facebook: "
             } else if indexPath.row == 1 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "whatsapp-icon"
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_address = val
-//                }
+                cell.textFieldsCallback = { val in
+                    socialList.socailUrl = val;
+                    socialList.socialName = "Whatsapp";
+                    self.viewModel.socialList?[indexPath.row] = socialList;
+                    //self.viewModel.socialList?.append(socialList)
+                    //self.contactSocialList.append(socialList);
+                    //self.viewModel.addContactModel?.addContact_address = val
+                }
                 
                 cell.labelTitle.text = "Whatsapp: "
             } else if indexPath.row == 2 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "twitter-icon"
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_phoneNum = val
-//                }
+                cell.textFieldsCallback = { val in
+                    socialList.socailUrl = val;
+                    socialList.socialName = "Twitter";
+                    self.viewModel.socialList?[indexPath.row] = socialList;
+                    //self.viewModel.socialList?.append(socialList)
+                    //self.contactSocialList.append(socialList);
+                    //self.viewModel.addContactModel?.addContact_phoneNum = val
+                }
                 
                 cell.labelTitle.text = "Twitter: "
             } else if indexPath.row == 3 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "linkedin-icon"
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_email = val
-//                }
+                cell.textFieldsCallback = { val in
+                    socialList.socailUrl = val;
+                    socialList.socialName = "Linkedin";
+                    self.viewModel.socialList?[indexPath.row] = socialList;
+                    //self.viewModel.socialList?.append(socialList)
+                    //self.contactSocialList.append(socialList);
+                    //self.viewModel.addContactModel?.addContact_email = val
+                }
                 
                 cell.labelTitle.text = "Linkedin: "
             }
@@ -957,7 +988,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if selectedTab == "log"{
-            return viewModel.logDetails.count
+            return resultHistoryList.count;
         }
         else if selectedTab == "todo" {
         return 4
@@ -1023,6 +1054,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             cell.title = data.title
         }
     }
+    
 //    //Date Picker
 //    func showDatePicker(){
 //        //Formate Date

@@ -432,6 +432,7 @@
 		0CBFA0CE215098FF0028750B /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				D66E10CF2150C2E2005625BF /* ContactViewModel.swift */,
 				0CBFA0D62150AC470028750B /* ContactListDetailsView */,
 				0CBFA0D52150AC2E0028750B /* ContactListView */,
 			);
@@ -481,7 +482,6 @@
 				24140A632148AF9B007687EB /* SettingsNavViewController.swift */,
 				24140A5B2148AF9B007687EB /* Security */,
 				24140A602148AF9B007687EB /* ChangePasscode */,
-				D66E10CF2150C2E2005625BF /* ContactViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";

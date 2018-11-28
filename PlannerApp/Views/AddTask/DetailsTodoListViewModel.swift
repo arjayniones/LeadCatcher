@@ -9,10 +9,11 @@
 import UIKit
 import UserNotifications
 import CoreLocation
+import RealmSwift
 
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
-    
+    let realmStore = RealmStore<AddNote>()
     var dateChosen:UNCalendarNotificationTrigger?
     var addNoteModel: AddNoteModel?
     
@@ -21,44 +22,44 @@ class DetailsTodoListViewModel {
         self.addNoteModel = AddNoteModel()
         
         let row1 = AddTodoViewObject()
-        row1.icon = "calendar-icon"
+        row1.icon = "calendar-iconx2"
         row1.title = "start_date_time".localized
         self.detailRows.append(row1)
         
         let row2 = AddTodoViewObject()
-        row2.icon = "repeat-icon"
+        row2.icon = "repeat-iconx2"
         row2.title = "alert".localized
         row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
         self.detailRows.append(row2)
         
         let row3 = AddTodoViewObject()
-        row3.icon = "subject-icon"
+        row3.icon = "subject-iconx2"
         row3.title = "subject".localized
         self.detailRows.append(row3)
         
         let row4 = AddTodoViewObject()
-        row4.icon = "person-icon"
+        row4.icon = "person-iconx2"
         row4.title = "customer".localized
         self.detailRows.append(row4)
         
         let row5 = AddTodoViewObject()
-        row5.icon = "task-icon"
+        row5.icon = "task-iconx2"
         row5.title = "task_type".localized
         row5.alertOptions = ["Appointment","Customer Birthday","Other"]
         self.detailRows.append(row5)
         
         let row6 = AddTodoViewObject()
-        row6.icon = "notes-icon"
+        row6.icon = "notes-iconx2"
         row6.title = "notes".localized
         self.detailRows.append(row6)
         
         let row7 = AddTodoViewObject()
-        row7.icon = "location-icon"
+        row7.icon = "location-iconx2"
         row7.title = "location".localized
         self.detailRows.append(row7)
         
         let row8 = AddTodoViewObject()
-        row8.icon = "checklist-icon"
+        row8.icon = "checklist-iconx2"
         row8.title = "Checklist"
         self.detailRows.append(row8)
     }
@@ -136,7 +137,7 @@ class DetailsTodoListViewModel {
         //            region.notifyOnExit = false;
         //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
     }
-    
+    // error here
     func setupNotificationInfoSettings(message:NotificationMessage,completion: @escaping ((_ success:Bool) -> Void)) {
         
         guard let id = self.saveToRealm() else {
@@ -165,6 +166,11 @@ class DetailsTodoListViewModel {
     }
     
     func prepareData() -> NotificationMessage? {
+        
+        guard setupNotificationDateSettings() && self.dateChosen != nil else {
+            return nil
+        }
+        
         guard let messageTitle = self.addNoteModel?.addNote_taskType,messageTitle != "" else {
             return nil
         }
@@ -182,10 +188,6 @@ class DetailsTodoListViewModel {
         }
         
         guard self.addNoteModel?.addNote_location != nil else {
-            return nil
-        }
-        
-        guard setupNotificationDateSettings() && self.dateChosen != nil else {
             return nil
         }
         
@@ -210,8 +212,10 @@ class DetailsTodoListViewModel {
     }
     
     func saveToRealm() -> UUID? {
+        
         if let addNoteMod = self.addNoteModel {
             let addNote = AddNote()
+            
             let id = addNote.newInstance()
             addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
             addNote.addNote_repeat = addNoteMod.addNote_repeat
@@ -219,14 +223,14 @@ class DetailsTodoListViewModel {
             addNote.addNote_customerId = addNoteMod.addNote_customer?.id
             addNote.addNote_taskType = addNoteMod.addNote_taskType
             addNote.addNote_notes = addNoteMod.addNote_notes
+            if let location = addNoteMod.addNote_location {
+                addNote.addNote_location = location
+            }
+            
             for x in addNoteMod.addNote_checkList {
                 addNote.addNote_checklist.append(x)
             }
             
-            if let location = addNoteMod.addNote_location {
-                addNote.addNote_location = location
-            }
-
             addNote.add()
             
             return id
@@ -235,9 +239,65 @@ class DetailsTodoListViewModel {
 
         }
     }
+    
+    func updateDetailToDo(id:String)
+    {
+        
+        //let dd:Results<AddNote>
+        // realStore => uirealm
+        // realstore.model(...) return results => uiRealm.objects(Person.self) return results
+        //let realmStore = RealmStore<AddNote>() =>let dogs = uiRealm.objects(Dog.self);
+        
+        if let dd = realmStore.queryToDo(id: id)?.first{
+            try! realmStore.write {
+                dd.addNote_subject = "324234324";
+            }
+        }
+        
+        
+        //print(dd[0].addNote_subject);
+        
+        
+    }
+    
+    func convertDateToString(date:Date)->String
+    {
+        let df = DateFormatter();
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss";
+        let now = df.string(from: date);
+        
+        return now;
+        
+    }
+    
+    /*
+    func updateAddNote(id:String)
+    {
+        let realmStore = RealmStore<AddNote>()
+        
+        if let queryData = realmStore.models(query: "id = '\(id)'")?.first {
+            if let updateData = self.addNoteModel {
+                queryData.addNote_alertDateTime = updateData.addNote_alertDateTime;
+                queryData.addNote_repeat = updateData.addNote_repeat;
+                queryData.addNote_subject = updateData.addNote_subject;
+                queryData.addNote_customerId = updateData.addNote_customer?.id;
+                queryData.addNote_notes = updateData.addNote_notes;
+                queryData.addNote_location = updateData.addNote_location;
+                queryData.addNote_taskType = updateData.addNote_taskType;
+                
+                for x in updateData.addNote_checkList {
+                    queryData.addNote_checklist.append(x)
+                }
+                
+            }
+        }
+    }
+ */
+    
 }
 
 class AddNoteModel {
+    var addNote_ID:String = "";
     var addNote_alertDateTime: Date?
     var addNote_repeat: String = ""
     var addNote_subject: String = ""

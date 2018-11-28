@@ -56,6 +56,7 @@ protocol LargeNativeNavbar {
 extension LargeNativeNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
+        
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = CommonColor.naviBarBlackColor
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
@@ -74,6 +75,7 @@ extension LargeNativeNavbar where Self: UIViewController {
                 NSAttributedString.Key.foregroundColor: CommonColor.systemWhiteColor,
             ]
         }
+        
         
     }
 }
