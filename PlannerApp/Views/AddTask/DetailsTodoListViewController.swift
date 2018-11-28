@@ -35,8 +35,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         }
     }
     
-    fileprivate var checkListTag = -1
-    
     required init() {
         viewModel = DetailsTodoListViewModel()
         
@@ -118,7 +116,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     func refreshData() {
         viewModel = DetailsTodoListViewModel()
-        checkListTag = -1
     }
     
     //keyboard
@@ -429,7 +426,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.addIcon.isHidden = true
             cell.tag = indexPath.row
             cell.iconImage2.isHidden = false
-            print("@#!#@!#!@",checkListTag)
             cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
                 
