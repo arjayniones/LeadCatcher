@@ -52,6 +52,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     // azlim
     var resultHistoryList:Results<ContactHistory>!;
+    var resultSocialList:Results<ContactSocial>!;
     var contactSocialList:[SocialClass] = []
     
     fileprivate let profileImageView = UIImageView()
@@ -524,6 +525,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     socialButton.backgroundColor = .white
                     filesButton.backgroundColor = .lightGray
                     infoButton.backgroundColor = .lightGray
+                    resultSocialList = ContactViewModel.queryContactSocialTable(id: Defaults[.ContactID]!);
             break
             
         case filesButton :
@@ -826,11 +828,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
          
             let socialList = SocialClass()
             cell.selectionStyle = .none
+            var socialUrl:String = "";
+            if resultSocialList.count > 0
+            {
+                socialUrl = resultSocialList[indexPath.row].CS_SocialUrl;
+            }
             
             if indexPath.row == 0 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "facebook-icon"
+                cell.labelTitle.text = socialUrl;
                 cell.textFieldsCallback = { val in
                     //self.viewModel.addContactModel?.addContact_contactName = val
                     
@@ -842,11 +850,12 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     
                 }
                 
-                cell.labelTitle.text = "Facebook: "
+                cell.labelTitle.placeholder = "Facebook: "
             } else if indexPath.row == 1 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "whatsapp-icon"
+                cell.labelTitle.text = socialUrl;
                 cell.textFieldsCallback = { val in
                     socialList.socailUrl = val;
                     socialList.socialName = "Whatsapp";
@@ -856,11 +865,12 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     //self.viewModel.addContactModel?.addContact_address = val
                 }
                 
-                cell.labelTitle.text = "Whatsapp: "
+                cell.labelTitle.placeholder = "Whatsapp: "
             } else if indexPath.row == 2 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "twitter-icon"
+                cell.labelTitle.text = socialUrl;
                 cell.textFieldsCallback = { val in
                     socialList.socailUrl = val;
                     socialList.socialName = "Twitter";
@@ -870,11 +880,12 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     //self.viewModel.addContactModel?.addContact_phoneNum = val
                 }
                 
-                cell.labelTitle.text = "Twitter: "
+                cell.labelTitle.placeholder = "Twitter: "
             } else if indexPath.row == 3 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.leftIcon = "linkedin-icon"
+                cell.labelTitle.text = socialUrl;
                 cell.textFieldsCallback = { val in
                     socialList.socailUrl = val;
                     socialList.socialName = "Linkedin";
@@ -884,7 +895,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     //self.viewModel.addContactModel?.addContact_email = val
                 }
                 
-                cell.labelTitle.text = "Linkedin: "
+                cell.labelTitle.placeholder = "Linkedin: "
             }
             
             

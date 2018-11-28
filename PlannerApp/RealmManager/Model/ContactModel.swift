@@ -71,3 +71,19 @@ class ContactSocial:Model{
     }
     
 }
+
+class ContactFile:Model{
+    @objc dynamic var CF_CID:String = "";   // uuid
+    @objc dynamic var CF_FileName:String = "";  // file name
+    @objc dynamic var CF_Directory:String = ""; // file directory if needed
+    
+    func newInstance() -> ContactFile{
+        let contactFile = ContactFile();
+        contactFile.id = uuid();
+        contactFile.created_at = Date();
+        contactFile.updated_at = nil;
+        contactFile.deleted_at = nil;
+        
+        return contactFile;
+    }
+}

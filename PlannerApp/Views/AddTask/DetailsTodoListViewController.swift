@@ -204,7 +204,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        //updateNavbarAppear()
+        updateNavbarAppear()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -486,10 +486,10 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
-    
+
     func sheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select".localized + " \(data.title)", preferredStyle: .actionSheet)
-        
+
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
                 if data.title == "alert".localized {
@@ -501,9 +501,9 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
             }
             actionSheet.addAction(action)
         }
-        
+
         actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
-        
+
         self.present(actionSheet, animated: true, completion: nil)
     }
 }
