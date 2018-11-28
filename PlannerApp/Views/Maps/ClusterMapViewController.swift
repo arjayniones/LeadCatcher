@@ -21,7 +21,7 @@ class ClusterMapViewController: ViewControllerProtocol {
         super.viewDidLoad()
         
         title = "Map"
-        self.view.backgroundColor = UIColor.white
+        self.view.addBackground()
         
         view.addSubview(mapView)
         
@@ -59,6 +59,8 @@ class ClusterMapViewController: ViewControllerProtocol {
         if data.count > 0 {
             mapView.pointCamera(location: data.first?.addNote_location)
         }
+        
+        updateViewConstraints()
     }
     
     override func updateViewConstraints() {
@@ -72,7 +74,10 @@ class ClusterMapViewController: ViewControllerProtocol {
             }
             
             mapView.snp.makeConstraints { make in
-                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
             }
             
             didSetupConstraints = true

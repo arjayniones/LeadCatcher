@@ -93,7 +93,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             saveButton.setTitle("save".localized, for: .normal)
             saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         }
-        saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
+        
+        //saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
+        saveButton.setTitleColor(.white, for: .normal);
+        
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         
         saveButton.sizeToFit()
@@ -116,6 +119,21 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     func refreshData() {
         viewModel = DetailsTodoListViewModel()
+    }
+    
+    //datepicker
+    @objc func cancelButtonClick()
+    {
+        self.bottomView.isHidden = true;
+    }
+    
+    @objc func doneButtonClick()
+    {
+        //viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
+        //convertDateTimeToString(date: self.datePickerView.date);
+        //self.textView.text = convertDateToString();
+        self.bottomView.isHidden = true;
+        self.tableView.reloadData();
     }
     
     //keyboard
@@ -481,19 +499,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
-    @objc func cancelButtonClick()
-    {
-        self.bottomView.isHidden = true;
-    }
-    
-    @objc func doneButtonClick()
-    {
-        viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
-        //convertDateTimeToString(date: self.datePickerView.date);
-        //self.textView.text = convertDateToString();
-        self.bottomView.isHidden = true;
-        self.tableView.reloadData();
-    }
+  
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
