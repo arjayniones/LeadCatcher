@@ -60,6 +60,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         view.backgroundColor = .clear
       
+        headerBGView.colors = [CommonColor.lightGrayColor.cgColor,UIColor.white.cgColor]
         view.addSubview(headerBGView)
         
         headerView.axis = .vertical
@@ -79,17 +80,20 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         headerCountsView.spacing = 5
         view.addSubview(headerCountsView)
         
-        followUpsView.backgroundColor = .blue
+        followUpsView.backgroundColor = CommonColor.purpleColor
+        followUpsView.sideIcon.image = UIImage(named: "follow-up-icon")
         followUpsView.labelBelow.text = "Follow-Ups"
         followUpsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(followUpsView)
         
-        appointmentsView.backgroundColor = .orange
+        appointmentsView.backgroundColor = CommonColor.turquoiseColor
+        appointmentsView.sideIcon.image = UIImage(named: "sideIcon")
         appointmentsView.labelBelow.text = "Appointment"
         appointmentsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(appointmentsView)
         
-        birthdayView.backgroundColor = .red
+        birthdayView.backgroundColor = CommonColor.redColor
+        birthdayView.sideIcon.image = UIImage(named: "sideIcon")
         birthdayView.labelBelow.text = "Birthday"
         birthdayView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(birthdayView)
@@ -125,7 +129,6 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         calendarView.dataSource = self
         calendarView.delegate = self
-        calendarView.calendarHeaderView.isUserInteractionEnabled = true
         calendarView.calendarHeaderView.configureAppearance()
         calendarView.allowsMultipleSelection = true
         calendarView.backgroundColor = .white
@@ -573,6 +576,7 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         cell.titleLabel.text = data.addNote_subject
         let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
         cell.leftImageView.image = UIImage(named: imageNamed)
+        cell.leftImageAppearance = data.addNote_taskType
         let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!))"
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(data.addNote_location?.name ?? "")"

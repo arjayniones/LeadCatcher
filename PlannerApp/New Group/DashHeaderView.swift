@@ -21,8 +21,7 @@ class DashHeaderView: UIView {
         
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
-        
-        self.sideIcon.backgroundColor = .white
+    
         self.addSubview(sideIcon)
         
         labelCount.font = UIFont.ofSize(fontSize: 40, withType: .bold)
