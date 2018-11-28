@@ -51,6 +51,12 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     let topView = UIView()
     var editSelected = false
     
+    // for date picker
+    let datePickerView = UIDatePicker();
+    let bottomView = UIView();
+    let buttonLeft = UIButton();
+    let buttonRight = UIButton();
+    
     // azlim
     var resultHistoryList:Results<ContactHistory>!;
     var contactSocialList:[SocialClass] = []
@@ -102,6 +108,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         view.addBackground()
 
         title = "Contact Details"
+        selectedTab = "info"
         
         imagePickerController.delegate = self
         
@@ -284,6 +291,21 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         topView.addSubview(tableView)
         
+        // for datepicker
+        bottomView.backgroundColor = UIColor.lightGray;
+        buttonLeft.setTitle("Cancel", for: .normal);
+        buttonRight.setTitle("Done", for: .normal);
+        datePickerView.datePickerMode = .date;
+        datePickerView.timeZone = NSTimeZone.local;
+        buttonRight.addTarget(self, action: #selector(doneButtonClick), for: .touchUpInside);
+        buttonLeft.addTarget(self, action: #selector(cancelButtonClick), for: .touchUpInside);
+        self.view.addSubview(bottomView);
+        self.bottomView.addSubview(datePickerView);
+        self.bottomView.addSubview(buttonLeft);
+        self.bottomView.addSubview(buttonRight);
+        self.bottomView.isHidden = true;
+        
+        
         
         changeRightNavBarBtn()
         
@@ -313,10 +335,25 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         view.updateConstraintsIfNeeded()
     }
     
+    @objc func cancelButtonClick()
+    {
+        self.bottomView.isHidden = true;
+    }
+    
+    @objc func doneButtonClick()
+    {
+        viewModel.addContactModel?.addContact_dateOfBirth = self.datePickerView.date
+        //convertDateTimeToString(date: self.datePickerView.date);
+        //self.textView.text = convertDateToString();
+        self.bottomView.isHidden = true;
+        self.tableView.reloadData();
+    }
+    
     func changeRightNavBarBtn(){
         
         
         if editSelected {
+            
             let saveButton = UIButton()
             saveButton.setTitle("Save", for: .normal)
             saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
@@ -500,6 +537,33 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
             }
+            
+            bottomView.snp.makeConstraints { (make) in
+                make.left.right.bottom.equalTo(self.view).inset(0);
+                make.height.equalTo(210)
+            }
+            
+            buttonLeft.snp.makeConstraints { (make) in
+                make.left.equalTo(0);
+                make.top.equalTo(self.bottomView).inset(5);
+                make.width.equalTo(70);
+                make.height.equalTo(36);
+            }
+            
+            buttonRight.snp.makeConstraints { (make) in
+                make.right.equalTo(0);
+                make.top.equalTo(self.bottomView).inset(5);
+                make.width.equalTo(70);
+                make.height.equalTo(36);
+            }
+            
+            datePickerView.snp.makeConstraints { (make) in
+                make.left.right.bottom.equalTo(self.bottomView).inset(0);
+                make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
+                make.height.equalTo(162);
+                
+            }
+            
             
             didSetupConstraints = true
         }
@@ -766,8 +830,12 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         //add rows details here
         
         if selectedTab == "info" {
+            
+            if editSelected {
+                
+                
                 if indexPath.row == 1{
-                    //self.showDateTimePicker()
+                    self.showDateTimePicker()
                     
                 }else  if indexPath.row == 5 {
                     //scoring here
@@ -778,7 +846,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                    // status alert view
                     self.sheetPressedStatus(data: data)
                 }
-            
+            }
 
         }
 
@@ -964,32 +1032,61 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             cell.selectionStyle = .none
             
-            if indexPath.row == 0 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_contactName = val
+            if editSelected{
+                cell.isEditing = true
+                if indexPath.row == 0 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_contactName = val
+                    }
+                } else if indexPath.row == 2 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_address = val
+                    }
+                } else if indexPath.row == 3 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_phoneNum = val
+                    }
+                } else if indexPath.row == 4 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_email = val
+                    }
                 }
-            } else if indexPath.row == 2 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_address = val
-                }
-            } else if indexPath.row == 3 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_phoneNum = val
-                }
-            } else if indexPath.row == 4 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_email = val
+            } else {
+                cell.isEditing = false
+                if indexPath.row == 0 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_contactName = val
+                    }
+                } else if indexPath.row == 2 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_address = val
+                    }
+                } else if indexPath.row == 3 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_phoneNum = val
+                    }
+                } else if indexPath.row == 4 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_email = val
+                    }
                 }
             }
-            
             
             return cell
             
@@ -1213,9 +1310,11 @@ extension ContactDetailsViewController:DateAndTimePickerViewControllerDelegate {
     }
     
     func showDateTimePicker() {
-        let datePickerController = DateAndTimePickerViewController()
-        datePickerController.delegate = self
-        self.present(datePickerController, animated: true, completion: nil)
+//        let datePickerController = DateAndTimePickerViewController()
+//        datePickerController.delegate = self
+//        self.present(datePickerController, animated: true, completion: nil)
+        
+         self.bottomView.isHidden = false;
     }
 }
 extension ContactDetailsViewController: ImagePickerDelegate {

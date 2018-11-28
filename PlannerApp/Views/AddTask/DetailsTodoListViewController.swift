@@ -121,6 +121,21 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         viewModel = DetailsTodoListViewModel()
     }
     
+    //datepicker
+    @objc func cancelButtonClick()
+    {
+        self.bottomView.isHidden = true;
+    }
+    
+    @objc func doneButtonClick()
+    {
+        //viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
+        //convertDateTimeToString(date: self.datePickerView.date);
+        //self.textView.text = convertDateToString();
+        self.bottomView.isHidden = true;
+        self.tableView.reloadData();
+    }
+    
     //keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
@@ -484,19 +499,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
-    @objc func cancelButtonClick()
-    {
-        self.bottomView.isHidden = true;
-    }
-    
-    @objc func doneButtonClick()
-    {
-        viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
-        //convertDateTimeToString(date: self.datePickerView.date);
-        //self.textView.text = convertDateToString();
-        self.bottomView.isHidden = true;
-        self.tableView.reloadData();
-    }
+  
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
