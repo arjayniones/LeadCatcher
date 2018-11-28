@@ -55,7 +55,6 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         labelTitle.textColor = .lightGray
         labelTitle.delegate = self
         labelTitle.isEnabled = false
-        
         iconImage2.isHidden = true
         
         stackView.axis = .horizontal
@@ -110,7 +109,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         
         if let callback = subjectCallback2 {
             if let text = textField.text {
-                callback(text,textField.tag);
+                callback(text,self.tag);
             }
         }
         
