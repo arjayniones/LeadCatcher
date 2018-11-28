@@ -48,12 +48,6 @@ class ClusterMapViewController: ViewControllerProtocol {
                      lat: (x.addNote_location?.lat)!,
                      name: (x.addNote_location?.name)!)
         }
-        
-//        let _ = data.map{
-//            self.pin(long: ($0.addNote_location?.long)!,
-//                     lat: ($0.addNote_location?.lat)!,
-//                     name: ($0.addNote_location?.name)!)
-//        }
     }
     
     override func updateViewConstraints() {

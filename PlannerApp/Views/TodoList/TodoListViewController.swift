@@ -179,6 +179,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         detailController.isControllerEditing = true
         
         let todoModel = AddNoteModel()
+        todoModel.addNote_ID = model.id
         todoModel.addNote_alertDateTime = model.addNote_alertDateTime
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject

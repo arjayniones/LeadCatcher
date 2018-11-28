@@ -70,8 +70,13 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         
         contentView.addSubview(nextIcon)
         
+//        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeKeyboard)))
+        
         needsUpdateConstraints()
         setNeedsUpdateConstraints()
+    }
+    @objc func closeKeyboard() {
+        self.endEditing(true)
     }
     
     required init?(coder aDecoder: NSCoder) {

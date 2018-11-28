@@ -13,7 +13,7 @@ import RealmSwift
 
 class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
-    
+    let realmStore = RealmStore<AddNote>()
     var dateChosen:UNCalendarNotificationTrigger?
     var addNoteModel: AddNoteModel?
     
@@ -65,6 +65,8 @@ class DetailsTodoListViewModel {
     }
     
     func verifyRepeatTime(date: Date) -> Bool {
+        
+        return true
         
         if let repeatTime = self.addNoteModel?.addNote_repeat {
             
@@ -210,6 +212,7 @@ class DetailsTodoListViewModel {
     }
     
     func saveToRealm() -> UUID? {
+        
         if let addNoteMod = self.addNoteModel {
             let addNote = AddNote()
             
@@ -237,6 +240,26 @@ class DetailsTodoListViewModel {
         }
     }
     
+    func updateDetailToDo(id:String)
+    {
+        
+        //let dd:Results<AddNote>
+        // realStore => uirealm
+        // realstore.model(...) return results => uiRealm.objects(Person.self) return results
+        //let realmStore = RealmStore<AddNote>() =>let dogs = uiRealm.objects(Dog.self);
+        
+        if let dd = realmStore.queryToDo(id: id)?.first{
+            try! realmStore.write {
+                dd.addNote_subject = "324234324";
+            }
+        }
+        
+        
+        //print(dd[0].addNote_subject);
+        
+        
+    }
+    
     func convertDateToString(date:Date)->String
     {
         let df = DateFormatter();
@@ -247,9 +270,34 @@ class DetailsTodoListViewModel {
         
     }
     
+    /*
+    func updateAddNote(id:String)
+    {
+        let realmStore = RealmStore<AddNote>()
+        
+        if let queryData = realmStore.models(query: "id = '\(id)'")?.first {
+            if let updateData = self.addNoteModel {
+                queryData.addNote_alertDateTime = updateData.addNote_alertDateTime;
+                queryData.addNote_repeat = updateData.addNote_repeat;
+                queryData.addNote_subject = updateData.addNote_subject;
+                queryData.addNote_customerId = updateData.addNote_customer?.id;
+                queryData.addNote_notes = updateData.addNote_notes;
+                queryData.addNote_location = updateData.addNote_location;
+                queryData.addNote_taskType = updateData.addNote_taskType;
+                
+                for x in updateData.addNote_checkList {
+                    queryData.addNote_checklist.append(x)
+                }
+                
+            }
+        }
+    }
+ */
+    
 }
 
 class AddNoteModel {
+    var addNote_ID:String = "";
     var addNote_alertDateTime: Date?
     var addNote_repeat: String = ""
     var addNote_subject: String = ""

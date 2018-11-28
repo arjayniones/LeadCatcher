@@ -9,12 +9,14 @@
 import UIKit
 import RealmSwift
 import Kingfisher
+import SwiftyUserDefaults
 
 class ContactDetailsViewModel {
     var detailRows:[AddContactViewObject] = []
     var addContactModel:AddContactModel?
     var logDetails:[AddContactViewObject] = []
     var addLogDetails:LogsModel?
+    var socialList:[SocialClass]? = [];
     var profileImage:UIImage?
     
     init() {
@@ -22,19 +24,41 @@ class ContactDetailsViewModel {
         
         //log init
         self.addLogDetails = LogsModel()
-        
+        //about init
+        self.addContactModel = AddContactModel()
+        //self.socialList = [SocialClass()];
+        /*
         let log1 = AddContactViewObject()
         log1.title = "Called"
         log1.desc = "Had a successful call"
+        log1.dateTime = "3 minutes ago"
         self.logDetails.append(log1)
         
         let log2 = AddContactViewObject()
         log2.title = "Emailed"
         log2.desc = "Had sent Birthday Greetings email"
         self.logDetails.append(log2)
+         */
+        
+        let social1 = SocialClass();
+        social1.socailUrl = "";
+        social1.socialName = "Facebook";
+        self.socialList?.append(social1);
+        
+        let social2 = SocialClass();
+        social2.socailUrl = "";
+        social2.socialName = "Whatsapp";
+        self.socialList?.append(social2);
      
-        //about init
-        self.addContactModel = AddContactModel()
+        let social3 = SocialClass();
+        social3.socailUrl = "";
+        social3.socialName = "Twitter";
+        self.socialList?.append(social3);
+        
+        let social4 = SocialClass();
+        social4.socailUrl = "";
+        social4.socialName = "Linkedin";
+        self.socialList?.append(social4);
         
         let row1 = AddContactViewObject()
         row1.icon = "person-icon"
@@ -154,6 +178,25 @@ class ContactDetailsViewModel {
         }
         
         DispatchQueue.main.async {
+            
+            for data in self.socialList!
+            {
+                let addSocial = ContactSocial().newInstance()
+                addSocial.CS_CID = Defaults[.ContactID]!;
+                addSocial.CS_SocialType = data.socialName;
+                addSocial.CS_SocialUrl = data.socailUrl;
+                print(data.socailUrl);
+                addSocial.add();
+            }
+//            if self.socialList != nil{
+//                let data = self.socialList?[0];
+//                let addSocial = ContactSocial().newInstance()
+//                addSocial.CS_CID = Defaults[.ContactID]!;
+//                addSocial.CS_SocialType = (data?.socialName)!;
+//                addSocial.CS_SocialUrl = (data?.socailUrl)!;
+//                addSocial.add();
+//            }
+            
             if let addContactMod = self.addContactModel {
                 let addContact = ContactModel().newInstance()
                 addContact.C_Name = addContactMod.addContact_contactName
@@ -171,6 +214,8 @@ class ContactDetailsViewModel {
 //                    addContact.C_Address = location
 //                }
                 addContact.add()
+                
+                //ContactViewModel.insertDataContactSocialModel(id: Defaults[.ContactID]!, url: "");
                 
             }
         }
@@ -209,9 +254,15 @@ class AddContactModel {
 
 class LogsModel {
     
-    var log_date: Date?
+    var log_date: String = ""
     var log_task: String = ""
     var log_details: String = ""
     
+}
+
+class SocialClass{
+    //var id:UUID = "";
+    var socialName:String = "";
+    var socailUrl:String = "";
 }
 

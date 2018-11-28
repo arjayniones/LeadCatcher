@@ -38,6 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }
         }
         
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if !launchedBefore  {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            Defaults[.NeedOnboarding] = true
+        }
+        
         prepareAndExecute() {
             self.window?.rootViewController = BaseViewController()
         }
@@ -77,7 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         GMSServices.provideAPIKey("AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA")
         GMSPlacesClient.provideAPIKey("AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA")
         
-        fn()
+        if Defaults[.NeedOnboarding] == true {
+            self.window?.rootViewController = OnboardingInfoViewController()
+        } else {
+            fn()
+        }
         
         self.window?.makeKeyAndVisible()
     }

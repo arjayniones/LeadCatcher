@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import RealmSwift
 
 class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
@@ -156,7 +157,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         saveButton.setTitle("save".localized, for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
-        
+        saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
         saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
         
         saveButton.sizeToFit()
@@ -167,24 +168,25 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     @objc func save() {
         
-        viewModel.saveSchedule(completion: { val in
+        //self.viewModel.updateDetailToDo(id:(self.viewModel.addNoteModel?.addNote_ID)!);
+        view.endEditing(true)
+        self.viewModel.saveSchedule(completion: { val in
             if val {
-                //DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "add_task_success".localized, message: "clear_the_fields".localized, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
-                    alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
-                        self.viewModel.addNoteModel = AddNoteModel()
-                        self.tableView.reloadData()
-                    }))
-                    self.present(alert, animated: true, completion:nil);
-                //}
+                //
+                let alert = UIAlertController(title: "add_task_success".localized, message: "clear_the_fields".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                    self.viewModel.addNoteModel = AddNoteModel()
+                    self.tableView.reloadData()
+                }))
+                self.present(alert, animated: true, completion:nil);
                 
             } else {
                 let alert = UIAlertController.alertControllerWithTitle(title: "error".localized, message: "add_task_failed".localized)
                 self.present(alert, animated: true, completion: nil);
             }
         })
- 
+        
     }
     
     @objc func clear() {
@@ -414,30 +416,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
                 
-                for x in (self.viewModel.addNoteModel?.addNote_checkList)! {
-                    if x.textTag == String(index){
-                        x.title = val
-                    }
+                if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
+                    print("1 \(checkData)");
+                    checkData.title = val
+                    print("2 \(checkData)");
                 }
-                
-                var j:String? = "ff";
-                if var k = j{
-                    k = "abc"
-                    print(j!);
-                    print(k);
-                }
-                else
-                {
-                    j = "fx";
-                    print("j are nil");
-                }
-                
-                //print(self.viewModel.addNoteModel?.addNote_checkList[0].title);
-//                if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
-//                    print("1 \(checkData)");
-//                    checkData.title = val
-//                    print("2 \(checkData)");
-//                }
                 
                 
             }

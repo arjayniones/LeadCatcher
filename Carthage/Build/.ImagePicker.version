@@ -1,9 +1,18 @@
 {
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
   "commitish" : "3.1.0",
   "iOS" : [
     {
       "name" : "ImagePicker",
-      "hash" : "ae7d3ea26201f483c1b40429a15ec05053efeeb4b6878b525c7ee9e20bebd3b8"
+      "hash" : "af51a8b6303b98d85bfcdd09c59af36b01bcdc2dd13b787cc7d3d184ea2aa2a0"
     }
   ]
 }

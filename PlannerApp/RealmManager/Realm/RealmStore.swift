@@ -32,6 +32,7 @@ class RealmStore<T: Model> {
         }
     }
     
+    
     /**
      Get all object with object type
      
@@ -68,6 +69,13 @@ class RealmStore<T: Model> {
     func models(sortingKey:String,ascending:Bool) -> Results<T>? {
         
         let model = store.objects(T.self).sorted(byKeyPath: sortingKey, ascending: ascending)
+        self.model = model
+        return model
+    }
+    
+    func queryToDo(id:String) -> Results<T>?
+    {
+        let model = store.objects(T.self).filter("id = %@",id)
         self.model = model
         return model
     }
