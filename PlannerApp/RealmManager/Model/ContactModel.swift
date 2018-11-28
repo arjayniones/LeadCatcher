@@ -24,7 +24,7 @@ class ContactModel:Model{
     @objc dynamic var C_From:String = "";
     @objc dynamic var C_LastComm:String = "";
     @objc dynamic var C_ToFollow:String = "";
-    //let ContactHistorys = List<ContactHistory>();
+    //let ContactSocial = List<ContactSocial>();
     
     func newInstance() -> ContactModel {
         let contactInfo = ContactModel()
@@ -51,6 +51,23 @@ class ContactHistory:Model{
         contactHistory.deleted_at = nil;
         
         return contactHistory;
+    }
+    
+}
+
+class ContactSocial:Model{
+    @objc dynamic var CS_CID:String = ""; // customer uuid
+    @objc dynamic var CS_SocialType:String = ""; // social type like facebook, twitter
+    @objc dynamic var CS_SocialUrl:String = "";
+    
+    func newInstance() -> ContactSocial{
+        let contactSocial = ContactSocial();
+        contactSocial.id = uuid();
+        contactSocial.created_at = Date();
+        contactSocial.updated_at = nil;
+        contactSocial.deleted_at = nil;
+        
+        return contactSocial;
     }
     
 }

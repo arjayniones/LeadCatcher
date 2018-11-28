@@ -6,4 +6,5 @@ github "realm/realm-cocoa" ~> 3.11.2
 github "tristanhimmelman/ObjectMapper"
 github "radex/SwiftyUserDefaults" "4.0.0-alpha.1"
 github "Alamofire/Alamofire" ~> 4.7.3
+github "Ramotion/preview-transition"
 github "hyperoslo/ImagePicker"

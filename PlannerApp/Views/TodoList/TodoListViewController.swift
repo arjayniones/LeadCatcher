@@ -78,8 +78,10 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func updateViewConstraints() {
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
+
                 make.top.equalTo(view.safeArea.top)
                 make.left.right.equalTo(view)
+
                 make.bottom.equalTo(view).inset(50)
             }
             
@@ -94,7 +96,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         super.viewWillAppear(animated)
         
-        updateNavbarAppear()
+        //updateNavbarAppear()
     }
     
     override func didReceiveMemoryWarning() {
@@ -151,11 +153,11 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         }
         
-        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
-            self.openDetailsNoteForEditing(model: note)
-        }
+//        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
+//            self.openDetailsNoteForEditing(model: note)
+//        }
         
-        return [deleteAction, editAction]
+        return [deleteAction]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -179,6 +181,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         detailController.isControllerEditing = true
         
         let todoModel = AddNoteModel()
+        todoModel.addNote_ID = model.id
         todoModel.addNote_alertDateTime = model.addNote_alertDateTime
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
@@ -236,7 +239,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: "dashboard-task-icon")
+        cell.imageView?.image = UIImage(named: "tasklist-iconx2")
         cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
         cell.detailTextLabel?.textColor = .red
         return cell

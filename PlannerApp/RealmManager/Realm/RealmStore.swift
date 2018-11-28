@@ -24,12 +24,14 @@ class RealmStore<T: Model> {
      */
 
     func add(model: Object) {
-        
-        print("saved into: ",store.configuration.fileURL)
-        try! write {
-            store.add(model, update: true)
+        DispatchQueue.main.async {
+            print("saved into: ",self.store.configuration.fileURL)
+            try! self.write {
+                self.store.add(model, update: true)
+            }
         }
     }
+    
     
     /**
      Get all object with object type
@@ -67,6 +69,13 @@ class RealmStore<T: Model> {
     func models(sortingKey:String,ascending:Bool) -> Results<T>? {
         
         let model = store.objects(T.self).sorted(byKeyPath: sortingKey, ascending: ascending)
+        self.model = model
+        return model
+    }
+    
+    func queryToDo(id:String) -> Results<T>?
+    {
+        let model = store.objects(T.self).filter("id = %@",id)
         self.model = model
         return model
     }

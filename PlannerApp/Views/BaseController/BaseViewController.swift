@@ -14,9 +14,6 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
     enum ActiveTab: Equatable {
         case home,contact,addNote,todoList,addMore
     }
-    
-    fileprivate let bottomGradient = CAGradientLayer()
-    
     fileprivate var homeNavController: BaseNavigationController
     fileprivate var contactNavController: BaseNavigationController
     fileprivate var addNoteNavController: BaseNavigationController
@@ -34,6 +31,7 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
     var activeTab:ActiveTab = .home
     
     let tabView = UIStackView()
+    let bgTabView = UIView()
     
     required init() {
         homeNavController = HomeNavController()
@@ -57,8 +55,8 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         addChild(homeNavController)
         view.insertSubview(homeNavController.view, at: 0)
         
-        bottomGradient.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.5).cgColor]
-        tabView.layer.addSublayer(bottomGradient)
+        bgTabView.backgroundColor = .darkGray
+        self.view.addSubview(bgTabView)
         
         tabView.spacing = 0
         tabView.axis = .horizontal
@@ -121,8 +119,13 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         if !didSetupConstraints {
             
             tabView.snp.makeConstraints { make in
-                make.left.right.bottom.equalToSuperview().inset(0)
+                make.left.right.bottom.equalToSuperview().inset(UIEdgeInsets.zero)
                 make.height.equalTo(50)
+            }
+            
+            bgTabView.snp.makeConstraints { make in
+                make.center.equalTo(tabView)
+                make.size.equalTo(tabView)
             }
             
             didSetupConstraints = true

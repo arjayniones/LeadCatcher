@@ -57,8 +57,10 @@ protocol LargeNativeNavbar {
 extension LargeNativeNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
+
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .clear //CommonColor.naviBarBlackColor
+
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
@@ -74,6 +76,7 @@ extension LargeNativeNavbar where Self: UIViewController {
                 NSAttributedString.Key.foregroundColor: CommonColor.systemWhiteColor,
             ]
         }
+        
         
     }
 }
