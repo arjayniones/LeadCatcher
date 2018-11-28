@@ -58,7 +58,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         viewModel.getGreetingByTime()
 //        view = imageView
         
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
       
         view.addSubview(headerBGView)
         
@@ -85,13 +85,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         headerCountsView.addArrangedSubview(followUpsView)
         
         appointmentsView.backgroundColor = .orange
-        appointmentsView.labelCount.text = "\(viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay))"
         appointmentsView.labelBelow.text = "Appointment"
         appointmentsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(appointmentsView)
         
         birthdayView.backgroundColor = .red
-        birthdayView.labelCount.text = "\(viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay))"
         birthdayView.labelBelow.text = "Birthday"
         birthdayView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(birthdayView)
@@ -125,7 +123,6 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarStackView.axis = .vertical
         contentView.addSubview(calendarStackView)
         
-        
         calendarView.dataSource = self
         calendarView.delegate = self
         calendarView.calendarHeaderView.isUserInteractionEnabled = true
@@ -145,15 +142,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
         calendarStackView.addArrangedSubview(calendarView)
         
-        previousCalendarButton.frame = CGRect(x: 30, y: 12, width: 20, height: 20)
         previousCalendarButton.addTarget(self, action: #selector(previousCalendarButtonPressed), for: .touchUpInside)
         previousCalendarButton.setBackgroundImage(UIImage(named: "chevron-left"), for: .normal)
-        calendarView.calendarHeaderView.addSubview(previousCalendarButton)
+        calendarView.addSubview(previousCalendarButton)
         
-        nextCalendarButton.frame = CGRect(x: view.frame.width-50, y: 12, width: 20, height: 20)
         nextCalendarButton.addTarget(self, action: #selector(nextCalendarButtonPressed), for: .touchUpInside)
         nextCalendarButton.setBackgroundImage(UIImage(named: "chevron-right"), for: .normal)
-        calendarView.calendarHeaderView.addSubview(nextCalendarButton)
+        calendarView.addSubview(nextCalendarButton)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -197,6 +192,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
                     self?.calendarView.select(data.addNote_alertDateTime)
+                    
+                    self?.mapView.pin(data: data)
+                    
                     self?.clonedData.append(data)
                     if data.status == "unread" {
                         notificationImage.image = UIImage(named:"bell-icon-active")
@@ -205,6 +203,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 
                 let bday = self?.viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
                 let appCount = self?.viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
+                
+                if (appCount ?? 0) > 0 {
+                    let data = self?.viewModel.searchAppointmentByDayData(fromDate: Date().startOfDay,
+                                                               toDate: Date().endOfDay)
+                    
+                    self?.mapView.pointCamera(location: data?.addNote_location)
+                }
                 
                 self?.appointmentsView.labelCount.text = "\(appCount ?? 0)"
                 self?.birthdayView.labelCount.text = "\(bday ?? 0)"
@@ -236,6 +241,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                     self?.calendarView.select(self?.viewModel.todoListData?[$0].addNote_alertDateTime)
                     if let note = self?.viewModel.todoListData?[$0] {
                         self?.clonedData.append(note)
+                        self?.mapView.pin(data: note)
                     }
                 })
                 
@@ -260,14 +266,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         view.setNeedsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
+    
     @objc func previousCalendarButtonPressed() {
-        print("<<<<<<<")
         let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarView.currentPage)
         calendarView.setCurrentPage(previousMonth!, animated: true)
     }
     
     @objc func nextCalendarButtonPressed() {
-        print(">>>>>>")
         let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: calendarView.currentPage)
         calendarView.setCurrentPage(nextMonth!, animated: true)
     }
@@ -361,7 +366,8 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             }
             
             scrollView.snp.makeConstraints { (make) in
-                make.left.bottom.right.equalTo(view)
+                make.left.right.equalTo(view)
+                make.bottom.equalToSuperview().inset(0)
                 make.top.equalTo(headerCountsView.snp.bottom).offset(10)
             }
             
@@ -391,6 +397,18 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.height.equalTo(400)
             }
             
+            previousCalendarButton.snp.makeConstraints{ make in
+                make.top.equalToSuperview().inset(12)
+                make.left.equalToSuperview().inset(30)
+                make.size.equalTo(CGSize(width: 20, height: 20))
+            }
+            
+            nextCalendarButton.snp.makeConstraints{ make in
+                make.top.equalToSuperview().inset(12)
+                make.right.equalToSuperview().inset(30)
+                make.size.equalTo(CGSize(width: 20, height: 20))
+            }
+            
             calendarStackView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
                 make.top.equalTo(buttonMapSubView.snp.bottom).offset(0)
@@ -406,7 +424,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
                 make.top.equalTo(moreLessButton.snp.bottom).offset(5)
                 make.height.equalTo(300)
-                make.bottom.equalTo(contentView).offset(-20)
+                make.bottom.equalTo(contentView).offset(0)
             }
             
             buttonMapView.snp.makeConstraints{ make in
@@ -455,7 +473,6 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
 }
 extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        print("===============")
         calendar.snp.updateConstraints { (make) in
             make.height.equalTo(bounds.height)
         }
@@ -532,6 +549,12 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         self.moreLessButton.isHidden = (dataCount == 0 || dataCount < 3) ? true:false
         
         return viewModel.filteredDates.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let location = viewModel.filteredDates[indexPath.row].addNote_location {
+            self.mapView.pointCamera(location: location)
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
