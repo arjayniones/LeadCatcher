@@ -411,12 +411,20 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
+            cell.tag += cell.tag
             cell.iconImage2.isHidden = false
             //cell.title = "Insert checklist"
             cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
                 
-                if let checkData = self.viewModel.addNoteModel?.addNote_checkList.last {
+//                for x in (self.viewModel.addNoteModel?.addNote_checkList)! {
+//                    if x.textTag == String(index){
+//                        x.title = val
+//                    }
+//                }
+
+                print(self.viewModel.addNoteModel?.addNote_checkList.last);
+                if let checkData = self.viewModel.addNoteModel?.addNote_checkList[cell.tag]{
                     print("1 \(checkData)");
                     checkData.title = val
                     print("2 \(checkData)");

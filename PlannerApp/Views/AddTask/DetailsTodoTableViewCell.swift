@@ -94,7 +94,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         if let callback = subjectCallback2{
             if let text = textField.text
             {
-                callback(text,textField.tag);
+                callback(text,self.tag);
             }
         }
         
