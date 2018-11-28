@@ -285,26 +285,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topView.addSubview(tableView)
         
         
+        changeRightNavBarBtn()
         
-        if editSelected {
-        let saveButton = UIButton()
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
-        saveButton.sizeToFit()
-        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
-            editSelected = false
-        } else {
-        let editButton = UIButton()
-        editButton.setTitle("Edit", for: .normal)
-        editButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-        editButton.addTarget(self, action: #selector(edit), for: .touchUpInside)
-        editButton.sizeToFit()
-        editButton.frame = CGRect(x: 0, y: -2, width: editButton.frame.width, height: editButton.frame.height)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
-            editSelected = true
-        }
         
         if !isControllerEditing {
             let clearButton = UIButton()
@@ -329,6 +311,30 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    
+    func changeRightNavBarBtn(){
+        
+        
+        if editSelected {
+            let saveButton = UIButton()
+            saveButton.setTitle("Save", for: .normal)
+            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+            saveButton.sizeToFit()
+            saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+            
+        } else {
+            let editButton = UIButton()
+            editButton.setTitle("Edit", for: .normal)
+            editButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            editButton.addTarget(self, action: #selector(edit), for: .touchUpInside)
+            editButton.sizeToFit()
+            editButton.frame = CGRect(x: 0, y: -2, width: editButton.frame.width, height: editButton.frame.height)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
+            
+        }
     }
     
     //keyboard
@@ -363,6 +369,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     @objc func save() {
+        self.editSelected = false
+        changeRightNavBarBtn()
+        
 //        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
 //        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         dismissKeyboard();
@@ -384,12 +393,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     @objc func edit() {
         
-        if editSelected {
-            
-        }
-        else {
-            
-        }
+            self.editSelected = true
+            changeRightNavBarBtn()
+        
+       
     }
     
     @objc func clear() {

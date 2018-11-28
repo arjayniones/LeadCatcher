@@ -124,8 +124,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         view.addSubview(tableView)
         
         let addButton = UIButton()
-        let image = UIImage(named: "plus-grey-icon" )
-        addButton.setImage(image, for: .normal)
+//        let image = UIImage(named: "plus-grey-icon" )
+//        addButton.setImage(image, for: .normal)
+        addButton.setTitle("Add", for: .normal)
         addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
         
@@ -241,6 +242,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     @objc func addContact() {
         let contactsDetailsVC = ContactDetailsViewController()
         self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+        contactsDetailsVC.editSelected = true
     }
 
     override func didReceiveMemoryWarning() {

@@ -23,7 +23,7 @@ class ClusterMapViewController: ViewControllerProtocol {
         super.viewDidLoad()
         
         title = "Map"
-        self.view.backgroundColor = UIColor.white
+        self.view.addBackground()
         
         self.setupMap()
         
@@ -59,6 +59,8 @@ class ClusterMapViewController: ViewControllerProtocol {
                      lat: (x.addNote_location?.lat)!,
                      name: (x.addNote_location?.name)!)
         }
+        
+        updateViewConstraints()
     }
     
     override func updateViewConstraints() {
@@ -72,7 +74,10 @@ class ClusterMapViewController: ViewControllerProtocol {
             }
             
             mapView.snp.makeConstraints { make in
-                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
+                make.bottom.equalTo(view).inset(50)
             }
             
             didSetupConstraints = true

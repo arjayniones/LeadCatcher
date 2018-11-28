@@ -20,7 +20,7 @@ public enum TimeStatus {
     case afternoon
 }
 
-class HomeViewController: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppearance,UIScrollViewDelegate {
+class HomeViewController: ViewControllerProtocol,LargeNativeNavbar,FSCalendarDelegateAppearance,UIScrollViewDelegate {
     
     fileprivate let calendarView = FSCalendar()
 //    fileprivate weak var eventLabel: UILabel!
