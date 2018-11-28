@@ -25,7 +25,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     let buttonLeft = UIButton();
     let buttonRight = UIButton();
     
-    fileprivate let viewModel:DetailsTodoListViewModel
+    fileprivate var viewModel:DetailsTodoListViewModel
     
     var isControllerEditing:Bool = false
     
@@ -114,6 +114,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.updateConstraintsIfNeeded()
     }
     
+    func refreshData() {
+        viewModel = DetailsTodoListViewModel()
+    }
+    
     //keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
@@ -182,6 +186,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.addNoteModel = AddNoteModel()
+                    self.refreshData()
                     self.tableView.reloadData()
                 }))
                 self.present(alert, animated: true, completion:nil);
@@ -206,6 +211,8 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -366,13 +373,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         
-        if !isCellEditing
-        {
+        if !isCellEditing {
             cell.contentView.alpha = 0.5;
             cell.isUserInteractionEnabled = false;
         }
-        else
-        {
+        else {
             cell.contentView.alpha = 1.0;
             cell.isUserInteractionEnabled = true;
         }
@@ -415,14 +420,14 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         }
         
         if indexPath.section == 1 {
+            print(">>>>>><<<<<<<")
             cell.labelTitle.isEnabled = true
-            cell.labelTitle.tag = checkListStartCount;
+//            cell.labelTitle.tag = checkListStartCount;
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
-            cell.tag += cell.tag
+            cell.tag = indexPath.row
             cell.iconImage2.isHidden = false
-            //cell.title = "Insert checklist"
             cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
                 
@@ -433,13 +438,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 //                }
 
                 print(self.viewModel.addNoteModel?.addNote_checkList.last);
-                if let checkData = self.viewModel.addNoteModel?.addNote_checkList[cell.tag]{
+                if let checkData = self.viewModel.addNoteModel?.addNote_checkList[index]{
                     print("1 \(checkData)");
                     checkData.title = val
                     print("2 \(checkData)");
                 }
-                
-                
             }
         }
         
@@ -467,10 +470,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     
     func addCell(tableView: UITableView) {
         
-        let checkList = Checklist()
-        checkList.newInstance()
-        checkListStartCount += 1;
-        checkList.textTag = String(checkListStartCount);
+        let checkList = ChecklistTemp()
+//        checkListStartCount += 1;
+//        checkList.textTag = String(checkListStartCount);
         let indexBefore = viewModel.addNoteModel?.addNote_checkList.count ?? 0
         
         viewModel.addNoteModel?.addNote_checkList.append(checkList)
