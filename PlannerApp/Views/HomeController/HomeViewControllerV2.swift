@@ -47,6 +47,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     fileprivate let moreLessButton = RightIconButton()
     fileprivate let headerBGView = GradientView()
     
+    let previousCalendarButton = ActionButton()
+    let nextCalendarButton = ActionButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,22 +125,17 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarStackView.axis = .vertical
         contentView.addSubview(calendarStackView)
         
-        let previousCalendarButton = ActionButton()
-        previousCalendarButton.setBackgroundImage(UIImage(named: "chevron-left"), for: .normal)
-        
-        let nextCalendarButton = ActionButton()
-        nextCalendarButton.setBackgroundImage(UIImage(named: "chevron-right"), for: .normal)
-        
-        calendarView.calendarHeaderView.addSubview(previousCalendarButton)
-        calendarView.calendarHeaderView.addSubview(nextCalendarButton)
         
         calendarView.dataSource = self
         calendarView.delegate = self
+        calendarView.calendarHeaderView.isUserInteractionEnabled = true
+        calendarView.calendarHeaderView.configureAppearance()
         calendarView.allowsMultipleSelection = true
         calendarView.backgroundColor = .white
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
         calendarView.appearance.todayColor = .darkGray
         calendarView.appearance.selectionColor = UIColor(rgb:0x9ACD32)
+        calendarView.appearance.todaySelectionColor = UIColor(rgb:0x6B8E23)
         calendarView.calendarWeekdayView.backgroundColor = UIColor.clear
         calendarView.appearance.headerTitleFont = UIFont.ofSize(fontSize: 20, withType: .regular)
         calendarView.appearance.weekdayFont = UIFont.ofSize(fontSize: 15, withType: .regular)
@@ -146,6 +144,16 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarView.appearance.eventOffset = CGPoint(x: 0, y: -7)
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
         calendarStackView.addArrangedSubview(calendarView)
+        
+        previousCalendarButton.frame = CGRect(x: 30, y: 12, width: 20, height: 20)
+        previousCalendarButton.addTarget(self, action: #selector(previousCalendarButtonPressed), for: .touchUpInside)
+        previousCalendarButton.setBackgroundImage(UIImage(named: "chevron-left"), for: .normal)
+        calendarView.calendarHeaderView.addSubview(previousCalendarButton)
+        
+        nextCalendarButton.frame = CGRect(x: view.frame.width-50, y: 12, width: 20, height: 20)
+        nextCalendarButton.addTarget(self, action: #selector(nextCalendarButtonPressed), for: .touchUpInside)
+        nextCalendarButton.setBackgroundImage(UIImage(named: "chevron-right"), for: .normal)
+        calendarView.calendarHeaderView.addSubview(nextCalendarButton)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -251,6 +259,17 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         view.setNeedsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    @objc func previousCalendarButtonPressed() {
+        print("<<<<<<<")
+        let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarView.currentPage)
+        calendarView.setCurrentPage(previousMonth!, animated: true)
+    }
+    
+    @objc func nextCalendarButtonPressed() {
+        print(">>>>>>")
+        let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: calendarView.currentPage)
+        calendarView.setCurrentPage(nextMonth!, animated: true)
     }
     
     @objc func showMap() {
@@ -436,7 +455,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
 }
 extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        print(">>>>>> pumasok dito")
+        print("===============")
         calendar.snp.updateConstraints { (make) in
             make.height.equalTo(bounds.height)
         }

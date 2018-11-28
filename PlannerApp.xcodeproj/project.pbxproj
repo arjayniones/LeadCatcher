@@ -107,6 +107,7 @@
 		24AE1BF521ACD55F00D74186 /* CCZoomTransitionVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF121ACD55E00D74186 /* CCZoomTransitionVCExtension.swift */; };
 		24AE1BF621ACD55F00D74186 /* CCZoomTransitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF221ACD55F00D74186 /* CCZoomTransitioner.swift */; };
 		24AE1BF821ACF30D00D74186 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BF721ACF30D00D74186 /* SelfSizedTableView.swift */; };
+		24AE1BFE21AD3A5F00D74186 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AE1BFD21AD3A5F00D74186 /* CalendarView.swift */; };
 		24B186CB2154B8DF0028CE23 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */; };
 		24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D1B7FE216359AC001D519C /* FSCalendar.framework */; };
 		24D1B80521636816001D519C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D1B80421636816001D519C /* HomeViewModel.swift */; };
@@ -250,6 +251,7 @@
 		24AE1BF121ACD55E00D74186 /* CCZoomTransitionVCExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCZoomTransitionVCExtension.swift; sourceTree = "<group>"; };
 		24AE1BF221ACD55F00D74186 /* CCZoomTransitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCZoomTransitioner.swift; sourceTree = "<group>"; };
 		24AE1BF721ACF30D00D74186 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
+		24AE1BFD21AD3A5F00D74186 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		24B186CA2154B8DF0028CE23 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
 		24D1B7FE216359AC001D519C /* FSCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FSCalendar.framework; path = Carthage/Build/iOS/FSCalendar.framework; sourceTree = "<group>"; };
 		24D1B80421636816001D519C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 				24819DF521ABD108001487A1 /* GradientView.swift */,
 				24819DFB21ABD945001487A1 /* MapView.swift */,
 				24AE1BF721ACF30D00D74186 /* SelfSizedTableView.swift */,
+				24AE1BFD21AD3A5F00D74186 /* CalendarView.swift */,
 			);
 			name = CustomViews;
 			path = "New Group";
@@ -1071,6 +1074,7 @@
 				0C8DBA24216359A6009A1475 /* SummaryBarChart.swift in Sources */,
 				24D8B2C12149F57800EC7DBE /* ViewControllerProtocol.swift in Sources */,
 				D66DDB5321901FD5002077A2 /* CSVConstants.swift in Sources */,
+				24AE1BFE21AD3A5F00D74186 /* CalendarView.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				242717D821491150001792BD /* HomeViewController.swift in Sources */,
 				0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */,

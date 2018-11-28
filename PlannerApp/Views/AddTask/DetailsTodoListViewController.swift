@@ -25,7 +25,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     let buttonLeft = UIButton();
     let buttonRight = UIButton();
     
-    fileprivate let viewModel:DetailsTodoListViewModel
+    fileprivate var viewModel:DetailsTodoListViewModel
     
     var isControllerEditing:Bool = false
     
@@ -34,6 +34,8 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             viewModel.addNoteModel = setupModel
         }
     }
+    
+    fileprivate var checkListTag = -1
     
     required init() {
         viewModel = DetailsTodoListViewModel()
@@ -48,11 +50,14 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+         view.addBackground()
+
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         
-        view.backgroundColor = .white
+    
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
         
         tableView.delegate = self
@@ -109,6 +114,11 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    
+    func refreshData() {
+        viewModel = DetailsTodoListViewModel()
+        checkListTag = -1
     }
     
     //keyboard
@@ -177,6 +187,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.addNoteModel = AddNoteModel()
+                    self.refreshData()
                     self.tableView.reloadData()
                 }))
                 self.present(alert, animated: true, completion:nil);
@@ -201,6 +212,8 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -222,9 +235,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
-                //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
-                make.top.left.right.equalTo(view)
+
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
+
+                
             }
             
             bottomView.snp.makeConstraints { (make) in
@@ -250,6 +266,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 make.left.right.bottom.equalTo(self.bottomView).inset(0);
                 make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
                 make.height.equalTo(162);
+
             }
             
             
@@ -357,13 +374,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         
-        if !isCellEditing
-        {
+        if !isCellEditing {
             cell.contentView.alpha = 0.5;
             cell.isUserInteractionEnabled = false;
         }
-        else
-        {
+        else {
             cell.contentView.alpha = 1.0;
             cell.isUserInteractionEnabled = true;
         }
@@ -406,14 +421,15 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         }
         
         if indexPath.section == 1 {
+            print(">>>>>><<<<<<<")
             cell.labelTitle.isEnabled = true
-            cell.labelTitle.tag = checkListStartCount;
+//            cell.labelTitle.tag = checkListStartCount;
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
-            cell.tag += cell.tag
+            cell.tag = indexPath.row
             cell.iconImage2.isHidden = false
-            //cell.title = "Insert checklist"
+            print("@#!#@!#!@",checkListTag)
             cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
                 
@@ -424,13 +440,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
 //                }
 
                 print(self.viewModel.addNoteModel?.addNote_checkList.last);
-                if let checkData = self.viewModel.addNoteModel?.addNote_checkList[cell.tag]{
+                if let checkData = self.viewModel.addNoteModel?.addNote_checkList[index]{
                     print("1 \(checkData)");
                     checkData.title = val
                     print("2 \(checkData)");
                 }
-                
-                
             }
         }
         
@@ -458,10 +472,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     
     func addCell(tableView: UITableView) {
         
-        let checkList = Checklist()
-        checkList.newInstance()
-        checkListStartCount += 1;
-        checkList.textTag = String(checkListStartCount);
+        let checkList = ChecklistTemp()
+//        checkListStartCount += 1;
+//        checkList.textTag = String(checkListStartCount);
         let indexBefore = viewModel.addNoteModel?.addNote_checkList.count ?? 0
         
         viewModel.addNoteModel?.addNote_checkList.append(checkList)
@@ -558,3 +571,4 @@ extension DetailsTodoListViewController: MapViewControllerDelegate {
         }
     }
 }
+

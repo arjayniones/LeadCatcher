@@ -228,10 +228,15 @@ class DetailsTodoListViewModel {
             }
             
             for x in addNoteMod.addNote_checkList {
-                addNote.addNote_checklist.append(x)
+                let checkList = Checklist()
+                checkList.newInstance()
+                checkList.title = x.title
+                checkList.status = x.status
+                
+                addNote.addNote_checklist.append(checkList)
             }
             
-            addNote.add()
+            realmStore.add(model: addNote)
             
             return id
         } else {
@@ -305,7 +310,7 @@ class AddNoteModel {
     var addNote_taskType: String = ""
     var addNote_notes: String = ""
     var addNote_location:LocationModel?
-    var addNote_checkList:[Checklist] = []
+    var addNote_checkList:[ChecklistTemp] = []
 }
 
 
@@ -313,5 +318,10 @@ class NotificationMessage {
     var title: String = ""
     var subtitle: String = ""
     var body: String = ""
+}
+
+class ChecklistTemp {
+    var title: String = "";
+    var status: String = "";
 }
 
