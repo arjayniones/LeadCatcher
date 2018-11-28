@@ -26,14 +26,13 @@ class DashHeaderView: UIView {
         self.addSubview(sideIcon)
         
         labelCount.font = UIFont.ofSize(fontSize: 40, withType: .bold)
-        labelCount.text = "7"
+        labelCount.text = "0"
         labelCount.textAlignment = .center
         self.addSubview(labelCount)
         
-        labelBelow.font = UIFont.ofSize(fontSize: 20, withType: .regular)
+        labelBelow.font = UIFont.ofSize(fontSize: 15, withType: .regular)
         labelBelow.layer.cornerRadius = 10
         labelBelow.layer.masksToBounds = true
-        labelBelow.text = "Birthday"
         labelBelow.backgroundColor = .darkGray
         labelBelow.textAlignment = .center
         labelBelow.textColor = .white

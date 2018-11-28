@@ -9,9 +9,13 @@
 import UIKit
 
 class GradientView: UIView {
+    
+    var colors:[CGColor] = [UIColor.lightGray.cgColor,UIColor.white.cgColor]
+    
+    
+    
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()!
-        let colors = [UIColor(rgb: 0xf1f1f1).cgColor,UIColor(rgb: 0xf6f6f6).cgColor]
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let colorLocations: [CGFloat] = [0.0, 1.0]
         let gradient = CGGradient(colorsSpace: colorSpace,

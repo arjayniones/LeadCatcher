@@ -16,6 +16,8 @@ class ClusterMapViewController: ViewControllerProtocol {
     private var mapView:GMSMapView!
     private var locationManager = CLLocationManager()
     private let realmStore = RealmStore<AddNote>()
+    private let closeButton = ActionButton()
+    var isControllerPresented:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +34,17 @@ class ClusterMapViewController: ViewControllerProtocol {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         }
         
+        closeButton.setBackgroundImage(UIImage(named: "left-arrow-icon"), for: .normal)
+        closeButton.isHidden = !isControllerPresented
+        closeButton.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
+        view.addSubview(closeButton)
+        
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
+    }
+    
+    @objc func dismissController() {
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +64,12 @@ class ClusterMapViewController: ViewControllerProtocol {
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
+            
+            closeButton.snp.makeConstraints { make in
+                make.top.equalTo(view.safeArea.top).inset(20)
+                make.size.equalTo(CGSize(width: 40, height: 40))
+                make.left.equalToSuperview().inset(20)
+            }
             
             mapView.snp.makeConstraints { make in
                 make.edges.equalTo(view).inset(UIEdgeInsets.zero)
