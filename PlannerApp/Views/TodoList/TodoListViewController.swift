@@ -22,11 +22,11 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         super.viewDidLoad()
         
         title = "to_do_list".localized
-        
+         view.addBackground()
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
-        
+        searchController.searchBar.isTranslucent = true
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
@@ -78,8 +78,10 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func updateViewConstraints() {
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
-                //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
-                make.top.left.right.equalTo(view)
+
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
+
                 make.bottom.equalTo(view).inset(50)
             }
             

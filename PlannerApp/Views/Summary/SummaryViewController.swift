@@ -55,7 +55,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         super.viewDidLoad()
         
         title = "Summary"
-        view.backgroundColor = UIColor.gray
+        view.addBackground()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 110)
@@ -72,7 +72,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         let exportBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportCustomerData));
         navigationItem.rightBarButtonItem = exportBtn;
         
-        barChart.backgroundColor = UIColor.white
+        barChart.backgroundColor = .clear
         //barChart.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3)
         self.view.addSubview(collectionview)
         self.view.addSubview(barChart)

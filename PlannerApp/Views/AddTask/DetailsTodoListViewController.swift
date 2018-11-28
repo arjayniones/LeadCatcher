@@ -50,11 +50,14 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+         view.addBackground()
+
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         
-        view.backgroundColor = .white
+    
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
         
         tableView.delegate = self
@@ -232,9 +235,12 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
-                //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
-                make.top.left.right.equalTo(view)
+
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
+
+                
             }
             
             bottomView.snp.makeConstraints { (make) in
@@ -260,6 +266,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 make.left.right.bottom.equalTo(self.bottomView).inset(0);
                 make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
                 make.height.equalTo(162);
+
             }
             
             
@@ -564,3 +571,4 @@ extension DetailsTodoListViewController: MapViewControllerDelegate {
         }
     }
 }
+

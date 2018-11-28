@@ -22,6 +22,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         super.viewDidLoad()
         
         title = "Settings"
+         view.addBackground()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
@@ -44,7 +45,8 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         if !didSetupConstraints {
             
             tableView.snp.makeConstraints { make in
-                make.top.left.right.equalTo(view)
+                make.top.equalTo(view.safeArea.top)
+                make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
             }
             
