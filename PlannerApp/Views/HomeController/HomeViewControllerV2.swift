@@ -13,7 +13,7 @@ import CoreImage
 import SwiftyUserDefaults
 import UserNotifications
 
-class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppearance,UIScrollViewDelegate {
+class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAppearance {
     
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     fileprivate let viewModel = TodoListViewModel()
@@ -99,6 +99,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         headerCountsView.addArrangedSubview(birthdayView)
         
         scrollView.backgroundColor = .clear
+        scrollView.delegate = self
         view.addSubview(scrollView)
         
         contentView.backgroundColor = CommonColor.grayColor
@@ -353,6 +354,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                     make.top.equalTo(view).inset(70)
                 }
                 make.left.right.equalTo(view).inset(20)
+                make.height.equalTo(60)
             }
             
             headerCountsView.snp.makeConstraints {make in
@@ -584,22 +586,80 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        
-        if scrollView == self.scrollView {
-            if yOffset >= scrollView.contentSize.height - view.frame.height {
-                scrollView.isScrollEnabled = false
-                tableView.isScrollEnabled = true
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let yOffset = scrollView.contentOffset.y
+//
+//        if scrollView == self.scrollView {
+//            if yOffset >= scrollView.contentSize.height - view.frame.height {
+//                scrollView.isScrollEnabled = false
+//                tableView.isScrollEnabled = true
+//            }
+//        }
+//
+//        if scrollView == self.tableView {
+//            if yOffset <= 0 {
+//                self.scrollView.isScrollEnabled = true
+//                self.tableView.isScrollEnabled = false
+//            }
+//        }
+//    }
+}
+
+extension HomeViewControllerV2:UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView != tableView else {
+            return
+        }
+        if scrollView.contentOffset.y < 0 {
+            let headerHeight = self.headerView.frame.height + abs(scrollView.contentOffset.y)
+            
+            self.headerView.snp.updateConstraints{ make in
+                make.height.equalTo(headerHeight)
+            }
+            
+        } else if scrollView.contentOffset.y > 0 && self.headerView.frame.height >= 65 {
+            let headerHeight = self.headerView.frame.height - scrollView.contentOffset.y/100
+            
+            self.headerView.snp.updateConstraints{ make in
+                make.height.equalTo(headerHeight)
+            }
+            
+            if self.headerView.frame.height < 60 {
+                self.headerView.snp.updateConstraints{ make in
+                    make.height.equalTo(60)
+                }
             }
         }
-        
-        if scrollView == self.tableView {
-            if yOffset <= 0 {
-                self.scrollView.isScrollEnabled = true
-                self.tableView.isScrollEnabled = false
-            }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView != tableView else {
+            return
         }
+        
+        if self.headerView.frame.height > 150 {
+            animateHeader()
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView != tableView else {
+            return
+        }
+        
+        if self.headerView.frame.height > 150 {
+            animateHeader()
+        }
+    }
+    
+    func animateHeader() {
+        self.headerView.snp.updateConstraints{ make in
+            make.height.equalTo(60)
+        }
+        
+        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }
 
