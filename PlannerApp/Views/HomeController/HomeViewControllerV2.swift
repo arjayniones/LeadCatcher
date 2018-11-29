@@ -288,18 +288,14 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     }
     
     @objc func hideShowCalendar() {
-        
-        self.calendarView.isHidden = !self.calendarView.isHidden
-        self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
-        self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
-        
-//        let transitionOptions: UIView.AnimationOptions = self.calendarView.isHidden ? [.transitionCurlDown]:[.transitionCurlUp]
-//
-//        UIView.transition(with: calendarView, duration: 1.0, options:transitionOptions, animations: {
-//
-//        }, completion: { _ in
-//
-//        })
+        UIView.animate(withDuration: 0.4, animations: {
+            
+            self.calendarView.isHidden = !self.calendarView.isHidden
+            self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
+            self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
+            self.view.layoutIfNeeded()
+            
+        })
     }
     
     @objc func addMoreButtonPressed() {
