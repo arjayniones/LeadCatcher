@@ -610,6 +610,7 @@ extension HomeViewControllerV2:UIScrollViewDelegate {
         guard scrollView != tableView else {
             return
         }
+        
         if scrollView.contentOffset.y < 0 {
             let headerHeight = self.headerView.frame.height + abs(scrollView.contentOffset.y)
             
@@ -617,17 +618,18 @@ extension HomeViewControllerV2:UIScrollViewDelegate {
                 make.height.equalTo(headerHeight)
             }
             
-        } else if scrollView.contentOffset.y > 0 && self.headerView.frame.height >= 65 {
-            let headerHeight = self.headerView.frame.height - scrollView.contentOffset.y/100
+        } else if scrollView.contentOffset.y > 0 {
+            let headerHeight = self.headerView.frame.height - scrollView.contentOffset.y
             
-            self.headerView.snp.updateConstraints{ make in
-                make.height.equalTo(headerHeight)
-            }
-            
-            if self.headerView.frame.height < 60 {
+            guard headerHeight < 0 else {
                 self.headerView.snp.updateConstraints{ make in
                     make.height.equalTo(60)
                 }
+                return
+            }
+            
+            self.headerView.snp.updateConstraints{ make in
+                make.height.equalTo(headerHeight)
             }
         }
     }
@@ -637,7 +639,7 @@ extension HomeViewControllerV2:UIScrollViewDelegate {
             return
         }
         
-        if self.headerView.frame.height > 150 {
+        if self.headerView.frame.height > 60 {
             animateHeader()
         }
     }
@@ -647,7 +649,7 @@ extension HomeViewControllerV2:UIScrollViewDelegate {
             return
         }
         
-        if self.headerView.frame.height > 150 {
+        if self.headerView.frame.height > 60 {
             animateHeader()
         }
     }
