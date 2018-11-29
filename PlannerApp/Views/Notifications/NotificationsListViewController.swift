@@ -62,7 +62,13 @@ class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
     override func updateViewConstraints() {
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
-                make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                if #available(iOS 11.0, *) {
+                    make.top.equalTo(view.safeArea.top).inset(UIEdgeInsets.zero)
+                } else {
+                    make.top.equalTo(view).inset(70)
+                }
+                make.left.right.equalTo(view).inset(UIEdgeInsets.zero)
+                make.bottom.equalTo(view).inset(50)
             }
             
             didSetupConstraints = true

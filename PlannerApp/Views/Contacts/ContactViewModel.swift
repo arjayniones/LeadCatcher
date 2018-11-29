@@ -58,7 +58,8 @@ class ContactViewModel {
         data.C_Email = cEmail;
         data.C_From = cFrom;
         data.C_Address = cAddress;
-        data.add();
+        
+        realmStore.add(model: data)
         
         return data.id;
     }

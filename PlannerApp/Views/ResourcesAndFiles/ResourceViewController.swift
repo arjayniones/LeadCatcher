@@ -96,14 +96,15 @@ extension ResourceViewController:UIDocumentMenuDelegate,UIDocumentPickerDelegate
     }
     
     
-    public func documentMenu(_ documentMenu:UIDocumentMenuViewController, didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+    public func documentMenu(_ documentMenu:UIDocumentMenuViewController,
+                             didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+        
         documentPicker.delegate = self
         present(documentPicker, animated: true, completion: nil)
     }
     
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        print("view was cancelled")
         dismiss(animated: true, completion: nil)
     }
 }

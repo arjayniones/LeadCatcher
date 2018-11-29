@@ -127,11 +127,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         self.bottomView.isHidden = true;
     }
     
-    @objc func doneButtonClick()
-    {
-        //viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
-        //convertDateTimeToString(date: self.datePickerView.date);
-        //self.textView.text = convertDateToString();
+    @objc func doneButtonClick() {
+        viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
+//        convertDateTimeToString(date: self.datePickerView.date);
+//        self.textView.text = convertDateToString();
         self.bottomView.isHidden = true;
         self.tableView.reloadData();
     }
@@ -256,8 +255,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 make.top.equalTo(view.safeArea.top)
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
-
-                
             }
             
             bottomView.snp.makeConstraints { (make) in

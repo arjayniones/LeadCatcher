@@ -58,7 +58,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         viewModel.getGreetingByTime()
         view.backgroundColor = .clear
         
-        headerBGView.colors = [CommonColor.lightGrayColor.cgColor,UIColor.white.cgColor]
+        headerBGView.colors = [CommonColor.grayColor.cgColor,UIColor.white.cgColor]
         view.addSubview(headerBGView)
         
         headerView.axis = .vertical
@@ -129,11 +129,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         calendarView.dataSource = self
         calendarView.delegate = self
-        calendarView.calendarHeaderView.configureAppearance()
         calendarView.allowsMultipleSelection = true
         calendarView.backgroundColor = .white
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
         calendarView.appearance.todayColor = .darkGray
+        calendarView.appearance.separators = .interRows
         calendarView.appearance.selectionColor = UIColor(rgb:0x9ACD32)
         calendarView.appearance.todaySelectionColor = UIColor(rgb:0x6B8E23)
         calendarView.calendarWeekdayView.backgroundColor = UIColor.clear
@@ -194,8 +194,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             switch changes {
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
-                    self?.calendarView.select(data.addNote_alertDateTime)
-                    
+                    self?.calendarView.select(data.addNote_alertDateTime, scrollToDate: false)
                     self?.mapView.pin(data: data)
                     
                     self?.clonedData.append(data)
@@ -358,7 +357,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             
             headerCountsView.snp.makeConstraints {make in
                 make.top.equalTo(headerView.snp.bottom).offset(20)
-                make.height.equalTo(view.snp.height).multipliedBy(0.20)
+                make.height.equalTo(view.snp.width).multipliedBy(0.28)
                 make.left.right.equalTo(view).inset(20)
             }
             
