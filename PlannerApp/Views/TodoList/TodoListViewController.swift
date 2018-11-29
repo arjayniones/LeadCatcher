@@ -22,7 +22,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         super.viewDidLoad()
         
         title = "to_do_list".localized
-         view.addBackground()
+        view.backgroundColor = .clear
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized

@@ -46,7 +46,7 @@ class HomeViewController: ViewControllerProtocol,LargeNativeNavbar,FSCalendarDel
 //        self.blurredBGImage()
         self.getGreetingByTime()
         view = imageView
-        view.addBackground()
+        view.backgroundColor = .clear
         //let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         //print(paths[0]);
 

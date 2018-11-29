@@ -23,7 +23,7 @@ class ClusterMapViewController: ViewControllerProtocol {
         super.viewDidLoad()
         
         title = "Map"
-        self.view.addBackground()
+        self.view.backgroundColor = .clear
         
         self.setupMap()
         

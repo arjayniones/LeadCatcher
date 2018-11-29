@@ -71,11 +71,11 @@ class MapViewController: ViewControllerProtocol, LargeNativeNavbar {
         super.viewDidLoad()
         
         self.title = "Pick A Location"
-        self.view.addBackground()
+        self.view.backgroundColor = .clear
 
         self.setupMap()
         self.setupTextField()
-        view.addBackground()
+        
         self.view.addSubview(btnMyLocation)
         
         let doneButton = UIButton()

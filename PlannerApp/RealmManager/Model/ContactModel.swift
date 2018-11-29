@@ -24,6 +24,10 @@ class ContactModel:Model{
     @objc dynamic var C_From:String = "";
     @objc dynamic var C_LastComm:String = "";
     @objc dynamic var C_ToFollow:String = "";
+    @objc dynamic var C_Facebook:String = "";
+    @objc dynamic var C_Whatsapp:String = "";
+    @objc dynamic var C_Twitter:String = "";
+    @objc dynamic var C_Linkedin:String = "";
     //let ContactSocial = List<ContactSocial>();
     
     func newInstance() -> ContactModel {

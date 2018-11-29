@@ -49,7 +49,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
 
-         view.addBackground()
+         view.backgroundColor = .clear
 
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
