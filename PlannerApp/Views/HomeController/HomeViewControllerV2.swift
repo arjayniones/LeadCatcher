@@ -21,7 +21,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     fileprivate var clonedData: [AddNote] = []
     fileprivate let tableView = SelfSizedTableView()
     
-    fileprivate let imageView = UIImageView()
+//    fileprivate let imageView = UIImageView()
     fileprivate var context = CIContext(options: nil)
     fileprivate let scrollView = UIScrollView()
     fileprivate let contentView = UIView()
@@ -54,12 +54,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         super.viewDidLoad()
         
 //        imageView.isUserInteractionEnabled = true
-//        imageView.backgroundColor = .white
+//        imageView.image = UIImage(named: "contact-details-gradiant-bg")
         viewModel.getGreetingByTime()
-//        view = imageView
+        view.backgroundColor = .clear
         
-        view.backgroundColor = .white
-      
+        headerBGView.colors = [CommonColor.lightGrayColor.cgColor,UIColor.white.cgColor]
         view.addSubview(headerBGView)
         
         headerView.axis = .vertical
@@ -68,9 +67,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         view.addSubview(headerView)
         
         greetingsLabel.textColor = viewModel.fontColorByTime()
+        greetingsLabel.backgroundColor = .clear
         headerView.addArrangedSubview(greetingsLabel)
         
         appointmentLabel.textColor = viewModel.fontColorByTime()
+        appointmentLabel.backgroundColor = .clear
         appointmentLabel.font = UIFont.ofSize(fontSize: 17, withType: .regular)
         headerView.addArrangedSubview(appointmentLabel)
         
@@ -79,19 +80,20 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         headerCountsView.spacing = 5
         view.addSubview(headerCountsView)
         
-        followUpsView.backgroundColor = .blue
+        followUpsView.backgroundColor = CommonColor.purpleColor
+//        followUpsView.sideIcon.image = UIImage(named: "follow-up-icon")
         followUpsView.labelBelow.text = "Follow-Ups"
         followUpsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(followUpsView)
         
-        appointmentsView.backgroundColor = .orange
-        appointmentsView.labelCount.text = "\(viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay))"
+        appointmentsView.backgroundColor = CommonColor.turquoiseColor
+//        appointmentsView.sideIcon.image = UIImage(named: "sideIcon")
         appointmentsView.labelBelow.text = "Appointment"
         appointmentsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(appointmentsView)
         
-        birthdayView.backgroundColor = .red
-        birthdayView.labelCount.text = "\(viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay))"
+        birthdayView.backgroundColor = CommonColor.redColor
+//        birthdayView.sideIcon.image = UIImage(named: "sideIcon")
         birthdayView.labelBelow.text = "Birthday"
         birthdayView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(birthdayView)
@@ -99,7 +101,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         scrollView.backgroundColor = .clear
         view.addSubview(scrollView)
         
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = CommonColor.grayColor
         scrollView.addSubview(contentView)
         
         buttonMapSubView.backgroundColor = .white
@@ -125,10 +127,8 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarStackView.axis = .vertical
         contentView.addSubview(calendarStackView)
         
-        
         calendarView.dataSource = self
         calendarView.delegate = self
-        calendarView.calendarHeaderView.isUserInteractionEnabled = true
         calendarView.calendarHeaderView.configureAppearance()
         calendarView.allowsMultipleSelection = true
         calendarView.backgroundColor = .white
@@ -145,15 +145,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         calendarView.register(HomeCalendarCell.self, forCellReuseIdentifier: "cell")
         calendarStackView.addArrangedSubview(calendarView)
         
-        previousCalendarButton.frame = CGRect(x: 30, y: 12, width: 20, height: 20)
         previousCalendarButton.addTarget(self, action: #selector(previousCalendarButtonPressed), for: .touchUpInside)
         previousCalendarButton.setBackgroundImage(UIImage(named: "chevron-left"), for: .normal)
-        calendarView.calendarHeaderView.addSubview(previousCalendarButton)
+        calendarView.addSubview(previousCalendarButton)
         
-        nextCalendarButton.frame = CGRect(x: view.frame.width-50, y: 12, width: 20, height: 20)
         nextCalendarButton.addTarget(self, action: #selector(nextCalendarButtonPressed), for: .touchUpInside)
         nextCalendarButton.setBackgroundImage(UIImage(named: "chevron-right"), for: .normal)
-        calendarView.calendarHeaderView.addSubview(nextCalendarButton)
+        calendarView.addSubview(nextCalendarButton)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -197,6 +195,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
                     self?.calendarView.select(data.addNote_alertDateTime)
+                    
+                    self?.mapView.pin(data: data)
+                    
                     self?.clonedData.append(data)
                     if data.status == "unread" {
                         notificationImage.image = UIImage(named:"bell-icon-active")
@@ -205,6 +206,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 
                 let bday = self?.viewModel.searchBirthdayByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
                 let appCount = self?.viewModel.searchAppointmentByDay(fromDate: Date().startOfDay, toDate: Date().endOfDay)
+                
+                if (appCount ?? 0) > 0 {
+                    let data = self?.viewModel.searchAppointmentByDayData(fromDate: Date().startOfDay,
+                                                               toDate: Date().endOfDay)
+                    
+                    self?.mapView.pointCamera(location: data?.addNote_location)
+                }
                 
                 self?.appointmentsView.labelCount.text = "\(appCount ?? 0)"
                 self?.birthdayView.labelCount.text = "\(bday ?? 0)"
@@ -236,6 +244,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                     self?.calendarView.select(self?.viewModel.todoListData?[$0].addNote_alertDateTime)
                     if let note = self?.viewModel.todoListData?[$0] {
                         self?.clonedData.append(note)
+                        self?.mapView.pin(data: note)
                     }
                 })
                 
@@ -260,14 +269,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         view.setNeedsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
+    
     @objc func previousCalendarButtonPressed() {
-        print("<<<<<<<")
         let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarView.currentPage)
         calendarView.setCurrentPage(previousMonth!, animated: true)
     }
     
     @objc func nextCalendarButtonPressed() {
-        print(">>>>>>")
         let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: calendarView.currentPage)
         calendarView.setCurrentPage(nextMonth!, animated: true)
     }
@@ -305,32 +313,32 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     }
     
     
-    func blurredBGImage() {
-        
-        let hour = Calendar.current.component(.hour, from: Date())
-        
-        switch hour {
-        case 6..<12 : imageView.image = UIImage(named:"morning.jpg") ; viewModel.timeByString = .morning
-        case 12 : imageView.image = UIImage(named:"noon.jpg") ; viewModel.timeByString = .noon
-        case 13..<17 : imageView.image = UIImage(named:"afternoon.jpg") ; viewModel.timeByString = .afternoon
-        case 17..<22 : imageView.image = UIImage(named:"evening.jpeg") ; viewModel.timeByString = .evening
-        default: imageView.image = UIImage(named:"evening.jpeg") ; viewModel.timeByString = .evening
-        }
-        
-        let currentFilter = CIFilter(name: "CIGaussianBlur")
-        let beginImage = CIImage(image: imageView.image!)
-        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
-        currentFilter!.setValue(4, forKey: kCIInputRadiusKey)
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
-        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
-        
-        let output = cropFilter!.outputImage
-        let cgimg = context.createCGImage(output!, from: output!.extent)
-        let processedImage = UIImage(cgImage: cgimg!)
-        imageView.image = processedImage
-    }
+//    func blurredBGImage() {
+//
+//        let hour = Calendar.current.component(.hour, from: Date())
+//
+//        switch hour {
+//        case 6..<12 : imageView.image = UIImage(named:"morning.jpg") ; viewModel.timeByString = .morning
+//        case 12 : imageView.image = UIImage(named:"noon.jpg") ; viewModel.timeByString = .noon
+//        case 13..<17 : imageView.image = UIImage(named:"afternoon.jpg") ; viewModel.timeByString = .afternoon
+//        case 17..<22 : imageView.image = UIImage(named:"evening.jpeg") ; viewModel.timeByString = .evening
+//        default: imageView.image = UIImage(named:"evening.jpeg") ; viewModel.timeByString = .evening
+//        }
+//
+//        let currentFilter = CIFilter(name: "CIGaussianBlur")
+//        let beginImage = CIImage(image: imageView.image!)
+//        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
+//        currentFilter!.setValue(4, forKey: kCIInputRadiusKey)
+//
+//        let cropFilter = CIFilter(name: "CICrop")
+//        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
+//        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
+//
+//        let output = cropFilter!.outputImage
+//        let cgimg = context.createCGImage(output!, from: output!.extent)
+//        let processedImage = UIImage(cgImage: cgimg!)
+//        imageView.image = processedImage
+//    }
     
     deinit {
         viewModel.notificationToken?.invalidate()
@@ -343,14 +351,14 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 if #available(iOS 11.0, *) {
                     make.top.equalTo(view.safeArea.top).inset(5)
                 } else {
-                    make.top.equalTo(view).inset(5)
+                    make.top.equalTo(view).inset(70)
                 }
                 make.left.right.equalTo(view).inset(20)
             }
             
             headerCountsView.snp.makeConstraints {make in
                 make.top.equalTo(headerView.snp.bottom).offset(20)
-                make.height.equalTo(120)
+                make.height.equalTo(view.snp.height).multipliedBy(0.20)
                 make.left.right.equalTo(view).inset(20)
             }
             
@@ -361,7 +369,8 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             }
             
             scrollView.snp.makeConstraints { (make) in
-                make.left.bottom.right.equalTo(view)
+                make.left.right.equalTo(view)
+                make.bottom.equalToSuperview().inset(50)
                 make.top.equalTo(headerCountsView.snp.bottom).offset(10)
             }
             
@@ -391,6 +400,18 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 make.height.equalTo(400)
             }
             
+            previousCalendarButton.snp.makeConstraints{ make in
+                make.top.equalToSuperview().inset(12)
+                make.left.equalToSuperview().inset(30)
+                make.size.equalTo(CGSize(width: 20, height: 20))
+            }
+            
+            nextCalendarButton.snp.makeConstraints{ make in
+                make.top.equalToSuperview().inset(12)
+                make.right.equalToSuperview().inset(30)
+                make.size.equalTo(CGSize(width: 20, height: 20))
+            }
+            
             calendarStackView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
                 make.top.equalTo(buttonMapSubView.snp.bottom).offset(0)
@@ -405,8 +426,8 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             mapView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(contentView).inset(UIEdgeInsets.zero)
                 make.top.equalTo(moreLessButton.snp.bottom).offset(5)
-                make.height.equalTo(300)
-                make.bottom.equalTo(contentView).offset(-20)
+                make.bottom.equalTo(contentView).offset(0)
+                make.height.greaterThanOrEqualTo(300)
             }
             
             buttonMapView.snp.makeConstraints{ make in
@@ -455,7 +476,6 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
 }
 extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        print("===============")
         calendar.snp.updateConstraints { (make) in
             make.height.equalTo(bounds.height)
         }
@@ -534,6 +554,12 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         return viewModel.filteredDates.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let location = viewModel.filteredDates[indexPath.row].addNote_location {
+            self.mapView.pointCamera(location: location)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 999
     }
@@ -550,6 +576,7 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         cell.titleLabel.text = data.addNote_subject
         let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
         cell.leftImageView.image = UIImage(named: imageNamed)
+        cell.leftImageAppearance = data.addNote_taskType
         let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!))"
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(data.addNote_location?.name ?? "")"

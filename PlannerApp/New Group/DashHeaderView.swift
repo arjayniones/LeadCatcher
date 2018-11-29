@@ -10,7 +10,7 @@ import UIKit
 
 class DashHeaderView: UIView {
     
-    let sideIcon: UIImageView = UIImageView()
+//    let sideIcon: UIImageView = UIImageView()
     let labelCount = UILabel()
     let labelBelow = UILabel()
     var didSetupConstraints:Bool = false
@@ -21,12 +21,12 @@ class DashHeaderView: UIView {
         
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
+    
+//        self.addSubview(sideIcon)
         
-        self.sideIcon.backgroundColor = .white
-        self.addSubview(sideIcon)
-        
-        labelCount.font = UIFont.ofSize(fontSize: 40, withType: .bold)
+        labelCount.font = UIFont.ofSize(fontSize: 60, withType: .bold)
         labelCount.text = "0"
+        labelCount.textColor = .white
         labelCount.textAlignment = .center
         self.addSubview(labelCount)
         
@@ -45,13 +45,13 @@ class DashHeaderView: UIView {
     override func updateConstraints() {
         if !didSetupConstraints {
             
-            sideIcon.snp.makeConstraints{ make in
-                make.size.equalTo(self.snp.height).multipliedBy(0.25)
-                make.left.top.equalTo(self).inset(5)
-            }
+//            sideIcon.snp.makeConstraints{ make in
+//                make.size.equalTo(self.snp.height).multipliedBy(0.25)
+//                make.left.top.equalTo(self).inset(5)
+//            }
             
             labelCount.snp.makeConstraints{ make in
-                make.top.equalTo(sideIcon.snp.bottom).offset(5)
+                make.top.equalTo(self).inset(15)
                 make.left.right.equalTo(self).inset(5)
             }
             

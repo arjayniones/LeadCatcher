@@ -45,14 +45,31 @@ class MapView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func pin(long: CLLocationDegrees,lat:CLLocationDegrees,name:String) {
+    func pin(data:AddNote) {
+        
+        guard let location = data.addNote_location else {
+            return
+        }
+        
+        
+        
         let destinationMarker = GMSMarker()
         destinationMarker.appearAnimation = .pop
         destinationMarker.icon = UIImage(named: "map-pin-icon")
-        destinationMarker.title = name
-        destinationMarker.snippet = name
+        destinationMarker.title = data.addNote_subject
+        destinationMarker.snippet = location.name
         destinationMarker.map = mapView
-        destinationMarker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        destinationMarker.position = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
+    }
+    
+    func pointCamera(location:LocationModel?) {
+        guard location != nil else {
+            return
+        }
+        
+        let pos = GMSCameraPosition.camera(withLatitude:  location!.lat, longitude: location!.long,
+                                 zoom: 14)
+        mapView.camera = pos
     }
     
 }

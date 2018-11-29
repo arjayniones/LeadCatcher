@@ -6,14 +6,12 @@
 //  Copyright © 2018 SICMSB. All rights reserved.
 //
 
-import GoogleMaps
-import GooglePlaces
-import GooglePlacePicker
+import CoreLocation
 import UIKit
 
 class ClusterMapViewController: ViewControllerProtocol {
     
-    private var mapView:GMSMapView!
+    private var mapView = MapView()
     private var locationManager = CLLocationManager()
     private let realmStore = RealmStore<AddNote>()
     private let closeButton = ActionButton()
@@ -25,7 +23,7 @@ class ClusterMapViewController: ViewControllerProtocol {
         title = "Map"
         self.view.backgroundColor = .clear
         
-        self.setupMap()
+        view.addSubview(mapView)
         
         isAuthorizedtoGetUserLocation()
         
@@ -55,9 +53,11 @@ class ClusterMapViewController: ViewControllerProtocol {
         let data = realmStore.models()
         
         for x in data {
-            self.pin(long: (x.addNote_location?.long)!,
-                     lat: (x.addNote_location?.lat)!,
-                     name: (x.addNote_location?.name)!)
+            mapView.pin(data: x)
+        }
+        
+        if data.count > 0 {
+            mapView.pointCamera(location: data.first?.addNote_location)
         }
         
         updateViewConstraints()
@@ -90,27 +90,6 @@ class ClusterMapViewController: ViewControllerProtocol {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func setupMap() {
-        
-        let cameraPosition = GMSCameraPosition.camera(withLatitude:  3.048226, longitude: 101.68849909999994,
-                                                      zoom: 14)
-        mapView = GMSMapView.map(withFrame: .zero, camera: cameraPosition)
-        mapView.isMyLocationEnabled = true
-        view.addSubview(mapView)
-    }
-    
-    func pin(long: CLLocationDegrees,lat:CLLocationDegrees,name:String) {
-        
-        let destinationMarker = GMSMarker()
-        destinationMarker.appearAnimation = .pop
-        destinationMarker.icon = UIImage(named: "map-pin-icon")
-        destinationMarker.title = name
-        destinationMarker.snippet = name
-        destinationMarker.map = mapView
-        destinationMarker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
-    }
-    
 }
 
 extension ClusterMapViewController: CLLocationManagerDelegate {
