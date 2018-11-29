@@ -631,6 +631,9 @@ extension HomeViewControllerV2:UIScrollViewDelegate {
             self.headerView.snp.updateConstraints{ make in
                 make.height.equalTo(headerHeight)
             }
+            UIView.animate(withDuration: 0.4, animations: {
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
