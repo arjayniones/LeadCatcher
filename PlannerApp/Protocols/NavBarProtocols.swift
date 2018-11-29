@@ -15,8 +15,7 @@ protocol NoNavbar {
 extension NoNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
-         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
-        //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.isTranslucent = true
