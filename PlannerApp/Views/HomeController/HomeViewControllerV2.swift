@@ -351,7 +351,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 if #available(iOS 11.0, *) {
                     make.top.equalTo(view.safeArea.top).inset(5)
                 } else {
-                    make.top.equalTo(view).inset(70)
+                    make.top.equalTo(view).inset(60)
                 }
                 make.left.right.equalTo(view).inset(20)
                 make.height.equalTo(60)
@@ -619,11 +619,11 @@ extension HomeViewControllerV2:UIScrollViewDelegate {
             }
             
         } else if scrollView.contentOffset.y > 0 {
-            let headerHeight = self.headerView.frame.height - scrollView.contentOffset.y
+            let headerHeight = self.headerView.frame.height - (scrollView.contentOffset.y - 5)
             
-            guard headerHeight < 0 else {
+            guard headerHeight >= 0 else {
                 self.headerView.snp.updateConstraints{ make in
-                    make.height.equalTo(60)
+                    make.height.equalTo(0)
                 }
                 return
             }
