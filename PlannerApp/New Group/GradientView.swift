@@ -12,8 +12,6 @@ class GradientView: UIView {
     
     var colors:[CGColor] = [UIColor.lightGray.cgColor,UIColor.white.cgColor]
     
-    
-    
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()!
         let colorSpace = CGColorSpaceCreateDeviceRGB()

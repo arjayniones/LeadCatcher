@@ -15,8 +15,7 @@ protocol NoNavbar {
 extension NoNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
-         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
-        //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.isTranslucent = true
@@ -34,7 +33,7 @@ extension NativeNavbar where Self: UIViewController {
         navigationController?.navigationBar.barTintColor = .clear //CommonColor.naviBarBlackColor
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
@@ -63,7 +62,7 @@ extension LargeNativeNavbar where Self: UIViewController {
 
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg"), for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         

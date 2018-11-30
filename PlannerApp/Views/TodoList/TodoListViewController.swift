@@ -22,7 +22,8 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         super.viewDidLoad()
         
         title = "to_do_list".localized
-        view.addBackground()
+        //view.addBackground()
+        view.backgroundColor = .clear
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
@@ -200,6 +201,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         
         for x in model.addNote_checklist {
             let checklisttemp = ChecklistTemp()
+            checklisttemp.id = x.id
             checklisttemp.title = x.title
             checklisttemp.status = x.status
             checklist.append(checklisttemp)

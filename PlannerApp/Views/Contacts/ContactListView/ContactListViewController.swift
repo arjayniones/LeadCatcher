@@ -51,7 +51,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         searchController.searchBar.delegate = self
 
         title = "Contacts"
-        view.addBackground()
+        view.backgroundColor = .clear
         
         allButton.roundTop()
         allButton.setTitle("All", for: .normal)

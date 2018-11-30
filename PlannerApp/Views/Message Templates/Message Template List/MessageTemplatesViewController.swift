@@ -20,7 +20,7 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
         title = "Message Templates"
-        view.addBackground()
+       view.backgroundColor = .clear
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false

@@ -16,7 +16,6 @@ class HomeTableViewCell: UITableViewCell {
         let imV = UIImageView()
         imV.image = UIImage(named: "dashboard-task-icon")
         imV.layer.cornerRadius = 30
-        imV.backgroundColor = .red
         imV.layer.masksToBounds = true
         return imV
     }()
@@ -61,9 +60,23 @@ class HomeTableViewCell: UITableViewCell {
     
     let bgView = GradientView()
     
+    var leftImageAppearance: String = "" {
+        didSet{
+            switch leftImageAppearance.lowercased() {
+            case "customer birthday":
+                self.leftImageView.backgroundColor = CommonColor.redColor
+            case "appointment":
+                self.leftImageView.backgroundColor = CommonColor.turquoiseColor
+            default:
+                self.leftImageView.backgroundColor = CommonColor.purpleColor
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        bgView.colors = [CommonColor.lightGrayColor.cgColor,UIColor.white.cgColor]
         contentView.addSubview(bgView)
         selectionStyle = .none
         

@@ -55,7 +55,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         super.viewDidLoad()
         
         title = "Summary"
-        view.addBackground()
+        view.backgroundColor = .clear
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 110)

@@ -32,6 +32,7 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
     
     let tabView = UIStackView()
     let bgTabView = UIView()
+    var bgImageView:UIImageView!
     
     required init() {
         homeNavController = HomeNavController()
@@ -52,10 +53,15 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bgImageView = UIImageView(frame: view.bounds)
+        bgImageView.isUserInteractionEnabled = true
+        bgImageView.image = UIImage(named: "contact-details-gradiant-bg")
+        view = bgImageView
+        
         addChild(homeNavController)
         view.insertSubview(homeNavController.view, at: 0)
         
-        bgTabView.backgroundColor = .darkGray
+        bgTabView.backgroundColor = .clear
         self.view.addSubview(bgTabView)
         
         tabView.spacing = 0

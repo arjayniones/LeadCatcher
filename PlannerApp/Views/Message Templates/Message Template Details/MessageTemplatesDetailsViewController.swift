@@ -152,7 +152,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         super.viewDidLoad()
 
         title = "Message Templates"
-        view.addBackground()
+        view.backgroundColor = .clear
         
         view.addSubview(mainView)
         mainView.addSubview(titleLabel)

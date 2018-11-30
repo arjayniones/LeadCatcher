@@ -41,6 +41,10 @@ class TodoListViewModel {
         return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Appointment").count
     }
     
+    func searchAppointmentByDayData(fromDate:Date,toDate:Date) -> AddNote? {
+        return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Appointment").first ?? nil
+    }
+    
     func searchBirthdayByDay(fromDate:Date,toDate:Date) -> Int {
         return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Customer Birthday").count
     }

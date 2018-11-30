@@ -210,6 +210,11 @@ class ContactDetailsViewModel {
                 addContact.C_DateAdded = addContactMod.addContact_dateAdded
                 addContact.C_LastComm = addContactMod.addContact_lastComm
                 addContact.C_ToFollow = addContactMod.addContact_toFollow
+                addContact.C_Facebook = addContactMod.addContact_Facebook
+                addContact.C_Whatsapp = addContactMod.addContact_Whatsapp
+                addContact.C_Twitter = addContactMod.addContact_Twitter
+                addContact.C_Linkedin = addContactMod.addContact_Linkedin
+                
 //                if let location = addContactMod.addContact_address{
 //                    addContact.C_Address = location
 //                }
@@ -249,6 +254,11 @@ class AddContactModel {
     var addContact_dateAdded: Date?
     var addContact_lastComm: String = ""
     var addContact_toFollow: String = ""
+    var addContact_Facebook: String = ""
+    var addContact_Whatsapp: String = ""
+    var addContact_Twitter: String = ""
+    var addContact_Linkedin: String = ""
+    
     
 }
 

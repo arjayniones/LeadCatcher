@@ -18,7 +18,7 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         super.viewDidLoad()
         
         title = "Resources"
-        view.addBackground()
+        view.backgroundColor = .clear
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 110)
@@ -96,14 +96,15 @@ extension ResourceViewController:UIDocumentMenuDelegate,UIDocumentPickerDelegate
     }
     
     
-    public func documentMenu(_ documentMenu:UIDocumentMenuViewController, didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+    public func documentMenu(_ documentMenu:UIDocumentMenuViewController,
+                             didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+        
         documentPicker.delegate = self
         present(documentPicker, animated: true, completion: nil)
     }
     
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        print("view was cancelled")
         dismiss(animated: true, completion: nil)
     }
 }

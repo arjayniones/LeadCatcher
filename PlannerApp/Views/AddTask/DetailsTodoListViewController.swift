@@ -49,7 +49,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         super.viewDidLoad()
         
 
-         view.addBackground()
+         view.backgroundColor = .clear
 
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -129,11 +129,11 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         self.bottomView.isHidden = true;
     }
     
-    @objc func doneButtonClick()
-    {
+
+    @objc func doneButtonClick() {
         viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
-        //convertDateTimeToString(date: self.datePickerView.date);
-        //viewModel.addNoteModel?.addNote_alertDateTime  = convertDateTimeToString(date: self.datePickerView.date);
+//        convertDateTimeToString(date: self.datePickerView.date);
+//        self.textView.text = convertDateToString();
         self.bottomView.isHidden = true;
         self.tableView.reloadData();
     }
@@ -279,8 +279,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 make.top.equalTo(view.safeArea.top)
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
-
-                
             }
             
             bottomView.snp.makeConstraints { (make) in
@@ -445,7 +443,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.subjectCallback = { val in
-                    // todo here got bug
                     if !self.clearStatus {
                         self.viewModel.addNoteModel?.addNote_subject = val
                     }
@@ -458,16 +455,9 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                     self.addCell(tableView: tableView)
                 }
             }
-            else
-            {
-                cell.subjectCallback = { val in
-                    print(val);
-                }
-            }
         }
         
         if indexPath.section == 1 {
-            print(">>>>>><<<<<<<")
             cell.labelTitle.isEnabled = true
             cell.labelTitle.tag = indexPath.row+1; // used to diff section 0 or section 1, +1 bcos textfield inside section0 all is 0 so in this section tag must +1
             cell.nextIcon.isHidden = true
@@ -478,11 +468,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.title = "";
             cell.labelTitle.text = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
-
                 if let checkData = self.viewModel.addNoteModel?.addNote_checkList[index]{
-                    print("1 \(checkData)");
                     checkData.title = val
-                    print("2 \(checkData)");
                 }
             }
         }
@@ -512,8 +499,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func addCell(tableView: UITableView) {
         
         let checkList = ChecklistTemp()
-//        checkListStartCount += 1;
-//        checkList.textTag = String(checkListStartCount);
         let indexBefore = viewModel.addNoteModel?.addNote_checkList.count ?? 0
         
         viewModel.addNoteModel?.addNote_checkList.append(checkList)

@@ -24,14 +24,10 @@ class RealmStore<T: Model> {
      */
 
     func add(model: Object) {
-        DispatchQueue.main.async {
-            print("saved into: ",self.store.configuration.fileURL)
-            
-            try! self.write {
-                self.store.add(model, update: true)
-                
-            }
-            
+
+        print("saved into: ",self.store.configuration.fileURL)
+        try! self.write {
+            self.store.add(model, update: true)
         }
     }
     
