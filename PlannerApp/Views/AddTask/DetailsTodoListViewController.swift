@@ -413,7 +413,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
                 cell.subjectCallback = { val in
-                    // todo here got bug
                     if !self.clearStatus {
                         self.viewModel.addNoteModel?.addNote_subject = val
                     }
@@ -426,18 +425,10 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                     self.addCell(tableView: tableView)
                 }
             }
-            else
-            {
-                cell.subjectCallback = { val in
-                    print(val);
-                }
-            }
         }
         
         if indexPath.section == 1 {
-            print(">>>>>><<<<<<<")
             cell.labelTitle.isEnabled = true
-//            cell.labelTitle.tag = checkListStartCount;
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
@@ -446,17 +437,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
                 
-//                for x in (self.viewModel.addNoteModel?.addNote_checkList)! {
-//                    if x.textTag == String(index){
-//                        x.title = val
-//                    }
-//                }
-
-                print(self.viewModel.addNoteModel?.addNote_checkList.last);
                 if let checkData = self.viewModel.addNoteModel?.addNote_checkList[index]{
-                    print("1 \(checkData)");
                     checkData.title = val
-                    print("2 \(checkData)");
                 }
             }
         }
@@ -486,8 +468,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
     func addCell(tableView: UITableView) {
         
         let checkList = ChecklistTemp()
-//        checkListStartCount += 1;
-//        checkList.textTag = String(checkListStartCount);
         let indexBefore = viewModel.addNoteModel?.addNote_checkList.count ?? 0
         
         viewModel.addNoteModel?.addNote_checkList.append(checkList)

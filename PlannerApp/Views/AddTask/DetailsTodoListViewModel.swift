@@ -215,8 +215,16 @@ class DetailsTodoListViewModel {
         
         if let addNoteMod = self.addNoteModel {
             let addNote = AddNote()
+            var id:String
             
-            let id = addNote.newInstance()
+            if addNoteMod.addNote_ID == "" {
+                print("creating id>>>")
+                id = addNote.newInstance()
+            } else {
+                id = addNoteMod.addNote_ID
+                addNote.id = addNoteMod.addNote_ID
+            }
+            
             addNote.addNote_alertDateTime = addNoteMod.addNote_alertDateTime
             addNote.addNote_repeat = addNoteMod.addNote_repeat
             addNote.addNote_subject = addNoteMod.addNote_subject
@@ -229,7 +237,11 @@ class DetailsTodoListViewModel {
             
             for x in addNoteMod.addNote_checkList {
                 let checkList = Checklist()
-                checkList.newInstance()
+                if x.id == "" {
+                    print("creating id>>>")
+                    checkList.newInstance()
+                }
+                
                 checkList.title = x.title
                 checkList.status = x.status
                 
@@ -321,6 +333,7 @@ class NotificationMessage {
 }
 
 class ChecklistTemp {
+    var id: String = ""
     var title: String = "";
     var status: String = "";
 }

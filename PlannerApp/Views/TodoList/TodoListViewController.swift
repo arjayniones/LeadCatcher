@@ -197,6 +197,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         
         for x in model.addNote_checklist {
             let checklisttemp = ChecklistTemp()
+            checklisttemp.id = x.id
             checklisttemp.title = x.title
             checklisttemp.status = x.status
             checklist.append(checklisttemp)
