@@ -247,11 +247,9 @@ class DetailsTodoListViewModel {
     
     func updateDetailToDo(id:String)
     {
-        
         //var dd:Results<AddNote>
-        // realStore => uirealm
-        // realstore.model(...) return results => uiRealm.objects(Person.self) return results
-        //let realmStore = RealmStore<AddNote>() =>let dogs = uiRealm.objects(Dog.self);
+            // realmStore.store.objects(AddNote.self); => uiRealm.objects(Dog.self); return all results
+        // realStore.store => uirealm
         
         //if let dd = realmStore.queryToDo(id: id)?.first{
 //        if let dd = realmStore.queryToDo(id: id){
