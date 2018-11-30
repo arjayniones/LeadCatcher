@@ -89,11 +89,14 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        if let callback = subjectCallback2{
-            if let text = textField.text
-            {
-                callback(text,self.tag);
+        print(textField);
+        if textField.tag > 0
+        {
+            if let callback = subjectCallback2{
+                if let text = textField.text
+                {
+                    callback(text,self.tag);
+                }
             }
         }
         

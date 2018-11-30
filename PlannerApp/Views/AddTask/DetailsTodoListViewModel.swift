@@ -254,9 +254,36 @@ class DetailsTodoListViewModel {
         //let realmStore = RealmStore<AddNote>() =>let dogs = uiRealm.objects(Dog.self);
         
         //if let dd = realmStore.queryToDo(id: id)?.first{
-        if let dd = realmStore.queryToDo(id: id){
-            realmStore.delete(modelToDelete: dd.first, hard: true);
-//            RealmStore<AddNote>().delete(modelToDelete: dd, hard: true)
+//        if let dd = realmStore.queryToDo(id: id){
+//            realmStore.delete(modelToDelete: dd.first, hard: true);
+//
+////            RealmStore<AddNote>().delete(modelToDelete: dd, hard: true)
+//        }
+        realmStore.store.beginWrite();
+        let addNoteModel = realmStore.queryToDo(id: id)?.first;
+        if let data = self.addNoteModel
+        {
+            addNoteModel?.addNote_alertDateTime = data.addNote_alertDateTime;
+            addNoteModel?.addNote_customerId = data.addNote_customer?.id
+            addNoteModel?.addNote_location = data.addNote_location;
+            addNoteModel?.addNote_notes = data.addNote_notes;
+            addNoteModel?.addNote_repeat = data.addNote_repeat;
+            addNoteModel?.addNote_subject = data.addNote_subject;
+            addNoteModel?.addNote_taskType = data.addNote_taskType;
+            
+            for x in (addNoteModel?.addNote_checklist)!
+            {
+                realmStore.store.delete(x);
+            }
+            
+            for x in data.addNote_checkList {
+                let checkList = Checklist()
+                checkList.newInstance()
+                checkList.title = x.title
+                checkList.status = x.status
+                addNoteModel!.addNote_checklist.append(checkList)
+            }
+            try! realmStore.store.commitWrite()
         }
         
         

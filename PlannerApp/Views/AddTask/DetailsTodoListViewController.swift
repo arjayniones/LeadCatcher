@@ -199,15 +199,17 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         //self.viewModel.updateDetailToDo(id:(self.viewModel.addNoteModel?.addNote_ID)!);
         view.endEditing(true)
-        
+    
         if !isControllerEditing
         {
             saveData();
         }
         else
         {
+            
             self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
-            //self.dismiss(animated: false, completion: nil);
+            //self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
+            self.navigationController?.popViewController(animated: false);
             //saveData();
             
         }
@@ -242,6 +244,8 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             self.viewModel.addNoteModel = AddNoteModel()
             self.tableView.reloadData()
+            let indexPath = IndexPath(item: 0, section: 0)
+            self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false);
         }))
         
         self.present(controller, animated: true, completion: nil);
@@ -336,18 +340,21 @@ extension DetailsTodoListViewController:ContactListViewControllerDelegate {
 extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
-        
-        if data.title == "notes".localized {
-            self.openNoteController()
-        } else if data.alertOptions.count != 0 {
-            self.sheetPressed(data: data)
-        } else if data.title == "start_date_time".localized {
-            self.showDateTimePicker()
-        } else if data.title == "customer".localized {
-            self.openContactListViewController()
-        } else if data.title == "location".localized {
-            self.openMapView()
+        if indexPath.section == 0
+        {
+            if data.title == "notes".localized {
+                self.openNoteController()
+            } else if data.alertOptions.count != 0 {
+                self.sheetPressed(data: data)
+            } else if data.title == "start_date_time".localized {
+                self.showDateTimePicker()
+            } else if data.title == "customer".localized {
+                self.openContactListViewController()
+            } else if data.title == "location".localized {
+                self.openMapView()
+            }
         }
+        
     }
     
     func populateData(cell:DetailsTodoTableViewCell,index:IndexPath,data:AddTodoViewObject) {
@@ -424,6 +431,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if indexPath.section == 0 {
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
+            cell.labelTitle.tag = 0; //  used to diff section 0 or section 1
             cell.iconImage2.isHidden = true
             cell.iconImage.isHidden = false
             cell.addIcon.isHidden = true
@@ -461,12 +469,13 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if indexPath.section == 1 {
             print(">>>>>><<<<<<<")
             cell.labelTitle.isEnabled = true
-//            cell.labelTitle.tag = checkListStartCount;
+            cell.labelTitle.tag = indexPath.row+1; // used to diff section 0 or section 1, +1 bcos textfield inside section0 all is 0 so in this section tag must +1
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
             cell.tag = indexPath.row
             cell.iconImage2.isHidden = false
+            cell.title = "";
             cell.labelTitle.text = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
 
@@ -511,9 +520,8 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         
         let indexPath = IndexPath(item: indexBefore, section: 1)
         tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true);
     }
-    
-  
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
