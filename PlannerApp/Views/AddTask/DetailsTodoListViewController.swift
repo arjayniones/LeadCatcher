@@ -65,9 +65,11 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         view.addSubview(tableView)
         
         // for datepicker
-        bottomView.backgroundColor = UIColor.lightGray;
+        bottomView.backgroundColor = UIColor.white;
         buttonLeft.setTitle("Cancel", for: .normal);
         buttonRight.setTitle("Done", for: .normal);
+        buttonLeft.setTitleColor(self.view.tintColor, for: .normal);
+        buttonRight.setTitleColor(self.view.tintColor, for: .normal);
         datePickerView.datePickerMode = .dateAndTime;
         datePickerView.timeZone = NSTimeZone.local;
         buttonRight.addTarget(self, action: #selector(doneButtonClick), for: .touchUpInside);
@@ -126,6 +128,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         self.bottomView.isHidden = true;
     }
     
+
     @objc func doneButtonClick() {
         viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
 //        convertDateTimeToString(date: self.datePickerView.date);
@@ -195,6 +198,26 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         //self.viewModel.updateDetailToDo(id:(self.viewModel.addNoteModel?.addNote_ID)!);
         view.endEditing(true)
+    
+        if !isControllerEditing
+        {
+            saveData();
+        }
+        else
+        {
+            
+            self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
+            //self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
+            self.navigationController?.popViewController(animated: false);
+            //saveData();
+            
+        }
+        
+        
+    }
+    
+    @objc func saveData()
+    {
         self.viewModel.saveSchedule(completion: { val in
             if val {
                 //
@@ -212,7 +235,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
                 self.present(alert, animated: true, completion: nil);
             }
         })
-        
     }
     
     @objc func clear() {
@@ -221,6 +243,8 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             self.viewModel.addNoteModel = AddNoteModel()
             self.tableView.reloadData()
+            let indexPath = IndexPath(item: 0, section: 0)
+            self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false);
         }))
         
         self.present(controller, animated: true, completion: nil);
@@ -257,26 +281,28 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             }
             
             bottomView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalTo(self.view).inset(0);
+                make.left.right.equalTo(self.view).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
                 make.height.equalTo(210)
             }
             
             buttonLeft.snp.makeConstraints { (make) in
                 make.left.equalTo(0);
-                make.top.equalTo(self.bottomView).inset(5);
+                make.top.equalTo(self.bottomView).inset(10);
                 make.width.equalTo(70);
                 make.height.equalTo(36);
             }
             
             buttonRight.snp.makeConstraints { (make) in
                 make.right.equalTo(0);
-                make.top.equalTo(self.bottomView).inset(5);
+                make.top.equalTo(self.bottomView).inset(10);
                 make.width.equalTo(70);
                 make.height.equalTo(36);
             }
             
             datePickerView.snp.makeConstraints { (make) in
-                make.left.right.bottom.equalTo(self.bottomView).inset(0);
+                make.left.right.equalTo(self.bottomView).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
                 make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
                 make.height.equalTo(162);
 
@@ -311,18 +337,21 @@ extension DetailsTodoListViewController:ContactListViewControllerDelegate {
 extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
-        
-        if data.title == "notes".localized {
-            self.openNoteController()
-        } else if data.alertOptions.count != 0 {
-            self.sheetPressed(data: data)
-        } else if data.title == "start_date_time".localized {
-            self.showDateTimePicker()
-        } else if data.title == "customer".localized {
-            self.openContactListViewController()
-        } else if data.title == "location".localized {
-            self.openMapView()
+        if indexPath.section == 0
+        {
+            if data.title == "notes".localized {
+                self.openNoteController()
+            } else if data.alertOptions.count != 0 {
+                self.sheetPressed(data: data)
+            } else if data.title == "start_date_time".localized {
+                self.showDateTimePicker()
+            } else if data.title == "customer".localized {
+                self.openContactListViewController()
+            } else if data.title == "location".localized {
+                self.openMapView()
+            }
         }
+        
     }
     
     func populateData(cell:DetailsTodoTableViewCell,index:IndexPath,data:AddTodoViewObject) {
@@ -336,14 +365,14 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
                 break;
             case 2:
-                if viewmod.addNote_subject == ""
+                if viewmod.addNote_subject == "" // if addnote_subject is empty then set placeholder only
                 {
-                    print("data.title = " + data.title);
                     cell.title = data.title;
                 }
                 else
                 {
-                    print("viewmod = " + viewmod.addNote_subject);
+                    // else set placeholder and data
+                    cell.title = data.title;
                     cell.labelTitle.text = viewmod.addNote_subject;
                 }
                 //cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
@@ -399,6 +428,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if indexPath.section == 0 {
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
+            cell.labelTitle.tag = 0; //  used to diff section 0 or section 1
             cell.iconImage2.isHidden = true
             cell.iconImage.isHidden = false
             cell.addIcon.isHidden = true
@@ -428,14 +458,15 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         
         if indexPath.section == 1 {
             cell.labelTitle.isEnabled = true
+            cell.labelTitle.tag = indexPath.row+1; // used to diff section 0 or section 1, +1 bcos textfield inside section0 all is 0 so in this section tag must +1
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true
             cell.tag = indexPath.row
             cell.iconImage2.isHidden = false
-            cell.title = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
+            cell.title = "";
+            cell.labelTitle.text = self.viewModel.addNoteModel!.addNote_checkList[indexPath.row].title;
             cell.subjectCallback2 = { val, index in
-                
                 if let checkData = self.viewModel.addNoteModel?.addNote_checkList[index]{
                     checkData.title = val
                 }
@@ -473,14 +504,15 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         
         let indexPath = IndexPath(item: indexBefore, section: 1)
         tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true);
     }
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {
-    
+
     func sheetPressed(data:AddTodoViewObject){
         let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select".localized + " \(data.title)", preferredStyle: .actionSheet)
-        
+
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
                 if data.title == "alert".localized {
@@ -492,6 +524,14 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
             }
             actionSheet.addAction(action)
         }
+
+        actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
+
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func sheetPressed2(){
+        let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select", preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
         

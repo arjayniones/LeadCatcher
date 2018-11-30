@@ -124,6 +124,12 @@ class ContactViewModel {
         return realmStore.models(query:  "CH_CID = '\(id)'")!
     }
     
+    class func queryContactSocialTable( id:String)->Results<ContactSocial> {
+        // query particular contact info by id
+        let realmStore = RealmStore<ContactSocial>()
+        return realmStore.models(query:  "CS_CID = '\(id)'")!
+    }
+    
     class func insertDataContactHistoryModel(cID:String, cHistoryType:String)->Bool
     {
         let data = ContactHistory().newInstance();
