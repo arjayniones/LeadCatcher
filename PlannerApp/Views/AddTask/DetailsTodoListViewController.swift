@@ -46,10 +46,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(actionKeyboardDidShow(with:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(actionKeyboardWillHide(with:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-
          view.backgroundColor = .clear
 
         //NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -121,33 +117,8 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    // MARK: keyboard expand
-    @objc private func actionKeyboardDidShow(with notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: AnyObject],
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-            else { return }
-        
-        var contentInset = self.tableView.contentInset
-        contentInset.bottom += keyboardFrame.height
-        
-        self.tableView.contentInset = contentInset
-        self.tableView.scrollIndicatorInsets = contentInset
-    }
-    
-    @objc private func actionKeyboardWillHide(with notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: AnyObject],
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-            else { return }
-        
-        var contentInset = self.tableView.contentInset
-        contentInset.bottom -= keyboardFrame.height
-        
-        self.tableView.contentInset = contentInset
-        self.tableView.scrollIndicatorInsets = contentInset
+        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func refreshData() {

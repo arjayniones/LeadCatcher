@@ -45,6 +45,8 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
         labelTitle.textColor = .lightGray
         labelTitle.delegate = self
         labelTitle.isEnabled = false
+        labelTitle.autocorrectionType = .no;
+        
         contentView.addSubview(labelTitle)
         
         contentView.addSubview(nextIcon)

@@ -100,9 +100,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         super.viewDidLoad()
         
 
-
-//        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(actionKeyboardDidShow(with:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(actionKeyboardWillHide(with:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 //        
        
 
@@ -377,7 +379,33 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
     }
     
+    // MARK: keyboard expand
+    @objc private func actionKeyboardDidShow(with notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+            else { return }
+        
+        var contentInset = self.tableView.contentInset
+        contentInset.bottom += keyboardFrame.height
+        
+        self.tableView.contentInset = contentInset
+        self.tableView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func actionKeyboardWillHide(with notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+            else { return }
+        
+        var contentInset = self.tableView.contentInset
+        contentInset.bottom = keyboardFrame.height
+        
+        self.tableView.contentInset = contentInset
+        self.tableView.scrollIndicatorInsets = contentInset
+    }
+    
     //keyboard
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             let distanceBetweenTextfielAndKeyboard = self.view.frame.height - textFieldRealYPosition - keyboardSize.height
@@ -459,9 +487,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
-        NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        //NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+        //NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
     }
     
     override func viewDidAppear(_ animated: Bool) {

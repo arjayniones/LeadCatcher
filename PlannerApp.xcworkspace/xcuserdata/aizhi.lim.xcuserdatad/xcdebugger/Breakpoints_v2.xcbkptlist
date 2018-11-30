@@ -19,5 +19,69 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
+            timestampString = "565254885.599604"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
+            landmarkName = "keyboardWillShow(notification:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PlannerApp.ContactDetailsViewController.keyboardWillShow(notification: __C.NSNotification) -&gt; ()"
+                  moduleName = "PlannerApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aizhi.lim/Documents/swift/leadgeneratingapp/lead-management-app/PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
+                  timestampString = "565254885.78602"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "413"
+                  endingLineNumber = "413"
+                  offsetFromSymbolStart = "1807">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in PlannerApp.ContactDetailsViewController.keyboardWillShow(notification: __C.NSNotification) -&gt; ()"
+                  moduleName = "PlannerApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aizhi.lim/Documents/swift/leadgeneratingapp/lead-management-app/PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
+                  timestampString = "565254885.788344"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
+            timestampString = "565254885.5999351"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "textFieldDidBeginEditing(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
