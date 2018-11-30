@@ -66,11 +66,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         headerView.spacing = 10
         view.addSubview(headerView)
         
-        greetingsLabel.textColor = viewModel.fontColorByTime()
+        greetingsLabel.textColor = .white
         greetingsLabel.backgroundColor = .clear
         headerView.addArrangedSubview(greetingsLabel)
         
-        appointmentLabel.textColor = viewModel.fontColorByTime()
+        appointmentLabel.textColor = .white
         appointmentLabel.backgroundColor = .clear
         appointmentLabel.font = UIFont.ofSize(fontSize: 17, withType: .regular)
         headerView.addArrangedSubview(appointmentLabel)
@@ -117,6 +117,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         calendarLabelRightButton.setTitle("Calendar", for: .normal)
         calendarLabelRightButton.setTitleColor(.black, for: .normal)
+        calendarLabelRightButton.isSelected = false
         calendarLabelRightButton.setImage(UIImage(named: "switch-on-icon"), for: .normal)
         calendarLabelRightButton.setImage(UIImage(named: "switch-off-icon"), for: .selected)
         calendarLabelRightButton.addTarget(self, action: #selector(hideShowCalendar), for: .touchUpInside)
@@ -288,13 +289,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     }
     
     @objc func hideShowCalendar() {
-        UIView.animate(withDuration: 0.4, animations: {
-            
+        
+        self.calendarLabelRightButton.isSelected = !self.calendarLabelRightButton.isSelected
+        
+        UIView.animate(withDuration:  0.4, animations: {
             self.calendarView.isHidden = !self.calendarView.isHidden
-            self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
             self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
             self.view.layoutIfNeeded()
-            
         })
     }
     
@@ -514,9 +515,9 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
         _ = clonedData.map({
             if convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy") {
                 if $0.addNote_taskType.lowercased() == "customer birthday" {
-                    eventcolors.append(UIColor.red)
+                    eventcolors.append(CommonColor.redColor)
                 } else {
-                    eventcolors.append(UIColor.green)
+                    eventcolors.append(CommonColor.turquoiseColor)
                 }
             }
         })
@@ -569,9 +570,9 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
         
         let data = viewModel.filteredDates[indexPath.row]
-        
+    
         cell.titleLabel.text = data.addNote_subject
-        let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
+        let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
         cell.leftImageView.image = UIImage(named: imageNamed)
         cell.leftImageAppearance = data.addNote_taskType
         let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!))"

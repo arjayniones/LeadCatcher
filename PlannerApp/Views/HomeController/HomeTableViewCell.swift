@@ -14,7 +14,8 @@ class HomeTableViewCell: UITableViewCell {
     
     let leftImageView:UIImageView = {
         let imV = UIImageView()
-        imV.image = UIImage(named: "dashboard-task-icon")
+        imV.image = UIImage(named: "dashboard-task-icon2")
+        imV.contentMode = .center
         imV.layer.cornerRadius = 30
         imV.layer.masksToBounds = true
         return imV
@@ -32,28 +33,28 @@ class HomeTableViewCell: UITableViewCell {
     
     let titleLabel:UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = CommonColor.darkGrayColor
         label.font = UIFont.ofSize(fontSize: 18, withType: .bold)
         return label
     }()
     
     let descriptionLabel:UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = CommonColor.grayColor
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()
     
     let descriptionLabel2:UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = CommonColor.darkGrayColor
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()
     
     let descriptionLabel3:UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = CommonColor.darkGrayColor
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()
@@ -76,7 +77,7 @@ class HomeTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        bgView.colors = [CommonColor.lightGrayColor.cgColor,UIColor.white.cgColor]
+        bgView.colors = [UIColor.white.cgColor,CommonColor.lightGrayColor.cgColor]
         contentView.addSubview(bgView)
         selectionStyle = .none
         

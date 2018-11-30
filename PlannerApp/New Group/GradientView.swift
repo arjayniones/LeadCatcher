@@ -19,8 +19,8 @@ class GradientView: UIView {
         let gradient = CGGradient(colorsSpace: colorSpace,
                                   colors: colors as CFArray,
                                   locations: colorLocations)!
-        let startPoint = CGPoint(x: 0, y:0)
-        let endPoint = CGPoint(x: 0, y: bounds.height)
+        let startPoint = CGPoint(x: 0, y:bounds.height)
+        let endPoint = CGPoint(x: bounds.width, y: bounds.height)
         context.drawLinearGradient(gradient,
                                    start: startPoint,
                                    end: endPoint,
