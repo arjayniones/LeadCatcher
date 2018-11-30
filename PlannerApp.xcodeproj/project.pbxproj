@@ -43,6 +43,8 @@
 		0CBFA0E5215376110028750B /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0E4215376110028750B /* TodoListViewModel.swift */; };
 		0CBFA0F32158D2F60028750B /* AddContactViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */; };
 		0CC2CD37216D992900233A1E /* ArchivesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC2CD36216D992900233A1E /* ArchivesViewModel.swift */; };
+		240C858821B104B400509ABD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240C858621B104B300509ABD /* Fabric.framework */; };
+		240C858921B104B400509ABD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240C858721B104B400509ABD /* Crashlytics.framework */; };
 		24140A672148AF9B007687EB /* SecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5C2148AF9B007687EB /* SecurityViewController.swift */; };
 		24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5D2148AF9B007687EB /* SecurityViewModel.swift */; };
 		24140A6A2148AF9B007687EB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A5F2148AF9B007687EB /* SettingsViewModel.swift */; };
@@ -181,6 +183,8 @@
 		0CBFA0E4215376110028750B /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
 		0CBFA0F22158D2F60028750B /* AddContactViewObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewObject.swift; sourceTree = "<group>"; };
 		0CC2CD36216D992900233A1E /* ArchivesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesViewModel.swift; sourceTree = "<group>"; };
+		240C858621B104B300509ABD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		240C858721B104B400509ABD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		24140A5C2148AF9B007687EB /* SecurityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewController.swift; sourceTree = "<group>"; };
 		24140A5D2148AF9B007687EB /* SecurityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
 		24140A5F2148AF9B007687EB /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -293,12 +297,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				246714F621A7A41100518228 /* Alamofire.framework in Frameworks */,
+				240C858921B104B400509ABD /* Crashlytics.framework in Frameworks */,
 				246714F321A79D5700518228 /* RealmSwift.framework in Frameworks */,
 				246714F421A79D5700518228 /* Realm.framework in Frameworks */,
 				246714F021A7952300518228 /* SwiftyUserDefaults.framework in Frameworks */,
 				246714EE21A793EA00518228 /* ObjectMapper.framework in Frameworks */,
 				246714EC21A78D0900518228 /* SnapKit.framework in Frameworks */,
 				24701A44219A6BBE00028F43 /* PaperOnboarding.framework in Frameworks */,
+				240C858821B104B400509ABD /* Fabric.framework in Frameworks */,
 				2460FC4C2176E1CB00DBF03B /* Kingfisher.framework in Frameworks */,
 				2460FC4A2176CBA300DBF03B /* ImagePicker.framework in Frameworks */,
 				24D1B7FF216359AC001D519C /* FSCalendar.framework in Frameworks */,
@@ -818,6 +824,8 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				240C858721B104B400509ABD /* Crashlytics.framework */,
+				240C858621B104B300509ABD /* Fabric.framework */,
 				246714F521A7A41100518228 /* Alamofire.framework */,
 				246714F221A79D5700518228 /* Realm.framework */,
 				246714F121A79D5700518228 /* RealmSwift.framework */,
@@ -848,6 +856,7 @@
 				248B83762140B29D00119D9D /* Resources */,
 				3C56C0A9E28170B15171EA4E /* [CP] Copy Pods Resources */,
 				24D1B80121635A57001D519C /* ShellScript */,
+				240C858A21B1050E00509ABD /* Crashlytics Run Script */,
 			);
 			buildRules = (
 			);
@@ -928,6 +937,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		240C858A21B1050E00509ABD /* Crashlytics Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Crashlytics Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/Fabric.framework/run\" 859cb44d7e171dfdd9394a993cae92a1ed0d869b 3e494c903115808ffd283824f5fe18dac5b50dd7b210172092fd1a6f21cb415a\n";
+		};
 		24D1B80121635A57001D519C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1245,6 +1273,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -1270,6 +1299,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;

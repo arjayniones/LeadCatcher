@@ -14,7 +14,8 @@ import RealmSwift
 import GooglePlaces
 import CallKit
 import SwiftyUserDefaults
-
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
@@ -82,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         //AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA
         GMSServices.provideAPIKey("AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA")
         GMSPlacesClient.provideAPIKey("AIzaSyDDy1IxnyQcuuWPmqWx44TxxcxGsTWuVaA")
+        Fabric.with([Crashlytics.self])
         
         if Defaults[.NeedOnboarding] == true {
             self.window?.rootViewController = OnboardingInfoViewController()
