@@ -33,10 +33,6 @@ class SettingsViewModel {
     
 }
 
-
-
-
-
 struct SettingsLabels {
     let labelName:String?
     

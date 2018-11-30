@@ -15,7 +15,6 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     var textFieldRealYPosition: CGFloat = 0.0
     var selectedDate: Date = Date()
     var clearStatus:Bool = false;
-    var checkListStartCount:Int = 20;
     var isCellEditing:Bool = false;
     let tableView = UITableView()
     
@@ -475,8 +474,6 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         let indexPath = IndexPath(item: indexBefore, section: 1)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
-    
-  
 }
 
 extension DetailsTodoListViewController:UIActionSheetDelegate {

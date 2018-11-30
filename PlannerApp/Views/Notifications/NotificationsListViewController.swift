@@ -134,6 +134,7 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         detailController.isControllerEditing = true
         
         let todoModel = AddNoteModel()
+        todoModel.addNote_ID = model.id
         todoModel.addNote_alertDateTime = model.addNote_alertDateTime
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
@@ -142,10 +143,20 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
             todoModel.addNote_customer = customerModel
         }
         
-        
         todoModel.addNote_taskType = model.addNote_taskType
         todoModel.addNote_notes = model.addNote_notes
         todoModel.addNote_location = model.addNote_location
+        var checklist:[ChecklistTemp] = []
+        
+        for x in model.addNote_checklist {
+            let checklisttemp = ChecklistTemp()
+            checklisttemp.id = x.id
+            checklisttemp.title = x.title
+            checklisttemp.status = x.status
+            checklist.append(checklisttemp)
+        }
+        
+        todoModel.addNote_checkList = checklist
         
         detailController.setupModel = todoModel
         
