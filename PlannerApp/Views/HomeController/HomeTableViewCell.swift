@@ -14,7 +14,8 @@ class HomeTableViewCell: UITableViewCell {
     
     let leftImageView:UIImageView = {
         let imV = UIImageView()
-        imV.image = UIImage(named: "dashboard-task-icon")
+        imV.image = UIImage(named: "dashboard-task-icon2")
+        imV.contentMode = .center
         imV.layer.cornerRadius = 30
         imV.layer.masksToBounds = true
         return imV

@@ -66,11 +66,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         headerView.spacing = 10
         view.addSubview(headerView)
         
-        greetingsLabel.textColor = viewModel.fontColorByTime()
+        greetingsLabel.textColor = .white
         greetingsLabel.backgroundColor = .clear
         headerView.addArrangedSubview(greetingsLabel)
         
-        appointmentLabel.textColor = viewModel.fontColorByTime()
+        appointmentLabel.textColor = .white
         appointmentLabel.backgroundColor = .clear
         appointmentLabel.font = UIFont.ofSize(fontSize: 17, withType: .regular)
         headerView.addArrangedSubview(appointmentLabel)
@@ -288,14 +288,15 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     }
     
     @objc func hideShowCalendar() {
-        UIView.animate(withDuration: 0.4, animations: {
-            
+        
+        self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
+        UIView.animate(withDuration:  0.4, animations: {
             self.calendarView.isHidden = !self.calendarView.isHidden
-            self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
-            self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
             self.view.layoutIfNeeded()
-            
+        }, completion: { val in
+            self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
         })
+        
     }
     
     @objc func addMoreButtonPressed() {
@@ -569,9 +570,9 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
         
         let data = viewModel.filteredDates[indexPath.row]
-        
+    
         cell.titleLabel.text = data.addNote_subject
-        let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon":"dashboard-task-icon"
+        let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
         cell.leftImageView.image = UIImage(named: imageNamed)
         cell.leftImageAppearance = data.addNote_taskType
         let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!))"
