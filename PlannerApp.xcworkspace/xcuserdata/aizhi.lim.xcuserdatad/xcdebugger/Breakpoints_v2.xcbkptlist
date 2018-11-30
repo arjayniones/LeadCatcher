@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
-            timestampString = "565254885.599604"
+            timestampString = "565263195.403271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
             landmarkName = "keyboardWillShow(notification:)"
             landmarkType = "7">
             <Locations>
@@ -42,11 +42,11 @@
                   moduleName = "PlannerApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aizhi.lim/Documents/swift/leadgeneratingapp/lead-management-app/PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
-                  timestampString = "565254885.78602"
+                  timestampString = "565263195.6073999"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "413"
-                  endingLineNumber = "413"
+                  startingLineNumber = "384"
+                  endingLineNumber = "384"
                   offsetFromSymbolStart = "1807">
                </Location>
                <Location
@@ -57,11 +57,11 @@
                   moduleName = "PlannerApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aizhi.lim/Documents/swift/leadgeneratingapp/lead-management-app/PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
-                  timestampString = "565254885.788344"
+                  timestampString = "565263195.6095769"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "414"
-                  endingLineNumber = "414"
+                  startingLineNumber = "385"
+                  endingLineNumber = "385"
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PlannerApp/Views/Contacts/ContactListDetailsView/ContactDetailsViewController.swift"
-            timestampString = "565254885.5999351"
+            timestampString = "565263195.403339"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "textFieldDidBeginEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>

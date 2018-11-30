@@ -281,10 +281,10 @@ class DetailsTodoListViewModel {
             addNoteModel?.addNote_subject = data.addNote_subject;
             addNoteModel?.addNote_taskType = data.addNote_taskType;
             
-            for x in (addNoteModel?.addNote_checklist)!
-            {
-                realmStore.store.delete(x);
-            }
+            //for x in ()!
+            //{
+            realmStore.store.delete((addNoteModel?.addNote_checklist)!);
+            //}
             
             for x in data.addNote_checkList {
                 let checkList = Checklist()

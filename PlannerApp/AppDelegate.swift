@@ -14,7 +14,7 @@ import RealmSwift
 import GooglePlaces
 import CallKit
 import SwiftyUserDefaults
-
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var callObServer:CXCallObserver!;
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        IQKeyboardManager.shared.enable = true;
         callObServer = CXCallObserver();
         callObServer.setDelegate(self, queue: DispatchQueue.main);
         
