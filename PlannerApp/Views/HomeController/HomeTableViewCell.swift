@@ -77,7 +77,7 @@ class HomeTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        bgView.colors = [CommonColor.lightGrayColor.cgColor,UIColor.white.cgColor]
+        bgView.colors = [UIColor.white.cgColor,CommonColor.lightGrayColor.cgColor]
         contentView.addSubview(bgView)
         selectionStyle = .none
         
