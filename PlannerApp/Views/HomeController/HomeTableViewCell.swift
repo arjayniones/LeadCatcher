@@ -33,28 +33,28 @@ class HomeTableViewCell: UITableViewCell {
     
     let titleLabel:UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = CommonColor.darkGrayColor
         label.font = UIFont.ofSize(fontSize: 18, withType: .bold)
         return label
     }()
     
     let descriptionLabel:UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = CommonColor.grayColor
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()
     
     let descriptionLabel2:UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = CommonColor.darkGrayColor
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()
     
     let descriptionLabel3:UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = CommonColor.darkGrayColor
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()

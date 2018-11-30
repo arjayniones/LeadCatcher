@@ -117,6 +117,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         calendarLabelRightButton.setTitle("Calendar", for: .normal)
         calendarLabelRightButton.setTitleColor(.black, for: .normal)
+        calendarLabelRightButton.isSelected = false
         calendarLabelRightButton.setImage(UIImage(named: "switch-on-icon"), for: .normal)
         calendarLabelRightButton.setImage(UIImage(named: "switch-off-icon"), for: .selected)
         calendarLabelRightButton.addTarget(self, action: #selector(hideShowCalendar), for: .touchUpInside)
@@ -289,14 +290,13 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     
     @objc func hideShowCalendar() {
         
-        self.calendarLabelRightButton.isSelected = self.calendarView.isHidden
+        self.calendarLabelRightButton.isSelected = !self.calendarLabelRightButton.isSelected
+        self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
+        
         UIView.animate(withDuration:  0.4, animations: {
             self.calendarView.isHidden = !self.calendarView.isHidden
             self.view.layoutIfNeeded()
-        }, completion: { val in
-            self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
         })
-        
     }
     
     @objc func addMoreButtonPressed() {
@@ -515,9 +515,9 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
         _ = clonedData.map({
             if convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy") {
                 if $0.addNote_taskType.lowercased() == "customer birthday" {
-                    eventcolors.append(UIColor.red)
+                    eventcolors.append(CommonColor.redColor)
                 } else {
-                    eventcolors.append(UIColor.green)
+                    eventcolors.append(CommonColor.turquoiseColor)
                 }
             }
         })
