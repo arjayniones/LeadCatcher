@@ -291,10 +291,10 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     @objc func hideShowCalendar() {
         
         self.calendarLabelRightButton.isSelected = !self.calendarLabelRightButton.isSelected
-        self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
         
         UIView.animate(withDuration:  0.4, animations: {
             self.calendarView.isHidden = !self.calendarView.isHidden
+            self.calendarLabelLeftButton.isHidden = !self.calendarView.isHidden
             self.view.layoutIfNeeded()
         })
     }
