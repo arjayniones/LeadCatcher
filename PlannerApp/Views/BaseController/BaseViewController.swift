@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
+import Kingfisher
 
 class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate {
     
@@ -55,7 +56,16 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         
         bgImageView = UIImageView(frame: view.bounds)
         bgImageView.isUserInteractionEnabled = true
-        bgImageView.image = UIImage(named: "contact-details-gradiant-bg")
+        
+        ImageCache.default.retrieveImage(forKey: "background_image", options: nil) {
+            image, cacheType in
+            if let image = image {
+                self.bgImageView.image = image
+            } else {
+                self.bgImageView.image = UIImage(named: "contact-details-gradiant-bg")
+            }
+        }
+        
         view = bgImageView
         
         addChild(homeNavController)

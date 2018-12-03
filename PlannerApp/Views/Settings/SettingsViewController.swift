@@ -10,13 +10,15 @@
 import UIKit
 import SwiftyUserDefaults
 import Contacts
+import Kingfisher
 
 class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
     let settingsModel = SettingsViewModel()
     
-     let settingsLabels = SettingsViewModel.getSettingsLabels() // model with get settings label func
+    let settingsLabels = SettingsViewModel.getSettingsLabels() // model with get settings label func
     
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,8 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         tableView.estimatedRowHeight = 100
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
+        
+        imagePicker.delegate = self
         
         view.setNeedsUpdateConstraints()
     }
@@ -90,13 +94,14 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
         } else if indexPath.row == 2{
              self.getTheContact();
-           
         } else if indexPath.row == 3{
             let messageTempVC = MessageTemplatesViewController()
             self.navigationController?.pushViewController(messageTempVC, animated: true)
         } else if indexPath.row == 4{
             let resourcesVC = ResourceViewController()
             self.navigationController?.pushViewController(resourcesVC, animated: true)
+        } else if indexPath.row == 5 {
+            self.uploadImage()
         }
 
     }
@@ -167,5 +172,54 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
     }
 }
 
-
+extension SettingsViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
+    func uploadImage() {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+            self.openGallary()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func openCamera() {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            imagePicker.cameraCaptureMode = .photo
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.saveImage(image: pickedImage)
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func openGallary() {
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        imagePicker.allowsEditing = false
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func saveImage(image:UIImage) {
+        ImageCache.default.store(image, forKey: "background_image")
+    }
+}
  

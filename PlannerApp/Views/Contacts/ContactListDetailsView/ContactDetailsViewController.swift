@@ -117,7 +117,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         view.addSubview(topView)
         topView.backgroundColor = .clear
         
-        
         profileImageView.layer.cornerRadius = 45
         profileImageView.layer.borderColor = UIColor.black.cgColor
         profileImageView.layer.borderWidth = 2
@@ -207,8 +206,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         emailButton.backgroundColor = .white
         emailButton.layer.cornerRadius = 10
         emailButton.addTarget(self, action: #selector(actionEmail), for: .touchUpInside)
-        
-        
         
         buttonStackView.axis = .vertical
         buttonStackView.distribution = .fillEqually
@@ -308,10 +305,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         self.bottomView.addSubview(buttonRight);
         self.bottomView.isHidden = true;
         
-        
-        
         changeRightNavBarBtn()
-        
         
         if !isControllerEditing {
             let clearButton = UIButton()
@@ -388,7 +382,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             }
         }
     }
-    
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.4) {
@@ -1447,8 +1440,6 @@ extension ContactDetailsViewController: ImagePickerDelegate {
     func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 
 
