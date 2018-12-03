@@ -99,10 +99,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-
-//        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 //        
        
 
@@ -372,6 +370,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     //keyboard
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             let distanceBetweenTextfielAndKeyboard = self.view.frame.height - textFieldRealYPosition - keyboardSize.height
@@ -446,15 +445,16 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
-        NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
+        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        //NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+        //NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
     }
     
     override func viewDidAppear(_ animated: Bool) {

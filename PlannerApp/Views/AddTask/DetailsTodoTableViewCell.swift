@@ -55,6 +55,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         labelTitle.textColor = .lightGray
         labelTitle.delegate = self
         labelTitle.isEnabled = false
+        labelTitle.autocorrectionType = .no;
         iconImage2.isHidden = true
         
         stackView.axis = .horizontal
