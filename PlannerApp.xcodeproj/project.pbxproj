@@ -856,11 +856,8 @@
 				248B83762140B29D00119D9D /* Resources */,
 				3C56C0A9E28170B15171EA4E /* [CP] Copy Pods Resources */,
 				24D1B80121635A57001D519C /* ShellScript */,
-
 				F95DA382B4E84BBCF9479593 /* [CP] Embed Pods Frameworks */,
-
 				240C858A21B1050E00509ABD /* Crashlytics Run Script */,
-
 			);
 			buildRules = (
 			);
@@ -1291,7 +1288,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
+				DEVELOPMENT_TEAM = 798C6YELQF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1300,9 +1297,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = sampleapp;
+				PROVISIONING_PROFILE_SPECIFIER = PlannerApp;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1317,7 +1314,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4Y4J5JD5NJ;
+				DEVELOPMENT_TEAM = 798C6YELQF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1326,9 +1323,9 @@
 				INFOPLIST_FILE = PlannerApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thousandminds.ytsample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sicmsb.PlannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = sampleapp;
+				PROVISIONING_PROFILE_SPECIFIER = PlannerApp;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
