@@ -865,6 +865,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             //let data = viewModel.logDetails[indexPath.row]
             //cell.leftIcon = data.icon
 //             populateLogData(cell: cell, index: indexPath, data: data)
+            
             cell.leftIcon = "message-icon"
             
             cell.selectionStyle = .none
@@ -1108,7 +1109,11 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             cell.leftIcon = data.icon
             self.populateInfoData(cell: cell, index: indexPath, data:data)
             
-            cell.selectionStyle = .none
+            let customSelectionView = UIView();
+            customSelectionView.backgroundColor = UIColor.clear
+            cell.selectedBackgroundView = customSelectionView
+            
+            //cell.selectionStyle = .none
             
             if editSelected{
                 cell.isEditing = true
@@ -1201,7 +1206,6 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     self.viewModel.addContactModel?.addContact_email = val
                 }
             }
-            
             
             return cell
             

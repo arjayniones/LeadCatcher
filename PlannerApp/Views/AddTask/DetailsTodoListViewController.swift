@@ -430,6 +430,11 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         }
         
         if indexPath.section == 0 {
+            
+            let customSelectionView = UIView();
+            customSelectionView.backgroundColor = UIColor.clear
+            cell.selectedBackgroundView = customSelectionView
+            
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
             cell.labelTitle.tag = 0; //  used to diff section 0 or section 1
@@ -440,7 +445,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             cell.labelTitle.text = "";
             self.populateData(cell: cell, index: indexPath, data:data)
             
-            cell.selectionStyle = .none
+            //cell.selectionStyle = .none
             
             if data.title == "subject".localized {
                 cell.labelTitle.isEnabled = true
@@ -531,14 +536,6 @@ extension DetailsTodoListViewController:UIActionSheetDelegate {
 
         actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
 
-        self.present(actionSheet, animated: true, completion: nil)
-    }
-    
-    func sheetPressed2(){
-        let actionSheet = UIAlertController(title: "choose_options".localized, message: "please_select", preferredStyle: .actionSheet)
-        
-        actionSheet.addAction(UIAlertAction(title: "cancel".localized, style: .cancel))
-        
         self.present(actionSheet, animated: true, completion: nil)
     }
 }
