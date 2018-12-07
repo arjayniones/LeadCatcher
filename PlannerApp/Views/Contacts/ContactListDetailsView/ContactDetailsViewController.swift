@@ -813,6 +813,129 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 self.present(previewController, animated: true, completion: nil)
                 
                 break;
+            
+            case "social":
+                
+                let getUserFB: String? =  self.viewModel.addContactModel?.addContact_Facebook
+                let getUserWhatsapp: String? =  self.viewModel.addContactModel?.addContact_Whatsapp
+                let getUserTwitter: String? =  self.viewModel.addContactModel?.addContact_Twitter
+                let getUserLinkedin: String? =  self.viewModel.addContactModel?.addContact_Linkedin
+                
+                let FBAppLink = "fb://profile/\(getUserFB ?? "Check the username")"
+                let FBWebLink = "http://www.facebook.com/\(getUserFB ?? "Check the username")"
+                
+                let WhatsappAppLink = "whatsapp://send?phone=\( getUserWhatsapp ?? "Check the username")&text=Hello"
+                let WhatsappWebLink = "whatsapp://send?phone=\( getUserWhatsapp ?? "Check the username")&text=Hello"
+                
+                let TwitterAppLink = "twitter://user?screen_name=\(getUserTwitter ?? "Check the username")"
+                let TwitterWebLink = "https://twitter.com/\(getUserTwitter ?? "Check the username")"
+               
+                let LinkedInAppLink = "linkedin://profile/\(getUserLinkedin ?? "Check the username")" 
+                let LinkedInWebLink = "https://www.linkedin.com/in/\(getUserLinkedin ?? "Check the username")/"
+             
+            
+//
+//                UIApplication.tryURL(urls: [
+//                    FBAppLink, // App
+//                    FBWebLink // Website if app fails
+//                    ])
+                
+                if indexPath.row == 0 { //facebook selected
+                    
+                    let appURL = NSURL(string: FBAppLink)!
+                    let webURL = NSURL(string: FBWebLink)!
+                    
+                    if UIApplication.shared.canOpenURL(appURL as URL) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                            
+                         
+                        } else {
+                            UIApplication.shared.openURL(appURL as URL)
+                        }
+                    } else {
+                        //redirect to safari because the user doesn't have Instagram
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                        } else {
+                            UIApplication.shared.openURL(webURL as URL)
+                        }
+                    }
+                    
+                } else if indexPath.row == 1 { //whatsapp selected
+                    
+                    let appURL = NSURL(string: WhatsappAppLink)!
+                    let webURL = NSURL(string: WhatsappWebLink)!
+                    
+                    if UIApplication.shared.canOpenURL(appURL as URL) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                            
+                            
+                        } else {
+                            UIApplication.shared.openURL(appURL as URL)
+                        }
+                    } else {
+                        //redirect to safari because the user doesn't have Instagram
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                        } else {
+                            UIApplication.shared.openURL(webURL as URL)
+                        }
+                    }
+                    
+                } else if indexPath.row == 2 { //twitter selected
+                    
+                    let appURL = NSURL(string: TwitterAppLink)!
+                    let webURL = NSURL(string: TwitterWebLink)!
+                    
+                    if UIApplication.shared.canOpenURL(appURL as URL) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                            
+                            
+                        } else {
+                            UIApplication.shared.openURL(appURL as URL)
+                        }
+                    } else {
+                        //redirect to safari because the user doesn't have Instagram
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                        } else {
+                            UIApplication.shared.openURL(webURL as URL)
+                        }
+                    }
+                    
+                } else if indexPath.row == 3 { //linkedin selected
+                    
+                    let appURL = NSURL(string: LinkedInAppLink)!
+                    let webURL = NSURL(string: LinkedInWebLink)!
+                    
+                    if UIApplication.shared.canOpenURL(appURL as URL) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                            
+                            
+                        } else {
+                            UIApplication.shared.openURL(appURL as URL)
+                        }
+                    } else {
+                        //redirect to safari because the user doesn't have Instagram
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                        } else {
+                            UIApplication.shared.openURL(webURL as URL)
+                        }
+                    }
+                    
+                } else {
+                    
+                    print("Nothing")
+                    
+                }
+            
+                break;
+            
             default:
                 print("select nothing");
             
@@ -917,10 +1040,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 socialUrl = resultSocialList[indexPath.row].CS_SocialUrl;
             }
             
-            if editSelected {
-                    cell.isEditing = true
+            
+                    cell.isEditing = false
                     if indexPath.row == 0 {
-                        cell.labelTitle.isEnabled = true
+                        cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "facebook-icon"
                         cell.title = "facebook"
@@ -931,7 +1054,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         //cell.labelTitle.text = "Facebook:"
                         
                     } else if indexPath.row == 1 {
-                        cell.labelTitle.isEnabled = true
+                        cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "whatsapp-icon"
                         cell.title = "whatsapp"
@@ -942,7 +1065,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         
                        
                     } else if indexPath.row == 2 {
-                        cell.labelTitle.isEnabled = true
+                        cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "twitter-icon"
                         cell.title = "twitter";
@@ -954,7 +1077,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 
                         
                     } else if indexPath.row == 3 {
-                        cell.labelTitle.isEnabled = true
+                        cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "linkedin-icon"
                         cell.title = "linkedin";
@@ -965,50 +1088,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         
                         
                     }
-            }else {
-                 cell.isEditing = false
-                if indexPath.row == 0 {
-                    cell.labelTitle.isEnabled = false
-                    cell.nextIcon.isHidden = true
-                    cell.leftIcon = "facebook-icon"
-                    cell.textFieldsCallback = { val in
-                        self.viewModel.addContactModel?.addContact_Facebook = val
-                        //cell.labelTitle.text = "Facebook: \(self.viewModel.addContactModel?.addContact_Facebook ?? "") "
-                    }
-                    
-                } else if indexPath.row == 1 {
-                    cell.labelTitle.isEnabled = false
-                    cell.nextIcon.isHidden = true
-                    cell.leftIcon = "whatsapp-icon"
-                    cell.textFieldsCallback = { val in
-                        self.viewModel.addContactModel?.addContact_Whatsapp = val
-                        //cell.labelTitle.text = "Whatsapp: \(self.viewModel.addContactModel?.addContact_Whatsapp ?? "") "
-                    }
-                    
-                  
-                } else if indexPath.row == 2 {
-                    cell.labelTitle.isEnabled = false
-                    cell.nextIcon.isHidden = true
-                    cell.leftIcon = "twitter-icon"
-                    cell.textFieldsCallback = { val in
-                        self.viewModel.addContactModel?.addContact_Twitter = val
-                        //cell.labelTitle.text = "Twitter: \(self.viewModel.addContactModel?.addContact_Twitter ?? "")"
-                    }
-                    
-                  
-                    
-                } else if indexPath.row == 3 {
-                    cell.labelTitle.isEnabled = true
-                    cell.nextIcon.isHidden = true
-                    cell.leftIcon = "linkedin-icon"
-                    cell.textFieldsCallback = { val in
-                        self.viewModel.addContactModel?.addContact_Linkedin = val
-                        //cell.labelTitle.text = "Linkedin: \(self.viewModel.addContactModel?.addContact_Linkedin ?? "")"
-                    }
-                    
-                  
-                }
-            }
+        
             
             
             return cell
@@ -1064,6 +1144,30 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_email = val
                     }
+                }  else if indexPath.row == 8 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Facebook = val
+                    }
+                }  else if indexPath.row == 9 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Whatsapp = val
+                    }
+                }  else if indexPath.row == 10 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Twitter = val
+                    }
+                }  else if indexPath.row == 11 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Linkedin = val
+                    }
                 } else
                 {
                     cell.labelTitle.isEnabled = false;
@@ -1095,6 +1199,34 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_email = val
                     }
+                } else if indexPath.row == 8 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Facebook = val
+                    }
+                }  else if indexPath.row == 9 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Whatsapp = val
+                    }
+                }  else if indexPath.row == 10 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Twitter = val
+                    }
+                }  else if indexPath.row == 11 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Linkedin = val
+                    }
+                } else {
+                    
+                    cell.labelTitle.isEnabled = false;
+                    cell.nextIcon.isHidden = false;
                 }
             }
             
@@ -1104,33 +1236,122 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
+            cell.labelTitle.text = "";
             self.populateInfoData(cell: cell, index: indexPath, data:data)
             
-            cell.selectionStyle = .none
+            let customSelectionView = UIView();
+            customSelectionView.backgroundColor = UIColor.clear
+            cell.selectedBackgroundView = customSelectionView
             
-            if indexPath.row == 0 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_contactName = val
+            if editSelected{
+                cell.isEditing = true
+                if indexPath.row == 0 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_contactName = val
+                    }
+                } else if indexPath.row == 2 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_address = val
+                    }
+                } else if indexPath.row == 3 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_phoneNum = val
+                    }
+                } else if indexPath.row == 4 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_email = val
+                    }
+                }  else if indexPath.row == 8 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Facebook = val
+                    }
+                }  else if indexPath.row == 9 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Whatsapp = val
+                    }
+                }  else if indexPath.row == 10 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Twitter = val
+                    }
+                }  else if indexPath.row == 11 {
+                    cell.labelTitle.isEnabled = true
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Linkedin = val
+                    }
+                } else
+                {
+                    cell.labelTitle.isEnabled = false;
+                    cell.nextIcon.isHidden = false;
                 }
-            } else if indexPath.row == 2 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_address = val
-                }
-            } else if indexPath.row == 3 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_phoneNum = val
-                }
-            } else if indexPath.row == 4 {
-                cell.labelTitle.isEnabled = true
-                cell.nextIcon.isHidden = true
-                cell.textFieldsCallback = { val in
-                    self.viewModel.addContactModel?.addContact_email = val
+            } else {
+                cell.isEditing = false
+                if indexPath.row == 0 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_contactName = val
+                    }
+                } else if indexPath.row == 2 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_address = val
+                    }
+                } else if indexPath.row == 3 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_phoneNum = val
+                    }
+                } else if indexPath.row == 4 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_email = val
+                    }
+                } else if indexPath.row == 8 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Facebook = val
+                    }
+                }  else if indexPath.row == 9 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Whatsapp = val
+                    }
+                }  else if indexPath.row == 10 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Twitter = val
+                    }
+                }  else if indexPath.row == 11 {
+                    cell.labelTitle.isEnabled = false
+                    cell.nextIcon.isHidden = true
+                    cell.textFieldsCallback = { val in
+                        self.viewModel.addContactModel?.addContact_Linkedin = val
+                    }
+                } else {
+                    
+                    cell.labelTitle.isEnabled = false;
+                    cell.nextIcon.isHidden = false;
                 }
             }
             
@@ -1218,6 +1439,26 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 //print("Status -----> \(viewmod.addContact_status)")
                 cell.title = data.title;
                 cell.labelTitle.text = viewmod.addContact_status;
+                
+            case 8:
+                
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_Facebook;
+                
+            case 9:
+                
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_Whatsapp;
+                
+            case 10:
+                
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_Twitter;
+                
+            case 11:
+                
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_Linkedin;
                 
             default:
                 break
@@ -1490,3 +1731,17 @@ extension UIView {
 //    }
 }
 
+
+//For Social Link
+extension UIApplication {
+    class func tryURL(urls: [String]) {
+        let application = UIApplication.shared
+        for url in urls {
+            if application.canOpenURL(URL(string: url)!) {
+                //application.openURL(URL(string: url)!)
+                application.open(URL(string: url)!, options: [:], completionHandler: nil)
+                return
+            }
+        }
+    }
+}
