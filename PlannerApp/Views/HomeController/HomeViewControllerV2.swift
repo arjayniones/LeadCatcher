@@ -82,7 +82,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         followUpsView.backgroundColor = CommonColor.purpleColor
 //        followUpsView.sideIcon.image = UIImage(named: "follow-up-icon")
-        followUpsView.labelBelow.text = "Follow-Ups"
+        followUpsView.labelBelow.text = "Customers"
         followUpsView.translatesAutoresizingMaskIntoConstraints = true
         headerCountsView.addArrangedSubview(followUpsView)
         
