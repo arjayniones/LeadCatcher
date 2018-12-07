@@ -29,7 +29,8 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     var title:String = "" {
         didSet {
-            labelTitle.text = title
+            //labelTitle.text = title
+            labelTitle.placeholder = title
         }
     }
     

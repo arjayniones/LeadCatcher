@@ -60,7 +60,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     // azlim
     var resultHistoryList:Results<ContactHistory>!;
     var resultSocialList:Results<ContactSocial>!;
-    var contactSocialList:[SocialClass] = []
+    var contactSocialList:[SocialClass] = [];
+    var addNoteList:Results<AddNote>!;
+    var editData_YN:Bool = true; // false : mean new entry, true : mean update entry
+    let todoModel = TodoListViewModel();
+    
     
     fileprivate let profileImageView = UIImageView()
     
@@ -108,9 +112,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 
         title = "Contact Details"
         selectedTab = "info"
-        
         imagePickerController.delegate = self
-        
         
         view.addSubview(topView)
         topView.backgroundColor = .clear
@@ -286,7 +288,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         tableView.register(LogsTableViewCell.self, forCellReuseIdentifier: "cellLog")
         
         topView.addSubview(tableView)
-        
         // for datepicker
         bottomView.backgroundColor = UIColor.white;
         buttonLeft.setTitle("Cancel", for: .normal);
@@ -371,63 +372,54 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     //keyboard
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            let distanceBetweenTextfielAndKeyboard = self.view.frame.height - textFieldRealYPosition - keyboardSize.height
-            if distanceBetweenTextfielAndKeyboard < 0 {
-                UIView.animate(withDuration: 0.4) {
-                    self.view.transform = CGAffineTransform(translationX: 0.0, y: distanceBetweenTextfielAndKeyboard)
-                }
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.4) {
-            self.view.transform = .identity
-        }
-    }
-    
-    
-
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textFieldRealYPosition = textField.frame.origin.y + textField.frame.height
-        //take in account all superviews from textfield and potential contentOffset if you are using tableview to calculate the real position
-    }
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textFieldRealYPosition = textField.frame.origin.y + textField.frame.height
+//        //take in account all superviews from textfield and potential contentOffset if you are using tableview to calculate the real position
+//    }
     
     @objc func editProfileImage() {
         self.present(imagePickerController, animated: true, completion: nil)
     }
     
     @objc func save() {
-        self.editSelected = false
-        changeRightNavBarBtn()
+        view.endEditing(true);
+        if self.editData_YN
+        {
+            viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!)
+            self.navigationController?.popViewController(animated: false);
+        }
+        else
+        {
+            changeRightNavBarBtn()
+            
+            //        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
+            //        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+            dismissKeyboard();
+            viewModel.saveContact(completion: { val in
+                if val {
+                    let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                        self.viewModel.addContactModel = AddContactModel()
+                        self.tableView.reloadData()
+                    }))
+                    self.present(alert, animated: true, completion:nil);
+                } else {
+                    let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
+                    self.present(alert, animated: true, completion: nil);
+                }
+            })
+        }
         
-//        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
-//        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
-        dismissKeyboard();
-        viewModel.saveContact(completion: { val in
-            if val {
-                let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-                    self.viewModel.addContactModel = AddContactModel()
-                    self.tableView.reloadData()
-                }))
-                self.present(alert, animated: true, completion:nil);
-            } else {
-                let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
-                self.present(alert, animated: true, completion: nil);
-            }
-        })
+        self.editSelected = false
+        
     }
     
     @objc func edit() {
-        
-            self.editSelected = true
-            changeRightNavBarBtn()
-        
+        self.tableView.isUserInteractionEnabled = true;
+        self.editSelected = true
+        changeRightNavBarBtn()
+        self.tableView.reloadData();
        
     }
     
@@ -471,7 +463,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 //
       
         
-        //tableView.reloadData()
+        tableView.reloadData()
     }
     
     override func updateViewConstraints() {
@@ -602,6 +594,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     
             break
         case todoButton:
+            addNoteList = todoModel.getToDoListByContactID(test: (self.viewModel.addContactModel?.addContact_id)!);
                     logButton.isSelected = false
                     todoButton.isSelected = true
                     socialButton.isSelected = false
@@ -613,6 +606,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     socialButton.backgroundColor = .lightGray
                     filesButton.backgroundColor = .lightGray
                     infoButton.backgroundColor = .lightGray
+            self.tableView.reloadData();
             break
             
         case socialButton :
@@ -853,25 +847,19 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-        
         //selection of tabs
         //add plus button to add check list
         //add check box at the accessory if task are finish it can be checked
         
         switch selectedTab {
-            
+         
         case "log":
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
-            //let data = viewModel.logDetails[indexPath.row]
-            //cell.leftIcon = data.icon
-//             populateLogData(cell: cell, index: indexPath, data: data)
-            
             cell.leftIcon = "message-icon"
             
             cell.selectionStyle = .none
             
            //populate logs here using the customer logs info from database
-            
             cell.labelTitle.text = resultHistoryList[indexPath.row].CH_HistoryType; //"Call log \(indexPath.row)"
             cell.labelDesc.text = ""
             cell.labelDate.text = convertDateTimeToString(date: resultHistoryList[indexPath.row].CH_CallingDate!, dateFormat: "dd-MMM-yyyy HH:mm:ss") ;
@@ -880,57 +868,37 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
         case "todo":
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
-            let data = viewModel.detailRows[indexPath.row]
-            //cell.leftIcon = data.icon
-           
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
+            //let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = "meeting-icon"
-//            self.populateInfoData(cell: cell, index: indexPath, data:data)
-           
             cell.selectionStyle = .none
-            
-          
-            
+            cell.labelTitle.isEnabled = false
+            cell.labelTitle.text = addNoteList[indexPath.row].addNote_subject;
+            cell.labelDate.text = convertDateTimeToString(date: addNoteList[indexPath.row].addNote_alertDateTime!)
+            /*
             if indexPath.row == 0 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_contactName = val
-//                }
                 
                 cell.labelTitle.text = "Introduce you self"
                 
             } else if indexPath.row == 1 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_address = val
-//                }
-                
                  cell.labelTitle.text = "Present the Company"
             } else if indexPath.row == 2 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_phoneNum = val
-//                }
                  cell.labelTitle.text = "Share Success Stories"
             } else if indexPath.row == 3 {
                 cell.labelTitle.isEnabled = true
                 cell.nextIcon.isHidden = true
-//                cell.textFieldsCallback = { val in
-//                    self.viewModel.addContactModel?.addContact_email = val
-//                }
                  cell.labelTitle.text = "Ask if intereseted or not"
             }
-       
-                
-                
-                cell.labelTitle.isEnabled = false
-               
-        
-            
-            
+ 
+            cell.labelTitle.isEnabled = false
+ */
+
             return cell
             
         case "social":
@@ -955,16 +923,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         cell.labelTitle.isEnabled = true
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "facebook-icon"
+                        cell.title = "facebook"
                         cell.textFieldsCallback = { val in
                             self.viewModel.addContactModel?.addContact_Facebook = val
-                            
-                            //socialList.socailUrl = val;
-                            //socialList.socialName = "Facebook";
-                            //self.viewModel.socialList?.append(socialList);
-                            //self.viewModel.socialList?[indexPath.row] = socialList;
-                            //self.contactSocialList.append(socialList);
-                            
-                            cell.labelTitle.text = "Facebook: \(self.viewModel.addContactModel?.addContact_Facebook ?? "") "
+                            //cell.labelTitle.text = "Facebook: \(self.viewModel.addContactModel?.addContact_Facebook ?? "") "
                         }
                         //cell.labelTitle.text = "Facebook:"
                         
@@ -972,14 +934,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         cell.labelTitle.isEnabled = true
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "whatsapp-icon"
+                        cell.title = "whatsapp"
                         cell.textFieldsCallback = { val in
-                            //socialList.socailUrl = val;
-                            //socialList.socialName = "Whatsapp";
-                           // self.viewModel.socialList?[indexPath.row] = socialList;
-                            //self.viewModel.socialList?.append(socialList)
-                            //self.contactSocialList.append(socialList);
                             self.viewModel.addContactModel?.addContact_Whatsapp = val
-                            cell.labelTitle.text = "Whatsapp: \(self.viewModel.addContactModel?.addContact_Whatsapp ?? "") "
+                            //cell.labelTitle.text = "Whatsapp: \(self.viewModel.addContactModel?.addContact_Whatsapp ?? "") "
                         }
                         
                        
@@ -987,14 +945,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         cell.labelTitle.isEnabled = true
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "twitter-icon"
+                        cell.title = "twitter";
                         cell.textFieldsCallback = { val in
-                            //socialList.socailUrl = val;
-                            //socialList.socialName = "Twitter";
-                            //self.viewModel.socialList?[indexPath.row] = socialList;
-                            //self.viewModel.socialList?.append(socialList)
-                            //self.contactSocialList.append(socialList);
                             self.viewModel.addContactModel?.addContact_Twitter = val
-                            cell.labelTitle.text = "Twitter: \(self.viewModel.addContactModel?.addContact_Twitter ?? "")"
+                            //cell.labelTitle.text = "Twitter: \(self.viewModel.addContactModel?.addContact_Twitter ?? "")"
                         }
                         
                 
@@ -1003,15 +957,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         cell.labelTitle.isEnabled = true
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "linkedin-icon"
+                        cell.title = "linkedin";
                         cell.textFieldsCallback = { val in
-                            //socialList.socailUrl = val;
-                            //socialList.socialName = "Linkedin";
-                            //self.viewModel.socialList?[indexPath.row] = socialList;
-                            //self.viewModel.socialList?.append(socialList)
-                            //self.contactSocialList.append(socialList);
                             self.viewModel.addContactModel?.addContact_Linkedin = val
-                            
-                            cell.labelTitle.text = "Linkedin: \(self.viewModel.addContactModel?.addContact_Linkedin ?? "")"
+                            //cell.labelTitle.text = "Linkedin: \(self.viewModel.addContactModel?.addContact_Linkedin ?? "")"
                         }
                         
                         
@@ -1024,14 +973,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.leftIcon = "facebook-icon"
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_Facebook = val
-                        
-                        //socialList.socailUrl = val;
-                        //socialList.socialName = "Facebook";
-                        //self.viewModel.socialList?.append(socialList);
-                        //self.viewModel.socialList?[indexPath.row] = socialList;
-                        //self.contactSocialList.append(socialList);
-                        
-                        cell.labelTitle.text = "Facebook: \(self.viewModel.addContactModel?.addContact_Facebook ?? "") "
+                        //cell.labelTitle.text = "Facebook: \(self.viewModel.addContactModel?.addContact_Facebook ?? "") "
                     }
                     
                 } else if indexPath.row == 1 {
@@ -1039,13 +981,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.nextIcon.isHidden = true
                     cell.leftIcon = "whatsapp-icon"
                     cell.textFieldsCallback = { val in
-                        //socialList.socailUrl = val;
-                        //socialName = "Whatsapp";
-                        // self.viewModel.socialList?[indexPath.row] = socialList;
-                        //self.viewModel.socialList?.append(socialList)
-                        //self.contactSocialList.append(socialList);
                         self.viewModel.addContactModel?.addContact_Whatsapp = val
-                        cell.labelTitle.text = "Whatsapp: \(self.viewModel.addContactModel?.addContact_Whatsapp ?? "") "
+                        //cell.labelTitle.text = "Whatsapp: \(self.viewModel.addContactModel?.addContact_Whatsapp ?? "") "
                     }
                     
                   
@@ -1054,13 +991,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.nextIcon.isHidden = true
                     cell.leftIcon = "twitter-icon"
                     cell.textFieldsCallback = { val in
-                        //socialList.socailUrl = val;
-                        //socialList.socialName = "Twitter";
-                        //self.viewModel.socialList?[indexPath.row] = socialList;
-                        //self.viewModel.socialList?.append(socialList)
-                        //self.contactSocialList.append(socialList);
                         self.viewModel.addContactModel?.addContact_Twitter = val
-                        cell.labelTitle.text = "Twitter: \(self.viewModel.addContactModel?.addContact_Twitter ?? "")"
+                        //cell.labelTitle.text = "Twitter: \(self.viewModel.addContactModel?.addContact_Twitter ?? "")"
                     }
                     
                   
@@ -1070,14 +1002,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.nextIcon.isHidden = true
                     cell.leftIcon = "linkedin-icon"
                     cell.textFieldsCallback = { val in
-                        //socialList.socailUrl = val;
-                        //.socialName = "Linkedin";
-                        //self.viewModel.socialList?[indexPath.row] = socialList;
-                        //self.viewModel.socialList?.append(socialList)
-                        //self.contactSocialList.append(socialList);
                         self.viewModel.addContactModel?.addContact_Linkedin = val
-                        
-                        cell.labelTitle.text = "Linkedin: \(self.viewModel.addContactModel?.addContact_Linkedin ?? "")"
+                        //cell.labelTitle.text = "Linkedin: \(self.viewModel.addContactModel?.addContact_Linkedin ?? "")"
                     }
                     
                   
@@ -1091,9 +1017,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
-            //cell.leftIcon = data.icon
             cell.leftIcon = "archive-icon"
-//            self.populateInfoData(cell: cell, index: indexPath, data:data)
            
             cell.selectionStyle = .none
             
@@ -1107,13 +1031,12 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
+            cell.labelTitle.text = "";
             self.populateInfoData(cell: cell, index: indexPath, data:data)
             
             let customSelectionView = UIView();
             customSelectionView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = customSelectionView
-            
-            //cell.selectionStyle = .none
             
             if editSelected{
                 cell.isEditing = true
@@ -1141,6 +1064,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_email = val
                     }
+                } else
+                {
+                    cell.labelTitle.isEnabled = false;
+                    cell.nextIcon.isHidden = false;
                 }
             } else {
                 cell.isEditing = false
@@ -1220,7 +1147,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             return resultHistoryList.count;
         }
         else if selectedTab == "todo" {
-        return 4
+            return addNoteList.count;
         } else if selectedTab == "social" {
             return 4
         } else if selectedTab == "files" {
@@ -1236,38 +1163,69 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         if let viewmod = viewModel.addContactModel {
             switch index.row {
             case 0:
-                cell.title = viewmod.addContact_contactName == "" ? data.title :
-                viewmod.addContact_contactName
+//                cell.title = viewmod.addContact_contactName == "" ? data.title :
+//                viewmod.addContact_contactName
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_contactName;
                 Defaults[.ContactID] = viewmod.addContact_id;
             case 1:
-                cell.title = viewmod.addContact_dateOfBirth == nil ? data.title:
-                convertDateTimeToString(date: viewmod.addContact_dateOfBirth!)
+//                cell.title = viewmod.addContact_dateOfBirth == nil ? data.title:
+//                convertDateTimeToString(date: viewmod.addContact_dateOfBirth!)
+                if viewmod.addContact_dateOfBirth == nil
+                {
+                    cell.title = data.title;
+                }
+                else
+                {
+                    cell.labelTitle.text = convertDateTimeToString(date: viewmod.addContact_dateOfBirth!);
+                }
+                
+                //cell.labelTitle.text = convertDateTimeToString(date: viewmod.addContact_dateOfBirth!);
             case 2:
-                cell.title = viewmod.addContact_address == "" ? data.title: viewmod.addContact_address
+                //cell.title = viewmod.addContact_address == "" ? data.title: viewmod.addContact_address
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_address;
             case 3:
-                cell.title = viewmod.addContact_phoneNum == "" ? data.title: viewmod.addContact_phoneNum
+                //cell.title = viewmod.addContact_phoneNum == "" ? data.title: viewmod.addContact_phoneNum
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_phoneNum;
             case 4:
-                cell.title = viewmod.addContact_email == "" ? data.title: viewmod.addContact_email
+//                cell.title = viewmod.addContact_email == "" ? data.title: viewmod.addContact_email
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_email;
             case 5:
                 let x:Int = viewmod.addContact_leadScore
-                print("Lead Score ----->\(x)")
+                //print("Lead Score ----->\(x)")
+                //cell.title = viewmod.addContact_leadScore == 0 ? data.title: "\(x)"
+                if viewmod.addContact_leadScore == 0
+                {
+                    cell.title = data.title;
+                }
+                else
+                {
+                    cell.labelTitle.text = "\(x)";
+                }
                 
-                cell.title = viewmod.addContact_leadScore == 0 ? data.title: "\(x)"
                 
             case 6:
-                cell.title = viewmod.addContact_remarks == "" ? data.title:
-                viewmod.addContact_remarks
+//                cell.title = viewmod.addContact_remarks == "" ? data.title:
+//                viewmod.addContact_remarks
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_remarks;
             case 7:
-                cell.title = viewmod.addContact_status == "" ? data.title:
-                    viewmod.addContact_status
-                print("Status -----> \(viewmod.addContact_status)")
-                
+                //cell.title = viewmod.addContact_status == "" ? data.title:
+                    //viewmod.addContact_status
+                //print("Status -----> \(viewmod.addContact_status)")
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addContact_status;
                 
             default:
                 break
             }
         } else {
+            print("Something wrong here");
             cell.title = data.title
+            cell.labelTitle.text = "Error come";
         }
     }
     
@@ -1287,20 +1245,32 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
     func populateSocialData(cell:ContactDetailTableViewCell,index:IndexPath,data:AddContactViewObject) {
         
         if let viewmod = viewModel.addContactModel {
-            
+            print(viewmod.addContact_Facebook);
             switch index.row {
                 
-            case 0: cell.title = viewmod.addContact_Facebook == "" ? data.title :
-                viewmod.addContact_Facebook
+            case 0:
+                cell.title = "facebook";
+                cell.labelTitle.text = viewmod.addContact_Facebook;
+//                cell.title = viewmod.addContact_Facebook == "" ? data.title :
+//                viewmod.addContact_Facebook
                 
-            case 1:  cell.title = viewmod.addContact_Whatsapp == "" ? data.title :
-                viewmod.addContact_Whatsapp
+            case 1:
+                cell.title = "whatsapp";
+                cell.labelTitle.text = viewmod.addContact_Whatsapp;
+//                cell.title = viewmod.addContact_Whatsapp == "" ? data.title :
+//                viewmod.addContact_Whatsapp
                 
-            case 2: cell.title = viewmod.addContact_Twitter == "" ? data.title :
-                viewmod.addContact_Twitter
+            case 2:
+                cell.title = "twitter";
+                cell.labelTitle.text = viewmod.addContact_Twitter;
+//                cell.title = viewmod.addContact_Twitter == "" ? data.title :
+//                viewmod.addContact_Twitter
                 
-            case 3: cell.title = viewmod.addContact_Linkedin == "" ? data.title :
-                viewmod.addContact_Linkedin
+            case 3:
+                cell.title = "linkedin";
+                cell.labelTitle.text = viewmod.addContact_Linkedin;
+//                cell.title = viewmod.addContact_Linkedin == "" ? data.title :
+//                viewmod.addContact_Linkedin
             default:
                 cell.title = ""
             }
@@ -1348,10 +1318,10 @@ extension ContactDetailsViewController:UIActionSheetDelegate {
         
         for title in data.alertOptions {
             let action = UIAlertAction(title: title, style: .default) { (action:UIAlertAction) in
-                if data.title == "Lead Scoring" {
+                //if data.title == "Lead Scoring" {
                     self.viewModel.addContactModel?.addContact_leadScore = Int(title)!
                     
-                }
+                //}
                 //self.tableView.reloadData()
                 let indexPathRow:Int = 5
                 let indexPosition = IndexPath(row: indexPathRow, section: 0)

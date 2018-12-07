@@ -18,6 +18,7 @@ class ContactDetailsViewModel {
     var addLogDetails:LogsModel?
     var socialList:[SocialClass]? = [];
     var profileImage:UIImage?
+    let realmStore = RealmStore<ContactModel>()
     
     init() {
         
@@ -39,26 +40,6 @@ class ContactDetailsViewModel {
         log2.desc = "Had sent Birthday Greetings email"
         self.logDetails.append(log2)
          */
-        
-        let social1 = SocialClass();
-        social1.socailUrl = "";
-        social1.socialName = "Facebook";
-        self.socialList?.append(social1);
-        
-        let social2 = SocialClass();
-        social2.socailUrl = "";
-        social2.socialName = "Whatsapp";
-        self.socialList?.append(social2);
-     
-        let social3 = SocialClass();
-        social3.socailUrl = "";
-        social3.socialName = "Twitter";
-        self.socialList?.append(social3);
-        
-        let social4 = SocialClass();
-        social4.socailUrl = "";
-        social4.socialName = "Linkedin";
-        self.socialList?.append(social4);
         
         let row1 = AddContactViewObject()
         row1.icon = "person-icon"
@@ -103,7 +84,25 @@ class ContactDetailsViewModel {
         
         self.detailRows.append(row8)
         
+        let social1 = SocialClass();
+        social1.socailUrl = "";
+        social1.socialName = "Facebook";
+        self.socialList?.append(social1);
         
+        let social2 = SocialClass();
+        social2.socailUrl = "";
+        social2.socialName = "Whatsapp";
+        self.socialList?.append(social2);
+        
+        let social3 = SocialClass();
+        social3.socailUrl = "";
+        social3.socialName = "Twitter";
+        self.socialList?.append(social3);
+        
+        let social4 = SocialClass();
+        social4.socailUrl = "";
+        social4.socialName = "Linkedin";
+        self.socialList?.append(social4);
     
     }
     
@@ -169,13 +168,44 @@ class ContactDetailsViewModel {
         
         return
     }
+    
+    func updateContactList(id:String)
+    {
+        if let image = profileImage {
+            //if let id = self.addContactModel?.addContact_id {
+                ImageCache.default.store(image, forKey: "profile_"+id)
+            //}
+        }
+        
+        realmStore.store.beginWrite();
+        let updateContactModel = realmStore.queryToDo(id: id)?.first;
+        if let data = self.addContactModel
+        {
+            updateContactModel?.C_Name = data.addContact_contactName;
+            updateContactModel?.C_DOB = data.addContact_dateOfBirth;
+            updateContactModel?.C_Address = data.addContact_address;
+            updateContactModel?.C_PhoneNo = data.addContact_phoneNum;
+            updateContactModel?.C_Email = data.addContact_email;
+            updateContactModel?.C_Scoring = data.addContact_leadScore;
+            updateContactModel?.C_Remark = data.addContact_remarks;
+            updateContactModel?.C_Status = data.addContact_status;
+            updateContactModel?.C_Facebook = data.addContact_Facebook;
+            updateContactModel?.C_Whatsapp = data.addContact_Whatsapp;
+            updateContactModel?.C_Twitter = data.addContact_Twitter;
+            updateContactModel?.C_Linkedin = data.addContact_Linkedin;
+            //for x in ()!
+            //{
+            //realmStore.store.delete((addNoteModel?.addNote_checklist)!);
+            //}
+            
+            
+            try! self.realmStore.store.commitWrite()
+        }
+        
+    }
    
     func saveToRealm() {
-        if let image = profileImage {
-            if let id = self.addContactModel?.addContact_id {
-                ImageCache.default.store(image, forKey: "profile_"+id)
-            }
-        }
+        
         
         DispatchQueue.main.async {
             
@@ -199,6 +229,11 @@ class ContactDetailsViewModel {
             
             if let addContactMod = self.addContactModel {
                 let addContact = ContactModel().newInstance()
+                
+                if let image = self.profileImage {
+                    ImageCache.default.store(image, forKey: "profile_"+addContact.id)
+                }
+                
                 addContact.C_Name = addContactMod.addContact_contactName
                 addContact.C_DOB = addContactMod.addContact_dateOfBirth
                 addContact.C_Address = addContactMod.addContact_address
