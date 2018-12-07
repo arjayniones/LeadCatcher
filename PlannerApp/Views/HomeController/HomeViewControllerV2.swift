@@ -214,7 +214,6 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                     
                     self?.mapView.pointCamera(location: data?.addNote_location)
                 }
-                
                 self?.appointmentsView.labelCount.text = "\(appCount ?? 0)"
                 self?.birthdayView.labelCount.text = "\(bday ?? 0)"
                 
@@ -462,6 +461,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             greetingsLabel.attributedText = msgAttributedText
         }
         
+        self.followUpsView.labelCount.text = "\(self.viewModel.getCustomersCount())"
         self.appointmentLabel.text = self.viewModel.getAppointmentHeaderMessage()
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
