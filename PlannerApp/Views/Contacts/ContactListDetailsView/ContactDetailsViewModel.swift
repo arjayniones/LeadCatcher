@@ -42,43 +42,43 @@ class ContactDetailsViewModel {
          */
         
         let row1 = AddContactViewObject()
-        row1.icon = "person-icon"
+        row1.icon = "person-iconx2"
         row1.title = "Contact Name"
         self.detailRows.append(row1)
         
         let row2 = AddContactViewObject()
-        row2.icon = "calendar-icon"
+        row2.icon = "calendar-iconx2"
         row2.title = "Date of Birth"
         self.detailRows.append(row2)
         
         let row3 = AddContactViewObject()
-        row3.icon = "location-icon"
+        row3.icon = "location-iconx2"
         row3.title = "Address"
         self.detailRows.append(row3)
         
         let row4 = AddContactViewObject()
-        row4.icon = "phone-icon"
+        row4.icon = "phone-gray"
         row4.title = "Phone Number"
         self.detailRows.append(row4)
         
         let row5 = AddContactViewObject()
-        row5.icon = "email-icon"
+        row5.icon = "mail-x2"
         row5.title = "Email"
         self.detailRows.append(row5)
         
         let row6 = AddContactViewObject()
-        row6.icon = "notes-icon"
+        row6.icon = "star2-x2"
         row6.title = "Lead Scoring"
         row6.alertOptions = ["5","4","3","2","1"]
         self.detailRows.append(row6)
         
         let row7 = AddContactViewObject()
-        row7.icon = "subject-icon"
+        row7.icon = "notes-iconx2"
         row7.title = "Write Remarks"
         self.detailRows.append(row7)
         
         let row8 = AddContactViewObject()
-        row8.icon = "task-icon"
+        row8.icon = "user-check-x2"
         row8.title = "Status"
         row8.alertOptions = ["Potential","Nurture","Disqualified","Customer"]
         

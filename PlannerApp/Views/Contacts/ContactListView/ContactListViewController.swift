@@ -393,9 +393,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
         
         
-        callAction.backgroundColor = .green
-        smsAction.backgroundColor = .yellow
-        emailAction.backgroundColor = .orange
+        callAction.backgroundColor = #colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1)
+        smsAction.backgroundColor = #colorLiteral(red: 0.9960784314, green: 0.8274509804, blue: 0.1882352941, alpha: 1)
+        emailAction.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
         let configuration = UISwipeActionsConfiguration(actions: [callAction,smsAction,emailAction])
         return configuration
     }
@@ -432,38 +432,33 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         cell.toFollow.text = contactData.C_ToFollow == "" ? "No meeting yet": contactData.C_ToFollow
         
         if contactData.C_Status == "Potential" {
-            
-           
            cell.toFollow.text = "To Follow"
-           cell.toFollow.textColor = .orange
-           cell.status.textColor = .orange
+            cell.toFollow.textColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+           cell.status.textColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
             
         } else if contactData.C_Status == "Customer" {
             
             
             cell.toFollow.text = "Keep In Touch"
-            cell.toFollow.textColor = .green
-            cell.status.textColor = .green
+            cell.toFollow.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            cell.status.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             
         } else if contactData.C_Status == "Disqualified" {
             
             
             cell.toFollow.text = "Delete Contact"
-            cell.toFollow.textColor = .red
-            cell.status.textColor = .red
+            cell.toFollow.textColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
+            cell.status.textColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
            
            
             
         } else {
-            
-               
-            
-                cell.toFollow.textColor = .lightGray
+            cell.toFollow.textColor = .lightGray
        
         }
         
         //cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐
-         cell.rating.textColor = .yellow
+         //cell.rating.textColor = .red
         if contactData.C_Scoring == 0 {
             cell.rating.text = "✩ ✩ ✩ ✩ ✩"
            
