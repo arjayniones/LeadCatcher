@@ -463,8 +463,8 @@
 		0CBFA0D62150AC470028750B /* ContactListDetailsView */ = {
 			isa = PBXGroup;
 			children = (
-				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
 				0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */,
+				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
 				0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */,
 				0C1E5FFD2181B23E00DC8750 /* LogsTableViewCell.swift */,
 				0C1E5FFF2181B25F00DC8750 /* ToDoTableViewCell.swift */,

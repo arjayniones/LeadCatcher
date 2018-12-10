@@ -435,15 +435,15 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             
            
            cell.toFollow.text = "To Follow"
-           cell.toFollow.textColor = .orange
-           cell.status.textColor = .orange
+           cell.toFollow.textColor = CommonColor.turquoiseColor
+           cell.status.textColor = CommonColor.turquoiseColor
             
         } else if contactData.C_Status == "Customer" {
             
             
             cell.toFollow.text = "Keep In Touch"
-            cell.toFollow.textColor = .green
-            cell.status.textColor = .green
+            cell.toFollow.textColor = CommonColor.purpleColor
+            cell.status.textColor = CommonColor.purpleColor
             
         } else if contactData.C_Status == "Disqualified" {
             
@@ -456,10 +456,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             
         } else {
             
-               
-            
                 cell.toFollow.textColor = .lightGray
-       
+                 cell.status.textColor = .lightGray
         }
         
         //cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐

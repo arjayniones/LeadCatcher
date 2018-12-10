@@ -140,7 +140,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         companyLabel.font = companyLabel.font.withSize(20)
         
         let score = viewModel.addContactModel?.addContact_leadScore
-        scoreLabel.textColor = .yellow
+        scoreLabel.textColor = CommonColor.yellowColor
         scoreLabel.font = scoreLabel.font.withSize(22)
         if score == 0 {
               scoreLabel.text = "✩ ✩ ✩ ✩ ✩"
@@ -160,13 +160,13 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         let status = viewModel.addContactModel?.addContact_status
         
         if status == "Potential" {
-            statusLabel.backgroundColor = .yellow
+            statusLabel.backgroundColor = CommonColor.turquoiseColor
             statusLabel.text = status
         } else if status == "Disqualified" {
             statusLabel.backgroundColor = .red
             statusLabel.text = status
         } else if status == "Customer" {
-            statusLabel.backgroundColor = .green
+            statusLabel.backgroundColor = CommonColor.purpleColor
             statusLabel.text = status
         }else {
             statusLabel.text = status == "" ? "No Meeting Yet" : status
