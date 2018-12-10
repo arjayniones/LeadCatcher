@@ -27,8 +27,41 @@ func convertDateTimeToString(date:Date,dateFormat:String = "EEEE,dd MMM yyyy hh:
     
     return selectedDate
 }
+func removeFile(fileData:FileData,completion: @escaping ((_ success: Bool) -> Void)) {
+    //optionals data, dont put filename if url is given
+    let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+    let logsPath = documentsPath.appendingPathComponent("MyFiles")
+    let fileManager = FileManager.default
+    
+    var path:URL
+    
+    if fileData.filename == "" {
+        path = fileData.url!
+    } else {
+        path = logsPath.appendingPathComponent("\(fileData.filename)")
+    }
+    
+    do {
+        if fileManager.fileExists(atPath: path.path) {
+            try fileManager.removeItem(at: path)
+        }
+        completion(true)
+    } catch {
+        print(error)
+        completion(false)
+    }
+}
 
-func saveFileToDisk (fileData:FileData) {
+func getFilePathString(filename:String) -> String {
+    let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+    let logsPath = documentsPath.appendingPathComponent("MyFiles")
+    
+    let path = logsPath.appendingPathComponent("\(filename)")
+    
+    return path.path
+}
+
+func saveFileToDisk(fileData:FileData,completion: @escaping ((_ success: Bool) -> Void)) {
     
     let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
     let logsPath = documentsPath.appendingPathComponent("MyFiles")
@@ -43,16 +76,21 @@ func saveFileToDisk (fileData:FileData) {
     let path = logsPath.appendingPathComponent("\(fileData.filename)")
     
     guard let fileURL = fileData.url else {
+        completion(false)
         return
     }
     
     if !fileManager.fileExists(atPath: path.path) {
         do {
-            let file = try! Data(contentsOf:  fileURL)
+            let file = try! Data(contentsOf: fileURL)
             try file.write(to: path, options:.atomic)
-            try fileManager.removeItem(at: fileURL)
+            
+            if fileManager.fileExists(atPath: path.path) {
+                try fileManager.removeItem(at: fileURL)
+                completion(true)
+            }
         } catch {
-            print(error)
+            completion(false)
         }
     }
 }
