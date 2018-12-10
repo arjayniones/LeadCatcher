@@ -12,8 +12,11 @@ import RealmSwift
 
 class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate,LargeNativeNavbar  {
 
-    var collectionview: UICollectionView!
+    fileprivate var collectionview: UICollectionView!
     let viewModel = ResourcesAndFilesModel()
+    fileprivate var isRemoveButtonEnabled:Bool = false
+    
+    fileprivate let trashButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +25,7 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         view.backgroundColor = .clear
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 110)
+        layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: ((view.frame.width - 40)/3)+20)
         
         collectionview = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionview.dataSource = self
@@ -33,11 +36,19 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         self.view.addSubview(collectionview)
         
         let importButton = UIButton()
+        importButton.frame = CGRect(x:0, y:0, width:30, height:30)
         let image = UIImage(named: "plus-grey-icon" )
-        importButton.setImage(image, for: .normal)
+        importButton.setBackgroundImage(image, for: .normal)
         importButton.addTarget(self, action: #selector(importButtonPressed), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: importButton)
+        let rightAddBarButton = UIBarButtonItem(customView: importButton)
         
+        trashButton.frame = CGRect(x:0, y:0, width:30, height:30)
+        trashButton.setBackgroundImage(UIImage(named: "trash-icon" ), for: .normal)
+        trashButton.setBackgroundImage(UIImage(named: "okay-icon" ), for: .selected)
+        trashButton.addTarget(self, action: #selector(removeButtonPressed), for: .touchUpInside)
+        let rightTrashBarButton = UIBarButtonItem(customView: trashButton)
+        
+        navigationItem.rightBarButtonItems = [rightTrashBarButton,rightAddBarButton]
         
         viewModel.notificationToken = viewModel.files?.observe { [weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionview else { return }
@@ -52,12 +63,38 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         }
     }
     
-    func savePDF() {
-        //
+    @objc func removeButtonPressed() {
+        
+        self.trashButton.isSelected = !self.isRemoveButtonEnabled
+        self.isRemoveButtonEnabled = !self.isRemoveButtonEnabled
+        
+        self.collectionview.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
+    }
+    
+    func removeCheck(data:UserFiles) {
+        let filePath = getFilePathString(filename: data.filename + "." + "\(data.fileType)")
+        
+        let fileData = FileData()
+        fileData.url = URL(fileURLWithPath: filePath)
+        
+        let alert = UIAlertController(title: "", message: "Remove this file?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style:.default, handler: { _ in
+            removeFile(fileData: fileData, completion: { val in
+                if val {
+                    DispatchQueue.main.async {
+                        self.viewModel.realmStore.delete(modelToDelete: data, hard: true)
+                    }
+                }
+            })
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:nil))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     override func updateViewConstraints() {
@@ -98,14 +135,18 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FileCell
         
         cell.nameLabel.text = data.filename
+        cell.removeButton.isHidden = !isRemoveButtonEnabled
         
         if data.fileType.lowercased() == "pdf" {
             cell.fileImage.image = UIImage(named:"file-pdf-icon")
         } else if (["xlsx","xls","xlsm"].filter{ $0 == data.fileType.lowercased()}.count) > 0 {
             cell.fileImage.image = UIImage(named:"file-excel-icon")
-            
         } else {
             cell.fileImage.image = UIImage(named:"file-unknown-icon")
+        }
+        
+        cell.removeCallback = {
+            self.removeCheck(data: data)
         }
         
         return cell
@@ -115,7 +156,6 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         let data = viewModel.files![indexPath.row]
         
         let filePath = getFilePathString(filename: data.filename + "." + "\(data.fileType)")
-        print(filePath)
         
         showFileWithPath(path: filePath)
     }
@@ -213,16 +253,26 @@ class FileCell: UICollectionViewCell {
     
     fileprivate var didSetupConstraints:Bool = false
     
+    let removeButton = UIButton()
+    
+    var removeCallback:(() -> ())?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        fileImage.contentMode = .scaleAspectFit
+        fileImage.contentMode = .scaleToFill
+        fileImage.isUserInteractionEnabled = true
         contentView.addSubview(fileImage)
         
         nameLabel.font = UIFont.ofSize(fontSize: 15, withType: .regular)
         nameLabel.textColor = .black
         nameLabel.textAlignment = .center
         contentView.addSubview(nameLabel)
+        
+        removeButton.setBackgroundImage(UIImage(named:"remove-icon"), for: .normal)
+        removeButton.isHidden = true
+        removeButton.addTarget(self, action: #selector(removeButtonPressed), for: .touchUpInside)
+        fileImage.addSubview(removeButton)
         
         updateConstraintsIfNeeded()
         needsUpdateConstraints()
@@ -232,11 +282,23 @@ class FileCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    @objc func removeButtonPressed() {
+        if let callback = removeCallback {
+            callback()
+        }
+    }
+    
     override func updateConstraints() {
         if !didSetupConstraints {
             
             fileImage.snp.makeConstraints { make in
                 make.left.right.top.equalToSuperview()
+            }
+            
+            removeButton.snp.makeConstraints { make in
+                make.bottom.right.equalToSuperview().inset(2)
+                make.size.equalTo(CGSize(width: 30, height: 30))
             }
             
             nameLabel.snp.makeConstraints { make in

@@ -28,7 +28,7 @@ func convertDateTimeToString(date:Date,dateFormat:String = "EEEE,dd MMM yyyy hh:
     return selectedDate
 }
 func removeFile(fileData:FileData,completion: @escaping ((_ success: Bool) -> Void)) {
-    
+    //optionals data, dont put filename if url is given
     let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
     let logsPath = documentsPath.appendingPathComponent("MyFiles")
     let fileManager = FileManager.default
@@ -47,6 +47,7 @@ func removeFile(fileData:FileData,completion: @escaping ((_ success: Bool) -> Vo
         }
         completion(true)
     } catch {
+        print(error)
         completion(false)
     }
 }
