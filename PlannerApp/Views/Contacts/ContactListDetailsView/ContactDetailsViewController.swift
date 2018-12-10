@@ -248,17 +248,17 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         socialButton.roundTop()
         socialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
-        filesButton.setTitle("Files", for: .normal)
-        filesButton.setTitleColor(.white, for: .normal)
-        filesButton.setTitleColor(.black, for: .selected)
-        filesButton.titleLabel?.font =  .systemFont(ofSize: 11)
-        filesButton.isSelected = true
-        filesButton.backgroundColor = .lightGray
-        filesButton.layer.borderColor = UIColor.gray.cgColor
-        filesButton.layer.borderWidth = 0.2
-        filesButton.roundTop()
-        filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
-        
+//        filesButton.setTitle("Files", for: .normal)
+//        filesButton.setTitleColor(.white, for: .normal)
+//        filesButton.setTitleColor(.black, for: .selected)
+//        filesButton.titleLabel?.font =  .systemFont(ofSize: 11)
+//        filesButton.isSelected = true
+//        filesButton.backgroundColor = .lightGray
+//        filesButton.layer.borderColor = UIColor.gray.cgColor
+//        filesButton.layer.borderWidth = 0.2
+//        filesButton.roundTop()
+//        filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
+//
         infoButton.setTitle("Info", for: .normal)
         infoButton.setTitleColor(.white, for: .normal)
         infoButton.setTitleColor(.black, for: .selected)
@@ -276,7 +276,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topStackView.addArrangedSubview(logButton)
         topStackView.addArrangedSubview(todoButton)
         topStackView.addArrangedSubview(socialButton)
-        topStackView.addArrangedSubview(filesButton)
+//        topStackView.addArrangedSubview(filesButton)
         topStackView.addArrangedSubview(infoButton)
         topView.addSubview(topStackView)
         
@@ -624,20 +624,20 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     resultSocialList = ContactViewModel.queryContactSocialTable(id: Defaults[.ContactID]!);
             break
             
-        case filesButton :
-                    logButton.isSelected = false
-                    todoButton.isSelected = false
-                    socialButton.isSelected = false
-                    filesButton.isSelected = true
-                    infoButton.isSelected = false
-                    selectedTab = "files"
-                    logButton.backgroundColor = .lightGray
-                    todoButton.backgroundColor = .lightGray
-                    socialButton.backgroundColor = .lightGray
-                    filesButton.backgroundColor = .white
-                    infoButton.backgroundColor = .lightGray
-                    
-            break
+//        case filesButton :
+//                    logButton.isSelected = false
+//                    todoButton.isSelected = false
+//                    socialButton.isSelected = false
+//                    filesButton.isSelected = true
+//                    infoButton.isSelected = false
+//                    selectedTab = "files"
+//                    logButton.backgroundColor = .lightGray
+//                    todoButton.backgroundColor = .lightGray
+//                    socialButton.backgroundColor = .lightGray
+//                    filesButton.backgroundColor = .white
+//                    infoButton.backgroundColor = .lightGray
+//                    
+//            break
             
         case infoButton :
                     logButton.isSelected = false
@@ -830,7 +830,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 let TwitterAppLink = "twitter://user?screen_name=\(getUserTwitter ?? "Check the username")"
                 let TwitterWebLink = "https://twitter.com/\(getUserTwitter ?? "Check the username")"
                
-                let LinkedInAppLink = "linkedin://profile/\(getUserLinkedin ?? "Check the username")" 
+                let LinkedInAppLink = "linkedin://profile/\(getUserLinkedin ?? "Check the username")"
                 let LinkedInWebLink = "https://www.linkedin.com/in/\(getUserLinkedin ?? "Check the username")/"
              
             
