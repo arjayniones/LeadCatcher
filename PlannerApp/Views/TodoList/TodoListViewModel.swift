@@ -49,6 +49,10 @@ class TodoListViewModel {
         return realmStore.models().filter("addNote_alertDateTime >= %@ && addNote_alertDateTime < %@ && addNote_taskType == %@ && deleted_at == nil",fromDate,toDate,"Customer Birthday").count
     }
     
+    func getCustomersCount() -> Int {
+        return RealmStore<ContactModel>().models().filter("C_Status == %@","Customer").count
+    }
+    
     func getGreetingByTime() {
         let hour = Calendar.current.component(.hour, from: Date())
         

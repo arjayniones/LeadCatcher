@@ -140,7 +140,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         companyLabel.font = companyLabel.font.withSize(20)
         
         let score = viewModel.addContactModel?.addContact_leadScore
+
         scoreLabel.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        //scoreLabel.textColor = CommonColor.yellowColor
         scoreLabel.font = scoreLabel.font.withSize(22)
         if score == 0 {
               scoreLabel.text = "✩ ✩ ✩ ✩ ✩"
@@ -160,7 +162,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         let status = viewModel.addContactModel?.addContact_status
         statusLabel.textColor = #colorLiteral(red: 0.3084815145, green: 0.3084815145, blue: 0.3084815145, alpha: 1);
         if status == "Potential" {
-            statusLabel.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+
+            //statusLabel.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+            statusLabel.backgroundColor = CommonColor.turquoiseColor
+
             statusLabel.text = status
         } else if status == "Disqualified" {
             statusLabel.backgroundColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
@@ -168,6 +173,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         } else if status == "Customer" {
             
             statusLabel.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            //statusLabel.backgroundColor = CommonColor.purpleColor
             statusLabel.text = status
         }else {
             statusLabel.text = status == "" ? "No Meeting Yet" : status
@@ -249,17 +255,19 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         socialButton.roundTop()
         socialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
-        filesButton.setTitle("Files", for: .normal)
-        filesButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
-        filesButton.setTitleColor(.black, for: .selected)
-        filesButton.titleLabel?.font =  .systemFont(ofSize: 11)
-        filesButton.isSelected = true
-        filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
-        filesButton.layer.borderColor = UIColor.gray.cgColor
-        filesButton.layer.borderWidth = 0.2
-        filesButton.roundTop()
-        filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
-        
+
+//        filesButton.setTitle("Files", for: .normal)
+//        filesButton.setTitleColor(.white, for: .normal)
+//        filesButton.setTitleColor(.black, for: .selected)
+//        filesButton.titleLabel?.font =  .systemFont(ofSize: 11)
+//        filesButton.isSelected = true
+//        filesButton.backgroundColor = .lightGray
+//        filesButton.layer.borderColor = UIColor.gray.cgColor
+//        filesButton.layer.borderWidth = 0.2
+//        filesButton.roundTop()
+//        filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
+//
+
         infoButton.setTitle("Info", for: .normal)
         infoButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         infoButton.setTitleColor(.black, for: .selected)
@@ -277,7 +285,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topStackView.addArrangedSubview(logButton)
         topStackView.addArrangedSubview(todoButton)
         topStackView.addArrangedSubview(socialButton)
-        topStackView.addArrangedSubview(filesButton)
+//        topStackView.addArrangedSubview(filesButton)
         topStackView.addArrangedSubview(infoButton)
         topView.addSubview(topStackView)
         
@@ -625,6 +633,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     resultSocialList = ContactViewModel.queryContactSocialTable(id: Defaults[.ContactID]!);
             break
             
+/*
         case filesButton :
                     logButton.isSelected = false
                     todoButton.isSelected = false
@@ -639,6 +648,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     
             break
+*/
+
             
         case infoButton :
                     logButton.isSelected = false
@@ -850,7 +861,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 let TwitterAppLink = "twitter://user?screen_name=\(getUserTwitter ?? "Check the username")"
                 let TwitterWebLink = "https://twitter.com/\(getUserTwitter ?? "Check the username")"
                
-                let LinkedInAppLink = "linkedin://profile/\(getUserLinkedin ?? "Check the username")" 
+                let LinkedInAppLink = "linkedin://profile/\(getUserLinkedin ?? "Check the username")"
                 let LinkedInWebLink = "https://www.linkedin.com/in/\(getUserLinkedin ?? "Check the username")/"
              
             

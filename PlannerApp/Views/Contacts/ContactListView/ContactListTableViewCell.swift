@@ -47,20 +47,32 @@ class ContactListTableViewCell: UITableViewCell {
     
     let rating : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+
+        //label.font = UIFont.boldSystemFont(ofSize: 15)
+        //label.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = CommonColor.yellowColor
         return label
     }()
     var lastCom : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = .lightGray
         return label
     }()
-    var toFollow = UILabel()
+    var toFollow : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        
+        return label
+    }()
+    
     var cellView:  UIView = {
         let view = UIView()
+
         //view.backgroundColor = .white
+        view.backgroundColor = CommonColor.darkerWhiteColor
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 0.2
         view.layer.shadowRadius = 5

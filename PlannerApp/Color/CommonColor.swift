@@ -20,4 +20,6 @@ struct CommonColor {
     static let lightGrayColor:UIColor = UIColor(rgb: 0xF1F2F6)
     static let grayColor:UIColor = UIColor(rgb: 0xCED6E0)
     static let darkGrayColor:UIColor = UIColor(rgb: 0x535C68)
+    static let yellowColor:UIColor = UIColor(rgb: 0xf4ce42)
+    static let darkerWhiteColor:UIColor = UIColor(rgb: 0xf2f5f9)
 }

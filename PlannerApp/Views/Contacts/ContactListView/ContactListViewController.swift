@@ -433,15 +433,22 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         if contactData.C_Status == "Potential" {
            cell.toFollow.text = "To Follow"
-            cell.toFollow.textColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
-           cell.status.textColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+
+            //cell.toFollow.textColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+           //cell.status.textColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+
+           cell.toFollow.textColor = CommonColor.turquoiseColor
+           cell.status.textColor = CommonColor.turquoiseColor
             
         } else if contactData.C_Status == "Customer" {
             
             
             cell.toFollow.text = "Keep In Touch"
-            cell.toFollow.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-            cell.status.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+
+            //cell.toFollow.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            //cell.status.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            cell.toFollow.textColor = CommonColor.purpleColor
+            cell.status.textColor = CommonColor.purpleColor
             
         } else if contactData.C_Status == "Disqualified" {
             
@@ -453,8 +460,10 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
            
             
         } else {
-            cell.toFollow.textColor = .lightGray
-       
+
+            //cell.toFollow.textColor = .lightGray
+                cell.toFollow.textColor = .lightGray
+                 cell.status.textColor = .lightGray
         }
         
         //cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐

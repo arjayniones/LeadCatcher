@@ -89,6 +89,8 @@
 		24701A44219A6BBE00028F43 /* PaperOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24701A43219A6BBE00028F43 /* PaperOnboarding.framework */; };
 		24701A46219A71F800028F43 /* OnboardingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */; };
 		24775F5F217F0451004319B1 /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24775F5E217F0451004319B1 /* ResourceViewController.swift */; };
+		247E7A2321BA51EB00FBDCAE /* UserFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247E7A2221BA51EB00FBDCAE /* UserFiles.swift */; };
+		247E7A2521BA5C7F00FBDCAE /* ResourcesAndFilesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247E7A2421BA5C7F00FBDCAE /* ResourcesAndFilesModel.swift */; };
 		24811D43215B5AE500C1ED20 /* ClusterMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */; };
 		24819DF421AB86E5001487A1 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24819DF321AB86E5001487A1 /* HomeTableViewCell.swift */; };
 		24819DF621ABD108001487A1 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24819DF521ABD108001487A1 /* GradientView.swift */; };
@@ -231,6 +233,8 @@
 		24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInfoViewController.swift; sourceTree = "<group>"; };
 		24775F5E217F0451004319B1 /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		24775F60217F1183004319B1 /* PlannerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlannerApp.entitlements; sourceTree = "<group>"; };
+		247E7A2221BA51EB00FBDCAE /* UserFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFiles.swift; sourceTree = "<group>"; };
+		247E7A2421BA5C7F00FBDCAE /* ResourcesAndFilesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesAndFilesModel.swift; sourceTree = "<group>"; };
 		24811D42215B5AE500C1ED20 /* ClusterMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMapViewController.swift; sourceTree = "<group>"; };
 		24819DF321AB86E5001487A1 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		24819DF521ABD108001487A1 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
@@ -459,8 +463,8 @@
 		0CBFA0D62150AC470028750B /* ContactListDetailsView */ = {
 			isa = PBXGroup;
 			children = (
-				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
 				0CBFA0D92150C1810028750B /* ContactDetailsViewController.swift */,
+				0CBFA0D72150C1690028750B /* ContactDetailsViewModel.swift */,
 				0C2C11AE215B5F39002479F1 /* ContactDetailTableViewCell.swift */,
 				0C1E5FFD2181B23E00DC8750 /* LogsTableViewCell.swift */,
 				0C1E5FFF2181B25F00DC8750 /* ToDoTableViewCell.swift */,
@@ -549,6 +553,7 @@
 				0C8DBA40216AF2C4009A1475 /* PanelListModel.swift */,
 				0C8DBA48216C4B7A009A1475 /* MessageTemplatesModel.swift */,
 				2468C4C42182A50D0062D3FF /* Checklist.swift */,
+				247E7A2221BA51EB00FBDCAE /* UserFiles.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -607,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				24775F5E217F0451004319B1 /* ResourceViewController.swift */,
+				247E7A2421BA5C7F00FBDCAE /* ResourcesAndFilesModel.swift */,
 			);
 			path = ResourcesAndFiles;
 			sourceTree = "<group>";
@@ -1124,6 +1130,7 @@
 				24AE1BFE21AD3A5F00D74186 /* CalendarView.swift in Sources */,
 				D6715D882140C82E00957E86 /* LoginViewController.swift in Sources */,
 				242717D821491150001792BD /* HomeViewController.swift in Sources */,
+				247E7A2321BA51EB00FBDCAE /* UserFiles.swift in Sources */,
 				0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */,
 				24819DF421AB86E5001487A1 /* HomeTableViewCell.swift in Sources */,
 				2455FBCC2150DD8100881541 /* AddNoteNavViewController.swift in Sources */,
@@ -1149,6 +1156,7 @@
 				2455FBC72150D6FD00881541 /* ColorExtension.swift in Sources */,
 				0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */,
 				24AE1BF321ACD55F00D74186 /* CCZoomAnimatedTransitioning.swift in Sources */,
+				247E7A2521BA5C7F00FBDCAE /* ResourcesAndFilesModel.swift in Sources */,
 				0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */,
 				2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */,
 			);
