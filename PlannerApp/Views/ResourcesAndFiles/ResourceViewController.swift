@@ -13,6 +13,7 @@ import RealmSwift
 class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate,LargeNativeNavbar  {
 
     fileprivate var collectionview: UICollectionView!
+    
     let viewModel = ResourcesAndFilesModel()
     fileprivate var isRemoveButtonEnabled:Bool = false
     
@@ -38,13 +39,13 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         let importButton = UIButton()
         importButton.frame = CGRect(x:0, y:0, width:30, height:30)
         let image = UIImage(named: "plus-grey-icon" )
-        importButton.setBackgroundImage(image, for: .normal)
+        importButton.setImage(image, for: .normal)
         importButton.addTarget(self, action: #selector(importButtonPressed), for: .touchUpInside)
         let rightAddBarButton = UIBarButtonItem(customView: importButton)
         
         trashButton.frame = CGRect(x:0, y:0, width:30, height:30)
-        trashButton.setBackgroundImage(UIImage(named: "trash-icon" ), for: .normal)
-        trashButton.setBackgroundImage(UIImage(named: "okay-icon" ), for: .selected)
+        trashButton.setImage(UIImage(named: "trash-icon" ), for: .normal)
+        trashButton.setImage(UIImage(named: "okay-icon" ), for: .selected)
         trashButton.addTarget(self, action: #selector(removeButtonPressed), for: .touchUpInside)
         let rightTrashBarButton = UIBarButtonItem(customView: trashButton)
         

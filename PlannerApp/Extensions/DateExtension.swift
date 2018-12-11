@@ -108,6 +108,16 @@ extension Date {
 }
 
 extension Date {
+    public enum filterDateElement {
+        case second
+        case minute
+        case hour
+        case day
+        case month
+        case year
+    }
+    
+    
     var startOfDay: Date {
         return Calendar.current.startOfDay(for: self)
     }
@@ -129,6 +139,26 @@ extension Date {
         components.month = 1
         components.second = -1
         return Calendar.current.date(byAdding: components, to: startOfMonth)!
+    }
+    
+    func isContain(this:Int,filterElement:filterDateElement) -> Bool {
+        let components = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: self)
+        print("self",self)
+        print(this)
+        
+        switch filterElement {
+        case .second:
+            return components.second! == this
+        case .minute:
+            return components.minute! == this
+        case .hour:
+            return components.hour! == this
+        case .day:
+            return components.day! == this
+        case .month:
+            return components.month! == this
+        default: return false
+        }
     }
 }
 
