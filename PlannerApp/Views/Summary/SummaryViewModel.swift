@@ -117,7 +117,7 @@ class SummaryViewModel {
     
     }
     
-    func generateDateForFilter(mth:Int, yrs:Int)->(Date, Date)
+    func generateDateForFilter(mth:Int, yrs:Int)->Results<ContactModel>
     {
         let selectedMonth = mth
         let selectedYear = yrs
@@ -136,7 +136,7 @@ class SummaryViewModel {
         
         let results = realmStoreContact.models().filter(predicate);
         
-        return (startDateOfMonth!, endDateOfMonth!)
+        return results;
     }
     
     func exportToDoData() {
