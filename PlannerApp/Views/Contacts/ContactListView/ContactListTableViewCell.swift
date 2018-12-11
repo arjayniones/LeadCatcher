@@ -21,7 +21,7 @@ class ContactListTableViewCell: UITableViewCell {
     }()
     let customerName: UILabel = {
         let label = UILabel()
-       
+        label.textColor = #colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1)
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.font = UIFont.boldSystemFont(ofSize: 20)
         
@@ -31,12 +31,14 @@ class ContactListTableViewCell: UITableViewCell {
     
     let phoneNum: UILabel = {
         let label = UILabel()
+        label.textColor = #colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 12)
         
         return label
     }()
     let email: UILabel = {
         let label = UILabel()
+        label.textColor = #colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 10)
         
         return label
@@ -45,6 +47,10 @@ class ContactListTableViewCell: UITableViewCell {
     
     let rating : UILabel = {
         let label = UILabel()
+
+        //label.font = UIFont.boldSystemFont(ofSize: 15)
+        //label.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = CommonColor.yellowColor
         return label
@@ -64,6 +70,8 @@ class ContactListTableViewCell: UITableViewCell {
     
     var cellView:  UIView = {
         let view = UIView()
+
+        //view.backgroundColor = .white
         view.backgroundColor = CommonColor.darkerWhiteColor
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 0.2
@@ -83,7 +91,7 @@ class ContactListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(cellView)
-       
+        cellView.backgroundColor = #colorLiteral(red: 0.9450980392, green: 0.9490196078, blue: 0.9647058824, alpha: 1)
         self.backgroundColor = .clear
         imgUser.image = UIImage(named: "user-circle-big-icon")
 
@@ -139,6 +147,7 @@ class ContactListTableViewCell: UITableViewCell {
             make.left.equalTo(cellView).inset(20)
             //make.top.bottom.equalTo(cellView).inset(30)
             make.size.equalTo(CGSize(width: 50, height: 50))
+           
             make.centerY.equalTo(cellView.snp.centerY)
 
         }
@@ -146,16 +155,17 @@ class ContactListTableViewCell: UITableViewCell {
         stackView1.snp.makeConstraints { make in
 
             make.top.bottom.equalTo(cellView).inset(5)
-            make.left.equalTo(imgUser.snp.right).offset(10)
-            make.right.equalTo(stackView2).offset(5)
+            make.left.equalTo(imgUser.snp.right).offset(20)
+            make.width.equalTo(cellView.snp.width).multipliedBy(0.4);
+            //make.right.equalTo(stackView2).offset(5)
         }
         
         stackView2.snp.makeConstraints { make in
           
             make.top.equalTo(cellView).inset(20)
             make.bottom.equalTo(cellView).inset(5)
-            //make.left.equalTo(stackView1.snp.right).offset(5)
-            make.right.equalTo(cellView).inset(5)
+            make.width.equalTo(cellView.snp.width).multipliedBy(0.35); //make.left.equalTo(stackView1.snp.right).offset(20)
+            make.right.equalTo(cellView).inset(0)
         }
 
 

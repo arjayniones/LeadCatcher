@@ -231,6 +231,7 @@ class DetailsTodoListViewModel {
             addNote.addNote_customerId = addNoteMod.addNote_customer?.id
             addNote.addNote_taskType = addNoteMod.addNote_taskType
             addNote.addNote_notes = addNoteMod.addNote_notes
+            addNote.status = "Pending"
             if let location = addNoteMod.addNote_location {
                 addNote.addNote_location = location
             }

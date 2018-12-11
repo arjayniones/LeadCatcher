@@ -28,6 +28,7 @@ class ContactModel:Model{
     @objc dynamic var C_Whatsapp:String = "";
     @objc dynamic var C_Twitter:String = "";
     @objc dynamic var C_Linkedin:String = "";
+    @objc dynamic var C_Linkedin2:String = "";
     //let ContactSocial = List<ContactSocial>();
     
     func newInstance() -> ContactModel {
