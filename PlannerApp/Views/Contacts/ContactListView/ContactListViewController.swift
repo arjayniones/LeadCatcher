@@ -410,6 +410,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         let contactData: ContactModel
         
+         let resultHistoryList = ContactViewModel.queryContactHistoryTable(id: Defaults[.ContactID]!);
+        
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
@@ -485,11 +487,15 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
            // cell.rating.textColor = .black
         }
         
+        
+        
         ImageCache.default.retrieveImage(forKey: "profile_"+contactData.id, options: nil) {
             image, cacheType in
             if let image = image {
                 cell.imgUser.image = image
             } else {
+                
+                cell.imgUser.image = UIImage(named: "user-circle-big-icon")
                 print("Not exist in cache.")
             }
         }
@@ -560,7 +566,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         detailController.setupModel = contactModel
         detailController.editData_YN = true;
-        self.navigationController?.pushViewController(detailController, animated: true)
+        self.navigationController?.pushViewController(detailController, animated: false)
     }
     
     @objc func sendSMS(num: String, name:String){
