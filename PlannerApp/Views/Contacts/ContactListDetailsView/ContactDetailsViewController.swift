@@ -255,7 +255,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         socialButton.roundTop()
         socialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
-
 //        filesButton.setTitle("Files", for: .normal)
 //        filesButton.setTitleColor(.white, for: .normal)
 //        filesButton.setTitleColor(.black, for: .selected)

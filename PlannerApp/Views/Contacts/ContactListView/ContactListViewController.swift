@@ -51,7 +51,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         searchController.searchBar.delegate = self
 
         title = "Contacts"
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         
         allButton.roundTop()
         allButton.setTitle("All", for: .normal)
@@ -241,7 +241,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     
     @objc func addContact() {
         let contactsDetailsVC = ContactDetailsViewController()
-        self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
+        self.navigationController?.pushViewController(contactsDetailsVC, animated: false)
         contactsDetailsVC.editSelected = true
         contactsDetailsVC.editData_YN = false;
     }
@@ -261,6 +261,12 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         self.tableView.reloadData()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        view.backgroundColor = .clear
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         if #available(iOS 11.0, *) {
             navigationItem.searchController = nil
@@ -566,7 +572,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         detailController.setupModel = contactModel
         detailController.editData_YN = true;
-        self.navigationController?.pushViewController(detailController, animated: true)
+        self.navigationController?.pushViewController(detailController, animated: false)
     }
     
     @objc func sendSMS(num: String, name:String){

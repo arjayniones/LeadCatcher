@@ -71,7 +71,7 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         addChild(homeNavController)
         view.insertSubview(homeNavController.view, at: 0)
         
-        bgTabView.backgroundColor = .clear
+        bgTabView.backgroundColor = .white
         self.view.addSubview(bgTabView)
         
         tabView.spacing = 0
