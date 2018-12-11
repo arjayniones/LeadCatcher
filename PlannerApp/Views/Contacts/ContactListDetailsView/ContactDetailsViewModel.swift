@@ -202,6 +202,7 @@ class ContactDetailsViewModel {
         let updateContactModel = realmStore.queryToDo(id: id)?.first;
         if let data = self.addContactModel
         {
+            updateContactModel?.updated_at = Date();
             updateContactModel?.C_Name = data.addContact_contactName;
             updateContactModel?.C_DOB = data.addContact_dateOfBirth;
             updateContactModel?.C_Address = data.addContact_address;
