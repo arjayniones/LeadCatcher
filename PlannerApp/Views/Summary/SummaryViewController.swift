@@ -123,6 +123,23 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SummaryCollectionViewCell
         let data = viewModel.detailRows[indexPath.row]
+        
+        let collectionCellColor = [#colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1),#colorLiteral(red: 0, green: 0.8235294118, blue: 0.8274509804, alpha: 1),#colorLiteral(red: 1, green: 0.1529411765, blue: 0.1529411765, alpha: 1)];
+        
+        if indexPath.row == 0 || indexPath.row == 3
+        {
+            myCell.outerView.backgroundColor = collectionCellColor[0];
+            //myCell.backgroundView?.backgroundColor = collectionCellColor[0];
+        }
+        else if indexPath.row == 1 || indexPath.row == 4
+        {
+            myCell.outerView.backgroundColor = collectionCellColor[1];
+        }
+        else if indexPath.row == 2 || indexPath.row == 5
+        {
+            myCell.outerView.backgroundColor = collectionCellColor[2];
+        }
+        
         myCell.textLabel.text = data.nameLbl == "" ? "No Label":  data.nameLbl
         
         myCell.numberLabel.text = data.valueLbl == 0 ? "0": "\(data.valueLbl)"

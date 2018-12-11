@@ -140,7 +140,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         companyLabel.font = companyLabel.font.withSize(20)
         
         let score = viewModel.addContactModel?.addContact_leadScore
-        scoreLabel.textColor = .yellow
+
+        scoreLabel.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        //scoreLabel.textColor = CommonColor.yellowColor
         scoreLabel.font = scoreLabel.font.withSize(22)
         if score == 0 {
               scoreLabel.text = "✩ ✩ ✩ ✩ ✩"
@@ -158,15 +160,20 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         
         let status = viewModel.addContactModel?.addContact_status
-        
+        statusLabel.textColor = #colorLiteral(red: 0.3084815145, green: 0.3084815145, blue: 0.3084815145, alpha: 1);
         if status == "Potential" {
-            statusLabel.backgroundColor = .yellow
+
+            //statusLabel.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+            statusLabel.backgroundColor = CommonColor.turquoiseColor
+
             statusLabel.text = status
         } else if status == "Disqualified" {
-            statusLabel.backgroundColor = .red
+            statusLabel.backgroundColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
             statusLabel.text = status
         } else if status == "Customer" {
-            statusLabel.backgroundColor = .green
+            
+            statusLabel.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            //statusLabel.backgroundColor = CommonColor.purpleColor
             statusLabel.text = status
         }else {
             statusLabel.text = status == "" ? "No Meeting Yet" : status
@@ -174,7 +181,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         
         statusLabel.font = statusLabel.font.withSize(15)
-        statusLabel.textColor = .black
+        //statusLabel.textColor = .black
         statusLabel.textAlignment = .center
         statusLabel.roundBottomRight()
         
@@ -216,33 +223,33 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topView.addSubview(buttonStackView)
         
         logButton.setTitle("Logs", for: .normal)
-        logButton.setTitleColor(.white, for: .normal)
+        logButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         logButton.setTitleColor(.black, for: .selected)
         logButton.titleLabel?.font =  .systemFont(ofSize: 11)
         logButton.isSelected = true
-        logButton.backgroundColor = .lightGray
+        logButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
         logButton.layer.borderColor = UIColor.gray.cgColor
         logButton.layer.borderWidth = 0.2
         logButton.roundTop()
         logButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         todoButton.setTitle("To Do", for: .normal)
-        todoButton.setTitleColor(.white, for: .normal)
+        todoButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         todoButton.setTitleColor(.black, for: .selected)
         todoButton.titleLabel?.font =  .systemFont(ofSize: 11)
         todoButton.isSelected = true
-        todoButton.backgroundColor = .lightGray
+        todoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
         todoButton.layer.borderColor = UIColor.gray.cgColor
         todoButton.layer.borderWidth = 0.2
         todoButton.roundTop()
         todoButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
         socialButton.setTitle("Socials", for: .normal)
-        socialButton.setTitleColor(.white, for: .normal)
+        socialButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         socialButton.setTitleColor(.black, for: .selected)
         socialButton.titleLabel?.font =  .systemFont(ofSize: 11)
         socialButton.isSelected = true
-        socialButton.backgroundColor = .lightGray
+        socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
         socialButton.layer.borderColor = UIColor.gray.cgColor
         socialButton.layer.borderWidth = 0.2
         socialButton.roundTop()
@@ -259,8 +266,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 //        filesButton.roundTop()
 //        filesButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
 //
+
         infoButton.setTitle("Info", for: .normal)
-        infoButton.setTitleColor(.white, for: .normal)
+        infoButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         infoButton.setTitleColor(.black, for: .selected)
         infoButton.titleLabel?.font =  .systemFont(ofSize: 11)
         infoButton.isSelected = true
@@ -580,10 +588,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     infoButton.isSelected = false
                     selectedTab = "log"
                     logButton.backgroundColor = .white
-                    todoButton.backgroundColor = .lightGray
-                    socialButton.backgroundColor = .lightGray
-                    filesButton.backgroundColor = .lightGray
-                    infoButton.backgroundColor = .lightGray
+                    todoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     resultHistoryList = ContactViewModel.queryContactHistoryTable(id: Defaults[.ContactID]!);
                     print(Defaults[.ContactID]!)
                     print(resultHistoryList);
@@ -601,11 +609,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = false
                     selectedTab = "todo"
-                    logButton.backgroundColor = .lightGray
+                    logButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     todoButton.backgroundColor = .white
-                    socialButton.backgroundColor = .lightGray
-                    filesButton.backgroundColor = .lightGray
-                    infoButton.backgroundColor = .lightGray
+                    socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
             self.tableView.reloadData();
             break
             
@@ -616,28 +624,31 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = false
                     selectedTab = "social"
-                    logButton.backgroundColor = .lightGray
-                    todoButton.backgroundColor = .lightGray
+                    logButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    todoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     socialButton.backgroundColor = .white
-                    filesButton.backgroundColor = .lightGray
-                    infoButton.backgroundColor = .lightGray
+                    filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     resultSocialList = ContactViewModel.queryContactSocialTable(id: Defaults[.ContactID]!);
             break
             
-//        case filesButton :
-//                    logButton.isSelected = false
-//                    todoButton.isSelected = false
-//                    socialButton.isSelected = false
-//                    filesButton.isSelected = true
-//                    infoButton.isSelected = false
-//                    selectedTab = "files"
-//                    logButton.backgroundColor = .lightGray
-//                    todoButton.backgroundColor = .lightGray
-//                    socialButton.backgroundColor = .lightGray
-//                    filesButton.backgroundColor = .white
-//                    infoButton.backgroundColor = .lightGray
-//                    
-//            break
+/*
+        case filesButton :
+                    logButton.isSelected = false
+                    todoButton.isSelected = false
+                    socialButton.isSelected = false
+                    filesButton.isSelected = true
+                    infoButton.isSelected = false
+                    selectedTab = "files"
+                    logButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    todoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    filesButton.backgroundColor = .white
+                    infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    
+            break
+*/
+
             
         case infoButton :
                     logButton.isSelected = false
@@ -646,10 +657,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = true
                     selectedTab = "info"
-                    logButton.backgroundColor = .lightGray
-                    todoButton.backgroundColor = .lightGray
-                    socialButton.backgroundColor = .lightGray
-                    filesButton.backgroundColor = .lightGray
+                    logButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    todoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     infoButton.backgroundColor = .white
             
             
@@ -660,10 +671,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.isSelected = false
                     infoButton.isSelected = true
                     selectedTab = "info"
-                    logButton.backgroundColor = .lightGray
-                    todoButton.backgroundColor = .lightGray
-                    socialButton.backgroundColor = .lightGray
-                    filesButton.backgroundColor = .lightGray
+                    logButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    todoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
+                    filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     infoButton.backgroundColor = .white
         }
         
@@ -800,6 +811,25 @@ extension ContactDetailsViewController: QLPreviewControllerDataSource {
 extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+
+//        switch selectedTab {
+//            case "files":
+//                // Setup QuickLook view controller
+//                // QuickPreviewDelegate at the extension part
+//                let previewController = QLPreviewController()
+//
+//                // "Exports" is the folder to keep csv file
+//                previewItem = ContactDetailsViewModel.getDirectoryInNSURL(fileName: "Exports/ToDoInfo.csv")
+//                previewController.dataSource = self
+//                // open csv/excel file
+//                self.present(previewController, animated: true, completion: nil)
+//
+//                break;
+//            default:
+//                print("select nothing");
+//
+//        }
+
         switch selectedTab {
             case "files":
                 // Setup QuickLook view controller
@@ -948,11 +978,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         if selectedTab == "info" {
             
             if editSelected {
-                
-                
                 if indexPath.row == 1{
                     self.showDateTimePicker()
-                    
                 }else  if indexPath.row == 5 {
                     //scoring here
                      self.sheetPressedScoring(data: data)
@@ -964,6 +991,41 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 }
             }
 
+        }
+        else if selectedTab == "todo"
+        {
+            let detailController = DetailsTodoListViewController()
+            detailController.isControllerEditing = true
+            
+            let todoModel = AddNoteModel()
+            todoModel.addNote_ID = addNoteList[indexPath.row].id
+            todoModel.addNote_alertDateTime = addNoteList[indexPath.row].addNote_alertDateTime
+            todoModel.addNote_repeat = addNoteList[indexPath.row].addNote_repeat
+            todoModel.addNote_subject = addNoteList[indexPath.row].addNote_subject
+            
+            if let customerModel = RealmStore<ContactModel>().models(query: "id == '\(addNoteList[indexPath.row].addNote_customerId!)'")?.first {
+                todoModel.addNote_customer = customerModel
+            }
+            
+            todoModel.addNote_taskType = addNoteList[indexPath.row].addNote_taskType
+            todoModel.addNote_notes = addNoteList[indexPath.row].addNote_notes
+            todoModel.addNote_location = addNoteList[indexPath.row].addNote_location
+            var checklist:[ChecklistTemp] = []
+            
+            for x in addNoteList[indexPath.row].addNote_checklist {
+                let checklisttemp = ChecklistTemp()
+                checklisttemp.id = x.id
+                checklisttemp.title = x.title
+                checklisttemp.status = x.status
+                checklist.append(checklisttemp)
+            }
+            
+            todoModel.addNote_checkList = checklist
+            
+            detailController.setupModel = todoModel
+            
+            self.navigationController?.pushViewController(detailController, animated: true)
+            
         }
 
     }
@@ -993,8 +1055,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
             //let data = viewModel.detailRows[indexPath.row]
-            cell.leftIcon = "meeting-icon"
-            cell.selectionStyle = .none
+            cell.leftIcon = "meeting-x2"
+            //cell.selectionStyle = .none
             cell.labelTitle.isEnabled = false
             cell.labelTitle.text = addNoteList[indexPath.row].addNote_subject;
             cell.labelDate.text = convertDateTimeToString(date: addNoteList[indexPath.row].addNote_alertDateTime!)
@@ -1239,6 +1301,9 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             cell.labelTitle.text = "";
             self.populateInfoData(cell: cell, index: indexPath, data:data)
             
+
+            //cell.selectionStyle = .none
+
             let customSelectionView = UIView();
             customSelectionView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = customSelectionView

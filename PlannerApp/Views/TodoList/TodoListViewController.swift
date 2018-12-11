@@ -17,6 +17,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var searchFooter = SearchFooterView()
     fileprivate let viewModel = TodoListViewModel()
+    let realmStore = RealmStore<AddNote>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,10 +152,22 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "delete".localized) { (deleteAction, indexPath) -> Void in
-            self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
-            let identifier = "user_notification_\(note.id)"
-            //azlim : to do remember to apply function below when deleted data
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+            
+            
+            let alert = UIAlertController(title: "Warning", message: "Delete this ToDo ?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+            alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
+                let identifier = "user_notification_\(note.id)"
+                
+                //azlim : to do remember to apply function below when deleted data
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+                
+            }))
+            self.present(alert, animated: true, completion:nil);
+            
+            
+            
         }
         
 //        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
@@ -251,6 +264,37 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
         cell.detailTextLabel?.textColor = .red
         return cell
+    }
+    
+    @available (iOS 11.0, *)
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let data = viewModel.todoListData  else {
+            return nil
+        }
+        
+        let markCompleted = UIContextualAction(style: .normal, title: "Completed") { (action, view, handler) in
+            
+            let alert = UIAlertController(title: "Info", message: "Completed this ToDo ?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+            alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                self.viewModel.updateToDoListStatus(id: data[indexPath.row].id);
+            }))
+            self.present(alert, animated: true, completion:nil);
+            
+            
+//            self.realmStore.store.beginWrite();
+//            let addNoteModel = self.realmStore.queryToDo(id: data[indexPath.row].id)?.first;
+//            addNoteModel?.status = "Completed"
+//
+//            self.realmStore.store.add(addNoteModel!, update: true);
+//            //let addNoteModel = realmStore.qu
+//            try! self.realmStore.store.commitWrite()
+        }
+        
+        markCompleted.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.9137254902, blue: 0.5803921569, alpha: 1)
+        let configuration = UISwipeActionsConfiguration(actions: [markCompleted])
+        return configuration
+        
     }
 }
 
