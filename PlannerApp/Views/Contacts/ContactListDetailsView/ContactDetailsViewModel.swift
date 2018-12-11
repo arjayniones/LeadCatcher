@@ -81,8 +81,29 @@ class ContactDetailsViewModel {
         row8.icon = "user-check-x2"
         row8.title = "Status"
         row8.alertOptions = ["Potential","Nurture","Disqualified","Customer"]
-        
         self.detailRows.append(row8)
+        
+        let row9 = AddContactViewObject();
+        row9.icon = "facebook-icon";
+        row9.title = "Facebook";
+        self.detailRows.append(row9)
+        
+        let row10 = AddContactViewObject();
+        row10.icon = "whatsapp-icon";
+        row10.title = "Whatsapp";
+        self.detailRows.append(row10)
+        
+        let row11 = AddContactViewObject();
+        row11.icon = "twitter-icon";
+        row11.title = "Twitter";
+        self.detailRows.append(row11)
+        
+        let row12 = AddContactViewObject();
+        row12.icon = "linkedin-icon";
+        row12.title = "LinkedIn";
+        self.detailRows.append(row12)
+        
+        
         
         let social1 = SocialClass();
         social1.socailUrl = "";
