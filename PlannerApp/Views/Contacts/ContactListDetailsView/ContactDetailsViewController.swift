@@ -118,7 +118,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         topView.backgroundColor = .clear
         
         profileImageView.layer.cornerRadius = 45
-        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.layer.borderColor = UIColor.white.cgColor
         profileImageView.layer.borderWidth = 2
         profileImageView.isUserInteractionEnabled = true
         profileImageView.image = UIImage(named:"user-circle-big-icon")
@@ -386,7 +386,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
 //    }
     
     @objc func editProfileImage() {
+        
+        if editData_YN {
         self.present(imagePickerController, animated: true, completion: nil)
+        }
     }
     
     @objc func save() {
