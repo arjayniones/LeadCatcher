@@ -27,10 +27,6 @@ class SettingsViewModel {
         return labelNames
         
     }
-    
-    
-    
-    
 }
 
 struct SettingsLabels {

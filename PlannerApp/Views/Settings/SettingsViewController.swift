@@ -220,6 +220,9 @@ extension SettingsViewController: UIImagePickerControllerDelegate,UINavigationCo
     
     func saveImage(image:UIImage) {
         ImageCache.default.store(image, forKey: "background_image")
+
+        NotificationCenter.default.post(name: notificationChangeImage, object: nil)
+        
     }
 }
  
