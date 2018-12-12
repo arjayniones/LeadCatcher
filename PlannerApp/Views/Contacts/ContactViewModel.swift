@@ -138,7 +138,7 @@ class ContactViewModel {
         data.CH_HistoryType = cHistoryType;
         
         data.add();
-        
+        updateContactLastCommColumn(id: cID)
         return true;
     }
     
@@ -149,6 +149,17 @@ class ContactViewModel {
         data.CS_CID = id;
         data.CS_SocialUrl = "https://facebook.com";
         data.add();
+    }
+    
+    class func updateContactLastCommColumn(id:String)
+    {
+        self.realmStore.store.beginWrite();
+        let addNoteModel = self.realmStore.queryToDo(id: id)?.first;
+        addNoteModel?.C_LastComm = Date().toString(withFormat: "yyyy-MM-dd HH:mm:ss")
+        
+        self.realmStore.store.add(addNoteModel!, update: true);
+        //let addNoteModel = realmStore.qu
+        try! self.realmStore.store.commitWrite()
     }
     
 }
