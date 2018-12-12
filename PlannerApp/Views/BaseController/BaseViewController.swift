@@ -57,14 +57,12 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         bgImageView = UIImageView(frame: view.bounds)
         bgImageView.isUserInteractionEnabled = true
         
-        ImageCache.default.retrieveImage(forKey: "background_image", options: nil) {
-            image, cacheType in
-            if let image = image {
-                self.bgImageView.image = image
-            } else {
-                self.bgImageView.image = UIImage(named: "contact-details-gradiant-bg")
-            }
-        }
+        self.changeBackGroundImage()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.changeBackGroundImage),
+                                               name: notificationChangeImage,
+                                               object: nil)
         
         view = bgImageView
         
@@ -112,6 +110,21 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
         
         view.updateConstraintsIfNeeded()
         view.setNeedsUpdateConstraints()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(notificationChangeImage)
+    }
+    
+    @objc func changeBackGroundImage() {
+        ImageCache.default.retrieveImage(forKey: "background_image", options: nil) {
+            image, cacheType in
+            if let image = image {
+                self.bgImageView.image = image
+            } else {
+                self.bgImageView.image = UIImage(named: "contact-details-gradiant-bg")
+            }
+        }
     }
     
     func resetTabController() {
