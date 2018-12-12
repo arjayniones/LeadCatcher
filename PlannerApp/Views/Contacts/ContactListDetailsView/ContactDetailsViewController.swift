@@ -741,7 +741,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             
             
             let emailTitle = "Hello"
-            let messageBody = "Hello \(customerName),"
+            let messageBody = "Hello \(customerName ?? ""),"
             let toRecipents = [emailAddress]
             let mc: MFMailComposeViewController = MFMailComposeViewController()
             mc.mailComposeDelegate = self
