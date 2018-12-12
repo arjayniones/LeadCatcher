@@ -156,6 +156,7 @@ extension MessageTemplatesViewController :  UITableViewDelegate,UITableViewDataS
         
         
         cell.textLabel?.text = msgTempData.msgTitle
+        cell.textLabel?.font = UIFont.ofSize(fontSize: 20, withType: .bold)
         cell.imageView?.image = UIImage(named: "message-icon")
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()

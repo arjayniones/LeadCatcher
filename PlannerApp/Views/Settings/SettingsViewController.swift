@@ -24,6 +24,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         super.viewDidLoad()
         
         title = "Settings"
+        
         view.backgroundColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
@@ -69,6 +70,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         
         cell.textLabel?.text = settingsLabels[indexPath.row].labelName
+        cell.textLabel?.font = UIFont.ofSize(fontSize: 20, withType: .bold)
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         cell.setNeedsUpdateConstraints()
         cell.updateConstraintsIfNeeded()
