@@ -23,7 +23,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
    
 
     fileprivate let searchController = UISearchController(searchResultsController: nil)
-    fileprivate var searchFooter = SearchFooterView()
+//    fileprivate var searchFooter = SearchFooterView()
     let viewModel = ContactListViewModel()
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
@@ -38,16 +38,17 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Contact"
+        searchController.searchBar.barStyle = .blackTranslucent
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = true
-            searchController.searchBar.placeholder = "Search Contact"
-            searchController.searchBar.barStyle = .blackTranslucent
+           
         } else {
             // Fallback on earlier versions
         }
+        definesPresentationContext = true
         searchController.searchBar.delegate = self
 
         title = "Contacts"
@@ -416,8 +417,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         let contactData: ContactModel
         
-         let resultHistoryList = ContactViewModel.queryContactHistoryTable(id: Defaults[.ContactID]!);
-        
+          
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
@@ -521,11 +521,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
         
         if isFiltering() {
-            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
+//            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
             return viewModel.filteredContacts!.count
         }
         
-        searchFooter.setNotFiltering()
+//        searchFooter.setNotFiltering()
         
         
         return data.count
@@ -712,20 +712,20 @@ extension ContactListViewController : MFMailComposeViewControllerDelegate, MFMes
 //    }
 //}
 
-extension UISearchBar {
-    func removeBackgroundImageView(){
-        if let view:UIView = self.subviews.first {
-            for curr in view.subviews {
-                guard let searchBarBackgroundClass = NSClassFromString("UISearchBarBackground") else {
-                    return
-                }
-                if curr.isKind(of:searchBarBackgroundClass){
-                    if let imageView = curr as? UIImageView{
-                        imageView.removeFromSuperview()
-                        break
-                    }
-                }
-            }
-        }
-    }
-}
+//extension UISearchBar {
+//    func removeBackgroundImageView(){
+//        if let view:UIView = self.subviews.first {
+//            for curr in view.subviews {
+//                guard let searchBarBackgroundClass = NSClassFromString("UISearchBarBackground") else {
+//                    return
+//                }
+//                if curr.isKind(of:searchBarBackgroundClass){
+//                    if let imageView = curr as? UIImageView{
+//                        imageView.removeFromSuperview()
+//                        break
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

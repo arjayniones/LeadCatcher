@@ -71,12 +71,12 @@ class ContactListTableViewCell: UITableViewCell {
     var cellView:  UIView = {
         let view = UIView()
 
-        //view.backgroundColor = .white
-        view.backgroundColor = CommonColor.darkerWhiteColor
-        view.layer.cornerRadius = 10
-        view.layer.borderWidth = 0.2
-        view.layer.shadowRadius = 5
-        view.layer.shadowOpacity = 0.5
+        view.backgroundColor = .white
+//        view.backgroundColor = CommonColor.darkerWhiteColor
+//        view.layer.cornerRadius = 10
+//        view.layer.borderWidth = 0.2
+//        view.layer.shadowRadius = 5
+//        view.layer.shadowOpacity = 0.5
       
         return view
     }()

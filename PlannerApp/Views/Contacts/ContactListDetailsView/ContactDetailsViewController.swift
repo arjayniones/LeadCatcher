@@ -160,7 +160,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         
         let status = viewModel.addContactModel?.addContact_status
-        statusLabel.textColor = #colorLiteral(red: 0.3084815145, green: 0.3084815145, blue: 0.3084815145, alpha: 1);
+        //statusLabel.textColor = #colorLiteral(red: 0.3084815145, green: 0.3084815145, blue: 0.3084815145, alpha: 1);
+        statusLabel.textColor = .white
+        
         if status == "Potential" {
 
             //statusLabel.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
@@ -172,12 +174,13 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             statusLabel.text = status
         } else if status == "Customer" {
             
-            statusLabel.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-            //statusLabel.backgroundColor = CommonColor.purpleColor
+            //statusLabel.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            statusLabel.backgroundColor = CommonColor.purpleColor
             statusLabel.text = status
         }else {
             statusLabel.text = status == "" ? "No Meeting Yet" : status
             statusLabel.backgroundColor = .white
+            statusLabel.textColor = .gray
         }
         
         statusLabel.font = statusLabel.font.withSize(15)

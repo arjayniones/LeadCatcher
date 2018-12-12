@@ -30,11 +30,11 @@ class TodoListViewModel {
         
         
         //fetch per date element
-//        if let fetchData = self.todoListData {
-//            fetchData.forEach{ (data) in
-//                print(data.addNote_alertDateTime!.isContain(this: 11, filterElement: .month))
-//            }
-//        }
+        if let fetchData = self.todoListData {
+            fetchData.forEach{ (data) in
+                print(data.addNote_alertDateTime!.isContain(this: 11, filterElement: .month))
+            }
+        }
     }
     
     func searchText(text:String) {

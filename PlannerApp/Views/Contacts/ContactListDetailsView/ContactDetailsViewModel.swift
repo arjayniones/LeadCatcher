@@ -80,7 +80,7 @@ class ContactDetailsViewModel {
         let row8 = AddContactViewObject()
         row8.icon = "user-check-x2"
         row8.title = "Status"
-        row8.alertOptions = ["Potential","Nurture","Disqualified","Customer"]
+        row8.alertOptions = ["Potential","Disqualified","Customer"]
         self.detailRows.append(row8)
         
         let row9 = AddContactViewObject();
@@ -202,6 +202,7 @@ class ContactDetailsViewModel {
         let updateContactModel = realmStore.queryToDo(id: id)?.first;
         if let data = self.addContactModel
         {
+            updateContactModel?.updated_at = Date();
             updateContactModel?.C_Name = data.addContact_contactName;
             updateContactModel?.C_DOB = data.addContact_dateOfBirth;
             updateContactModel?.C_Address = data.addContact_address;

@@ -19,7 +19,7 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Message Templates"
+        title = "Msg Templates"
        view.backgroundColor = .clear
         
         searchController.searchResultsUpdater = self

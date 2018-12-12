@@ -81,7 +81,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         stackView.addArrangedSubview(collectionview)
         stackView.addArrangedSubview(barChart)
         
-        
+        filteringOutContactTypeByDate()
        
         
     }
@@ -157,6 +157,19 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         let viewModel = SummaryViewModel()
         viewModel.exportContactData(); // used to export contact info
         viewModel.exportToDoData(); // used to export to do data
+    }
+    
+    func filteringOutContactTypeByDate()
+    {
+        let date = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        
+        for i in 1...12 {
+            let dateFromTo = viewModel.generateDateForFilter(mth: i, yrs: year)
+            
+            
+        }
     }
     
     

@@ -117,6 +117,28 @@ class SummaryViewModel {
     
     }
     
+    func generateDateForFilter(mth:Int, yrs:Int)->Results<ContactModel>
+    {
+        let selectedMonth = mth
+        let selectedYear = yrs
+        var components = DateComponents()
+        components.month = selectedMonth
+        components.year = selectedYear
+        let startDateOfMonth = Calendar.current.date(from: components)
+        
+        //Now create endDateOfMonth using startDateOfMonth
+        components.year = 0
+        components.month = 1
+        components.day = -1
+        let endDateOfMonth = Calendar.current.date(byAdding: components, to: startDateOfMonth!)
+        
+        let predicate = NSPredicate(format: "updated_at >= %@ AND updated_at <= %@",startDateOfMonth! as CVarArg,endDateOfMonth! as CVarArg);
+        
+        let results = realmStoreContact.models().filter(predicate);
+        
+        return results;
+    }
+    
     func exportToDoData() {
         
         let data:NSMutableArray  = NSMutableArray()
