@@ -45,7 +45,7 @@ class DetailsTodoListViewModel {
         let row5 = AddTodoViewObject()
         row5.icon = "task-iconx2"
         row5.title = "task_type".localized
-        row5.alertOptions = ["Appointment","Customer Birthday","Other"]
+        row5.alertOptions = ["Appointment","Customer Birthday"]
         self.detailRows.append(row5)
         
         let row6 = AddTodoViewObject()

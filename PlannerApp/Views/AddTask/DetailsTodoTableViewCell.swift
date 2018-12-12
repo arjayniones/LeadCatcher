@@ -40,6 +40,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     var title:String = "" {
         didSet {
             labelTitle.placeholder = title
+            //labelTitle.text = title
         }
     }
     
@@ -52,12 +53,12 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         self.selectionStyle = UITableViewCell.SelectionStyle.default
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
         labelTitle.returnKeyType = .done
-        labelTitle.textColor = .lightGray
         labelTitle.delegate = self
+        labelTitle.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         labelTitle.isEnabled = false
         labelTitle.autocorrectionType = .no;
         iconImage2.isHidden = true
-        
+       
         stackView.axis = .horizontal
         stackView.spacing = 10
         stackView.addArrangedSubview(iconImage2)

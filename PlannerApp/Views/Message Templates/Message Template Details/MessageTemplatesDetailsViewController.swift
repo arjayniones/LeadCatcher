@@ -54,7 +54,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     let titleTextView : UITextField = {
         let titleTxt = UITextField()
-        titleTxt.placeholder = "Enter message title here"
+        titleTxt.placeholder = "Enter message title"
         titleTxt.font = UIFont.ofSize(fontSize: 20, withType: .regular)
         
         return titleTxt
@@ -64,7 +64,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         let instructLbl = UILabel()
         instructLbl.text = "Copy this message or tap send button. "
         instructLbl.textColor = .darkGray
-        instructLbl.font = UIFont.ofSize(fontSize: 14, withType: .regular)
+        instructLbl.font = UIFont.ofSize(fontSize: 12, withType: .regular)
         
         return instructLbl
     }()
@@ -151,7 +151,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Message Templates"
+        title = "Msg Templates"
         view.backgroundColor = .clear
         
         view.addSubview(mainView)
@@ -217,7 +217,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             messageTextField.snp.makeConstraints {  make in
                 make.top.equalTo(bodyLabel.snp.bottom).offset(10)
                 make.left.right.equalTo(mainView).inset(10)
-                make.height.equalTo(300)
+                make.height.equalTo(200)
                 
             }
             

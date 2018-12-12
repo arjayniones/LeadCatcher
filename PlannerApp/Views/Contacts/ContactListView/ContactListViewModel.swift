@@ -51,5 +51,13 @@ class ContactListViewModel {
             contactList = realmStore.models(query: "deleted_at == nil")
         }
     }
-        
+    
+    func filterLastContactedDate(customerId:String) -> Date? {
+        if let data = RealmStore<ContactHistory>().models(query: "CH_CID == '\(customerId)'",
+                                                          sortingKey: "created_at",
+                                                          ascending: false) {
+            return data.first?.created_at
+        }
+        return nil
+    } 
 }

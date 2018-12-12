@@ -125,7 +125,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         profileImageView.layer.masksToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
+       
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editProfileImage)))
+        
         topView.addSubview(profileImageView)
         let name = viewModel.addContactModel?.addContact_contactName
         nameLabel.text = name == "" ? "No Name" : name
@@ -160,7 +162,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         
         let status = viewModel.addContactModel?.addContact_status
-        statusLabel.textColor = #colorLiteral(red: 0.3084815145, green: 0.3084815145, blue: 0.3084815145, alpha: 1);
+        //statusLabel.textColor = #colorLiteral(red: 0.3084815145, green: 0.3084815145, blue: 0.3084815145, alpha: 1);
+        statusLabel.textColor = .white
+        
         if status == "Potential" {
 
             //statusLabel.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
@@ -172,12 +176,13 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             statusLabel.text = status
         } else if status == "Customer" {
             
-            statusLabel.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-            //statusLabel.backgroundColor = CommonColor.purpleColor
+            //statusLabel.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            statusLabel.backgroundColor = CommonColor.purpleColor
             statusLabel.text = status
         }else {
             statusLabel.text = status == "" ? "No Meeting Yet" : status
             statusLabel.backgroundColor = .white
+            statusLabel.textColor = .gray
         }
         
         statusLabel.font = statusLabel.font.withSize(15)
@@ -365,6 +370,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             saveButton.sizeToFit()
             saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+            //editSelected = false
             
         } else {
             let editButton = UIButton()
@@ -374,7 +380,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             editButton.sizeToFit()
             editButton.frame = CGRect(x: 0, y: -2, width: editButton.frame.width, height: editButton.frame.height)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
-            
+            //editSelected = true
         }
     }
     
@@ -387,7 +393,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     @objc func editProfileImage() {
         
-        if editData_YN {
+        if editSelected {
         self.present(imagePickerController, animated: true, completion: nil)
         }
     }
@@ -1043,8 +1049,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
          
         case "log":
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
-            cell.leftIcon = "message-icon"
             
+            if resultHistoryList[indexPath.row].CH_HistoryType == "Call" {
+            cell.leftIcon = "phone-circle"
+            } else if resultHistoryList[indexPath.row].CH_HistoryType == "SMS" {
+                cell.leftIcon = "message-circle"
+            } else if resultHistoryList[indexPath.row].CH_HistoryType == "Email" {
+                cell.leftIcon = "mail-circle"
+            } else {
+                
+                
+            }
             cell.selectionStyle = .none
             
            //populate logs here using the customer logs info from database
@@ -1058,7 +1073,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
             //let data = viewModel.detailRows[indexPath.row]
+           
+            
+            if  addNoteList[indexPath.row].addNote_taskType == "Appointment"{
             cell.leftIcon = "meeting-x2"
+            } else if addNoteList[indexPath.row].addNote_taskType == "Customer Birthday"{
+                
+                cell.leftIcon = "birthday-icon"
+            } else {
+                
+                cell.leftIcon = "meeting-x2"
+            }
             //cell.selectionStyle = .none
             cell.labelTitle.isEnabled = false
             cell.labelTitle.text = addNoteList[indexPath.row].addNote_subject;
