@@ -125,7 +125,9 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         profileImageView.layer.masksToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
+       
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editProfileImage)))
+        
         topView.addSubview(profileImageView)
         let name = viewModel.addContactModel?.addContact_contactName
         nameLabel.text = name == "" ? "No Name" : name
@@ -368,6 +370,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             saveButton.sizeToFit()
             saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+            //editSelected = false
             
         } else {
             let editButton = UIButton()
@@ -377,7 +380,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             editButton.sizeToFit()
             editButton.frame = CGRect(x: 0, y: -2, width: editButton.frame.width, height: editButton.frame.height)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
-            
+            //editSelected = true
         }
     }
     
@@ -390,7 +393,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     @objc func editProfileImage() {
         
-        if editData_YN {
+        if editSelected {
         self.present(imagePickerController, animated: true, completion: nil)
         }
     }
@@ -1046,8 +1049,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
          
         case "log":
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
-            cell.leftIcon = "message-icon"
             
+            if resultHistoryList[indexPath.row].CH_HistoryType == "Call" {
+            cell.leftIcon = "phone-circle"
+            } else if resultHistoryList[indexPath.row].CH_HistoryType == "SMS" {
+                cell.leftIcon = "message-circle"
+            } else if resultHistoryList[indexPath.row].CH_HistoryType == "Email" {
+                cell.leftIcon = "mail-circle"
+            } else {
+                
+                
+            }
             cell.selectionStyle = .none
             
            //populate logs here using the customer logs info from database
@@ -1061,7 +1073,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
             //let data = viewModel.detailRows[indexPath.row]
+           
+            
+            if  addNoteList[indexPath.row].addNote_taskType == "Appointment"{
             cell.leftIcon = "meeting-x2"
+            } else if addNoteList[indexPath.row].addNote_taskType == "Customer Birthday"{
+                
+                cell.leftIcon = "birthday-icon"
+            } else {
+                
+                cell.leftIcon = "meeting-x2"
+            }
             //cell.selectionStyle = .none
             cell.labelTitle.isEnabled = false
             cell.labelTitle.text = addNoteList[indexPath.row].addNote_subject;

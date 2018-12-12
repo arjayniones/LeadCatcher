@@ -80,6 +80,8 @@ class ContactListTableViewCell: UITableViewCell {
       
         return view
     }()
+    
+    
      var didSetupConstraints = false
     
     var mainStackView = UIStackView()

@@ -25,7 +25,7 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search message templates".localized
-        
+        //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
