@@ -64,7 +64,7 @@ class SummaryCollectionViewCell: UICollectionViewCell {
     override func updateConstraints() {
         
         outerView.snp.makeConstraints { make in
-            make.edges.equalTo(self).inset(3)
+            make.edges.equalTo(self).inset(5)
             
         }
         

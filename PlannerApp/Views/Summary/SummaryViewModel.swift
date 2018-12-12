@@ -119,6 +119,9 @@ class SummaryViewModel {
     
     func generateDateForFilter(mth:Int, yrs:Int)->Results<ContactModel>
     {
+        
+        
+        
         let selectedMonth = mth
         let selectedYear = yrs
         var components = DateComponents()

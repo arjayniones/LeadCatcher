@@ -12,5 +12,6 @@ pod 'GoogleMaps'
 pod 'GooglePlaces'
 pod 'GooglePlacePicker'
 pod 'IQKeyboardManagerSwift'
+pod 'Charts'
  
 end
