@@ -26,7 +26,7 @@ class TodoListViewModel {
     var filteredDates: [AddNote] = []
     
     init() {
-        self.todoListData = realmStore.models(query: "deleted_at == nil && status == 'Pending'",sortingKey: "addNote_alertDateTime", ascending: false)
+        self.todoListData = realmStore.models(query: "deleted_at == nil && status != 'Completed'",sortingKey: "addNote_alertDateTime", ascending: false)
         
         
 //        //fetch per date element
@@ -121,10 +121,10 @@ class TodoListViewModel {
         return realmStore.models(query: "addNote_customerId == '\(test)' && status == 'Pending'");
     }
     
-    func updateToDoListStatus(id:String){
+    func updateToDoListStatus(id:String, status:String){
         self.realmStore.store.beginWrite();
         let addNoteModel = self.realmStore.queryToDo(id: id)?.first;
-        addNoteModel?.status = "Completed"
+        addNoteModel?.status = status
         
         self.realmStore.store.add(addNoteModel!, update: true);
         //let addNoteModel = realmStore.qu

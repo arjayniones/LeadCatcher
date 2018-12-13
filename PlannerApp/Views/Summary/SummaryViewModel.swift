@@ -24,39 +24,40 @@ class SummaryViewModel {
     init() {
         
         let row1 = SummaryCollectionViewObjects()
-        row1.nameLbl = "No. of Leads"
-        contactList = realmStoreContact.models(query: "deleted_at == nil")
+        row1.nameLbl = "Customer"
+        contactList = realmStoreContact.models(query: "C_Status == 'Customer' && deleted_at == nil")
         row1.valueLbl = (contactList?.count)!
         self.detailRows.append(row1)
         
         let row2 = SummaryCollectionViewObjects()
-        row2.nameLbl = "No. of Potential"
+        row2.nameLbl = "Potential"
         contactList = realmStoreContact.models(query: "C_Status == 'Potential' && deleted_at == nil")
         row2.valueLbl = (contactList?.count)!
         self.detailRows.append(row2)
         
         let row3 = SummaryCollectionViewObjects()
-        row3.nameLbl = "No. of Customers"
-        contactList = realmStoreContact.models(query: "C_Status == 'Customer' && deleted_at == nil")
+        row3.nameLbl = "Disqualified"
+        contactList = realmStoreContact.models(query: "C_Status == 'Disqualified' && deleted_at == nil")
         row3.valueLbl = (contactList?.count)!
         self.detailRows.append(row3)
         
         let row4 = SummaryCollectionViewObjects()
-        row4.nameLbl = "No. of Appointments"
-        todoList = realmStoreTodo.models()
+        row4.nameLbl = "Completed"
+        todoList = realmStoreTodo.models(query: "status == 'Completed' && deleted_at == nil")
         row4.valueLbl =  (todoList?.count)!
         self.detailRows.append(row4)
         
         let row5 = SummaryCollectionViewObjects()
-        row5.nameLbl = "No. Follow-Ups"
-        row5.valueLbl = 0
+        row5.nameLbl = "Follow-Ups"
+        todoList = realmStoreTodo.models(query: "status == 'Follow Up' && deleted_at == nil")
+        row5.valueLbl = (todoList?.count)!
         self.detailRows.append(row5)
         
         let row6 = SummaryCollectionViewObjects()
-        row6.nameLbl = "No. of Disqualified"
-        contactList = realmStoreContact.models(query: "C_Status == 'Disqualified' && deleted_at == nil")
+        row6.nameLbl = "Discontinue"
+        todoList = realmStoreTodo.models(query: "status == 'Discontinue' && deleted_at == nil")
         
-        row6.valueLbl = (contactList?.count)!
+        row6.valueLbl = (todoList?.count)!
         self.detailRows.append(row6)
         
         

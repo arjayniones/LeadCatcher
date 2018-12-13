@@ -39,8 +39,8 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     var title:String = "" {
         didSet {
-            //labelTitle.placeholder = title
-            labelTitle.text = title
+            labelTitle.placeholder = title
+            //labelTitle.text = title
         }
     }
     

@@ -86,8 +86,8 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         //collectionview.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3)
         
         // azlim : temp btn to generate excel file
-        let exportBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportCustomerData));
-        navigationItem.rightBarButtonItem = exportBtn;
+//        let exportBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportCustomerData));
+//        navigationItem.rightBarButtonItem = exportBtn;
         
         //barChart.backgroundColor = .clear
         //barChart.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3)
@@ -172,12 +172,12 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
                     fetchData.forEach({ (AddNote) in
                         if(AddNote.updated_at!.isContain(this: i+1, filterElement: .month))
                         {
-                            switch AddNote.addNote_taskType{
-                            case "Appointment":
+                            switch AddNote.status{
+                            case "Completed":
                                 val1 += 1;
-                            case "Customer Birthday":
+                            case "Follow Up":
                                 val2 += 1;
-                            case "Other":
+                            case "Discontinue":
                                 val3 += 1;
                             default:
                                 val1 += 0;
@@ -196,7 +196,11 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         
         let set = BarChartDataSet(values: yVals, label: "Type")
         set.drawIconsEnabled = false
-        set.colors = [ChartColorTemplates.material()[0], ChartColorTemplates.material()[1], ChartColorTemplates.material()[2]]
+        
+        let collectionCellColor = [#colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1),#colorLiteral(red: 0, green: 0.8235294118, blue: 0.8274509804, alpha: 1),#colorLiteral(red: 1, green: 0.1529411765, blue: 0.1529411765, alpha: 1)];
+        
+        //set.colors = [ChartColorTemplates.material()[0], ChartColorTemplates.material()[1], ChartColorTemplates.material()[2]]
+        set.colors = [#colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1),#colorLiteral(red: 0, green: 0.8235294118, blue: 0.8274509804, alpha: 1),#colorLiteral(red: 1, green: 0.1529411765, blue: 0.1529411765, alpha: 1)]
         if flag == "Lead"{
             set.stackLabels = ["Customer", "Potential", "Disqualified"]
         }
@@ -246,6 +250,10 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         
        updateNavbarAppear()
     }
+    
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return 2
+//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6

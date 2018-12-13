@@ -363,10 +363,30 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         if let viewmod = viewModel.addNoteModel {
             switch index.row {
             case 0:
-                cell.title = viewmod.addNote_alertDateTime == nil ? data.title : convertDateTimeToString(date: viewmod.addNote_alertDateTime!)
+                if viewmod.addNote_alertDateTime == nil
+                {
+                    cell.title = data.title;
+                }
+                else
+                {
+                    cell.title = data.title;
+                    cell.labelTitle.text = convertDateTimeToString(date:viewmod.addNote_alertDateTime!);
+                }
+                
+                //cell.title = viewmod.addNote_alertDateTime == nil ? data.title : convertDateTimeToString(date: viewmod.addNote_alertDateTime!)
                 break;
             case 1:
-                cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
+                if viewmod.addNote_repeat == ""
+                {
+                    cell.title = data.title;
+                }
+                else
+                {
+                    cell.title = data.title;
+                    cell.labelTitle.text = viewmod.addNote_repeat
+                }
+                
+                //cell.title = viewmod.addNote_repeat == "" ? data.title: viewmod.addNote_repeat
                 break;
             case 2:
                 if viewmod.addNote_subject == "" // if addnote_subject is empty then set placeholder only
@@ -382,16 +402,24 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
                 //cell.title = viewmod.addNote_subject == "" ? data.title: viewmod.addNote_subject
                 break;
             case 3:
-                cell.title = viewmod.addNote_customer?.C_Name == "" ? data.title: viewmod.addNote_customer?.C_Name ?? data.title
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addNote_customer?.C_Name
+                //cell.title = viewmod.addNote_customer?.C_Name == "" ? data.title: viewmod.addNote_customer?.C_Name ?? data.title
                 break;
             case 4:
-                cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addNote_taskType
+                //cell.title = viewmod.addNote_taskType == "" ? data.title: viewmod.addNote_taskType
                 break;
             case 5:
-                cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addNote_notes
+                //cell.title = viewmod.addNote_notes == "" ? data.title: viewmod.addNote_notes
                 break;
             case 6:
-                cell.title = viewmod.addNote_location == nil ? data.title:"\(viewmod.addNote_location?.name ?? data.title)"
+                cell.title = data.title;
+                cell.labelTitle.text = viewmod.addNote_location?.name
+                //cell.title = viewmod.addNote_location == nil ? data.title:"\(viewmod.addNote_location?.name ?? data.title)"
                 break;
             case 7:
                 cell.title = "Checklist"

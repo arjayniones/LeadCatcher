@@ -258,9 +258,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavbarAppear()
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-        }
+//        if #available(iOS 11.0, *) {
+//            navigationItem.searchController = searchController
+//        }
         
         self.tableView.reloadData()
     }
@@ -270,11 +270,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         view.backgroundColor = .clear
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = nil
-        }
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        if #available(iOS 11.0, *) {
+//            navigationItem.searchController = nil
+//        }
+//    }
     
     override func updateViewConstraints() {
         

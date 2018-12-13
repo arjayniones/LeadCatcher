@@ -28,7 +28,10 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
-        searchController.searchBar.isTranslucent = true
+        //searchController.searchBar.isTranslucent = true
+        searchController.searchBar.barStyle = .blackTranslucent
+        
+        
         //searchController.searchBar.backgroundColor = UIColor.clear;
         //UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal) //change cancel button to white
         //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
@@ -227,7 +230,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         
         detailController.setupModel = todoModel
         
-        self.navigationController?.pushViewController(detailController, animated: true)
+        self.navigationController?.pushViewController(detailController, animated: false)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -259,6 +262,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
         
         let note: AddNote
+        var status:String = "";
         
         if isFiltering() {
             note = viewModel.filteredNotes![indexPath.row]
@@ -287,10 +291,21 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
 //            cell.imageView?.backgroundColor = CommonColor.purpleColor
 //        }
         
-        
         cell.titleLabel.text = note.addNote_subject
         let imageNamed = note.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
-        cell.leftImageView.image = UIImage(named: imageNamed)
+        if note.status == "Follow Up"
+        {
+            cell.leftImageView.image = UIImage(named: "follow-up-icon")
+        }
+        else if note.status == "Discontinue"
+        {
+            cell.leftImageView.image = UIImage(named: "discontinue-icon")
+        }
+        else
+        {
+            cell.leftImageView.image = UIImage(named: imageNamed)
+        }
+        
         cell.leftImageAppearance = note.addNote_taskType
         let subText = "\(convertDateTimeToString(date: note.addNote_alertDateTime!))"
         cell.descriptionLabel.text = subText
@@ -305,29 +320,50 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         guard let data = viewModel.todoListData  else {
             return nil
         }
-        
-        let markCompleted = UIContextualAction(style: .normal, title: "Completed") { (action, view, handler) in
+        if data[indexPath.row].addNote_taskType == "Customer Birthday"
+        {
+            return nil
+        }
+        else
+        {
+            let markCompleted = UIContextualAction(style: .normal, title: "Completed") { (action, view, handler) in
+                
+                let alert = UIAlertController(title: "Info", message: "Completed this ToDo ?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                    self.viewModel.updateToDoListStatus(id: data[indexPath.row].id,status:"Completed");
+                    handler(true)
+                }))
+                self.present(alert, animated: true, completion:nil);
+            }
+            let markFollowUp = UIContextualAction(style: .normal, title: "Follow Up") { (action, view, handler) in
+                
+                let alert = UIAlertController(title: "Info", message: "Follow Up this ToDo ?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                    self.viewModel.updateToDoListStatus(id: data[indexPath.row].id,status:"Follow Up");
+                    handler(true)
+                }))
+                self.present(alert, animated: true, completion:nil);
+            }
+            let markUnSuccess = UIContextualAction(style: .normal, title: "Discontinue") { (action, view, handler) in
+                
+                let alert = UIAlertController(title: "Info", message: "Discontinue this ToDo ?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
+                    self.viewModel.updateToDoListStatus(id: data[indexPath.row].id,status:"Discontinue");
+                    handler(true)
+                }))
+                self.present(alert, animated: true, completion:nil);
+            }
             
-            let alert = UIAlertController(title: "Info", message: "Completed this ToDo ?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
-            alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
-                self.viewModel.updateToDoListStatus(id: data[indexPath.row].id);
-            }))
-            self.present(alert, animated: true, completion:nil);
-            
-            
-//            self.realmStore.store.beginWrite();
-//            let addNoteModel = self.realmStore.queryToDo(id: data[indexPath.row].id)?.first;
-//            addNoteModel?.status = "Completed"
-//
-//            self.realmStore.store.add(addNoteModel!, update: true);
-//            //let addNoteModel = realmStore.qu
-//            try! self.realmStore.store.commitWrite()
+            markCompleted.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.9137254902, blue: 0.5803921569, alpha: 1)
+            markFollowUp.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            markUnSuccess.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+            let configuration = UISwipeActionsConfiguration(actions: [markCompleted,markFollowUp,markUnSuccess])
+            return configuration
         }
         
-        markCompleted.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.9137254902, blue: 0.5803921569, alpha: 1)
-        let configuration = UISwipeActionsConfiguration(actions: [markCompleted])
-        return configuration
         
     }
 }
