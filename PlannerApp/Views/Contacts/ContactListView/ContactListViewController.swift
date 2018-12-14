@@ -42,6 +42,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
         searchController.searchBar.barStyle = .blackTranslucent
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal) //change cancel button to white
+//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false

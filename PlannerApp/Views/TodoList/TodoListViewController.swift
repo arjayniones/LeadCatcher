@@ -28,8 +28,8 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
-        searchController.searchBar.isTranslucent = false
-        if #available(iOS 11.0, *) {
+        
+	if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
         } else {
@@ -45,7 +45,8 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.tableFooterView = searchFooter
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
@@ -244,8 +245,12 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
+        //var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
+        
+        //let data = viewModel.filteredDates[indexPath.row]
+        //cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
         
         guard let data = viewModel.todoListData else {
             return cell
@@ -259,10 +264,37 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             note = data[indexPath.row]
         }
         
-        cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: "tasklist-iconx2")
-        cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
-        cell.detailTextLabel?.textColor = .red
+//        cell.textLabel!.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+//        cell.textLabel!.text = note.addNote_subject
+//        cell.detailTextLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
+//        cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
+//        cell.detailTextLabel?.textColor = .red
+//        cell.imageView?.layer.cornerRadius = 15
+//        cell.imageView?.layer.masksToBounds = true
+//        let imageName = note.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
+//        cell.imageView?.image = UIImage(named: imageName)
+//
+//        let leftImageAppearance = note.addNote_taskType
+//
+//        switch leftImageAppearance.lowercased() {
+//        case "customer birthday":
+//            cell.imageView?.backgroundColor = CommonColor.redColor
+//        case "appointment":
+//            cell.imageView?.backgroundColor = CommonColor.turquoiseColor
+//        default:
+//            cell.imageView?.backgroundColor = CommonColor.purpleColor
+//        }
+        
+        
+        cell.titleLabel.text = note.addNote_subject
+        let imageNamed = note.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
+        cell.leftImageView.image = UIImage(named: imageNamed)
+        cell.leftImageAppearance = note.addNote_taskType
+        let subText = "\(convertDateTimeToString(date: note.addNote_alertDateTime!))"
+        cell.descriptionLabel.text = subText
+        cell.descriptionLabel2.text = "\(note.addNote_location?.name ?? "")"
+        cell.descriptionLabel3.text = "\(note.addNote_notes)"
+        
         return cell
     }
     

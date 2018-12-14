@@ -57,7 +57,7 @@ class ContactListTableViewCell: UITableViewCell {
     }()
     var lastCom : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 10)
         label.textColor = .lightGray
         return label
     }()
@@ -80,6 +80,8 @@ class ContactListTableViewCell: UITableViewCell {
       
         return view
     }()
+    
+    
      var didSetupConstraints = false
     
     var mainStackView = UIStackView()
