@@ -28,9 +28,11 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
         
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            // Fallback on earlier versions
+            tableView.tableHeaderView = searchController.searchBar
         }
+        
         definesPresentationContext = true
         
         searchController.searchBar.delegate = self

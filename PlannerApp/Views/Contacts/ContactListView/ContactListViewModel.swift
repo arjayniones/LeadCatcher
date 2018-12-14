@@ -59,5 +59,5 @@ class ContactListViewModel {
             return data.first?.created_at
         }
         return nil
-    } 
+    }
 }

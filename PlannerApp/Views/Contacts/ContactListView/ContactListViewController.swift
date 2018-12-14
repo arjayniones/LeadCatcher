@@ -44,9 +44,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         searchController.searchBar.barStyle = .blackTranslucent
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
-           
+            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            // Fallback on earlier versions
+            tableView.tableHeaderView = searchController.searchBar
         }
         definesPresentationContext = true
         searchController.searchBar.delegate = self
@@ -256,14 +256,17 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavbarAppear()
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-        }
         
         self.tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+        }
         
         view.backgroundColor = .clear
     }
@@ -271,6 +274,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewWillDisappear(_ animated: Bool) {
         if #available(iOS 11.0, *) {
             navigationItem.searchController = nil
+        } else {
+            tableView.tableHeaderView = nil
         }
     }
     
