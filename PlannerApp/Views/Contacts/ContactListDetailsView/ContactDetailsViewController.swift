@@ -414,13 +414,16 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             dismissKeyboard();
             viewModel.saveContact(completion: { val in
                 if val {
-                    let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
+                    let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:{ action in
+                        self.navigationController?.popViewController(animated: false);
+                    }))
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                         self.viewModel.addContactModel = AddContactModel()
                         self.tableView.reloadData()
                     }))
                     self.present(alert, animated: true, completion:nil);
+                    
                 } else {
                     let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
                     self.present(alert, animated: true, completion: nil);
@@ -879,104 +882,133 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
 //                    FBWebLink // Website if app fails
 //                    ])
                 
-                if indexPath.row == 0 { //facebook selected
+                
                     
-                    let appURL = NSURL(string: FBAppLink)!
-                    let webURL = NSURL(string: FBWebLink)!
-                    
-                    if UIApplication.shared.canOpenURL(appURL as URL) {
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
-                            
-                         
-                        } else {
-                            UIApplication.shared.openURL(appURL as URL)
-                        }
-                    } else {
-                        //redirect to safari because the user doesn't have Instagram
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
-                        } else {
-                            UIApplication.shared.openURL(webURL as URL)
-                        }
-                    }
-                    
-                } else if indexPath.row == 1 { //whatsapp selected
-                    
-                    let appURL = NSURL(string: WhatsappAppLink)!
-                    let webURL = NSURL(string: WhatsappWebLink)!
-                    
-                    if UIApplication.shared.canOpenURL(appURL as URL) {
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
-                            
-                            
-                        } else {
-                            UIApplication.shared.openURL(appURL as URL)
-                        }
-                    } else {
-                        //redirect to safari because the user doesn't have Instagram
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
-                        } else {
-                            UIApplication.shared.openURL(webURL as URL)
-                        }
-                    }
-                    
-                } else if indexPath.row == 2 { //twitter selected
-                    
-                    let appURL = NSURL(string: TwitterAppLink)!
-                    let webURL = NSURL(string: TwitterWebLink)!
-                    
-                    if UIApplication.shared.canOpenURL(appURL as URL) {
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
-                            
-                            
-                        } else {
-                            UIApplication.shared.openURL(appURL as URL)
-                        }
-                    } else {
-                        //redirect to safari because the user doesn't have Instagram
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
-                        } else {
-                            UIApplication.shared.openURL(webURL as URL)
-                        }
-                    }
-                    
-                } else if indexPath.row == 3 { //linkedin selected
-                    
-                    let appURL = NSURL(string: LinkedInAppLink)!
-                    let webURL = NSURL(string: LinkedInWebLink)!
-                    
-                    if UIApplication.shared.canOpenURL(appURL as URL) {
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
-                            
-                            
-                        } else {
-                            UIApplication.shared.openURL(appURL as URL)
-                        }
-                    } else {
-                        //redirect to safari because the user doesn't have Instagram
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
-                        } else {
-                            UIApplication.shared.openURL(webURL as URL)
-                        }
-                    }
-                    
-                } else {
-                    
-                    print("Nothing")
-                    
-                }
+                            if indexPath.row == 0 { //facebook selected
+                                
+                                if getUserFB != "" {
+                                let appURL = NSURL(string: FBAppLink)!
+                                let webURL = NSURL(string: FBWebLink)!
+                                
+                                if UIApplication.shared.canOpenURL(appURL as URL) {
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                                        
+                                     
+                                    } else {
+                                        UIApplication.shared.openURL(appURL as URL)
+                                    }
+                                } else {
+                                    //redirect to safari because the user doesn't have Instagram
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                                    } else {
+                                        UIApplication.shared.openURL(webURL as URL)
+                                    }
+                                    }
+                                } else {
+                                    
+                                    let alert = UIAlertController(title: "Check Facebook username.", message: "Please fill up contact's Facebook username on Info tab. Click edit button and type in username on the text field.", preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "OK", style:.cancel, handler: nil))
+                                   
+                                    self.present(alert, animated: true, completion:nil);
+                                }
+                                
+                            } else if indexPath.row == 1 { //whatsapp selected
+                                
+                                
+                              if getUserWhatsapp != "" {
+                                let appURL = NSURL(string: WhatsappAppLink)!
+                                let webURL = NSURL(string: WhatsappWebLink)!
+                                
+                                if UIApplication.shared.canOpenURL(appURL as URL) {
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                                        
+                                        
+                                    } else {
+                                        UIApplication.shared.openURL(appURL as URL)
+                                    }
+                                } else {
+                                    //redirect to safari because the user doesn't have Instagram
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                                    } else {
+                                        UIApplication.shared.openURL(webURL as URL)
+                                    }
+                                }
+                              } else {
+                                
+                                let alert = UIAlertController(title: "Check Whatsapp number.", message: "Please fill up contact's registered Whatsapp number on Info tab. Click edit button and type in number on the text field.", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style:.cancel, handler: nil))
+                                
+                                self.present(alert, animated: true, completion:nil);
+                                }
+                            } else if indexPath.row == 2 { //twitter selected
+                               
+                                if getUserTwitter != "" {
+                                let appURL = NSURL(string: TwitterAppLink)!
+                                let webURL = NSURL(string: TwitterWebLink)!
+                                
+                                if UIApplication.shared.canOpenURL(appURL as URL) {
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                                        
+                                        
+                                    } else {
+                                        UIApplication.shared.openURL(appURL as URL)
+                                    }
+                                } else {
+                                    //redirect to safari because the user doesn't have Instagram
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                                    } else {
+                                        UIApplication.shared.openURL(webURL as URL)
+                                    }
+                                }
+                                } else {
+                                    
+                                    let alert = UIAlertController(title: "Check Twitter username.", message: "Please fill up contact's Twitter username on Info tab. Click edit button and type in username on the text field.", preferredStyle: .alert)
+                                     alert.addAction(UIAlertAction(title: "OK", style:.cancel, handler: nil))
+                                    
+                                    self.present(alert, animated: true, completion:nil);
+                                }
+                            } else if indexPath.row == 3 { //linkedin selected
+                                
+                                if getUserLinkedin != "" {
+                                let appURL = NSURL(string: LinkedInAppLink)!
+                                let webURL = NSURL(string: LinkedInWebLink)!
+                                
+                                if UIApplication.shared.canOpenURL(appURL as URL) {
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                                        
+                                        
+                                    } else {
+                                        UIApplication.shared.openURL(appURL as URL)
+                                    }
+                                } else {
+                                    //redirect to safari because the user doesn't have Instagram
+                                    if #available(iOS 10.0, *) {
+                                        UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                                    } else {
+                                        UIApplication.shared.openURL(webURL as URL)
+                                    }
+                                }
+                                
+                            } else {
+                                    
+                                    let alert = UIAlertController(title: "Check Linkedin username.", message: "Please fill up contact's Linkedin username on Info tab. Click edit button and type in username on the text field.", preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "OK", style:.cancel, handler: nil))
+                                    
+                                    self.present(alert, animated: true, completion:nil);
+                                }
+                          }
+                            break;
             
-                break;
             
-            default:
-                print("select nothing");
+                            default:
+                            print("select nothing");
             
         }
         
