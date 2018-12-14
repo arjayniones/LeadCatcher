@@ -10,5 +10,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "ContactDetailsViewController.tableView(_:didSelectRowAt:):ContactDetailsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell.labelTitle.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
