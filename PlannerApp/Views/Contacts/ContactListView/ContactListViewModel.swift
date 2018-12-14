@@ -8,6 +8,7 @@
 
 import RealmSwift
 import Kingfisher
+import UIKit
 
 class ContactListViewModel {
     var contactList:Results<ContactModel>?
@@ -59,5 +60,5 @@ class ContactListViewModel {
             return data.first?.created_at
         }
         return nil
-    } 
+    }
 }

@@ -19,8 +19,8 @@ protocol ContactListViewControllerDelegate:class {
 
 class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITableViewDataSource,LargeNativeNavbar {
     let tableView = UITableView()
-    
-   
+
+
 
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 //    fileprivate var searchFooter = SearchFooterView()
@@ -28,16 +28,16 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
     var userIdSelected:UUID?
-    
+
     let allButton = ActionButton()
     let potentialButton = ActionButton()
     let customerButton = ActionButton()
     let disqualifiedButton = ActionButton()
     let topStack = UIStackView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
@@ -46,16 +46,16 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 //        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
-           
+            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            // Fallback on earlier versions
+            tableView.tableHeaderView = searchController.searchBar
         }
         definesPresentationContext = true
         searchController.searchBar.delegate = self
 
         title = "Contacts"
         view.backgroundColor = .white
-        
+
         allButton.roundTop()
         allButton.setTitle("All", for: .normal)
         allButton.setTitleColor(.white, for: .normal)
@@ -67,7 +67,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         allButton.layer.borderWidth = 0.2
         allButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         //view.addSubview(allButton)
-        
+
         potentialButton.roundTop()
         potentialButton.setTitle("Potential", for: .normal)
         potentialButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
@@ -79,7 +79,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         potentialButton.titleLabel?.font =  .systemFont(ofSize: 11)
         potentialButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         //view.addSubview(potentialButton)
-        
+
         customerButton.roundTop()
         customerButton.setTitle("Customers", for: .normal)
         customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
@@ -91,7 +91,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         customerButton.titleLabel?.font =  .systemFont(ofSize: 11)
         customerButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         //view.addSubview(customerButton)
-        
+
         disqualifiedButton.roundTop()
         disqualifiedButton.setTitle("Disqualified", for: .normal)
         disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
@@ -103,18 +103,18 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         disqualifiedButton.titleLabel?.font =  .systemFont(ofSize: 11)
         disqualifiedButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         //view.addSubview(disqualifiedButton)
-        
-        
+
+
         view.addSubview(topStack)
         topStack.axis = .horizontal
-        
+
         topStack.distribution = .fillEqually
         topStack.addArrangedSubview(allButton)
         topStack.addArrangedSubview(potentialButton)
         topStack.addArrangedSubview(customerButton)
         topStack.addArrangedSubview(disqualifiedButton)
-        
-        
+
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
@@ -125,16 +125,16 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         tableView.register(ContactListTableViewCell.self, forCellReuseIdentifier: "contactListCell")
         //tableView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: "cellReuseIdentifier")
         view.addSubview(tableView)
-        
+
         let addButton = UIButton()
 //        let image = UIImage(named: "plus-grey-icon" )
 //        addButton.setImage(image, for: .normal)
         addButton.setTitle("Add", for: .normal)
         addButton.addTarget(self, action: #selector(addContact), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
-        
+
         //need to implement this , correct reloading of table after it was been populated.
-        
+
         viewModel.notificationToken = viewModel.contactList?.observe { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
@@ -142,7 +142,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
                 // Query results have changed, so apply them to the UITableView
-                
+
                 tableView.beginUpdates()
                 tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
                                      with: .automatic)
@@ -156,19 +156,19 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 fatalError("\(error)")
             }
         }
-        
+
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
     }
-    
-   
-    
+
+
+
     @objc func filterPressed(sender:UIButton) {
-        
+
         switch sender {
-            
+
         case  allButton :
-            
+
                 allButton.isSelected = true
                 potentialButton.isSelected = false
                 customerButton.isSelected = false
@@ -178,7 +178,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
-            
+
             break
         case potentialButton:
                 allButton.isSelected = false
@@ -190,9 +190,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 viewModel.filterContact(isPotential: true, isCustomer: false, isDisqualified: false)
-            
+
             break
-        
+
         case customerButton :
                 allButton.isSelected = false
                 potentialButton.isSelected = false
@@ -203,9 +203,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 customerButton.backgroundColor = .white
                 disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 viewModel.filterContact(isPotential: false, isCustomer: true, isDisqualified: false)
-                
+
             break
-        
+
         case disqualifiedButton :
                 allButton.isSelected = false
                 potentialButton.isSelected = false
@@ -216,10 +216,10 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 disqualifiedButton.backgroundColor = .white
                 viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: true)
-                
+
             break
-  
-        
+
+
         default :
                 allButton.isSelected = true
                 potentialButton.isSelected = false
@@ -230,18 +230,18 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
-            
-            
+
+
         }
-       
+
         tableView.reloadData()
     }
-    
+
     deinit {
         viewModel.notificationToken?.invalidate()
     }
-    
-    
+
+
     @objc func addContact() {
         let contactsDetailsVC = ContactDetailsViewController()
         self.navigationController?.pushViewController(contactsDetailsVC, animated: false)
@@ -253,111 +253,116 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavbarAppear()
-//        if #available(iOS 11.0, *) {
-//            navigationItem.searchController = searchController
-//        }
-        
+
         self.tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+        }
+
         view.backgroundColor = .clear
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        if #available(iOS 11.0, *) {
-//            navigationItem.searchController = nil
-//        }
-//    }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = nil
+        } else {
+            tableView.tableHeaderView = nil
+        }
+    }
+
     override func updateViewConstraints() {
-        
+
         if !didSetupConstraints {
-            
+
             topStack.snp.makeConstraints { make in
                 make.top.equalTo(view.safeArea.top)
                 make.left.equalToSuperview().offset(20)
                 make.right.equalToSuperview().inset(20)
                 make.height.equalTo(40)
             }
-            
+
 
             tableView.snp.makeConstraints { make in
                 make.left.right.equalTo(view)
                 make.top.equalTo(topStack.snp.bottom)
                 make.bottom.equalTo(view).inset(50)
             }
-            
+
             didSetupConstraints = true
         }
-        
+
         super.updateViewConstraints()
     }
-    
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
+
         guard let data = viewModel.contactList  else {
             return []
         }
-        
+
         let contactData: ContactModel
-        
+
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
-        
-        
-    
-        
+
+
+
+
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: contactData,hard:false)
         }
-        
+
         return [deleteAction]
     }
-    
+
     @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
-        
+
         guard let data = viewModel.contactList  else {
             return nil
         }
-        
+
         let contactData: ContactModel
-        
+
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
-        
-        
+
+
         let callAction = UIContextualAction(style: .normal, title: "Call") { (action, view, handler) in
             let contactNum = contactData.C_PhoneNo.replacingOccurrences(of: " ", with: "")
             Defaults[.ContactID] = contactData.id;
             print(contactNum)
             let url:NSURL = URL(string: "tel://\(contactNum)")! as NSURL
             UIApplication.shared.open(url as URL, options: [:], completionHandler: { val in
-                
+
             })
-            
+
         }
         let smsAction = UIContextualAction(style: .normal, title: "SMS") { (action, view, handler) in
             let contactNum = contactData.C_PhoneNo
             let contactName = contactData.C_Name
-            
+
             let actionSheet = UIAlertController(title: "Choose options", message: "Send SMS greetings to your lead.", preferredStyle: .actionSheet)
-            
-            
+
+
             let smsAction = UIAlertAction(title: "SMS", style: .default) { (action:UIAlertAction) in
                 //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
                 self.sendSMS(num: contactNum, name: contactName)
@@ -365,23 +370,23 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
                 self.sendWhatsapp(num: contactNum, name: contactName)
             }
-           
+
             actionSheet.addAction(smsAction)
             actionSheet.addAction(whatsappAction)
-            
+
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            
+
             self.present(actionSheet, animated: true, completion: nil)
-        
+
         }
-        
+
         let emailAction = UIContextualAction(style: .normal, title: "Email") { (action, view, handler) in
             let emailAddress = contactData.C_Email
             let customerName = contactData.C_Name
-            
+
             if MFMailComposeViewController.canSendMail() {
-                
-                
+
+
                 let emailTitle = "Hello"
                 let messageBody = "Hello \(customerName),"
                 let toRecipents = [emailAddress]
@@ -390,57 +395,57 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 mc.setSubject(emailTitle)
                 mc.setMessageBody(messageBody, isHTML: false)
                 mc.setToRecipients(toRecipents)
-                
+
                 UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
             } else {
                 // show failure alert
                 print("Can't send messages.")
             }
-            
-           
-       
+
+
+
         }
-        
-        
+
+
         callAction.backgroundColor = #colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1)
         smsAction.backgroundColor = #colorLiteral(red: 0.9960784314, green: 0.8274509804, blue: 0.1882352941, alpha: 1)
         emailAction.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
         let configuration = UISwipeActionsConfiguration(actions: [callAction,smsAction,emailAction])
         return configuration
     }
-    
-   
+
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactListCell") as! ContactListTableViewCell
-        
+
         guard let data = viewModel.contactList  else {
             return cell
         }
-        
+
         let contactData: ContactModel
-        
-          
+
+
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
-        
+
         if let userId = userIdSelected,userId == data[indexPath.row].id {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
-        
-       
+
+
         cell.customerName.text = contactData.C_Name == "" ? "No name": contactData.C_Name
         cell.status.text = contactData.C_Status == "" ? "No Status": contactData.C_Status
         cell.phoneNum.text = contactData.C_PhoneNo == "" ? "No Number": contactData.C_PhoneNo
         cell.email.text = contactData.C_Email == "" ? "No Email": contactData.C_Email
-        
+
         cell.lastCom.text = contactData.C_LastComm == "" ? "Not contacted yet": contactData.C_LastComm
         cell.toFollow.text = contactData.C_ToFollow == "" ? "No meeting yet": contactData.C_ToFollow
-        
+
         if contactData.C_Status == "Potential" {
            cell.toFollow.text = "To Follow"
 
@@ -449,105 +454,105 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
            cell.toFollow.textColor = CommonColor.turquoiseColor
            cell.status.textColor = CommonColor.turquoiseColor
-            
+
         } else if contactData.C_Status == "Customer" {
-            
-            
+
+
             cell.toFollow.text = "Keep In Touch"
 
             //cell.toFollow.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             //cell.status.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             cell.toFollow.textColor = CommonColor.purpleColor
             cell.status.textColor = CommonColor.purpleColor
-            
+
         } else if contactData.C_Status == "Disqualified" {
-            
-            
+
+
             cell.toFollow.text = "Delete Contact"
             cell.toFollow.textColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
             cell.status.textColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
-           
-           
-            
+
+
+
         } else {
 
             //cell.toFollow.textColor = .lightGray
                 cell.toFollow.textColor = .lightGray
                  cell.status.textColor = .lightGray
         }
-        
+
         //cell.rating.text = "\(contactData.C_Scoring)" == "0" ? "⭐⭐⭐⭐⭐": "\(contactData.C_Scoring)" //⭐
          //cell.rating.textColor = .red
         if contactData.C_Scoring == 0 {
             cell.rating.text = "✩ ✩ ✩ ✩ ✩"
-           
+
         } else if contactData.C_Scoring == 1 {
              cell.rating.text = "★ ✩ ✩ ✩ ✩"   //★
-            
+
         } else if contactData.C_Scoring == 2 {
             cell.rating.text = "★ ★ ✩ ✩ ✩"
-           
+
         } else if contactData.C_Scoring == 3 {
             cell.rating.text = "★ ★ ★ ✩ ✩"
-            
+
         } else if contactData.C_Scoring == 4 {
             cell.rating.text = "★ ★ ★ ★ ✩"
-            
+
         } else if contactData.C_Scoring == 5 {
             cell.rating.text = "★ ★ ★ ★ ★"
-            
+
         }
         else {
            // cell.rating.textColor = .black
         }
-        
-        
-        
+
+
+
         ImageCache.default.retrieveImage(forKey: "profile_"+contactData.id, options: nil) {
             image, cacheType in
             if let image = image {
                 cell.imgUser.image = image
             } else {
-                
+
                 cell.imgUser.image = UIImage(named: "user-circle-big-icon")
                 print("Not exist in cache.")
             }
         }
-        
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let data = viewModel.contactList else {
             return 0
         }
-        
+
         if isFiltering() {
 //            searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredContacts!.count, of: data.count)
             return viewModel.filteredContacts!.count
         }
-        
+
 //        searchFooter.setNotFiltering()
-        
-        
+
+
         return data.count
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let data = viewModel.contactList  else {
             return
         }
-        
+
         let contactData: ContactModel
-        
+
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
-        
-        
-        
+
+
+
         if userInContactsSelection {
             delegate?.didSelectCustomer(user:contactData)
             userIdSelected = contactData.id
@@ -558,11 +563,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 //            self.navigationController?.pushViewController(contactsDetailsVC, animated: true)
         }
     }
-    
+
     func openContactForEditing(model:ContactModel) {
         let detailController = ContactDetailsViewController()
         detailController.isControllerEditing = true
-        
+
         let contactModel = AddContactModel()
         contactModel.addContact_contactName = model.C_Name
         contactModel.addContact_dateOfBirth = model.C_DOB
@@ -577,23 +582,23 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         contactModel.addContact_Whatsapp = model.C_Whatsapp
         contactModel.addContact_Twitter = model.C_Twitter
         contactModel.addContact_Linkedin = model.C_Linkedin
-        
+
         detailController.setupModel = contactModel
         detailController.editData_YN = true;
         self.navigationController?.pushViewController(detailController, animated: false)
     }
-    
+
     @objc func sendSMS(num: String, name:String){
-        
-        
+
+
         let mc: MFMessageComposeViewController = MFMessageComposeViewController()
         //let composeVC = MFMessageComposeViewController()
         mc.messageComposeDelegate = self
-        
+
         // Configure the fields of the interface.
         mc.recipients = [num]
         mc.body = "Hello \(name)"
-        
+
         if MFMessageComposeViewController.canSendText() {
             //             UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
             self.present(mc, animated: true, completion: nil)
@@ -601,17 +606,17 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             print("Can't send messages.")
         }
     }
-    
+
     @objc func sendWhatsapp(num: String, name: String){
 
-        
-       
+
+
          let url  = "whatsapp://send?phone=\(num)&text=Hello \(name)\nFirst Whatsapp Share"
-        
+
         var characterSet = CharacterSet.urlQueryAllowed
         characterSet.insert(charactersIn: "?&")
        if let escapedString = url.addingPercentEncoding(withAllowedCharacters: characterSet) {
-            
+
             if let whatsappURL = NSURL(string: escapedString) {
                 if UIApplication.shared.canOpenURL(whatsappURL as URL){
                     UIApplication.shared.open(whatsappURL as URL)
@@ -619,20 +624,20 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 else {
                     let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages. Please install Whatsapp in your phone", delegate: self, cancelButtonTitle: "OK")
                     errorAlert.show()
-                    
+
                 }
             }
         }
-       
+
     }
-    
+
 }
 
 
 
 extension ContactListViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate
-    
+
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
@@ -646,12 +651,12 @@ extension ContactListViewController: UISearchResultsUpdating {
             self.tableView.reloadData()
         }
     }
-    
+
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
 }
-   
+
 
 extension ContactListViewController : MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate{
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -667,9 +672,9 @@ extension ContactListViewController : MFMailComposeViewControllerDelegate, MFMes
         }
         controller.dismiss(animated: true)
     }
-    
-    
-    
+
+
+
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .sent:
@@ -683,8 +688,8 @@ extension ContactListViewController : MFMailComposeViewControllerDelegate, MFMes
         }
         controller.dismiss(animated: true)
     }
-    
-    
+
+
 }
 
 

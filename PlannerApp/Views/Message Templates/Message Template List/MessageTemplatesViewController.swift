@@ -28,9 +28,11 @@ class MessageTemplatesViewController: ViewControllerProtocol,LargeNativeNavbar {
         //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            // Fallback on earlier versions
+            tableView.tableHeaderView = searchController.searchBar
         }
+        
         definesPresentationContext = true
         
         searchController.searchBar.delegate = self

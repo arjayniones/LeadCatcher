@@ -12,39 +12,34 @@ import UserNotifications
 
 class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     var deleteNotification: AddNote?
-    
+
     fileprivate let tableView = UITableView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var searchFooter = SearchFooterView()
     fileprivate let viewModel = TodoListViewModel()
     let realmStore = RealmStore<AddNote>()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = "to_do_list".localized
         //view.addBackground()
         view.backgroundColor = .clear
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
-        //searchController.searchBar.isTranslucent = true
-        searchController.searchBar.barStyle = .blackTranslucent
-        
-        
-        //searchController.searchBar.backgroundColor = UIColor.clear;
-        //UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal) //change cancel button to white
-        //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
-        //searchController.searchBar.barTintColor = UIColor.yellow;
-        if #available(iOS 11.0, *) {
+
+	if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            // Fallback on earlier versions
+            tableView.tableHeaderView = searchController.searchBar
         }
+
         definesPresentationContext = true
-        
+
         searchController.searchBar.delegate = self
-        
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
@@ -53,7 +48,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
-        
+
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
@@ -74,17 +69,17 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
                 fatalError("\(error)")
             }
         }
-        
-        
+
+
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
     }
-    
+
     deinit {
         viewModel.notificationToken?.invalidate()
     }
-    
-  
+
+
     override func updateViewConstraints() {
         if !didSetupConstraints {
             tableView.snp.makeConstraints { make in
@@ -94,31 +89,31 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
 
                 make.bottom.equalTo(view).inset(50)
             }
-            
+
             didSetupConstraints = true
         }
         super.updateViewConstraints()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         if let selectionIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
         super.viewWillAppear(animated)
-        
+
         updateNavbarAppear()
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 }
 
 extension TodoListViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate
-    
+
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
@@ -132,7 +127,7 @@ extension TodoListViewController: UISearchResultsUpdating {
             self.tableView.reloadData()
         }
     }
-    
+
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -142,73 +137,73 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
+
         guard let data = viewModel.todoListData else {
             return nil
         }
-        
+
         let note: AddNote
-        
+
         if isFiltering() {
             note = viewModel.filteredNotes![indexPath.row]
         } else {
             note = data[indexPath.row]
         }
-        
+
         let deleteAction = UITableViewRowAction(style: .destructive, title: "delete".localized) { (deleteAction, indexPath) -> Void in
-            
-            
+
+
             let alert = UIAlertController(title: "Warning", message: "Delete this ToDo ?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
             alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                 self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
                 let identifier = "user_notification_\(note.id)"
-                
+
                 //azlim : to do remember to apply function below when deleted data
                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
-                
+
             }))
             self.present(alert, animated: true, completion:nil);
-            
-            
-            
+
+
+
         }
-        
+
 //        let editAction = UITableViewRowAction(style: .normal, title: "edit".localized) { (editAction, indexPath) -> Void in
 //            self.openDetailsNoteForEditing(model: note)
 //        }
-        
+
         return [deleteAction]
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let data = viewModel.todoListData else {
             return
         }
-        
+
         let note: AddNote
-        
+
         if isFiltering() {
             note = viewModel.filteredNotes![indexPath.row]
         } else {
             note = data[indexPath.row]
         }
-        
+
         self.openDetailsNoteForEditing(model: note)
     }
-    
+
     func openDetailsNoteForEditing(model:AddNote) {
         let detailController = DetailsTodoListViewController()
         detailController.isControllerEditing = true
-        
+
         let todoModel = AddNoteModel()
         todoModel.addNote_ID = model.id
         todoModel.addNote_alertDateTime = model.addNote_alertDateTime
         todoModel.addNote_repeat = model.addNote_repeat
         todoModel.addNote_subject = model.addNote_subject
-        
+
         if let customerModel = RealmStore<ContactModel>().models(query: "id == '\(model.addNote_customerId!)'")?.first {
             todoModel.addNote_customer = customerModel
         }
@@ -217,7 +212,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         todoModel.addNote_notes = model.addNote_notes
         todoModel.addNote_location = model.addNote_location
         var checklist:[ChecklistTemp] = []
-        
+
         for x in model.addNote_checklist {
             let checklisttemp = ChecklistTemp()
             checklisttemp.id = x.id
@@ -225,51 +220,51 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             checklisttemp.status = x.status
             checklist.append(checklisttemp)
         }
-        
+
         todoModel.addNote_checkList = checklist
-        
+
         detailController.setupModel = todoModel
-        
+
         self.navigationController?.pushViewController(detailController, animated: false)
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
         guard let data = viewModel.todoListData else {
             return 0
         }
-        
+
         if isFiltering() {
             searchFooter.setIsFilteringToShow(filteredItemCount: viewModel.filteredNotes!.count, of: data.count)
             return viewModel.filteredNotes!.count
         }
-        
+
         searchFooter.setNotFiltering()
-        
+
         return data.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
-        
+
         //let data = viewModel.filteredDates[indexPath.row]
         //cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
-        
+
         guard let data = viewModel.todoListData else {
             return cell
         }
-        
+
         let note: AddNote
         var status:String = "";
-        
+
         if isFiltering() {
             note = viewModel.filteredNotes![indexPath.row]
         } else {
             note = data[indexPath.row]
         }
-        
+
 //        cell.textLabel!.font = UIFont.ofSize(fontSize: 17, withType: .bold)
 //        cell.textLabel!.text = note.addNote_subject
 //        cell.detailTextLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
@@ -290,7 +285,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
 //        default:
 //            cell.imageView?.backgroundColor = CommonColor.purpleColor
 //        }
-        
+
         cell.titleLabel.text = note.addNote_subject
         let imageNamed = note.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
         if note.status == "Follow Up"
@@ -305,16 +300,16 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         {
             cell.leftImageView.image = UIImage(named: imageNamed)
         }
-        
+
         cell.leftImageAppearance = note.addNote_taskType
         let subText = "\(convertDateTimeToString(date: note.addNote_alertDateTime!))"
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(note.addNote_location?.name ?? "")"
         cell.descriptionLabel3.text = "\(note.addNote_notes)"
-        
+
         return cell
     }
-    
+
     @available (iOS 11.0, *)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let data = viewModel.todoListData  else {
@@ -327,7 +322,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         else
         {
             let markCompleted = UIContextualAction(style: .normal, title: "Completed") { (action, view, handler) in
-                
+
                 let alert = UIAlertController(title: "Info", message: "Completed this ToDo ?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
@@ -337,7 +332,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
                 self.present(alert, animated: true, completion:nil);
             }
             let markFollowUp = UIContextualAction(style: .normal, title: "Follow Up") { (action, view, handler) in
-                
+
                 let alert = UIAlertController(title: "Info", message: "Follow Up this ToDo ?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
@@ -347,7 +342,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
                 self.present(alert, animated: true, completion:nil);
             }
             let markUnSuccess = UIContextualAction(style: .normal, title: "Discontinue") { (action, view, handler) in
-                
+
                 let alert = UIAlertController(title: "Info", message: "Discontinue this ToDo ?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
@@ -356,29 +351,27 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
                 }))
                 self.present(alert, animated: true, completion:nil);
             }
-            
+
             markCompleted.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.9137254902, blue: 0.5803921569, alpha: 1)
             markFollowUp.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
             markUnSuccess.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
             let configuration = UISwipeActionsConfiguration(actions: [markCompleted,markFollowUp,markUnSuccess])
             return configuration
         }
-        
-        
+
+
     }
 }
 
 extension Date {
-    
+
     func toString(withFormat format: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         let myString = formatter.string(from: self)
         let yourDate = formatter.date(from: myString)
         formatter.dateFormat = format
-        
+
         return formatter.string(from: yourDate!)
     }
 }
-
-

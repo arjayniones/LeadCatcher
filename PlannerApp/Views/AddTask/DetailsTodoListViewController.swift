@@ -225,7 +225,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         self.viewModel.saveSchedule(completion: { val in
             if val {
                 //
-                let alert = UIAlertController(title: "add_task_success".localized, message: "clear_the_fields".localized, preferredStyle: .alert)
+                let alert = UIAlertController(title: "Success,New Task has been saved.", message: "You want to add new task?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.addNoteModel = AddNoteModel()

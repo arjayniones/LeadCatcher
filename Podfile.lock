@@ -1,7 +1,4 @@
 PODS:
-  - Charts (3.2.1):
-    - Charts/Core (= 3.2.1)
-  - Charts/Core (3.2.1)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -12,30 +9,23 @@ PODS:
     - GooglePlaces (= 2.7.0)
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
-  - IQKeyboardManagerSwift (6.2.0)
 
 DEPENDENCIES:
-  - Charts
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
-  - IQKeyboardManagerSwift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Charts
     - GoogleMaps
     - GooglePlacePicker
     - GooglePlaces
-    - IQKeyboardManagerSwift
 
 SPEC CHECKSUMS:
-  Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlacePicker: 59ea44db173c58486ad6123993e81feefcbce9c3
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
-  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
 
-PODFILE CHECKSUM: e9ba97a8508137ade99e8a25933633ac795b98b0
+PODFILE CHECKSUM: 38fb095c478ef1136c5f6307f12e26dd97dc95a5
 
 COCOAPODS: 1.5.3
