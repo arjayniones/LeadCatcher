@@ -52,6 +52,7 @@
 		24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A632148AF9B007687EB /* SettingsNavViewController.swift */; };
 		24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A662148AF9B007687EB /* SettingsViewController.swift */; };
 		242717D821491150001792BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242717D721491150001792BD /* HomeViewController.swift */; };
+		24424E3F21C388B400ECAADA /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24424E3E21C388B400ECAADA /* IQKeyboardManagerSwift.framework */; };
 		2444277121C3627F0069DBB0 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2444277021C3627F0069DBB0 /* Charts.framework */; };
 		2450D380214209FA00F5F61F /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D37F214209FA00F5F61F /* RealmStore.swift */; };
 		2450D38321420A7400F5F61F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38221420A7400F5F61F /* Model.swift */; };
@@ -197,6 +198,7 @@
 		24140A632148AF9B007687EB /* SettingsNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
 		24140A662148AF9B007687EB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		242717D721491150001792BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		24424E3E21C388B400ECAADA /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
 		2444277021C3627F0069DBB0 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
 		2450D37F214209FA00F5F61F /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		2450D38221420A7400F5F61F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24424E3F21C388B400ECAADA /* IQKeyboardManagerSwift.framework in Frameworks */,
 				2444277121C3627F0069DBB0 /* Charts.framework in Frameworks */,
 				246714F621A7A41100518228 /* Alamofire.framework in Frameworks */,
 				240C858921B104B400509ABD /* Crashlytics.framework in Frameworks */,
@@ -839,6 +842,7 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24424E3E21C388B400ECAADA /* IQKeyboardManagerSwift.framework */,
 				2444277021C3627F0069DBB0 /* Charts.framework */,
 				240C858721B104B400509ABD /* Crashlytics.framework */,
 				240C858621B104B300509ABD /* Fabric.framework */,
@@ -872,7 +876,6 @@
 				248B83762140B29D00119D9D /* Resources */,
 				3C56C0A9E28170B15171EA4E /* [CP] Copy Pods Resources */,
 				24D1B80121635A57001D519C /* ShellScript */,
-				F95DA382B4E84BBCF9479593 /* [CP] Embed Pods Frameworks */,
 				240C858A21B1050E00509ABD /* Crashlytics Run Script */,
 			);
 			buildRules = (
@@ -986,6 +989,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework",
 			);
 			outputPaths = (
 			);
@@ -1031,24 +1035,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F95DA382B4E84BBCF9479593 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PlannerApp/Pods-PlannerApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

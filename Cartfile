@@ -7,5 +7,6 @@ github "tristanhimmelman/ObjectMapper"
 github "radex/SwiftyUserDefaults" "4.0.0-alpha.1"
 github "Alamofire/Alamofire" ~> 4.7.3
 github "Ramotion/preview-transition"
+github "hackiftekhar/IQKeyboardManager"
 github "danielgindi/Charts" ~> 3.2.1
 github "hyperoslo/ImagePicker"
