@@ -76,13 +76,16 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 105)
+        layout.headerReferenceSize = CGSize(width: 100, height: 20)
         
         collectionview = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionview.dataSource = self
         collectionview.delegate = self
         collectionview.register(SummaryCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionview.register(HeaderViewClass.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderViewClass")
         collectionview.showsVerticalScrollIndicator = false
         collectionview.backgroundColor = UIColor.white
+        
         //collectionview.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3)
         
         // azlim : temp btn to generate excel file
@@ -251,12 +254,45 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
        updateNavbarAppear()
     }
     
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 2
-//    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                             withReuseIdentifier: "HeaderViewClass",
+                                                                             for: indexPath) as! HeaderViewClass
+            let label1 = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20));
+            label1.textAlignment = .center
+            label1.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            if indexPath.section == 0
+            {
+                label1.text = "Customer"
+            }
+            else
+            {
+                label1.text = "Activities"
+            }
+            
+            headerView.addSubview(label1)
+            return headerView
+            
+        default:
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                             withReuseIdentifier: "HeaderViewClass",
+                                                                             for: indexPath) as! HeaderViewClass
+            return headerView
+            
+        }
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

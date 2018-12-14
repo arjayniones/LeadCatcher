@@ -147,6 +147,7 @@
 		D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715DAD2141213C00957E86 /* BaseNavigationController.swift */; };
 		D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715DB12141218900957E86 /* HomeNavController.swift */; };
 		D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B837B2140B29D00119D9D /* AppDelegate.swift */; };
+		D6ECD2FB21C378CE00D76BEA /* HeaderViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -297,6 +298,7 @@
 		D6715DAC2141213C00957E86 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		D6715DAD2141213C00957E86 /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		D6715DB12141218900957E86 /* HomeNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavController.swift; sourceTree = "<group>"; };
+		D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderViewClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +354,7 @@
 		0C8DBA1C216304C7009A1475 /* Summary */ = {
 			isa = PBXGroup;
 			children = (
+				D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */,
 				0C8DBA1D21630513009A1475 /* SummaryViewController.swift */,
 				0C1E5FFB2181551700DC8750 /* SummaryViewModel.swift */,
 				0C8DBA1F21631E88009A1475 /* SummaryCollectionViewCell.swift */,
@@ -1093,6 +1096,7 @@
 				24140A682148AF9B007687EB /* SecurityViewModel.swift in Sources */,
 				24FE315F2164B1C500A4EB96 /* UIViewExtensions.swift in Sources */,
 				2455FBD22151F2B800881541 /* AddNote.swift in Sources */,
+				D6ECD2FB21C378CE00D76BEA /* HeaderViewClass.swift in Sources */,
 				0C1E60062181B2CF00DC8750 /* InfoTableViewCell.swift in Sources */,
 				0C8DBA43216AFBD3009A1475 /* PanelListViewModel.swift in Sources */,
 				0CBFA0D421509CA80028750B /* ContactListViewModel.swift in Sources */,
@@ -1299,10 +1303,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
-
 				CODE_SIGN_IDENTITY = "iPhone Developer: Az Lim (2YKYLVQ3Z5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Az Lim (2YKYLVQ3Z5)";
-
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 798C6YELQF;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1327,10 +1329,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
-
 				CODE_SIGN_IDENTITY = "iPhone Developer: Az Lim (2YKYLVQ3Z5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Az Lim (2YKYLVQ3Z5)";
-
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 798C6YELQF;
 				FRAMEWORK_SEARCH_PATHS = (
