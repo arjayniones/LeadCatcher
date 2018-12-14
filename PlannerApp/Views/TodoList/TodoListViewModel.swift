@@ -29,12 +29,12 @@ class TodoListViewModel {
         self.todoListData = realmStore.models(query: "deleted_at == nil && status == 'Pending'",sortingKey: "addNote_alertDateTime", ascending: false)
         
         
-        //fetch per date element
-        if let fetchData = self.todoListData {
-            fetchData.forEach{ (data) in
-                print(data.addNote_alertDateTime!.isContain(this: 11, filterElement: .month))
-            }
-        }
+//        //fetch per date element
+//        if let fetchData = self.todoListData {
+//            fetchData.forEach{ (data) in
+//                print(data.addNote_alertDateTime!.isContain(this: 11, filterElement: .month))
+//            }
+//        }
     }
     
     func searchText(text:String) {

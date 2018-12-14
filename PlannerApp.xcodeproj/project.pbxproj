@@ -52,6 +52,7 @@
 		24140A6D2148AF9B007687EB /* SettingsNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A632148AF9B007687EB /* SettingsNavViewController.swift */; };
 		24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24140A662148AF9B007687EB /* SettingsViewController.swift */; };
 		242717D821491150001792BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242717D721491150001792BD /* HomeViewController.swift */; };
+		2444277121C3627F0069DBB0 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2444277021C3627F0069DBB0 /* Charts.framework */; };
 		2450D380214209FA00F5F61F /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D37F214209FA00F5F61F /* RealmStore.swift */; };
 		2450D38321420A7400F5F61F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38221420A7400F5F61F /* Model.swift */; };
 		2450D38621420AEC00F5F61F /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450D38521420AEC00F5F61F /* Networking.swift */; };
@@ -196,6 +197,7 @@
 		24140A632148AF9B007687EB /* SettingsNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavViewController.swift; sourceTree = "<group>"; };
 		24140A662148AF9B007687EB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		242717D721491150001792BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		2444277021C3627F0069DBB0 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
 		2450D37F214209FA00F5F61F /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		2450D38221420A7400F5F61F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2450D38521420AEC00F5F61F /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2444277121C3627F0069DBB0 /* Charts.framework in Frameworks */,
 				246714F621A7A41100518228 /* Alamofire.framework in Frameworks */,
 				240C858921B104B400509ABD /* Crashlytics.framework in Frameworks */,
 				246714F321A79D5700518228 /* RealmSwift.framework in Frameworks */,
@@ -836,6 +839,7 @@
 		F1F9D1DC9C9EAD4E3EE0A128 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2444277021C3627F0069DBB0 /* Charts.framework */,
 				240C858721B104B400509ABD /* Crashlytics.framework */,
 				240C858621B104B300509ABD /* Fabric.framework */,
 				246714F521A7A41100518228 /* Alamofire.framework */,
@@ -955,14 +959,10 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			name = "Crashlytics Run Script";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -985,6 +985,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
 			outputPaths = (
 			);
@@ -1301,8 +1302,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Arjay Niones (UDN87SVKC4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arjay Niones (UDN87SVKC4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Robert John Alkuino (KLGYHYNQL5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Robert John Alkuino (KLGYHYNQL5)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 798C6YELQF;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1327,8 +1328,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Arjay Niones (UDN87SVKC4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arjay Niones (UDN87SVKC4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Robert John Alkuino (KLGYHYNQL5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Robert John Alkuino (KLGYHYNQL5)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 798C6YELQF;
 				FRAMEWORK_SEARCH_PATHS = (

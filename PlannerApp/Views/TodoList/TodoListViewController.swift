@@ -28,16 +28,14 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "search_to_do".localized
-        searchController.searchBar.isTranslucent = true
-        //searchController.searchBar.backgroundColor = UIColor.clear;
-        //UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal) //change cancel button to white
-        //UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white //change search bar color to white
-        //searchController.searchBar.barTintColor = UIColor.yellow;
-        if #available(iOS 11.0, *) {
+        
+	if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            // Fallback on earlier versions
+            tableView.tableHeaderView = searchController.searchBar
         }
+        
         definesPresentationContext = true
         
         searchController.searchBar.delegate = self

@@ -130,6 +130,7 @@ class ContactViewModel {
         return realmStore.models(query:  "CS_CID = '\(id)'")!
     }
     
+    // cHistoryType is used to diff history type which include : sms, email and call
     class func insertDataContactHistoryModel(cID:String, cHistoryType:String)->Bool
     {
         let data = ContactHistory().newInstance();

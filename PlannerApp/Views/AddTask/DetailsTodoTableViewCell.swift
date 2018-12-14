@@ -54,6 +54,7 @@ class DetailsTodoTableViewCell: UITableViewCell,UITextFieldDelegate {
         labelTitle.font = UIFont.ofSize(fontSize: 14, withType: .bold)
         labelTitle.returnKeyType = .done
         labelTitle.delegate = self
+        labelTitle.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         labelTitle.isEnabled = false
         labelTitle.autocorrectionType = .no;
         iconImage2.isHidden = true

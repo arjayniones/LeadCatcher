@@ -41,7 +41,7 @@ extension NativeNavbar where Self: UIViewController {
         ]
         
         if #available(iOS 11.0, *) {
-            self.navigationController?.navigationBar.prefersLargeTitles = false
+            navigationController?.navigationBar.prefersLargeTitles = false
         }
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -65,6 +65,7 @@ extension LargeNativeNavbar where Self: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
         
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true
