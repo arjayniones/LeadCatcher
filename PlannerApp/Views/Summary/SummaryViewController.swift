@@ -76,7 +76,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: 105)
-        layout.headerReferenceSize = CGSize(width: 100, height: 20)
+        layout.headerReferenceSize = CGSize(width: 100, height: 15)
         
         collectionview = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionview.dataSource = self
@@ -234,7 +234,6 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
             
         }
         
-        
         chartView.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: view.frame.width, height: view.frame.height/3))
         }
@@ -259,7 +258,14 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        if collectionView == self.collectionview
+        {
+            return viewModel.detailRows.count
+        }
+        else
+        {
+            return viewModel.activitiesDetailRows.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -297,7 +303,19 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SummaryCollectionViewCell
-        let data = viewModel.detailRows[indexPath.row]
+        var name:String = "";
+        var number:Int = 0;
+        if indexPath.section == 0
+        {
+            name = viewModel.detailRows[indexPath.row].nameLbl
+            number = viewModel.detailRows[indexPath.row].valueLbl
+        }else
+        {
+            name = viewModel.activitiesDetailRows[indexPath.row].nameLbl
+            number = viewModel.activitiesDetailRows[indexPath.row].valueLbl
+        }
+        
+        //let data = viewModel.detailRows[indexPath.row]
         
         let collectionCellColor = [#colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1),#colorLiteral(red: 0, green: 0.8235294118, blue: 0.8274509804, alpha: 1),#colorLiteral(red: 1, green: 0.1529411765, blue: 0.1529411765, alpha: 1)];
         
@@ -315,16 +333,16 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
             myCell.outerView.backgroundColor = collectionCellColor[2];
         }
         
-        myCell.textLabel.text = data.nameLbl == "" ? "No Label":  data.nameLbl
+        myCell.textLabel.text = name == "" ? "No Label":  name
         
-        myCell.numberLabel.text = data.valueLbl == 0 ? "0": "\(data.valueLbl)"
+        myCell.numberLabel.text = number == 0 ? "0": "\(number)"
         
         return myCell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("User tapped on item \(indexPath.row)")
-        if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 5
+        if indexPath.section == 0
         {
             setChartData(count: 12, flag: "Lead")
         }

@@ -13,6 +13,7 @@ import Kingfisher
 
 class SummaryViewModel {
     var detailRows:[SummaryCollectionViewObjects] = []
+    var activitiesDetailRows:[SummaryCollectionViewObjects] = []
     var contactList:Results<ContactModel>?
     var todoList: Results<AddNote>?
     var notificationToken: NotificationToken? = nil
@@ -45,20 +46,20 @@ class SummaryViewModel {
         row4.nameLbl = "Completed"
         todoList = realmStoreTodo.models(query: "status == 'Completed' && deleted_at == nil")
         row4.valueLbl =  (todoList?.count)!
-        self.detailRows.append(row4)
+        self.activitiesDetailRows.append(row4)
         
         let row5 = SummaryCollectionViewObjects()
         row5.nameLbl = "Follow-Ups"
         todoList = realmStoreTodo.models(query: "status == 'Follow Up' && deleted_at == nil")
         row5.valueLbl = (todoList?.count)!
-        self.detailRows.append(row5)
+        self.activitiesDetailRows.append(row5)
         
         let row6 = SummaryCollectionViewObjects()
         row6.nameLbl = "Discontinue"
         todoList = realmStoreTodo.models(query: "status == 'Discontinue' && deleted_at == nil")
         
         row6.valueLbl = (todoList?.count)!
-        self.detailRows.append(row6)
+        self.activitiesDetailRows.append(row6)
         
         
     }
