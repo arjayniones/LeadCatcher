@@ -244,8 +244,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
     @objc func addContact() {
         let contactsDetailsVC = ContactDetailsViewController()
-        self.navigationController?.pushViewController(contactsDetailsVC, animated: false)
-        contactsDetailsVC.editSelected = true
+        self.present(contactsDetailsVC, animated: false, completion: nil)
         contactsDetailsVC.editData_YN = false;
     }
 
@@ -566,7 +565,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
     func openContactForEditing(model:ContactModel) {
         let detailController = ContactDetailsViewController()
-        detailController.isControllerEditing = true
 
         let contactModel = AddContactModel()
         contactModel.addContact_contactName = model.C_Name
@@ -585,7 +583,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
         detailController.setupModel = contactModel
         detailController.editData_YN = true;
-        self.navigationController?.pushViewController(detailController, animated: false)
+        self.present(detailController, animated:false, completion: nil)
+        
+//        self.navigationController?.pushViewController(detailController, animated: false)
     }
 
     @objc func sendSMS(num: String, name:String){

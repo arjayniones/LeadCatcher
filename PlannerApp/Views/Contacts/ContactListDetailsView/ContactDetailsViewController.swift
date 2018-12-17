@@ -29,7 +29,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     var leadScoring = String()
     var remarks = String()
     var status = String()
-    var isControllerEditing:Bool = false
     let datePicker = UIDatePicker()
     let logButton = ActionButton()
     let todoButton = ActionButton()
@@ -49,7 +48,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     var selectedTab = String()
     var previewItem = NSURL()
     let topView = UIView()
-    var editSelected = false
     
     // for date picker
     let datePickerView = UIDatePicker();
@@ -78,6 +76,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
     }
     
+    fileprivate let customnNavView = UIView()
+    fileprivate let clearButton = UIButton()
+    fileprivate let saveButton = UIButton()
+    
     let imagePickerController:ImagePickerController = {
         let configuration = Configuration()
         configuration.doneButtonTitle = "Finish"
@@ -102,11 +104,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//        
-       
 
         view.backgroundColor = .clear
 
@@ -317,17 +314,20 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         self.bottomView.addSubview(buttonRight);
         self.bottomView.isHidden = true;
         
-        changeRightNavBarBtn()
+        saveButton.setTitle("Edit", for: .normal)
+        saveButton.setTitle("Save", for: .selected)
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        customnNavView.addSubview(saveButton)
         
-        if !isControllerEditing {
-            let clearButton = UIButton()
-            clearButton.setTitle("Clear", for: .normal)
-            clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-            clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
-            clearButton.sizeToFit()
-            clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.frame.width, height: clearButton.frame.height)
-            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
-        }
+        clearButton.setTitle("Close", for: .normal)
+        clearButton.setTitle("Clear", for: .selected)
+        clearButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+        clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.frame.width, height: clearButton.frame.height)
+        customnNavView.addSubview(clearButton)
+        
+        view.addSubview(customnNavView)
         
         if let id = viewModel.addContactModel?.addContact_id {
             ImageCache.default.retrieveImage(forKey: "profile_"+id, options: nil) {
@@ -358,96 +358,68 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         self.tableView.reloadData();
     }
     
-    func changeRightNavBarBtn(){
-        
-        
-        if editSelected {
-            
-            let saveButton = UIButton()
-            saveButton.setTitle("Save", for: .normal)
-            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-            saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
-            saveButton.sizeToFit()
-            saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
-            //editSelected = false
-            
-        } else {
-            let editButton = UIButton()
-            editButton.setTitle("Edit", for: .normal)
-            editButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-            editButton.addTarget(self, action: #selector(edit), for: .touchUpInside)
-            editButton.sizeToFit()
-            editButton.frame = CGRect(x: 0, y: -2, width: editButton.frame.width, height: editButton.frame.height)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
-            //editSelected = true
-        }
-    }
-    
-    //keyboard
-    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textFieldRealYPosition = textField.frame.origin.y + textField.frame.height
-//        //take in account all superviews from textfield and potential contentOffset if you are using tableview to calculate the real position
-//    }
-    
     @objc func editProfileImage() {
         
-        if editSelected {
-        self.present(imagePickerController, animated: true, completion: nil)
+        if saveButton.isSelected {
+            self.present(imagePickerController, animated: true, completion: nil)
         }
     }
     
     @objc func save() {
-        view.endEditing(true);
-        if self.editData_YN
-        {
-            viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!)
-            self.navigationController?.popViewController(animated: false);
-        }
-        else
-        {
-            changeRightNavBarBtn()
+        
+        saveButton.isSelected = !saveButton.isSelected
+        clearButton.isSelected = saveButton.isSelected
+        
+        if !saveButton.isSelected {
+            view.endEditing(true);
+            self.tableView.isUserInteractionEnabled = true;
             
-            //        let url: NSURL = URL(string: "TEL://60127466766")! as NSURL
-            //        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
-            dismissKeyboard();
-            viewModel.saveContact(completion: { val in
-                if val {
-                    let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact?", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:{ action in
-                        self.navigationController?.popViewController(animated: false);
-                    }))
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-                        self.viewModel.addContactModel = AddContactModel()
-                        self.tableView.reloadData()
-                    }))
-                    self.present(alert, animated: true, completion:nil);
-                    
-                } else {
-                    let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
-                    self.present(alert, animated: true, completion: nil);
-                }
-            })
+            if self.editData_YN
+            {
+                viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!)
+                self.navigationController?.popViewController(animated: false);
+            }
+            else
+            {
+                dismissKeyboard();
+                viewModel.saveContact(completion: { val in
+                    if val {
+                        let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact?", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:{ action in
+                            self.navigationController?.popViewController(animated: false);
+                        }))
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                            self.viewModel.addContactModel = AddContactModel()
+                            self.tableView.reloadData()
+                        }))
+                        self.present(alert, animated: true, completion:nil);
+                        
+                    } else {
+                        let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
+                        self.present(alert, animated: true, completion: nil);
+                    }
+                })
+            }
+        } else {
+            self.tableView.isUserInteractionEnabled = true;
+            self.tableView.reloadData();
         }
-        
-        self.editSelected = false
-        
-    }
-    
-    @objc func edit() {
-        self.tableView.isUserInteractionEnabled = true;
-        self.editSelected = true
-        changeRightNavBarBtn()
-        self.tableView.reloadData();
-       
     }
     
     @objc func clear() {
+        if !clearButton.isSelected {
+            self.dismiss(animated: true, completion: nil)
+            self.clearButton.isSelected = true
+            return
+        }
+        
         let controller = UIAlertController(title: "Info", message: "Clear the fields?", preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: nil));
-        controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+        controller.addAction(UIAlertAction(title: "Cancel", style:.cancel, handler: { _ in
+            self.clearButton.isSelected = false
+        }));
+        controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
             self.viewModel.addContactModel = AddContactModel()
+            self.clearButton.isSelected = false
             self.tableView.reloadData()
         }))
 
@@ -456,32 +428,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     override func viewWillAppear(_ animated: Bool) {
         updateNavbarAppear()
-        
-        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        //NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailsViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        //NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
-        //NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-//        let indexPathRow1:Int = 1
-//        let indexPosition1 = IndexPath(row: indexPathRow1, section: 0)
-//        self.tableView.reloadRows(at: [indexPosition1], with: .none)
-//
-//
-//        let indexPathRow6:Int = 6
-//        let indexPosition6 = IndexPath(row: indexPathRow6, section: 0)
-//        self.tableView.reloadRows(at: [indexPosition6], with: .none)
-//
-      
         
         tableView.reloadData()
     }
@@ -490,8 +441,23 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         if !didSetupConstraints {
             
-            topView.snp.makeConstraints{ make in
+            customnNavView.snp.makeConstraints{ make in
                 make.top.equalTo(view.safeArea.top)
+                make.left.right.equalToSuperview()
+            }
+            
+            saveButton.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 70, height: 40))
+                make.right.top.bottom.equalToSuperview().inset(10)
+            }
+            
+            clearButton.snp.makeConstraints { make in
+                make.size.equalTo(CGSize(width: 100, height: 40))
+                make.left.top.bottom.equalToSuperview().inset(10)
+            }
+            
+            topView.snp.makeConstraints{ make in
+                make.top.equalTo(customnNavView.snp.bottom)
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(tableView.snp.bottom)
             }
@@ -543,7 +509,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             tableView.snp.makeConstraints { make in
                 make.top.equalTo(topStackView.snp.bottom).offset(10)
                 make.left.right.equalTo(view)
-                make.bottom.equalTo(view).inset(50)
+                make.bottom.equalTo(view).inset(0)
             }
             
             bottomView.snp.makeConstraints { (make) in
@@ -875,15 +841,6 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 let LinkedInAppLink = "linkedin://profile/\(getUserLinkedin ?? "Check the username")"
                 let LinkedInWebLink = "https://www.linkedin.com/in/\(getUserLinkedin ?? "Check the username")/"
              
-            
-//
-//                UIApplication.tryURL(urls: [
-//                    FBAppLink, // App
-//                    FBWebLink // Website if app fails
-//                    ])
-                
-                
-                    
                             if indexPath.row == 0 { //facebook selected
                                 
                                 if getUserFB != "" {
@@ -1009,7 +966,6 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
                             default:
                             print("select nothing");
-            
         }
         
         let data = viewModel.detailRows[indexPath.row]
@@ -1018,7 +974,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         
         if selectedTab == "info" {
             
-            if editSelected {
+            if saveButton.isSelected {
                 if indexPath.row == 1{
                     self.showDateTimePicker()
                 }else  if indexPath.row == 5 {
@@ -1240,7 +1196,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             customSelectionView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = customSelectionView
             
-            if editSelected{
+            if saveButton.isSelected {
                 cell.isEditing = true
                 if indexPath.row == 0 {
                     cell.labelTitle.isEnabled = true
@@ -1368,7 +1324,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             customSelectionView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = customSelectionView
             
-            if editSelected{
+            if saveButton.isSelected {
                 cell.isEditing = true
                 if indexPath.row == 0 {
                     cell.labelTitle.isEnabled = true
