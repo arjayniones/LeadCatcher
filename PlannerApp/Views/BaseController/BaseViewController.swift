@@ -201,7 +201,7 @@ class BaseViewController: ViewControllerProtocol,UINavigationControllerDelegate 
     }
     func resetEachController(newTab:ActiveTab ,oldTab:ActiveTab) {
         if newTab == oldTab {
-            self.activeNavViewController.popToRootViewController(animated: true)
+            self.activeNavViewController.popToRootViewController(animated: false)
         }
     }
     

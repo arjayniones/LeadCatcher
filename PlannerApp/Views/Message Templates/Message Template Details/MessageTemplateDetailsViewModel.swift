@@ -12,6 +12,7 @@ import RealmSwift
 
 class MessageTemplateDetailsViewModel {
     
+    let realmStore = RealmStore<MessageTemplatesModel>()
     var isControllerEditing:Bool = false
     var addMessageTemplateModel:AddMessageTemplateModel?
     init() {
@@ -35,6 +36,16 @@ class MessageTemplateDetailsViewModel {
         
         
         return true
+    }
+    
+    func updateData(id:String, title:String, body:String)
+    {
+        realmStore.store.beginWrite();
+        let addNoteModel = realmStore.queryToDo(id: id)?.first;
+        addNoteModel?.msgTitle = title;
+        addNoteModel?.msgBody = body;
+        
+        try! realmStore.store.commitWrite()
     }
     
     func savePanel(completion: @escaping ((_ success:Bool) -> Void)) {

@@ -235,6 +235,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
 
         tableView.reloadData()
+        
     }
 
     deinit {
@@ -290,7 +291,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 make.right.equalToSuperview().inset(20)
                 make.height.equalTo(40)
             }
-
 
             tableView.snp.makeConstraints { make in
                 make.left.right.equalTo(view)
@@ -422,20 +422,21 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
 
         let contactData: ContactModel
-
-
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
         } else {
             contactData = data[indexPath.row]
         }
-
-        if let userId = userIdSelected,userId == data[indexPath.row].id {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
+        
+        if (data.count) > 0
+        {
+            if let userId = userIdSelected,userId == data[indexPath.row].id {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
         }
-
+        
 
         cell.customerName.text = contactData.C_Name == "" ? "No name": contactData.C_Name
         cell.status.text = contactData.C_Status == "" ? "No Status": contactData.C_Status

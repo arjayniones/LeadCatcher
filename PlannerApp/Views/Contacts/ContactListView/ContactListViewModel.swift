@@ -46,7 +46,7 @@ class ContactListViewModel {
             
         } else if isDisqualified {
             contactList = realmStore.models(query: "C_Status == 'Disqualified' && deleted_at == nil")
-            
+            print(contactList?.count)
             
         } else {
             contactList = realmStore.models(query: "deleted_at == nil")

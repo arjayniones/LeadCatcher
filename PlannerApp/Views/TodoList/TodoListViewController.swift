@@ -94,15 +94,35 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         super.updateViewConstraints()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        if #available(iOS 11.0, *) {
+//            navigationItem.searchController = searchController
+//        } else {
+//            tableView.tableHeaderView = searchController.searchBar
+//        }
+//
+//    }
 
     override func viewWillAppear(_ animated: Bool) {
         if let selectionIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
         super.viewWillAppear(animated)
+        
 
         updateNavbarAppear()
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        if #available(iOS 11.0, *) {
+//            navigationItem.searchController = nil
+//        } else {
+//            tableView.tableHeaderView = nil
+//        }
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

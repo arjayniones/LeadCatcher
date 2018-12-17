@@ -13,6 +13,8 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
 
     fileprivate let viewModel: MessageTemplateDetailsViewModel
     var isControllerEditing:Bool = false
+    var isCellEditing:Bool = false;
+    var msgUDID:String = "";
     private let realmStore = RealmStore<MessageTemplatesModel>()
     
     
@@ -97,20 +99,54 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     }()
     
     
+    @objc func changeRightNavigatorButtonName()
+    {
+        //updateTextFieldStatus();
+        updateTextFieldStatus(status: "Save")
+        isCellEditing = true;
+        let saveButton = UIButton()
+        
+        saveButton.setTitle("save".localized, for: .normal)
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        saveButton.setTitleColor(.white, for: .normal);
+        //saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
+        
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        
+        saveButton.sizeToFit()
+        saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        
+    }
+    
     @objc func save(){
         
         
         self.viewModel.addMessageTemplateModel?.addMsgTemp_title = self.titleTextView.text!
         self.viewModel.addMessageTemplateModel?.addMsgTemp_body = self.messageTextField.text!
         
+        if !isControllerEditing
+        {
+            saveData();
+        }
+        else
+        {
+            self.viewModel.updateData(id: msgUDID, title: self.titleTextView.text!, body: self.messageTextField.text!)
+            self.navigationController?.popViewController(animated: true)
+        }
         
+        
+    }
+    
+    func saveData()
+    {
         self.viewModel.savePanel(completion: { val in
             if val {
                 let alert = UIAlertController(title: "Success,New Template has been saved.", message: "Info", preferredStyle: .alert)
                 //alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     self.viewModel.addMessageTemplateModel = AddMessageTemplateModel()
-                     self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }))
                 self.present(alert, animated: true, completion:nil);
             } else {
@@ -161,9 +197,26 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         mainView.addSubview(copyButton)
       
         let saveButton = UIButton()
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
-        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        if isControllerEditing
+        {
+            updateTextFieldStatus(status: "Edit")
+            isCellEditing = false;
+            saveButton.setTitle("Edit", for: .normal)
+            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            saveButton.addTarget(self, action: #selector(changeRightNavigatorButtonName), for: .touchUpInside)
+            //navigationItem.rightBarButtonItem = self.editButtonItem;
+        }
+        else
+        {
+            updateTextFieldStatus(status: "Save")
+            isCellEditing = true;
+            saveButton.setTitle("Save", for: .normal)
+            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        }
+        
+        
+        
         saveButton.sizeToFit()
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
@@ -324,6 +377,24 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         } else {
             let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages.", delegate: self, cancelButtonTitle: "OK")
             errorAlert.show()
+        }
+    }
+    
+    func updateTextFieldStatus(status:String)
+    {
+        if status == "Edit"
+        {
+            self.titleTextView.isEnabled = false;
+            self.messageTextField.isEditable = false;
+            self.titleTextView.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.messageTextField.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }
+        else
+        {
+            self.titleTextView.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.messageTextField.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.titleTextView.isEnabled = true;
+            self.messageTextField.isEditable = true;
         }
     }
     

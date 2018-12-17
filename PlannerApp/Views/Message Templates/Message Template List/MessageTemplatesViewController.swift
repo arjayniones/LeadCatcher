@@ -218,7 +218,7 @@ extension MessageTemplatesViewController :  UITableViewDelegate,UITableViewDataS
         let msgTempModel = AddMessageTemplateModel()
         msgTempModel.addMsgTemp_title = model.msgTitle
         msgTempModel.addMsgTemp_body = model.msgBody
-      
+        detailController.msgUDID = model.id
         detailController.setupModel = msgTempModel
         
         self.navigationController?.pushViewController(detailController, animated: false)
