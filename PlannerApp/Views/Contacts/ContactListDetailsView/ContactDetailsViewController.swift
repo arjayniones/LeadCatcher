@@ -372,8 +372,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         
         if !saveButton.isSelected {
             view.endEditing(true);
-            self.tableView.isUserInteractionEnabled = true;
-            
             if self.editData_YN
             {
                 viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!)
@@ -401,7 +399,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                 })
             }
         } else {
-            self.tableView.isUserInteractionEnabled = true;
             self.tableView.reloadData();
         }
     }
@@ -1029,9 +1026,6 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-        //selection of tabs
-        //add plus button to add check list
-        //add check box at the accessory if task are finish it can be checked
         
         switch selectedTab {
          
