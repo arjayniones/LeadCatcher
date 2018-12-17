@@ -221,7 +221,7 @@ extension MessageTemplatesViewController :  UITableViewDelegate,UITableViewDataS
       
         detailController.setupModel = msgTempModel
         
-        self.navigationController?.pushViewController(detailController, animated: true)
+        self.navigationController?.pushViewController(detailController, animated: false)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
