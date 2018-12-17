@@ -66,9 +66,16 @@ class ContactViewModel {
     
     // datele all contact that C_From = PhoneBook
     class func deletePhoneBookContact(from:String) {
-        if realmStore.models(query: "C_From = '\(from)'") != nil {
-            realmStore.delete(hard: false)
+        realmStore.store.beginWrite();
+        if let data = realmStore.models(query: "C_From == '\(from)'") {
+            //print(data.count);
+            if data.count > 0
+            {
+                realmStore.store.delete(data)
+            }
+            
         }
+        try! realmStore.store.commitWrite()
     }
     
     // update deleted date but not actual delete from table when user delete particular contact from contact table

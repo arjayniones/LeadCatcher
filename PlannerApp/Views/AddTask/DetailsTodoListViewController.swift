@@ -334,7 +334,7 @@ extension DetailsTodoListViewController:ContactListViewControllerDelegate {
         let controller = ContactListViewController()
         controller.delegate = self
         controller.userInContactsSelection = true
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.pushViewController(controller, animated: false)
     }
 }
 

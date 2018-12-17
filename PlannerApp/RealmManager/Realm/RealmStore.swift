@@ -113,6 +113,7 @@ class RealmStore<T: Model> {
         let store = try! Realm()
         store.delete(model)
     }
+    
     func delete(modelToDelete: T?,hard:Bool) {
         if modelToDelete != nil {
             assert((modelToDelete != nil))

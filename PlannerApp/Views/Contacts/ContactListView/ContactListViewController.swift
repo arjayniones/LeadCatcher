@@ -274,11 +274,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = nil
-        } else {
-            tableView.tableHeaderView = nil
-        }
+//        if #available(iOS 11.0, *) {
+//            navigationItem.searchController = nil
+//        } else {
+//            tableView.tableHeaderView = nil
+//        }
     }
 
     override func updateViewConstraints() {
