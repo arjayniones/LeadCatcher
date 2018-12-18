@@ -90,7 +90,7 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
         if indexPath.row == 0 {
             //SummaryViewController
             let summaryVC = SummaryViewController()
-            self.navigationController?.pushViewController(summaryVC, animated: true)
+            self.navigationController?.pushViewController(summaryVC, animated: false)
 
         } else if indexPath.row == 1{
             self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
@@ -98,10 +98,10 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
              self.getTheContact();
         } else if indexPath.row == 3{
             let messageTempVC = MessageTemplatesViewController()
-            self.navigationController?.pushViewController(messageTempVC, animated: true)
+            self.navigationController?.pushViewController(messageTempVC, animated: false)
         } else if indexPath.row == 4{
             let resourcesVC = ResourceViewController()
-            self.navigationController?.pushViewController(resourcesVC, animated: true)
+            self.navigationController?.pushViewController(resourcesVC, animated: false)
         } else if indexPath.row == 5 {
             self.uploadImage()
         }

@@ -40,8 +40,6 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         view.layer.shadowRadius = 10
         view.layer.shadowOpacity = 0.5
        // view.layer.shadowColor = UIColor.black as! CGColor
-        
-        
         return view
     }()
     
@@ -108,9 +106,9 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         
         self.viewModel.savePanel(completion: { val in
             if val {
-                let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Clear the fields?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                let alert = UIAlertController(title: "Success,New Template has been saved.", message: "Info", preferredStyle: .alert)
+                //alert.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     self.viewModel.addMessageTemplateModel = AddMessageTemplateModel()
                      self.navigationController?.popViewController(animated: true)
                 }))
@@ -280,12 +278,12 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
 
             let emailTitle = titleLabel.text
             let messageBody = messageTextField.text
-            let toRecipents = ["arjayniones@gmail.com"]
+            //let toRecipents = ["arjayniones@gmail.com"]
             let mc: MFMailComposeViewController = MFMailComposeViewController()
             mc.mailComposeDelegate = self
             mc.setSubject(emailTitle!)
             mc.setMessageBody(messageBody!, isHTML: false)
-            mc.setToRecipients(toRecipents)
+            //mc.setToRecipients(toRecipents)
 
             UIApplication.shared.keyWindow?.rootViewController?.present(mc, animated: true, completion: nil)
         } else {
@@ -303,7 +301,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
         mc.messageComposeDelegate = self
         
         // Configure the fields of the interface.
-        mc.recipients = ["+60164925940"]
+        //mc.recipients = ["+60164925940"]
         mc.body = self.messageTextField.text
         
         if MFMessageComposeViewController.canSendText() {
