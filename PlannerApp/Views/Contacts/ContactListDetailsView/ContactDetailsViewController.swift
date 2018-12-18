@@ -392,6 +392,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                         }))
                         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                             self.viewModel.addContactModel = AddContactModel()
+                            self.saveButton.isSelected = true
                             self.tableView.reloadData()
                         }))
                         self.present(alert, animated: true, completion:nil);
