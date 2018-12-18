@@ -245,8 +245,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
     @objc func addContact() {
         let contactsDetailsVC = ContactDetailsViewController()
-        self.present(contactsDetailsVC, animated: false, completion: nil)
         contactsDetailsVC.editData_YN = false;
+        self.present(contactsDetailsVC, animated: false, completion: nil)   
     }
 
     override func didReceiveMemoryWarning() {

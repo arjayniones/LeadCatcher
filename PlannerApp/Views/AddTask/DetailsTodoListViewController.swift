@@ -287,7 +287,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
 
                 make.top.equalTo(view.safeArea.top)
                 make.left.right.equalTo(view)
-                make.bottom.equalTo(view).inset(50)
+                make.bottom.equalTo(view).inset(0)
             }
             
             bottomView.snp.makeConstraints { (make) in

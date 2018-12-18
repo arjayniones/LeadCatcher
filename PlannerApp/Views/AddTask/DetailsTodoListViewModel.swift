@@ -15,6 +15,7 @@ class DetailsTodoListViewModel {
     var detailRows:[AddTodoViewObject] = []
     let realmStore = RealmStore<AddNote>()
     var dateChosen:UNCalendarNotificationTrigger?
+    var dateToSendTriggerBefore:UNCalendarNotificationTrigger?
     var addNoteModel: AddNoteModel?
     
     init() {
@@ -75,7 +76,6 @@ class DetailsTodoListViewModel {
             switch index {
             case 0:
                 intToMinus = -3
-                
             case 1:
                 intToMinus = -2
             case 2:
@@ -87,6 +87,10 @@ class DetailsTodoListViewModel {
                 if isDateLessThan(a: dateMinus, b: Date()) {
                     return false
                 } else {
+                    
+                    let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: dateMinus)
+                    self.dateToSendTriggerBefore = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+                    
                     return true
                 }
             default:
@@ -100,6 +104,10 @@ class DetailsTodoListViewModel {
             if isDateLessThan(a: dateMinus, b: Date()) {
                 return false
             }
+            
+            let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: dateMinus)
+            
+            self.dateToSendTriggerBefore = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
             
             return true
         }
@@ -126,13 +134,13 @@ class DetailsTodoListViewModel {
             let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date2)
             
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+            
             self.dateChosen = calendarTrigger
             
             return true
+        } else {
+            return true
         }
-        
-        return false
-        
         
         // will fire when the user comes within specified metres of the designated coordinate
         
@@ -158,6 +166,14 @@ class DetailsTodoListViewModel {
         content.badge = 1
         content.userInfo = ["id": "\(id)"]
         content.sound = UNNotificationSound.default
+        
+        if let setDateBefore = dateToSendTriggerBefore  {
+            let request = UNNotificationRequest(identifier: "before_user_notification_\(id)", content: content, trigger: setDateBefore)
+            UNUserNotificationCenter.current().add(request) { _ in
+                print("setDateBefore finish")
+            }
+        }
+        
         
         let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in
