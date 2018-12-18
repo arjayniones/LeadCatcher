@@ -122,16 +122,8 @@ class DetailsTodoListViewModel {
             guard verifyRepeatTime(date:date) else {
                 return false
             }
-            print(date);
             
-            let isoDate = "2018-12-18 14:03:00 +0000"
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-            let date2 = dateFormatter.date(from:isoDate)!
-            
-            
-            let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date2)
+            let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date)
             
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
             
