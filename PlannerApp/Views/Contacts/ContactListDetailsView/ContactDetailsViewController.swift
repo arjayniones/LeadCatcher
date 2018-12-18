@@ -327,6 +327,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         clearButton.frame = CGRect(x: 0, y: -2, width: clearButton.frame.width, height: clearButton.frame.height)
         customnNavView.addSubview(clearButton)
         
+        if !self.editData_YN {
+            saveButton.isSelected = true
+        }
+        
         view.addSubview(customnNavView)
         
         if let id = viewModel.addContactModel?.addContact_id {
@@ -382,7 +386,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                 dismissKeyboard();
                 viewModel.saveContact(completion: { val in
                     if val {
-                        let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact?", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact again?", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:{ action in
                             self.navigationController?.popViewController(animated: false);
                         }))
@@ -394,6 +398,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                         
                     } else {
                         let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
+                        
+                        self.saveButton.isSelected = !self.saveButton.isSelected
                         self.present(alert, animated: true, completion: nil);
                     }
                 })
