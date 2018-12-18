@@ -209,11 +209,15 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         }
         else
         {
+            self.viewModel.saveSchedule(completion: { val in
+                if val {
+                    
+                }
+            });
             
             self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
-            //self.viewModel.updateDetailToDo(id: (self.viewModel.addNoteModel?.addNote_ID)!);
             self.navigationController?.popViewController(animated: false);
-            //saveData();
+            
             
         }
         
@@ -226,7 +230,9 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             if val {
                 //
                 let alert = UIAlertController(title: "Success,New Task has been saved.", message: "You want to add new task?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
+                alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: {action in
+                    
+                }));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.addNoteModel = AddNoteModel()
                     self.refreshData()

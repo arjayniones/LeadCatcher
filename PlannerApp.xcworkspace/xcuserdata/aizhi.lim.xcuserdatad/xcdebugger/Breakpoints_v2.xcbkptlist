@@ -30,12 +30,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PlannerApp/Views/Contacts/ContactListView/ContactListViewController.swift"
-            timestampString = "566732038.139521"
+            timestampString = "566804727.452327"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
             endingLineNumber = "316"
             landmarkName = "tableView(_:editActionsForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PlannerApp/Views/AddTask/DetailsTodoListViewModel.swift"
+            timestampString = "566805933.04255"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "setupNotificationDateSettings()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -66,8 +66,6 @@ class DetailsTodoListViewModel {
     
     func verifyRepeatTime(date: Date) -> Bool {
         
-        return true
-        
         if let repeatTime = self.addNoteModel?.addNote_repeat {
             
             let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
@@ -116,8 +114,16 @@ class DetailsTodoListViewModel {
             guard verifyRepeatTime(date:date) else {
                 return false
             }
+            print(date);
             
-            let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date)
+            let isoDate = "2018-12-18 14:03:00 +0000"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+            let date2 = dateFormatter.date(from:isoDate)!
+            
+            
+            let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date2)
             
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
             self.dateChosen = calendarTrigger

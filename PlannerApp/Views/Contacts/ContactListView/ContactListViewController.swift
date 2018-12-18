@@ -436,7 +436,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 cell.accessoryType = .none
             }
         }
-        
 
         cell.customerName.text = contactData.C_Name == "" ? "No name": contactData.C_Name
         cell.status.text = contactData.C_Status == "" ? "No Status": contactData.C_Status
