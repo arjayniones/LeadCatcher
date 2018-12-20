@@ -186,6 +186,12 @@ extension SettingsViewController: UIImagePickerControllerDelegate,UINavigationCo
             self.openGallary()
         }))
         
+        alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { _ in
+            let bgImage = UIImage(named: "contact-details-gradiant-bg")
+            ImageCache.default.store(bgImage!, forKey: "background_image")
+            NotificationCenter.default.post(name: notificationChangeImage, object: nil)
+        }))
+        
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)

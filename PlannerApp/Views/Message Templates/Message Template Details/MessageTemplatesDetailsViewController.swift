@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNativeNavbar {
+class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavbar {
 
     fileprivate let viewModel: MessageTemplateDetailsViewModel
     var isControllerEditing:Bool = false
@@ -36,6 +36,8 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     let mainView: UIView = {
         let view = UIView()
+        view.frame = UIApplication.shared.keyWindow!.frame
+        UIApplication.shared.keyWindow!.addSubview(view)
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 0.2
@@ -169,8 +171,23 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     
     
     override func viewWillAppear(_ animated: Bool) {
-        updateNavbarAppear()
+        //updateNavbarAppear()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .white //CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.tintColor = UIColor(red: 0, green: 122/255.0, blue: 1.0, alpha: 1.0)
+        navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg-x1.jpg"), for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
+            NSAttributedString.Key.foregroundColor: CommonColor.naviBarBlackColor,
+        ]
         
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     @objc func loadMessages(){
@@ -187,7 +204,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
 
         title = "Msg Templates"
         view.backgroundColor = .clear
-        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissView))
         view.addSubview(mainView)
         mainView.addSubview(titleLabel)
         mainView.addSubview(titleTextView)
@@ -231,6 +248,11 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func dismissView()
+    {
+        navigationController?.popViewController(animated: false)
     }
     
 
@@ -280,7 +302,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, LargeNative
             }
             
             copyButton.snp.makeConstraints { make in
-                make.top.equalTo(messageTextField.snp.bottom).offset(5)
+                make.top.equalTo(instructionLabel.snp.bottom).offset(5)
                 make.right.equalTo(mainView).inset(10)
                 make.width.equalTo(70)
                 make.height.equalTo(40)

@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "b-bar-user-highlight-x1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "man-user (1).png",
+      "filename" : "b-bar-user-highlight-x2.png",
       "scale" : "2x"
     },
     {

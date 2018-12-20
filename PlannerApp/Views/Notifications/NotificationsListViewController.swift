@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
+class NotificationsListViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     fileprivate let tableView = UITableView()
     fileprivate let viewModel = NotificationViewModel()
@@ -77,9 +77,9 @@ class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if let selectionIndexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: selectionIndexPath, animated: animated)
-        }
+//        if let selectionIndexPath = tableView.indexPathForSelectedRow {
+//            tableView.deselectRow(at: selectionIndexPath, animated: animated)
+//        }
         super.viewWillAppear(animated)
         
         updateNavbarAppear()
@@ -160,7 +160,7 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         
         detailController.setupModel = todoModel
         
-        self.navigationController?.pushViewController(detailController, animated: true)
+        self.navigationController?.pushViewController(detailController, animated: false)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,7 +184,7 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         note = data[indexPath.row]
         
         cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: note.addNote_taskType == "Customer Birthday" ? "birthday-icon":"meeting-icon")
+        cell.imageView?.image = UIImage(named: note.addNote_taskType == "Customer Birthday" ? "cakex1":"meeting-icon")
         cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
         cell.detailTextLabel?.textColor = .red
         

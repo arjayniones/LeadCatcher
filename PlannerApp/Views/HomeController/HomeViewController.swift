@@ -155,7 +155,7 @@ class HomeViewController: ViewControllerProtocol,LargeNativeNavbar,FSCalendarDel
     
     @objc func openNotificationPage() {
         let notifVC = NotificationsListViewController()
-        self.navigationController?.pushViewController(notifVC, animated: true)
+        self.navigationController?.pushViewController(notifVC, animated: false)
     }
     
     func getGreetingByTime() {

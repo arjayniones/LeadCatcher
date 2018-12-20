@@ -30,7 +30,7 @@ extension NativeNavbar where Self: UIViewController {
     
     func updateNavbarAppear() {
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.barTintColor = .clear //CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.barTintColor = UIColor(red: 84, green: 165, blue: 198) //CommonColor.naviBarBlackColor
         navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
         navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)

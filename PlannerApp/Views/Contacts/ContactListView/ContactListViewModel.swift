@@ -23,12 +23,24 @@ class ContactListViewModel {
         contactList = realmStore.models(query: "deleted_at == nil")
     }
     
-    func searchText(text:String) {
-        let subpredicates = self.subpredicates.map { property in
-            NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, text)
+    func searchText(text:String, status:String) {
+        if status != "All"
+        {
+            let subpredicates = self.subpredicates.map { property in
+                NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil && C_Status == %@", property, text, status)
+            }
+            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
+            self.filteredContacts = contactList?.filter(predicate)
         }
-        let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-        self.filteredContacts = contactList?.filter(predicate)
+        else
+        {
+            let subpredicates = self.subpredicates.map { property in
+                NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, text)
+            }
+            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
+            self.filteredContacts = contactList?.filter(predicate)
+        }
+        
     }
     
     func removeImage(id:UUID) {

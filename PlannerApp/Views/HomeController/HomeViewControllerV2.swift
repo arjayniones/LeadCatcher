@@ -305,7 +305,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     
     @objc func openNotificationPage() {
         let notifVC = NotificationsListViewController()
-        self.navigationController?.pushViewController(notifVC, animated: true)
+        self.navigationController?.pushViewController(notifVC, animated: false)
     }
     
     
@@ -547,8 +547,8 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         let dataCount = viewModel.filteredDates.count
         
         tableView.isHidden = dataCount == 0 ? true:false
-        self.moreLessButton.isHidden = (dataCount == 0 || dataCount < 3) ? true:false
-        
+        //self.moreLessButton.isHidden = (dataCount == 0 || dataCount < 3) ? true:false
+        self.moreLessButton.isHidden = true // azlim
         return viewModel.filteredDates.count
     }
     

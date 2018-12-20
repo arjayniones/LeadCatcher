@@ -55,6 +55,7 @@ class HomeTableViewCell: UITableViewCell {
     let descriptionLabel3:UILabel = {
         let label = UILabel()
         label.textColor = CommonColor.darkGrayColor
+        label.numberOfLines = 2
         label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
         return label
     }()

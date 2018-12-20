@@ -87,7 +87,7 @@ class DetailsTodoListViewModel {
                 if isDateLessThan(a: dateMinus, b: Date()) {
                     return false
                 } else {
-                    
+                    // for everyday
                     let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: dateMinus)
                     self.dateToSendTriggerBefore = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
                     
@@ -105,6 +105,7 @@ class DetailsTodoListViewModel {
                 return false
             }
             
+            // for not everyday
             let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: dateMinus)
             
             self.dateToSendTriggerBefore = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
@@ -122,7 +123,7 @@ class DetailsTodoListViewModel {
             guard verifyRepeatTime(date:date) else {
                 return false
             }
-            
+            // to do date
             let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: date)
             
             let calendarTrigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
@@ -165,7 +166,6 @@ class DetailsTodoListViewModel {
                 print("setDateBefore finish")
             }
         }
-        
         
         let request = UNNotificationRequest(identifier: "user_notification_\(id)", content: content, trigger: self.dateChosen!)
         UNUserNotificationCenter.current().add(request) { error in
@@ -219,6 +219,7 @@ class DetailsTodoListViewModel {
             return
         }
         
+        // 2
         self.setupNotificationInfoSettings(message: messageConstructed, completion:{ val in
             completion(val)
             return

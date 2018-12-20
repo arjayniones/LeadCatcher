@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "b-bar-book-x1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "open-book (1).png",
+      "filename" : "b-bar-book-x2.png",
       "scale" : "2x"
     },
     {

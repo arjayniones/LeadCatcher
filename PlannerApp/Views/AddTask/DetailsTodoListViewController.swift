@@ -23,6 +23,11 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     let bottomView = UIView();
     let buttonLeft = UIButton();
     let buttonRight = UIButton();
+    var naviFlag:String = "ToDo";
+    
+    // for presentview todo detail
+    let naviBarView = UIView();
+    let naviBarLeftButton = UIButton();
     
     fileprivate var viewModel:DetailsTodoListViewModel
     
@@ -50,7 +55,17 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
 
         //NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         //NotificationCenter.default.addObserver(self, selector: #selector(DetailsTodoListViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        if naviFlag == "Contact"
+        {
+            naviBarView.backgroundColor = .clear;
+            naviBarLeftButton.setTitle("Close", for: .normal);
+            naviBarLeftButton.contentHorizontalAlignment = .left
+//            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+            naviBarLeftButton.addTarget(self, action: #selector(dismissThisView), for: .touchUpInside)
+//            button.setTitleColor(.white, for: .normal)
+            naviBarView.addSubview(naviBarLeftButton);
+            self.view.addSubview(naviBarView);
+        }
         
     
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
@@ -198,6 +213,11 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
         self.tableView.reloadData();
     }
     
+    @objc func dismissThisView()
+    {
+        self.dismiss(animated: false, completion: nil);
+    }
+    
     @objc func save() {
         
         //self.viewModel.updateDetailToDo(id:(self.viewModel.addNoteModel?.addNote_ID)!);
@@ -283,9 +303,32 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
     override func updateViewConstraints() {
         
         if !didSetupConstraints {
+            
+            if naviFlag == "Contact"
+            {
+                naviBarView.snp.makeConstraints { (make) in
+                    make.top.left.right.equalTo(self.view).inset(0);
+                    make.height.equalTo(60);
+                }
+                
+                naviBarLeftButton.snp.makeConstraints { (make) in
+                    make.left.equalTo(naviBarView).inset(10);
+                    make.height.equalTo(50);
+                    make.width.equalTo(100);
+                    make.centerY.equalTo(naviBarView.snp.centerY).inset(10);
+                }
+            }
+            
             tableView.snp.makeConstraints { make in
-
-                make.top.equalTo(view.safeArea.top)
+                if naviFlag == "Contact"
+                {
+                    make.top.equalTo(naviBarView.snp.bottom)
+                }
+                else
+                {
+                    make.top.equalTo(view.safeArea.top)
+                }
+                
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(0)
             }

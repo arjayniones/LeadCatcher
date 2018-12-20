@@ -34,10 +34,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     let customerButton = ActionButton()
     let disqualifiedButton = ActionButton()
     let topStack = UIStackView()
+    var cStatus:String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        cStatus = "All"
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
@@ -164,11 +165,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
 
     @objc func filterPressed(sender:UIButton) {
-
+        searchController.searchBar.text = ""
         switch sender {
 
         case  allButton :
-
+            cStatus = "All"
                 allButton.isSelected = true
                 potentialButton.isSelected = false
                 customerButton.isSelected = false
@@ -181,6 +182,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
             break
         case potentialButton:
+                cStatus = "Potential"
                 allButton.isSelected = false
                 potentialButton.isSelected = true
                 customerButton.isSelected = false
@@ -194,6 +196,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             break
 
         case customerButton :
+            cStatus = "Customer"
                 allButton.isSelected = false
                 potentialButton.isSelected = false
                 customerButton.isSelected = true
@@ -207,6 +210,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             break
 
         case disqualifiedButton :
+            cStatus = "Disqualified"
                 allButton.isSelected = false
                 potentialButton.isSelected = false
                 customerButton.isSelected = false
@@ -215,12 +219,21 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 potentialButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 disqualifiedButton.backgroundColor = .white
-                viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: true)
+                if isFiltering()
+                {
+                    
+                }
+                else
+                {
+                    viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: true)
+                }
+                
 
             break
 
 
         default :
+            cStatus = "All"
                 allButton.isSelected = true
                 potentialButton.isSelected = false
                 customerButton.isSelected = false
@@ -424,6 +437,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
+            print("azlim : \(contactData.C_Name)")
         } else {
             contactData = data[indexPath.row]
         }
@@ -533,7 +547,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
 //        searchFooter.setNotFiltering()
 
-
+        print(data.count);
         return data.count
     }
 
@@ -550,8 +564,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             contactData = data[indexPath.row]
         }
 
-
-
         if userInContactsSelection {
             delegate?.didSelectCustomer(user:contactData)
             userIdSelected = contactData.id
@@ -565,7 +577,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
     func openContactForEditing(model:ContactModel) {
         let detailController = ContactDetailsViewController()
-
+        //let navi = UINavigationController(rootViewController: detailController);
+        //self.windo
         let contactModel = AddContactModel()
         contactModel.addContact_contactName = model.C_Name
         contactModel.addContact_dateOfBirth = model.C_DOB
@@ -585,7 +598,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         detailController.editData_YN = true;
         self.present(detailController, animated:false, completion: nil)
         
-//        self.navigationController?.pushViewController(detailController, animated: false)
+        //self.navigationController?.pushViewController(detailController, animated: false)
     }
 
     @objc func sendSMS(num: String, name:String){
@@ -647,7 +660,7 @@ extension ContactListViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            viewModel.searchText(text: searchText)
+            viewModel.searchText(text: searchText, status:cStatus)
             self.tableView.reloadData()
         }
     }

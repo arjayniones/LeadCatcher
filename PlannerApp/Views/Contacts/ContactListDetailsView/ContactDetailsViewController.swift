@@ -61,6 +61,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     var contactSocialList:[SocialClass] = [];
     var addNoteList:Results<AddNote>!;
     var editData_YN:Bool = true; // false : mean new entry, true : mean update entry
+    var isCellEditing_YN = false;
     let todoModel = TodoListViewModel();
     
     
@@ -328,7 +329,12 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         customnNavView.addSubview(clearButton)
         
         if !self.editData_YN {
+            isCellEditing_YN = true;
             saveButton.isSelected = true
+        }
+        else
+        {
+            isCellEditing_YN = false;
         }
         
         view.addSubview(customnNavView)
@@ -406,6 +412,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                 })
             }
         } else {
+            isCellEditing_YN = true;
             self.tableView.reloadData();
         }
     }
@@ -517,8 +524,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             }
             
             bottomView.snp.makeConstraints { (make) in
-                make.left.right.equalTo(self.view).inset(0);
-                make.bottom.equalTo(self.view).inset(50);
+                make.left.right.bottom.equalTo(self.view).inset(0);
                 make.height.equalTo(210)
             }
             
@@ -538,7 +544,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             
             datePickerView.snp.makeConstraints { (make) in
                 make.left.right.equalTo(self.bottomView).inset(0);
-                make.bottom.equalTo(self.view).inset(50);
+                make.bottom.equalTo(self.view).inset(0);
                 make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
                 make.height.equalTo(162);
                 
@@ -749,8 +755,6 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     @objc func sendWhatsapp(num: String, name: String){
-        
-        
         
         let url  = "whatsapp://send?phone=\(num)&text=Hello \(name)\nFirst Whatsapp Share"
         
@@ -1024,8 +1028,9 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             todoModel.addNote_checkList = checklist
             
             detailController.setupModel = todoModel
-            
-            self.navigationController?.pushViewController(detailController, animated: true)
+            detailController.naviFlag = "Contact";
+            //self.navigationController?.pushViewController(detailController, animated: false)
+            self.present(detailController, animated: false, completion: nil)
             
         }
 
@@ -1188,6 +1193,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
         case "info":
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
+            
+            if !isCellEditing_YN {
+                cell.contentView.alpha = 0.5;
+                cell.isUserInteractionEnabled = false;
+            }
+            else
+            {
+                cell.contentView.alpha = 1.0;
+                cell.isUserInteractionEnabled = true;
+            }
+            
             let data = viewModel.detailRows[indexPath.row]
             cell.leftIcon = data.icon
             cell.labelTitle.text = "";
@@ -1212,12 +1228,14 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         self.viewModel.addContactModel?.addContact_address = val
                     }
                 } else if indexPath.row == 3 {
+                    cell.labelTitle.keyboardType = .numberPad
                     cell.labelTitle.isEnabled = true
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_phoneNum = val
                     }
                 } else if indexPath.row == 4 {
+                    cell.labelTitle.keyboardType = .emailAddress
                     cell.labelTitle.isEnabled = true
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
