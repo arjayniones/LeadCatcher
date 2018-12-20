@@ -85,7 +85,8 @@ class DetailsTodoListViewModel {
                     return false
                 }
                 if isDateLessThan(a: dateMinus, b: Date()) {
-                    return false
+                    // to allow user entry task but notice period less than 24 hour
+                    return true
                 } else {
                     // for everyday
                     let comps = Calendar.current.dateComponents([.year, .month, .day ,.hour,.minute], from: dateMinus)
@@ -151,17 +152,18 @@ class DetailsTodoListViewModel {
             completion(false)
             return
         }
-        
+        print(UIApplication.shared.applicationIconBadgeNumber);
         let content = UNMutableNotificationContent()
         content.title = message.title
         content.subtitle = message.subtitle
         content.body = message.body
-        content.badge = 1
+        content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber
         content.userInfo = ["id": "\(id)"]
         content.sound = UNNotificationSound.default
         
         if let setDateBefore = dateToSendTriggerBefore  {
             let request = UNNotificationRequest(identifier: "before_user_notification_\(id)", content: content, trigger: setDateBefore)
+            
             UNUserNotificationCenter.current().add(request) { _ in
                 print("setDateBefore finish")
             }
@@ -224,6 +226,11 @@ class DetailsTodoListViewModel {
             completion(val)
             return
         })
+    }
+    
+    func setBadgeNumber()
+    {
+        
     }
     
     func saveToRealm() -> UUID? {

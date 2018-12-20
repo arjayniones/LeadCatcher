@@ -49,6 +49,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     
     let previousCalendarButton = ActionButton()
     let nextCalendarButton = ActionButton()
+    var badgeLabel = UILabel();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -187,10 +188,23 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         buttonExpand.addTarget(self, action: #selector(showMap), for: .touchUpInside)
         buttonMapView.addSubview(buttonExpand)
         
+        badgeLabel = UILabel(frame: CGRect(x: 15, y: -5, width: 20, height: 20))
+        badgeLabel.layer.borderColor = UIColor.clear.cgColor
+        badgeLabel.layer.borderWidth = 2
+        badgeLabel.layer.cornerRadius = badgeLabel.bounds.size.height / 2
+        badgeLabel.textAlignment = .center
+        badgeLabel.layer.masksToBounds = true
+        badgeLabel.font = UIFont.systemFont(ofSize: 12.0)
+        badgeLabel.textColor = .white
+        badgeLabel.backgroundColor = .clear
+        //badgeLabel.text = "8"
+        
         let notificationImage = UIImageView()
         notificationImage.image = UIImage(named:"bell-icon-inactive")
+        notificationImage.addSubview(badgeLabel)
         notificationImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openNotificationPage)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationImage)
+        var initBadgeCount = 0;
         
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             switch changes {
@@ -200,7 +214,12 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                     self?.mapView.pin(data: data)
                     
                     self?.clonedData.append(data)
+                    
                     if data.status == "unread" {
+                        initBadgeCount += 1;
+                        self!.updateApplicationBadge(count: initBadgeCount);
+                        self!.badgeLabel.backgroundColor = .red
+                        self?.badgeLabel.text = String(initBadgeCount)
                         notificationImage.image = UIImage(named:"bell-icon-active")
                     }
                 }
@@ -238,6 +257,25 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                             self?.calendarView.deselect(date)
                         }
                     }
+                    
+                    if let notes = self?.viewModel.todoListData?.filter({ $0.status == "unread" && $0.deleted_at == nil }) {
+                        if  notes.count > 0 {
+                            self!.badgeLabel.backgroundColor = .red
+                            self!.updateApplicationBadge(count: notes.count);
+                            self?.badgeLabel.text = String(notes.count)
+                            notificationImage.image = UIImage(named:"bell-icon-active")
+                        } else {
+                            notificationImage.image = UIImage(named:"bell-icon-inactive")
+                            self!.badgeLabel.backgroundColor = .clear
+                            self?.badgeLabel.text = ""
+                        }
+                    }
+                    else
+                    {
+                        self!.badgeLabel.backgroundColor = .clear
+                        self?.badgeLabel.text = ""
+                    }
+                    
                 })
                 
                 _ = insertions.map({
@@ -249,14 +287,27 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 })
                 
                 if modifications.count > 0 {
-                    if let notes = self?.viewModel.todoListData?.filter({ $0.status == "unread" }) {
+                    if let notes = self?.viewModel.todoListData?.filter({ $0.status == "unread" && $0.deleted_at == nil }) {
                         if  notes.count > 0 {
+                            self!.updateApplicationBadge(count: notes.count);
+                            self!.badgeLabel.backgroundColor = .red
+                            self!.updateApplicationBadge(count: notes.count);
+                            self?.badgeLabel.text = String(notes.count)
                             notificationImage.image = UIImage(named:"bell-icon-active")
                         } else {
+                            self!.updateApplicationBadge(count: 0);
                             notificationImage.image = UIImage(named:"bell-icon-inactive")
+                            self!.badgeLabel.backgroundColor = .clear
+                            self?.badgeLabel.text = ""
                         }
                     }
+                    else
+                    {
+                        self!.badgeLabel.backgroundColor = .clear
+                        self?.badgeLabel.text = ""
+                    }
                 }
+                
                 
                 self?.calendarView.reloadData()
                 
@@ -268,6 +319,11 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         view.setNeedsUpdateConstraints()
         view.updateConstraintsIfNeeded()
+    }
+    
+    func updateApplicationBadge(count:Int)
+    {
+        UIApplication.shared.applicationIconBadgeNumber = count;
     }
     
     @objc func previousCalendarButtonPressed() {

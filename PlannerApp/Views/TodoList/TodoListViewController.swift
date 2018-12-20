@@ -180,9 +180,13 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                 self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
                 let identifier = "user_notification_\(note.id)"
+                
 
                 //azlim : to do remember to apply function below when deleted data
                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+                
+               let identifier2 = "before_user_notification_\(note.id)"
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier2])
 
             }))
             self.present(alert, animated: true, completion:nil);

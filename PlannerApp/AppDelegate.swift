@@ -97,6 +97,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        //application.applicationIconBadgeNumber = 0
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         application.applicationIconBadgeNumber = 0
     }
 
@@ -115,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }
 
             completionHandler()
+        
         case UNNotificationDefaultActionIdentifier: // App was opened from notification
 
             let realm = RealmStore<AddNote>()

@@ -1070,7 +1070,13 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
            
             
             if  addNoteList[indexPath.row].addNote_taskType == "Appointment"{
-            cell.leftIcon = "meeting-x2"
+                cell.leftIcon = "meeting-x2"
+                
+                if addNoteList[indexPath.row].status == "Follow Up"
+                {
+                    cell.leftIcon = "follow-up-icon"
+                }
+                
             } else if addNoteList[indexPath.row].addNote_taskType == "Customer Birthday"{
                 
                 cell.leftIcon = "birthday-icon"
@@ -1078,6 +1084,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 
                 cell.leftIcon = "meeting-x2"
             }
+            
             //cell.selectionStyle = .none
             cell.labelTitle.isEnabled = false
             cell.labelTitle.text = addNoteList[indexPath.row].addNote_subject;

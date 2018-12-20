@@ -149,6 +149,7 @@
 		D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715DAD2141213C00957E86 /* BaseNavigationController.swift */; };
 		D6715DB32141218A00957E86 /* HomeNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6715DB12141218900957E86 /* HomeNavController.swift */; };
 		D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B837B2140B29D00119D9D /* AppDelegate.swift */; };
+		D6B908EC21CB4997001922E0 /* BadgeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B908EB21CB4997001922E0 /* BadgeBarButtonItem.swift */; };
 		D6ECD2FB21C378CE00D76BEA /* HeaderViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */; };
 /* End PBXBuildFile section */
 
@@ -302,6 +303,7 @@
 		D6715DAC2141213C00957E86 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		D6715DAD2141213C00957E86 /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		D6715DB12141218900957E86 /* HomeNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavController.swift; sourceTree = "<group>"; };
+		D6B908EB21CB4997001922E0 /* BadgeBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeBarButtonItem.swift; sourceTree = "<group>"; };
 		D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderViewClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -831,6 +833,7 @@
 		D6715DB02141218900957E86 /* HomeController */ = {
 			isa = PBXGroup;
 			children = (
+				D6B908EB21CB4997001922E0 /* BadgeBarButtonItem.swift */,
 				D6715DB12141218900957E86 /* HomeNavController.swift */,
 				242717D721491150001792BD /* HomeViewController.swift */,
 				24D1B80421636816001D519C /* HomeViewModel.swift */,
@@ -1133,6 +1136,7 @@
 				0C8DBA3021646D01009A1475 /* PanelListDetailsViewController.swift in Sources */,
 				24819DF421AB86E5001487A1 /* HomeTableViewCell.swift in Sources */,
 				2455FBCC2150DD8100881541 /* AddNoteNavViewController.swift in Sources */,
+				D6B908EC21CB4997001922E0 /* BadgeBarButtonItem.swift in Sources */,
 				2484739521670FF000C6AFE7 /* Localizable.swift in Sources */,
 				D6715DAF2141213C00957E86 /* BaseNavigationController.swift in Sources */,
 				24140A6F2148AF9B007687EB /* SettingsViewController.swift in Sources */,
