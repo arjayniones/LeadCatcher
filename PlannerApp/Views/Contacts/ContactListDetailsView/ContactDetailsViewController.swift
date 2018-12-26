@@ -169,7 +169,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             statusLabel.backgroundColor = CommonColor.turquoiseColor
 
             statusLabel.text = status
-        } else if status == "Disqualified" {
+        } else if status == "Others" {
             statusLabel.backgroundColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
             statusLabel.text = status
         } else if status == "Customer" {

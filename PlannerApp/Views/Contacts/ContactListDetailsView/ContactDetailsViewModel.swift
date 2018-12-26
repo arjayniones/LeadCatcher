@@ -80,7 +80,7 @@ class ContactDetailsViewModel {
         let row8 = AddContactViewObject()
         row8.icon = "user-check-x2"
         row8.title = "Status"
-        row8.alertOptions = ["Potential","Disqualified","Customer"]
+        row8.alertOptions = ["Potential","Others","Customer"]
         self.detailRows.append(row8)
         
         let row9 = AddContactViewObject();

@@ -635,6 +635,8 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(data.addNote_location?.name ?? "")"
         cell.descriptionLabel3.text = "\(data.addNote_notes)"
+        let contactDetail = ContactViewModel.queryContactTable(checkType: "", id: data.addNote_customerId!)
+        cell.descriptionLabel4.text = contactDetail[0].C_Name
         
         return cell
     }

@@ -330,6 +330,8 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(note.addNote_location?.name ?? "")"
         cell.descriptionLabel3.text = "\(note.addNote_notes)"
+        let contactDetail = ContactViewModel.queryContactTable(checkType: "", id: note.addNote_customerId!)
+        cell.descriptionLabel4.text = contactDetail[0].C_Name
 
         return cell
     }

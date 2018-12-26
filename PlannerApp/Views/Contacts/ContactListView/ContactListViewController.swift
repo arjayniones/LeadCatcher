@@ -94,7 +94,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         //view.addSubview(customerButton)
 
         disqualifiedButton.roundTop()
-        disqualifiedButton.setTitle("Disqualified", for: .normal)
+        disqualifiedButton.setTitle("Others", for: .normal)
         disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
         disqualifiedButton.isSelected = false
         disqualifiedButton.layer.borderColor = UIColor.gray.cgColor
@@ -210,7 +210,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             break
 
         case disqualifiedButton :
-            cStatus = "Disqualified"
+            cStatus = "Others"
                 allButton.isSelected = false
                 potentialButton.isSelected = false
                 customerButton.isSelected = false
@@ -437,7 +437,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         let contactData: ContactModel
         if isFiltering() {
             contactData = viewModel.filteredContacts![indexPath.row]
-            print("azlim : \(contactData.C_Name)")
+            //print("azlim : \(contactData.C_Name)")
         } else {
             contactData = data[indexPath.row]
         }
@@ -478,10 +478,10 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             cell.toFollow.textColor = CommonColor.purpleColor
             cell.status.textColor = CommonColor.purpleColor
 
-        } else if contactData.C_Status == "Disqualified" {
+        } else if contactData.C_Status == "Others" {
 
 
-            cell.toFollow.text = "Delete Contact"
+            cell.toFollow.text = "Others"
             cell.toFollow.textColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
             cell.status.textColor = #colorLiteral(red: 0.8666666667, green: 0.1058823529, blue: 0.2980392157, alpha: 1)
 

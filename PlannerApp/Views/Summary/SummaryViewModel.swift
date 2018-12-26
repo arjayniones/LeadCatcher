@@ -37,8 +37,8 @@ class SummaryViewModel {
         self.detailRows.append(row2)
         
         let row3 = SummaryCollectionViewObjects()
-        row3.nameLbl = "Disqualified"
-        contactList = realmStoreContact.models(query: "C_Status == 'Disqualified' && deleted_at == nil")
+        row3.nameLbl = "Others"//"Disqualified"
+        contactList = realmStoreContact.models(query: "C_Status == 'Others' && deleted_at == nil")
         row3.valueLbl = (contactList?.count)!
         self.detailRows.append(row3)
         

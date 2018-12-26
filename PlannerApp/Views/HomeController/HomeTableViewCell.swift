@@ -60,6 +60,13 @@ class HomeTableViewCell: UITableViewCell {
         return label
     }()
     
+    let descriptionLabel4:UILabel = {
+        let label = UILabel()
+        label.textColor = CommonColor.darkGrayColor
+        label.font = UIFont.ofSize(fontSize: 15, withType: .bold)
+        return label
+    }()
+    
     let bgView = GradientView()
     
     var leftImageAppearance: String = "" {
@@ -88,10 +95,11 @@ class HomeTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(titleLabel)
         
         stackView.addArrangedSubview(descriptionLabel)
-        
+        stackView.addArrangedSubview(descriptionLabel4)
         stackView.addArrangedSubview(descriptionLabel2)
         
         stackView.addArrangedSubview(descriptionLabel3)
+        
         
         setNeedsUpdateConstraints()
         updateConstraintsIfNeeded()
