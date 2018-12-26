@@ -19,6 +19,11 @@ extension NoNavbar where Self: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.tintColor = CommonColor.systemWhiteColor
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
+            NSAttributedString.Key.foregroundColor: CommonColor.systemWhiteColor,
+        ]
     }
 }
 
@@ -27,6 +32,26 @@ protocol NativeNavbar {
 }
 
 extension NativeNavbar where Self: UIViewController {
+    
+    func updateBlackNavBarAppear()
+    {
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .white //CommonColor.naviBarBlackColor
+        navigationController?.navigationBar.tintColor = CommonColor.systemBlueColor
+        navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg-x1.jpg"), for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
+            NSAttributedString.Key.foregroundColor: CommonColor.naviBarBlackColor,
+        ]
+        
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
     
     func updateNavbarAppear() {
         navigationController?.navigationBar.isTranslucent = true

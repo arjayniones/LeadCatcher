@@ -10,7 +10,7 @@ import UIKit
 import MobileCoreServices
 import RealmSwift
 
-class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate,LargeNativeNavbar  {
+class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource, UICollectionViewDelegate,NativeNavbar  {
 
     fileprivate var collectionview: UICollectionView!
     
@@ -23,7 +23,8 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         super.viewDidLoad()
         
         title = "Resources"
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
+        view.backgroundColor?.withAlphaComponent(0.5)
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: (view.frame.width - 40)  / 3 , height: ((view.frame.width - 40)/3)+20)
@@ -38,7 +39,7 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
         
         let importButton = UIButton()
         importButton.frame = CGRect(x:0, y:0, width:30, height:30)
-        let image = UIImage(named: "plus-grey-icon" )
+        let image = UIImage(named: "plus-icon-inactive" )
         importButton.setImage(image, for: .normal)
         importButton.addTarget(self, action: #selector(importButtonPressed), for: .touchUpInside)
         let rightAddBarButton = UIBarButtonItem(customView: importButton)
@@ -73,7 +74,8 @@ class ResourceViewController: ViewControllerProtocol, UICollectionViewDataSource
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        updateNavbarAppear()
+        //updateNavbarAppear()
+        updateBlackNavBarAppear()
     }
     
     func removeCheck(data:UserFiles) {

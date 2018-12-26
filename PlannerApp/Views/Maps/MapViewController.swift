@@ -198,6 +198,15 @@ class MapViewController: ViewControllerProtocol, LargeNativeNavbar {
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
     }
+
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("aaaa")
+        return true;
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        print(marker.position.latitude)
+    }
     
     func pin(long: CLLocationDegrees,lat:CLLocationDegrees,place: GMSPlace?) -> GMSCameraPosition {
         
@@ -212,6 +221,7 @@ class MapViewController: ViewControllerProtocol, LargeNativeNavbar {
             if place != nil {
                 destinationMarker.title = "\(place!.name)"
                 destinationMarker.snippet = "\(place!.formattedAddress!)"
+                
             } else {
                 destinationMarker.snippet = "Me"
             }

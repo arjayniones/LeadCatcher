@@ -1043,7 +1043,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
          
         case "log":
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
-            
+            cell.nextIcon.isHidden = true
             if resultHistoryList[indexPath.row].CH_HistoryType == "Call" {
             cell.leftIcon = "phone-circle"
             } else if resultHistoryList[indexPath.row].CH_HistoryType == "SMS" {
@@ -1055,7 +1055,6 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 
             }
             cell.selectionStyle = .none
-            
            //populate logs here using the customer logs info from database
             cell.labelTitle.text = resultHistoryList[indexPath.row].CH_HistoryType; //"Call log \(indexPath.row)"
             cell.labelDesc.text = ""
@@ -1087,6 +1086,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             //cell.selectionStyle = .none
             cell.labelTitle.isEnabled = false
+            cell.nextIcon.isHidden = false
             cell.labelTitle.text = addNoteList[indexPath.row].addNote_subject;
             cell.labelDate.text = convertDateTimeToString(date: addNoteList[indexPath.row].addNote_alertDateTime!)
             /*

@@ -12,6 +12,7 @@ import UIKit
 struct CommonColor {
     static let buttonBlackColor:UIColor = UIColor(red: 74/255.0, green: 74/255.0, blue: 74/255.0, alpha: 1.0);
     static let naviBarBlackColor:UIColor = UIColor(red: 60/255.0, green: 60/255.0, blue: 60/255.0, alpha: 1.0);
+    static let systemBlueColor:UIColor = UIColor(red: 0, green: 122/255.0, blue: 1.0, alpha: 1.0)
     static let systemWhiteColor:UIColor = UIColor.white;
     static let purpleColor:UIColor = UIColor(rgb: 0x686DE0)
     static let redColor:UIColor =  UIColor(rgb: 0xFF2727)

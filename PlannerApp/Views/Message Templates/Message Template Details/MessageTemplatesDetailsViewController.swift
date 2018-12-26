@@ -110,10 +110,10 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
         
         saveButton.setTitle("save".localized, for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
-        saveButton.setTitleColor(.white, for: .normal);
+        saveButton.setTitleColor(CommonColor.systemBlueColor, for: .normal);
         //saveButton.setTitleColor(UIColor.init(red: 0, green: 122, blue: 255), for: .normal);
         
-        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+        saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
         
         saveButton.sizeToFit()
         saveButton.frame = CGRect(x: 0, y: -2, width: saveButton.frame.width, height: saveButton.frame.height)
@@ -172,22 +172,7 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
     
     override func viewWillAppear(_ animated: Bool) {
         //updateNavbarAppear()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.barTintColor = .white //CommonColor.naviBarBlackColor
-        navigationController?.navigationBar.tintColor = UIColor(red: 0, green: 122/255.0, blue: 1.0, alpha: 1.0)
-        navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "contact-details-gradiant-bg-x1.jpg"), for: .default)
-        navigationController?.navigationBar.shadowImage = nil
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: UIFont.ofSize(fontSize: 17, withType: .bold),
-            NSAttributedString.Key.foregroundColor: CommonColor.naviBarBlackColor,
-        ]
-        
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = false
-        }
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        updateBlackNavBarAppear()
     }
     
     @objc func loadMessages(){
@@ -218,8 +203,9 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
         {
             updateTextFieldStatus(status: "Edit")
             isCellEditing = false;
+            saveButton.setTitleColor(CommonColor.systemBlueColor, for: .normal);
             saveButton.setTitle("Edit", for: .normal)
-            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
             saveButton.addTarget(self, action: #selector(changeRightNavigatorButtonName), for: .touchUpInside)
             //navigationItem.rightBarButtonItem = self.editButtonItem;
         }
@@ -227,8 +213,9 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
         {
             updateTextFieldStatus(status: "Save")
             isCellEditing = true;
+            saveButton.setTitleColor(CommonColor.systemBlueColor, for: .normal);
             saveButton.setTitle("Save", for: .normal)
-            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .bold)
+            saveButton.titleLabel?.font = UIFont.ofSize(fontSize: 17, withType: .regular)
             saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         }
         

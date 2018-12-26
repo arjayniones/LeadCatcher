@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class NotificationsListViewController: ViewControllerProtocol,LargeNativeNavbar{
+class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
     
     fileprivate let tableView = UITableView()
     fileprivate let viewModel = NotificationViewModel()
@@ -77,12 +77,13 @@ class NotificationsListViewController: ViewControllerProtocol,LargeNativeNavbar{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        if let selectionIndexPath = tableView.indexPathForSelectedRow {
-//            tableView.deselectRow(at: selectionIndexPath, animated: animated)
-//        }
+        if let selectionIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
         super.viewWillAppear(animated)
         
         updateNavbarAppear()
+        
     }
     
     override func didReceiveMemoryWarning() {
