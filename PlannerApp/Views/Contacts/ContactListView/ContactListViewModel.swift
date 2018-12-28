@@ -24,6 +24,8 @@ class ContactListViewModel {
     }
     
     func searchText(text:String, status:String) {
+        // "All" when user press the "All" tab, All used to filter all contact where deleted != nil
+        // !=All include Customer, potential and other, used to filter only c_status = these status
         if status != "All"
         {
             let subpredicates = self.subpredicates.map { property in

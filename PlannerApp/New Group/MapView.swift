@@ -20,6 +20,7 @@ class MapView: UIView,GMSMapViewDelegate {
     private var mapView:GMSMapView!
     weak var delegate: MapViewDelegate?
     private var didSetupConstraints:Bool = false
+    
     //var tap = UITapGestureRecognizer();
 
     override init(frame: CGRect) {
@@ -57,6 +58,7 @@ class MapView: UIView,GMSMapViewDelegate {
     func pin(data:AddNote) {
         
         guard let location = data.addNote_location else {
+            
             return
         }
         
@@ -68,6 +70,12 @@ class MapView: UIView,GMSMapViewDelegate {
         destinationMarker.map = mapView
         destinationMarker.position = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
         
+    }
+    
+    func clearAllPin()
+    {
+        // clear all marker
+        mapView.clear()
     }
     
     func pointCamera(location:LocationModel?) {
@@ -111,8 +119,11 @@ class MapView: UIView,GMSMapViewDelegate {
         
     }
     */
+    
+    
+    
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        self.delegate?.getMarkerLongLat(long: coordinate.longitude, lat: coordinate.latitude)
+        
         print("did long press")
     }
     

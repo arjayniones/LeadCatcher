@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "SI-Logo.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "si-x2.png",
       "scale" : "2x"
     },
     {

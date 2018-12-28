@@ -13,7 +13,7 @@ import Contacts
 import Kingfisher
 import MessageUI
 
-class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailComposeViewControllerDelegate {
+class AboutViewController: ViewControllerProtocol,NativeNavbar {
     let data = AboutViewModel()
     let companyLogo:UIImageView = {
         let imV = UIImageView()
@@ -83,16 +83,6 @@ class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailCompo
         bgView.addSubview(companyLogo)
         
         labelWithDiffFont()
-        //let attributeString:NSMutableAttributedString = NSMutableAttributedString(string: data.companyWebsite)
-        
-//        attributeString.append(NSAttributedString(string: "Visit us at", attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 12)]))
-//
-//        attributeString.setColorForText(textAttribute: "www.sicmsb.com", color: CommonColor.systemBlueColor)
-//        attributeString.setFontForString(textAttribute: "Visit us at")
-        
-//        let attributeString2:NSMutableAttributedString = NSMutableAttributedString(string: data.companyEmail)
-//        attributeString2.setColorForText(textAttribute: "enquiry@sicmsb.com", color: CommonColor.systemBlueColor)
-//        attributeString2.setFontForString(textAttribute: "Have enquiry? just email us at")
         
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openSafari))
         labelCompanyWebsite.isUserInteractionEnabled = true
@@ -106,8 +96,6 @@ class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailCompo
         
         labelCompanyName.text = data.companyName
         labelCompanyAddr.text = data.companyAddr
-        //labelCompanyWebsite.attributedText = attributeString
-//        labelCompanyEmail.attributedText = attributeString2
         
         stackView.addArrangedSubview(labelCompanyName)
         stackView.addArrangedSubview(labelCompanyAddr)
@@ -115,7 +103,18 @@ class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailCompo
         stackView.addArrangedSubview(labelCompanyEmail)
         bgView.addSubview(stackView)
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissView))
+        
         view.setNeedsUpdateConstraints();
+    }
+    
+    @objc func dismissView()
+    {
+        navigationController?.popViewController(animated: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateNavbarAppear()
     }
     
     func labelWithDiffFont()
@@ -123,7 +122,7 @@ class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailCompo
         let attrs1 = [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.darkGrayColor]
         let attrs2 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.systemBlueColor]
         let attributedString1 = NSMutableAttributedString(string:"Visit us at \n", attributes:attrs1)
-        let attributedString2 = NSMutableAttributedString(string:"www.sicmsb.com", attributes:attrs2)
+        let attributedString2 = NSMutableAttributedString(string:data.companyWebsite, attributes:attrs2)
         
         attributedString1.append(attributedString2)
         self.labelCompanyWebsite.attributedText = attributedString1
@@ -131,7 +130,7 @@ class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailCompo
         let attrs3 = [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.darkGrayColor]
         let attrs4 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.systemBlueColor]
         let attributedString3 = NSMutableAttributedString(string:"Have enquiry? just email us at \n", attributes:attrs3)
-        let attributedString4 = NSMutableAttributedString(string:"enquiry@sicmsb.com", attributes:attrs4)
+        let attributedString4 = NSMutableAttributedString(string:data.companyEmail, attributes:attrs4)
         
         attributedString3.append(attributedString4)
         self.labelCompanyEmail.attributedText = attributedString3
@@ -170,14 +169,14 @@ class AboutViewController: ViewControllerProtocol,LargeNativeNavbar, MFMailCompo
         {
             
             bgView.snp.makeConstraints { (make) in
-                make.top.equalTo(self.view).inset(70)
+                make.top.equalTo(self.view).inset(65)
                 make.left.right.bottom.equalTo(self.view).inset(0)
             }
             
             companyLogo.snp.makeConstraints { (make) in
                 make.top.equalTo(bgView).inset(40)
-                make.height.equalTo(100)
-                make.width.equalTo(70)
+                make.height.equalTo(180)
+                make.width.equalTo(180)
                 make.centerX.equalTo(bgView.snp.centerX)
             }
             
@@ -208,5 +207,30 @@ extension NSMutableAttributedString{
         let range:NSRange = self.mutableString.range(of: textAttribute, options:.caseInsensitive)
         self.addAttribute(NSAttributedString.Key.font, value: UIFont.italicSystemFont(ofSize: 13), range: range)
         
+    }
+}
+
+extension AboutViewController:MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate
+{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result {
+        case .sent:
+            break;
+        default:
+            print("Send SMS fail");
+        }
+        controller.dismiss(animated: true)
+    }
+    
+    
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .sent:
+            break;
+        default:
+            print("Send Email fail");
+        }
+        controller.dismiss(animated: true)
     }
 }

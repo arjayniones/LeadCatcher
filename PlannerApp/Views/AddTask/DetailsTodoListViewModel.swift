@@ -146,12 +146,30 @@ class DetailsTodoListViewModel {
         //            let locationTrigger = UNLocationNotificationTrigger(region: region, repeats: false)
     }
     // error here
-    func setupNotificationInfoSettings(message:NotificationMessage,completion: @escaping ((_ success:Bool) -> Void)) {
-        
-        guard let id = self.saveToRealm() else {
-            completion(false)
-            return
+    func setupNotificationInfoSettings(flag:String, uuid:String, message:NotificationMessage,completion: @escaping ((_ success:Bool) -> Void)) {
+        var id:String = ""
+//        guard let id = self.saveToRealm() else {
+//            completion(false)
+//            return
+//        }
+        if flag == "New" // when insert
+        {
+            if let returnID = self.saveToRealm()
+            {
+                id = returnID
+            }
+            else
+            {
+                completion(false)
+                return
+            }
         }
+        else // when update
+        {
+            id = uuid
+        }
+        
+        
         print(UIApplication.shared.applicationIconBadgeNumber);
         let content = UNMutableNotificationContent()
         content.title = message.title
@@ -215,14 +233,14 @@ class DetailsTodoListViewModel {
         return message
     }
     
-    func saveSchedule(completion: @escaping ((_ success:Bool) -> Void)) {
+    func saveSchedule(flag:String, uuid:String, completion: @escaping ((_ success:Bool) -> Void)) {
         guard let messageConstructed = prepareData() else {
             completion(false)
             return
         }
         
         // 2
-        self.setupNotificationInfoSettings(message: messageConstructed, completion:{ val in
+        self.setupNotificationInfoSettings(flag:flag, uuid:uuid, message: messageConstructed, completion:{ val in
             completion(val)
             return
         })
@@ -234,7 +252,7 @@ class DetailsTodoListViewModel {
     }
     
     func saveToRealm() -> UUID? {
-        
+       
         if let addNoteMod = self.addNoteModel {
             let addNote = AddNote()
             var id:String
@@ -296,6 +314,8 @@ class DetailsTodoListViewModel {
         let addNoteModel = realmStore.queryToDo(id: id)?.first;
         if let data = self.addNoteModel
         {
+
+            addNoteModel?.updated_at = Date()
             addNoteModel?.addNote_alertDateTime = data.addNote_alertDateTime;
             addNoteModel?.addNote_customerId = data.addNote_customer?.id
             addNoteModel?.addNote_location = data.addNote_location;
@@ -316,6 +336,7 @@ class DetailsTodoListViewModel {
                 checkList.status = x.status
                 addNoteModel!.addNote_checklist.append(checkList)
             }
+            
             try! realmStore.store.commitWrite()
         }
         

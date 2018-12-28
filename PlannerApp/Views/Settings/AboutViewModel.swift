@@ -12,7 +12,7 @@ struct AboutViewModel {
     var companyLogoName:String = ""
     var companyName:String = "Software International Corporation (M) Sdn Bhd (354411-H)"
     var companyAddr:String = "Lot 1-1A, Support Service Building, Technology Park Malaysia, Bukit Jadil, 57000 Kuala Lumpur\n"
-    var companyWebsite:String = "Visit us at \n www.sicmsb.com\n"
-    var companyEmail:String = "Have enquiry ? just email us at\n enquiry@sicmsb.com"
+    var companyWebsite:String = "www.sicmsb.com\n"
+    var companyEmail:String = "enquiry@sicmsb.com"
 }
 
