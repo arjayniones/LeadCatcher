@@ -104,6 +104,9 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             self.navigationController?.pushViewController(resourcesVC, animated: false)
         } else if indexPath.row == 5 {
             self.uploadImage()
+        } else if indexPath.row == 6{
+            let aboutUSVC = AboutViewController()
+            self.navigationController?.pushViewController(aboutUSVC, animated: false);
         }
 
     }

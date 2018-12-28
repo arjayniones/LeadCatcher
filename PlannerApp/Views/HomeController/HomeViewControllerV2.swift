@@ -132,7 +132,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
         
         calendarView.dataSource = self
         calendarView.delegate = self
-        calendarView.allowsMultipleSelection = true
+        calendarView.allowsMultipleSelection = false
         calendarView.backgroundColor = .white
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
         calendarView.appearance.todayColor = .darkGray
@@ -538,9 +538,16 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return clonedData.filter({
+        if clonedData.filter({
             convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
-        }).count
+        }).count > 0
+        {
+            return 1
+        }
+        else
+        {
+            return 0
+        }
     }
     
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
@@ -570,32 +577,41 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
         
         _ = clonedData.map({
             if convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy") {
-                if $0.addNote_taskType.lowercased() == "customer birthday" {
-                    eventcolors.append(CommonColor.redColor)
-                } else {
-                    eventcolors.append(CommonColor.turquoiseColor)
-                }
+                eventcolors.append(CommonColor.turquoiseColor)
+//                if $0.addNote_taskType.lowercased() == "customer birthday" {
+//                    eventcolors.append(CommonColor.redColor)
+//                } else {
+//                    eventcolors.append(CommonColor.turquoiseColor)
+//                }
             }
         })
         
         return  eventcolors.count > 0 ? eventcolors:[]
     }
     
-    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        
-        return calendar.selectedDates.contains(date) ? true:false
-    }
+//    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+//
+//        return calendar.selectedDates.contains(date) ? true:false
+//    }
     
-    func calendar(_ calendar: FSCalendar, shouldDeselect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         viewModel.filteredDates = clonedData.filter({
             convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
         })
         
         tableView.reloadData()
-        
-        return false
     }
+    
+//    func calendar(_ calendar: FSCalendar, shouldDeselect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+//
+//        viewModel.filteredDates = clonedData.filter({
+//            convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
+//        })
+//
+//        tableView.reloadData()
+//
+//        return false
+//    }
 }
 
 extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {

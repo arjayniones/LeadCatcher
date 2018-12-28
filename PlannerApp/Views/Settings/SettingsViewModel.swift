@@ -22,6 +22,7 @@ class SettingsViewModel {
             //SettingsLabels(labelName: "Language"),
             SettingsLabels(labelName: "Resources"),
             SettingsLabels(labelName: "Change Background"),
+            SettingsLabels(labelName: "About"),
             //SettingsLabels(labelName: "Log Out")
         ]
         return labelNames

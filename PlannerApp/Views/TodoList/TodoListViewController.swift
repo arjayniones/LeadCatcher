@@ -18,10 +18,10 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
     fileprivate var searchFooter = SearchFooterView()
     fileprivate let viewModel = TodoListViewModel()
     let realmStore = RealmStore<AddNote>()
+    var realmResults:Results<AddNote>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         title = "to_do_list".localized
         //view.addBackground()
         view.backgroundColor = .clear
@@ -48,7 +48,10 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
-
+        
+        realmResults = viewModel.todoListData
+        setRealmNotification()
+        /*
         viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
@@ -69,7 +72,7 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
                 fatalError("\(error)")
             }
         }
-
+*/
 
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
@@ -107,12 +110,21 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
 //    }
 
     override func viewWillAppear(_ animated: Bool) {
+        
         if let selectionIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
         super.viewWillAppear(animated)
-        
-
+        // to reset realm notification token to prevent filtering update error
+        if isFiltering()
+        {
+            realmResults = viewModel.filteredNotes
+        }
+        else
+        {
+            realmResults = viewModel.todoListData
+        }
+        setRealmNotification()
         updateNavbarAppear()
     }
     
@@ -128,6 +140,31 @@ class TodoListViewController: ViewControllerProtocol,LargeNativeNavbar{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func setRealmNotification()
+    {
+        viewModel.notificationToken?.invalidate()
+        viewModel.notificationToken = realmResults?._observe({ [weak self] (changes:RealmCollectionChange) in
+            guard let tableView = self?.tableView else { return }
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                // Query results have changed, so apply them to the UITableView
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                                     with: .automatic)
+                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.endUpdates()
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+            }
+        })
+    }
 
 }
 
@@ -141,10 +178,23 @@ extension TodoListViewController: UISearchBarDelegate {
 
 extension TodoListViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("T##items: Any...##Any")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        realmResults = viewModel.todoListData
+        setRealmNotification()
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             viewModel.searchText(text: searchText)
-            self.tableView.reloadData()
+            realmResults = viewModel.filteredNotes
+            setRealmNotification()
+            //print(realmResults?.count)
+            //self.tableView.reloadData()
         }
     }
 

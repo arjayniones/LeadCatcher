@@ -35,6 +35,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     let disqualifiedButton = ActionButton()
     let topStack = UIStackView()
     var cStatus:String!
+    var realmResults:Results<ContactModel>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,14 +137,24 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
         //need to implement this , correct reloading of table after it was been populated.
 
-        viewModel.notificationToken = viewModel.contactList?.observe { [weak self] (changes: RealmCollectionChange) in
+        realmResults = viewModel.contactList
+        setupRealmNotification()
+
+        view.needsUpdateConstraints()
+        view.updateConstraintsIfNeeded()
+    }
+
+    func setupRealmNotification()
+    {
+        viewModel.notificationToken?.invalidate()
+        viewModel.notificationToken = realmResults!.observe { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
             case .initial:
                 tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
                 // Query results have changed, so apply them to the UITableView
-
+                
                 tableView.beginUpdates()
                 tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
                                      with: .automatic)
@@ -157,12 +168,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 fatalError("\(error)")
             }
         }
-
-        view.needsUpdateConstraints()
-        view.updateConstraintsIfNeeded()
     }
-
-
 
     @objc func filterPressed(sender:UIButton) {
         searchController.searchBar.text = ""
@@ -179,7 +185,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                 customerButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 disqualifiedButton.backgroundColor = .lightGray //CommonColor.naviBarBlackColor
                 viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
-
+            
             break
         case potentialButton:
                 cStatus = "Potential"
@@ -246,7 +252,8 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
 
         }
-
+        realmResults = viewModel.contactList
+        setupRealmNotification()
         tableView.reloadData()
         
     }
@@ -271,8 +278,17 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavbarAppear()
-
-        self.tableView.reloadData()
+        
+        if isFiltering()
+        {
+            realmResults = viewModel.filteredContacts
+        }
+        else
+        {
+            realmResults = viewModel.contactList
+        }
+        setupRealmNotification()
+        //self.tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -650,6 +666,11 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
 extension ContactListViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        realmResults = viewModel.contactList
+        setupRealmNotification()
+    }
 
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
@@ -661,7 +682,9 @@ extension ContactListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             viewModel.searchText(text: searchText, status:cStatus)
-            self.tableView.reloadData()
+            realmResults = viewModel.filteredContacts
+            setupRealmNotification()
+            //self.tableView.reloadData()
         }
     }
 

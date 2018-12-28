@@ -172,6 +172,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
             {
                 if let fetchData = realmStoreAddNote.models(query: "deleted_at == nil")
                 {
+                    print(fetchData.count)
                     fetchData.forEach({ (AddNote) in
                         if(AddNote.updated_at!.isContain(this: i+1, filterElement: .month))
                         {
