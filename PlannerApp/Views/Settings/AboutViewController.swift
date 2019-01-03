@@ -119,21 +119,16 @@ class AboutViewController: ViewControllerProtocol,NativeNavbar {
     
     func labelWithDiffFont()
     {
-        let attrs1 = [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.darkGrayColor]
-        let attrs2 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.systemBlueColor]
-        let attributedString1 = NSMutableAttributedString(string:"Visit us at \n", attributes:attrs1)
-        let attributedString2 = NSMutableAttributedString(string:data.companyWebsite, attributes:attrs2)
+        //self.labelCompanyWebsite.attributedText = attributedString1
+        self.labelCompanyWebsite.attributedText = data.customStringValue(string1: "Visit us at\n", string2: data.companyWebsite)
         
-        attributedString1.append(attributedString2)
-        self.labelCompanyWebsite.attributedText = attributedString1
+//        let attrs3 = [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.darkGrayColor]
+//        let attrs4 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.systemBlueColor]
+//        let attributedString3 = NSMutableAttributedString(string:"Have enquiry? just email us at \n", attributes:attrs3)
+//        let attributedString4 = NSMutableAttributedString(string:data.companyEmail, attributes:attrs4)
         
-        let attrs3 = [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.darkGrayColor]
-        let attrs4 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.systemBlueColor]
-        let attributedString3 = NSMutableAttributedString(string:"Have enquiry? just email us at \n", attributes:attrs3)
-        let attributedString4 = NSMutableAttributedString(string:data.companyEmail, attributes:attrs4)
-        
-        attributedString3.append(attributedString4)
-        self.labelCompanyEmail.attributedText = attributedString3
+        //attributedString3.append(attributedString4)
+        self.labelCompanyEmail.attributedText = data.customStringValue(string1: "Have enquiry? just email us at \n", string2: data.companyEmail)
         
     }
     
