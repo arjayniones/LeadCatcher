@@ -359,23 +359,28 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
 //        default:
 //            cell.imageView?.backgroundColor = CommonColor.purpleColor
 //        }
+        
 
         cell.titleLabel.text = note.addNote_subject
         let imageNamed = note.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
+        cell.leftImageAppearance = note.addNote_taskType
         if note.status == "Follow Up"
         {
-            cell.leftImageView.image = UIImage(named: "follow-up-icon")
+            cell.leftImageView.image = UIImage(named: imageNamed)
+            cell.leftImageView.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         }
         else if note.status == "Discontinue"
         {
-            cell.leftImageView.image = UIImage(named: "discontinue-icon")
+            cell.leftImageView.image = UIImage(named: imageNamed)
+            cell.leftImageView.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         }
         else
         {
             cell.leftImageView.image = UIImage(named: imageNamed)
+            cell.leftImageAppearance = note.addNote_taskType
         }
 
-        cell.leftImageAppearance = note.addNote_taskType
+        //
         let subText = "\(convertDateTimeToString(date: note.addNote_alertDateTime!))"
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(note.addNote_location?.name ?? "")"
@@ -428,7 +433,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
                 self.present(alert, animated: true, completion:nil);
             }
 
-            markCompleted.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.9137254902, blue: 0.5803921569, alpha: 1)
+            markCompleted.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             markFollowUp.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
             markUnSuccess.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
             let configuration = UISwipeActionsConfiguration(actions: [markCompleted,markFollowUp,markUnSuccess])

@@ -13,11 +13,20 @@ class LogsTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 
 fileprivate var didSetupContraints = false
-fileprivate let iconImage = UIImageView()
+//let iconImage = UIImageView()
 let labelTitle = UILabel()
 let labelDesc = UILabel()
 let labelDate = UILabel()
 let cellStackView = UIStackView()
+    
+let iconImage:UIImageView = {
+    let imV = UIImageView()
+    //imV.image = UIImage(named: "dashboard-task-icon2")
+    imV.contentMode = .center
+    imV.layer.cornerRadius = 20
+    imV.layer.masksToBounds = true
+    return imV
+}()
 
 let nextIcon:UIImageView = {
     let imageView = UIImageView()
@@ -138,7 +147,7 @@ override func updateConstraints() {
     if !didSetupContraints {
         
         iconImage.snp.makeConstraints { make in
-            make.width.height.equalTo(32)
+            make.width.height.equalTo(40)
             make.left.top.bottom.equalTo(contentView).inset(10)
         }
         

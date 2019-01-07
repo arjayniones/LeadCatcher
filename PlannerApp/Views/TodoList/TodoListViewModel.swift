@@ -17,7 +17,7 @@ class TodoListViewModel {
     
     var notificationToken: NotificationToken? = nil
     
-    var subpredicates = ["addNote_subject", "addNote_notes"]
+    var subpredicates = ["addNote_subject", "addNote_notes","status"]
     
     let realmStore = RealmStore<AddNote>()
     
@@ -118,7 +118,7 @@ class TodoListViewModel {
     
     func getToDoListByContactID(test:String) -> Results<AddNote>?
     {
-        return realmStore.models(query: "addNote_customerId == '\(test)' && status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read'");
+        return realmStore.models(query: "addNote_customerId == '\(test)' && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read')");
     }
     
     func updateToDoListStatus(id:String, status:String){

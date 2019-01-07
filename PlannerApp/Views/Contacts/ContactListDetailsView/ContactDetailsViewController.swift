@@ -1055,6 +1055,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 
             }
             cell.selectionStyle = .none
+            cell.iconImage.backgroundColor = CommonColor.systemWhiteColor
            //populate logs here using the customer logs info from database
             cell.labelTitle.text = resultHistoryList[indexPath.row].CH_HistoryType; //"Call log \(indexPath.row)"
             cell.labelDesc.text = ""
@@ -1069,19 +1070,30 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
            
             
             if  addNoteList[indexPath.row].addNote_taskType == "Appointment"{
-                cell.leftIcon = "meeting-x2"
+                cell.leftIcon = "taskIcon"
                 
                 if addNoteList[indexPath.row].status == "Follow Up"
                 {
-                    cell.leftIcon = "follow-up-icon"
+                    cell.leftIcon = "taskIcon"
+                    cell.iconImage.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+                }
+                else if addNoteList[indexPath.row].status == "Discontinue"
+                {
+                    cell.leftIcon = "taskIcon"
+                    cell.iconImage.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+                }
+                else
+                {
+                    cell.iconImage.backgroundColor = CommonColor.turquoiseColor
                 }
                 
             } else if addNoteList[indexPath.row].addNote_taskType == "Customer Birthday"{
-                
-                cell.leftIcon = "birthday-icon"
+                cell.leftIcon = "cakeIcon"
+                cell.iconImage.backgroundColor = CommonColor.redColor
             } else {
                 
-                cell.leftIcon = "meeting-x2"
+                cell.leftIcon = "taskIcon"
+                cell.iconImage.backgroundColor = CommonColor.turquoiseColor
             }
             
             //cell.selectionStyle = .none

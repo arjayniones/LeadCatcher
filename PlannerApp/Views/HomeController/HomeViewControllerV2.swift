@@ -287,7 +287,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 })
                 
                 _ = insertions.map({
-                    self?.calendarView.select(self?.viewModel.todoListData?[$0].addNote_alertDateTime)
+                    //self?.calendarView.select(self?.viewModel.todoListData?[$0].addNote_alertDateTime)
                     if let note = self?.viewModel.todoListData?[$0] {
                         self?.clonedData.append(note)
                         self?.mapView.pin(data: note)
@@ -682,6 +682,23 @@ extension HomeViewControllerV2: UITableViewDelegate,UITableViewDataSource {
         let imageNamed = data.addNote_taskType.lowercased().contains("birthday") ? "birthday-icon2":"dashboard-task-icon2"
         cell.leftImageView.image = UIImage(named: imageNamed)
         cell.leftImageAppearance = data.addNote_taskType
+        
+        if data.status == "Follow Up"
+        {
+            cell.leftImageView.image = UIImage(named: imageNamed)
+            cell.leftImageView.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        }
+        else if data.status == "Discontinue"
+        {
+            cell.leftImageView.image = UIImage(named: imageNamed)
+            cell.leftImageView.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }
+        else
+        {
+            cell.leftImageView.image = UIImage(named: imageNamed)
+            cell.leftImageAppearance = data.addNote_taskType
+        }
+        
         let subText = "\(convertDateTimeToString(date: data.addNote_alertDateTime!))"
         cell.descriptionLabel.text = subText
         cell.descriptionLabel2.text = "\(data.addNote_location?.name ?? "")"

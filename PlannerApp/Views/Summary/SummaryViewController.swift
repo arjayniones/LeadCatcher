@@ -138,6 +138,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
     func setChartData(count: Int, flag:String) {
         // count = x value
         // mult = customer count
+        let predicate = viewModel.addNoteFilterDate()
         let yVals = (0..<count).map { (i) -> BarChartDataEntry in
             var val1 = 0.00
             var val2 = 0.00
@@ -170,9 +171,14 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
             }
             else
             {
-                if let fetchData = realmStoreAddNote.models(query: "deleted_at == nil")
+                
+                if let fetchData = realmStoreAddNote.models(query: "deleted_at == nil")?.filter(predicate)
                 {
-                    print(fetchData.count)
+                    //let date = Date()
+                    //let calendar = Calendar.current
+                    
+                    //let currentYear = calendar.component(.year, from: date)
+                    //print(fetchData.count)
                     fetchData.forEach({ (AddNote) in
                         if(AddNote.updated_at!.isContain(this: i+1, filterElement: .month))
                         {
@@ -188,6 +194,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
                                 val2 += 0;
                                 val3 += 0;
                             }
+                            
                         }
                         
                         
@@ -349,9 +356,12 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
         }
         else
         {
+            //testRealmFilterDate();
             setChartData(count: 12, flag: "AddNote")
         }
     }
+    
+    
     
     @objc func exportCustomerData()
     {

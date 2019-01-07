@@ -42,26 +42,59 @@ class SummaryViewModel {
         row3.valueLbl = (contactList?.count)!
         self.detailRows.append(row3)
         
+        let predicate = addNoteFilterDate()
         let row4 = SummaryCollectionViewObjects()
         row4.nameLbl = "Completed"
-        todoList = realmStoreTodo.models(query: "status == 'Completed' && deleted_at == nil")
+        todoList = realmStoreTodo.models(query: "status == 'Completed' && deleted_at == nil")?.filter(predicate)
         row4.valueLbl =  (todoList?.count)!
         self.activitiesDetailRows.append(row4)
         
         let row5 = SummaryCollectionViewObjects()
         row5.nameLbl = "Follow-Ups"
-        todoList = realmStoreTodo.models(query: "status == 'Follow Up' && deleted_at == nil")
+        todoList = realmStoreTodo.models(query: "status == 'Follow Up' && deleted_at == nil")?.filter(predicate)
         row5.valueLbl = (todoList?.count)!
         self.activitiesDetailRows.append(row5)
         
         let row6 = SummaryCollectionViewObjects()
         row6.nameLbl = "Discontinue"
-        todoList = realmStoreTodo.models(query: "status == 'Discontinue' && deleted_at == nil")
+        todoList = realmStoreTodo.models(query: "status == 'Discontinue' && deleted_at == nil")?.filter(predicate)
         
         row6.valueLbl = (todoList?.count)!
         self.activitiesDetailRows.append(row6)
         
         
+    }
+    
+    func addNoteFilterDate()->NSPredicate
+    {
+        // Specify date components
+        let currentDate = Date();
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year,.month,.day], from: currentDate)
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = components.year
+        dateComponents.month = 01
+        //dateComponents.day = 01
+        
+        var dateComponents2 = DateComponents()
+        dateComponents2.year = components.year
+        dateComponents2.month = 12
+        //dateComponents2.day = 31
+        
+        // Create date from components
+        let userCalendar = Calendar.current // user calendar
+        let dateThisPostWasUpdated = userCalendar.date(from: dateComponents)
+        let dateThisPostWasUpdated2 = userCalendar.date(from: dateComponents2)
+        
+        let predicate = NSPredicate(format: "updated_at >= %@ AND updated_at <= %@",dateThisPostWasUpdated! as CVarArg,dateThisPostWasUpdated2! as CVarArg);
+        //let result = realmStoreAddNote.models().filter(predicate)
+        //let persons = uiRealm.objects(Person.self).filter(predicate);
+        //dogs = dogs.sorted(byKeyPath: "d_name");
+        //print(result.count);
+        
+        return predicate
+        //resultPersonList = uiRealm.objects(Person.self)
     }
     
     func exportContactData() {
