@@ -180,7 +180,7 @@ class SummaryViewController: ViewControllerProtocol, UICollectionViewDataSource,
                     //let currentYear = calendar.component(.year, from: date)
                     //print(fetchData.count)
                     fetchData.forEach({ (AddNote) in
-                        if(AddNote.updated_at!.isContain(this: i+1, filterElement: .month))
+                        if(AddNote.addNote_alertDateTime!.isContain(this: i+1, filterElement: .month))
                         {
                             switch AddNote.status{
                             case "Completed":

@@ -59,7 +59,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //self.updateApplicationBadge(count: 0);
 //        imageView.isUserInteractionEnabled = true
 //        imageView.image = UIImage(named: "contact-details-gradiant-bg")
         mapView.delegate = self
@@ -218,7 +218,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             switch changes {
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
-                    self?.calendarView.select(data.addNote_alertDateTime, scrollToDate: false)
+                    self?.calendarView.select(Date(), scrollToDate: false)
                     self?.mapView.pin(data: data)
                     
                     self?.clonedData.append(data)

@@ -347,9 +347,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             contactData = data[indexPath.row]
         }
 
-
-
-
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (deleteAction, indexPath) -> Void in
             self.viewModel.realmStore.delete(modelToDelete: contactData,hard:false)
         }
@@ -473,7 +470,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         cell.email.text = contactData.C_Email == "" ? "No Email": contactData.C_Email
 
         cell.lastCom.text = contactData.C_LastComm == "" ? "Not contacted yet": contactData.C_LastComm
-        cell.toFollow.text = contactData.C_ToFollow == "" ? "No meeting yet": contactData.C_ToFollow
+        cell.toFollow.text = contactData.C_ToFollow == "" ? "No status yet": contactData.C_ToFollow
 
         if contactData.C_Status == "Potential" {
            cell.toFollow.text = "To Follow"

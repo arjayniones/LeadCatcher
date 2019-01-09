@@ -22,9 +22,10 @@ class ContactViewModel {
     class func processUserContact(contacts:[CNContact], completetion:@escaping(_ value:String)->Void)
     {
         // delete all the contact that 'C_From = PhoneBook' to prevent duplicate contact info
-        deletePhoneBookContact(from: "PhoneBook");
+        //deletePhoneBookContact(from: "PhoneBook");
         
         for contact in contacts {
+            print(contact.identifier)
             let cName = "\(contact.givenName) \(contact.familyName)";
             let cDOB = contact.birthday?.date as Date?;
             let cPhoneNumber:String = (contact.phoneNumbers.first?.value)?.stringValue ?? "";
@@ -37,30 +38,78 @@ class ContactViewModel {
             }
             
             // insert data into contact table
-            let contactID = importDataContactModel(cName: cName, cDOB: cDOB, cPhoneNo: cPhoneNumber, cEmail: cEmail as String? ?? "", cFrom: "PhoneBook",cAddress: cAddress);
-
-            if contactID.count > 0
+            let result = realmStore.models(query: "id == '\(contact.identifier)'")
+            if result?.count == 0
             {
-                //print("Success import contact from phone book");
+                let contactID = importDataContactModel(cName: cName, cDOB: cDOB, cPhoneNo: cPhoneNumber, cEmail: cEmail as String? ?? "", cFrom: "PhoneBook",cAddress: cAddress, contactIdentifier:contact.identifier );
+                
+                if contactID.count > 0
+                {
+                    //print("Success import contact from phone book");
+                }
             }
+            else
+            {
+                let contactID = updateDataContactModel(cName: cName, cDOB: cDOB, cPhoneNo: cPhoneNumber, cEmail: cEmail as String? ?? "", cFrom: "PhoneBook",cAddress: cAddress, contactIdentifier:contact.identifier,result:result! );
+                
+                if contactID.count > 0
+                {
+                    //print("Success import contact from phone book");
+                }
+            }
+            
+            
             
         }
         completetion("Success");
     }
     
     //insert phonebook data into contact table and return usertable UDID in string
-    class func importDataContactModel(cName:String, cDOB:Date?, cPhoneNo:String, cEmail:String, cFrom:String, cAddress:String)->String
+    class func importDataContactModel(cName:String, cDOB:Date?, cPhoneNo:String, cEmail:String, cFrom:String, cAddress:String, contactIdentifier:String)->String
     {
-        let data = ContactModel().newInstance();
+        //realmStore.store.beginWrite();
+        //let data = ContactModel().newInstance();
+        let data = ContactModel()
+        data.id = contactIdentifier;
+        data.created_at = Date()
+        data.updated_at = Date()
         data.C_Name = cName;
         data.C_DOB = cDOB;
         data.C_PhoneNo = cPhoneNo;
         data.C_Email = cEmail;
         data.C_From = cFrom;
         data.C_Address = cAddress;
-        
+        //realmStore.store.add(data)
         realmStore.add(model: data)
+        //try! realmStore.store.commitWrite()
+        return data.id;
+    }
+    
+    class func updateDataContactModel(cName:String, cDOB:Date?, cPhoneNo:String, cEmail:String, cFrom:String, cAddress:String, contactIdentifier:String, result:Results<ContactModel>)->String
+    {
         
+        let data = ContactModel()
+        data.id = contactIdentifier;
+        data.created_at = result[0].created_at;
+        data.updated_at = Date()
+        data.C_Name = cName;
+        data.C_DOB = cDOB;
+        data.C_PhoneNo = cPhoneNo;
+        data.C_Email = cEmail;
+        data.C_From = cFrom;
+        data.C_Address = cAddress;
+        data.C_Remark = result[0].C_Remark;
+        data.C_Scoring = result[0].C_Scoring;
+        data.C_Status = result[0].C_Status;
+        data.C_Facebook = result[0].C_Facebook
+        data.C_Whatsapp = result[0].C_Whatsapp;
+        data.C_Linkedin = result[0].C_Linkedin;
+        data.C_Twitter = result[0].C_Twitter;
+        data.C_ToFollow = result[0].C_ToFollow;
+        data.C_LastComm = result[0].C_LastComm;
+        //realmStore.store.add(data)
+        realmStore.add(model: data)
+        //try! realmStore.store.commitWrite()
         return data.id;
     }
     

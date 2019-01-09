@@ -564,7 +564,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
     
     
     @objc func filterPressed(sender:UIButton) {
-        
+        //self.tableView .setContentOffset(.zero, animated: false)
         switch sender {
             
         case  logButton :
@@ -667,6 +667,12 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         }
         
         tableView.reloadData()
+        scrollToFirstRow()
+    }
+    
+    func scrollToFirstRow() {
+        let indexPath = NSIndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
     }
     
     
@@ -985,6 +991,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             if saveButton.isSelected {
                 if indexPath.row == 1{
                     self.showDateTimePicker()
+                    view.endEditing(true)
                 }else  if indexPath.row == 5 {
                     //scoring here
                      self.sheetPressedScoring(data: data)
@@ -1082,6 +1089,11 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     cell.leftIcon = "taskIcon"
                     cell.iconImage.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
                 }
+                else if addNoteList[indexPath.row].status == "Completed"
+                {
+                    cell.leftIcon = "taskIcon"
+                    cell.iconImage.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+                }
                 else
                 {
                     cell.iconImage.backgroundColor = CommonColor.turquoiseColor
@@ -1134,7 +1146,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             //cell.leftIcon = data.icon
             self.populateSocialData(cell: cell, index: indexPath, data: data)
             //self.populateInfoData(cell: cell, index: indexPath, data:data)
-         
+            cell.isUserInteractionEnabled = true
             //let socialList = SocialClass()
             cell.selectionStyle = .none
             var socialUrl:String = "";

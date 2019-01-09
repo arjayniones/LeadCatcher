@@ -154,15 +154,18 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             }
             
             // do something with the 'contacts' array
-            ContactViewModel.processUserContact(contacts: contacts, completetion:
-            {
-                result in
-                if result == "Success"
-                {
-                    let alert = UIAlertController.alertControllerWithTitle(title: "Info", message: "Success import contact from phonebook");
-                    self.present(alert, animated:false, completion: nil);
-                }
-            });
+            DispatchQueue.main.async {
+                ContactViewModel.processUserContact(contacts: contacts, completetion:
+                    {
+                        result in
+                        if result == "Success"
+                        {
+                            let alert = UIAlertController.alertControllerWithTitle(title: "Info", message: "Success import contact from phonebook");
+                            self.present(alert, animated:false, completion: nil);
+                        }
+                });
+            }
+            
         }
     }
     

@@ -103,8 +103,8 @@ class ContactListTableViewCell: UITableViewCell {
         stackView1.spacing = 5
 
         cellView.addSubview(stackView1)
-        
-        stackView1.addArrangedSubview(customerName)
+        cellView.addSubview(customerName)
+        //stackView1.addArrangedSubview(customerName)
         stackView1.addArrangedSubview(status)
         stackView1.addArrangedSubview(phoneNum)
         stackView1.addArrangedSubview(email)
@@ -154,17 +154,26 @@ class ContactListTableViewCell: UITableViewCell {
 
         }
         
+        customerName.snp.makeConstraints { make in
+            
+            make.top.equalTo(cellView).inset(5)
+            make.height.equalTo(20)
+            make.left.equalTo(imgUser.snp.right).offset(20)
+            //make.width.equalTo(cellView.snp.width).multipliedBy(0.4);
+            make.right.equalTo(cellView).offset(5)
+        }
+        
         stackView1.snp.makeConstraints { make in
-
-            make.top.bottom.equalTo(cellView).inset(5)
+            make.top.equalTo(customerName.snp.bottom).offset(5)
+            make.bottom.equalTo(cellView).inset(5)
             make.left.equalTo(imgUser.snp.right).offset(20)
             make.width.equalTo(cellView.snp.width).multipliedBy(0.4);
             //make.right.equalTo(stackView2).offset(5)
         }
         
         stackView2.snp.makeConstraints { make in
-          
-            make.top.equalTo(cellView).inset(20)
+             make.top.equalTo(customerName.snp.bottom).offset(5)
+            //make.top.equalTo(cellView).inset(25)
             make.bottom.equalTo(cellView).inset(5)
             make.width.equalTo(cellView.snp.width).multipliedBy(0.35); //make.left.equalTo(stackView1.snp.right).offset(20)
             make.right.equalTo(cellView).inset(0)

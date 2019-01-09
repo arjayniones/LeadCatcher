@@ -230,7 +230,6 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
             alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                 self.viewModel.realmStore.delete(modelToDelete: note, hard: false)
                 let identifier = "user_notification_\(note.id)"
-                
 
                 //azlim : to do remember to apply function below when deleted data
                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
@@ -418,6 +417,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.updateToDoListStatus(id: data[indexPath.row].id,status:"Follow Up");
+                    self.searchController.isActive = false
                     handler(true)
                 }))
                 self.present(alert, animated: true, completion:nil);
@@ -428,6 +428,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
                 alert.addAction(UIAlertAction(title: "no".localized, style:.cancel, handler: nil));
                 alert.addAction(UIAlertAction(title: "yes".localized, style: .default, handler: { action in
                     self.viewModel.updateToDoListStatus(id: data[indexPath.row].id,status:"Discontinue");
+                    self.searchController.isActive = false
                     handler(true)
                 }))
                 self.present(alert, animated: true, completion:nil);

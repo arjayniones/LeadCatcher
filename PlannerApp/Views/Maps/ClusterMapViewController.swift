@@ -48,15 +48,19 @@ class ClusterMapViewController: ViewControllerProtocol {
             locationManager.requestLocation();
         }
         
-        let data = realmStore.models()
+        let data = realmStore.models(query: "deleted_at == nil && status != 'Completed'")
         
-        for x in data {
-            mapView.pin(data: x)
+        if data!.count > 0
+        {
+            for x in data! {
+                mapView.pin(data: x)
+            }
+            
+            if data!.count > 0 {
+                mapView.pointCamera(location: data!.first?.addNote_location)
+            }
         }
         
-        if data.count > 0 {
-            mapView.pointCamera(location: data.first?.addNote_location)
-        }
         
         updateViewConstraints()
     }

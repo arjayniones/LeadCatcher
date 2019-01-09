@@ -118,7 +118,9 @@ class TodoListViewModel {
     
     func getToDoListByContactID(test:String) -> Results<AddNote>?
     {
-        return realmStore.models(query: "addNote_customerId == '\(test)' && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read')");
+        //return realmStore.models(query: "addNote_customerId == '\(test)' && deleted_at == nil && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read' || status == 'Completed')");
+        
+        return realmStore.models(query: "addNote_customerId == '\(test)' && deleted_at == nil && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read' || status == 'Completed')", sortingKey: "addNote_alertDateTime", ascending: false)
     }
     
     func updateToDoListStatus(id:String, status:String){

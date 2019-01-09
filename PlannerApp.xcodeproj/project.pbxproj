@@ -506,13 +506,12 @@
 		24140A5A2148AF9B007687EB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D65E385F21E5948B007CB406 /* About */,
 				24140A5F2148AF9B007687EB /* SettingsViewModel.swift */,
 				24140A662148AF9B007687EB /* SettingsViewController.swift */,
 				24140A632148AF9B007687EB /* SettingsNavViewController.swift */,
 				24140A5B2148AF9B007687EB /* Security */,
 				24140A602148AF9B007687EB /* ChangePasscode */,
-				D63B910121D49EB500AEB64E /* AboutViewController.swift */,
-				D63B910321D4A66000AEB64E /* AboutViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -774,6 +773,15 @@
 				02D9125D0BBA1F8C7DCE2639 /* Pods-PlannerApp.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D65E385F21E5948B007CB406 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				D63B910121D49EB500AEB64E /* AboutViewController.swift */,
+				D63B910321D4A66000AEB64E /* AboutViewModel.swift */,
+			);
+			path = About;
 			sourceTree = "<group>";
 		};
 		D66DDB4D21901FBA002077A2 /* CSVExport */ = {
