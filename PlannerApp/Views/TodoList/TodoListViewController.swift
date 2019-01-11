@@ -295,7 +295,7 @@ extension TodoListViewController: UITableViewDelegate,UITableViewDataSource {
         }
 
         todoModel.addNote_checkList = checklist
-
+        detailController.naviFlag = "ToDoList"
         detailController.setupModel = todoModel
 
         self.navigationController?.pushViewController(detailController, animated: false)

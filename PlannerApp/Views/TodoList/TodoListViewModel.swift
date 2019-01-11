@@ -120,7 +120,7 @@ class TodoListViewModel {
     {
         //return realmStore.models(query: "addNote_customerId == '\(test)' && deleted_at == nil && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read' || status == 'Completed')");
         
-        return realmStore.models(query: "addNote_customerId == '\(test)' && deleted_at == nil && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read' || status == 'Completed')", sortingKey: "addNote_alertDateTime", ascending: false)
+        return realmStore.models(query: "addNote_customerId == '\(test)' && deleted_at == nil && (status == 'Pending' || status == 'unread' || status == 'Follow Up' || status == 'read' || status == 'Completed' || status == 'Discontinue')", sortingKey: "addNote_alertDateTime", ascending: false)
     }
     
     func getFollowUpToDo(contactID:String) -> Results<AddNote>?

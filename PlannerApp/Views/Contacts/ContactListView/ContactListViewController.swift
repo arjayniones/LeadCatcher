@@ -25,7 +25,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 //    fileprivate var searchFooter = SearchFooterView()
     let viewModel = ContactListViewModel()
-    let toDoModel = TodoListViewModel()
+    //let toDoModel = TodoListViewModel()
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
     var userIdSelected:UUID?

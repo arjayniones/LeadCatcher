@@ -884,6 +884,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 let LinkedInWebLink = "https://www.linkedin.com/in/\(getUserLinkedin ?? "Check the username")/"
              
                             if indexPath.row == 0 { //facebook selected
+                                // remove the space to prevent error
                                 if getUserFB != "" {
                                 let appURL = NSURL(string: FBAppLink.replacingOccurrences(of: " ", with: ""))!
                                 let webURL = NSURL(string: FBWebLink.replacingOccurrences(of: " ", with: ""))!
@@ -1271,7 +1272,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             let customSelectionView = UIView();
             customSelectionView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = customSelectionView
-            
+            cell.labelTitle.keyboardType = .default
             if saveButton.isSelected {
                 cell.isEditing = true
                 if indexPath.row == 0 {
@@ -1344,12 +1345,14 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         self.viewModel.addContactModel?.addContact_address = val
                     }
                 } else if indexPath.row == 3 {
+                    cell.labelTitle.keyboardType = .numberPad
                     cell.labelTitle.isEnabled = false
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_phoneNum = val
                     }
                 } else if indexPath.row == 4 {
+                    cell.labelTitle.keyboardType = .emailAddress
                     cell.labelTitle.isEnabled = false
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in

@@ -69,6 +69,10 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             naviBarView.addSubview(naviBarLeftButton);
             self.view.addSubview(naviBarView);
         }
+        else if naviFlag == "ToDoList" || naviFlag == "Noti"
+        {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissView))
+        }
         
     
         title = isControllerEditing ? "edit_to_do_task".localized :"new_to_do_task".localized
@@ -130,7 +134,7 @@ class DetailsTodoListViewController: ViewControllerProtocol,LargeNativeNavbar {
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: clearButton)
         }
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissView))
+        
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()

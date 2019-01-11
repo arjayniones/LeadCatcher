@@ -69,7 +69,7 @@ class DetailsTodoListViewModel {
     func verifyRepeatTime(date: Date) -> Bool {
         
         if let repeatTime = self.addNoteModel?.addNote_repeat {
-            
+            // to prevent error if user save but datetime is empty
             if repeatTime == ""
             {
                 return false

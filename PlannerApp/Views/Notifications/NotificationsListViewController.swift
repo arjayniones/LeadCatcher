@@ -140,6 +140,7 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
     func openDetailsNoteForEditing(model:AddNote) {
         let detailController = DetailsTodoListViewController()
         detailController.isControllerEditing = true
+        detailController.naviFlag = "Noti"
         
         let todoModel = AddNoteModel()
         todoModel.addNote_ID = model.id
