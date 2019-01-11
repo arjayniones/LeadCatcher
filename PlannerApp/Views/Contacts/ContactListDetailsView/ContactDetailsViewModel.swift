@@ -19,6 +19,7 @@ class ContactDetailsViewModel {
     var socialList:[SocialClass]? = [];
     var profileImage:UIImage?
     let realmStore = RealmStore<ContactModel>()
+    var errorMsg = ""
     
     init() {
         
@@ -160,6 +161,17 @@ class ContactDetailsViewModel {
             return false
         }
         
+        if !checkEmailFormat(email: email)
+        {
+            errorMsg = "Invalid email found"
+            return false
+        }
+        else if !checkTelNoFormat(telNo: phoneNum)
+        {
+            errorMsg = "Invalid phone number"
+            return false
+        }
+        errorMsg = ""
 //        guard let dateAdded = self.addContactModel?.addContact_dateAdded else {
 //            return false
 //        }
@@ -177,15 +189,30 @@ class ContactDetailsViewModel {
         return true
     }
     
-    func saveContact(completion: @escaping ((_ success:Bool) -> Void)) {
+    func checkEmailFormat(email:String)->Bool
+    {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: email)
+    }
+    
+    func checkTelNoFormat(telNo:String)->Bool
+    {
+        let allowedCharacters = CharacterSet(charactersIn:"+0123456789 ")//Here change this characters based on your requirement
+        let characterSet = CharacterSet(charactersIn: telNo)
+        return allowedCharacters.isSuperset(of: characterSet)
+        
+    }
+    
+    func saveContact(completion: @escaping ((_ success:String) -> Void)) {
         guard prepareData() else {
-            completion(false)
+            completion(errorMsg)
             return
         }
         
-        
         self.saveToRealm()
-        completion(true)
+        completion("true")
         
         return
     }

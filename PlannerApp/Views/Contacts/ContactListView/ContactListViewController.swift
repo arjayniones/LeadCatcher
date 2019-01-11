@@ -25,6 +25,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 //    fileprivate var searchFooter = SearchFooterView()
     let viewModel = ContactListViewModel()
+    let toDoModel = TodoListViewModel()
     weak var delegate:ContactListViewControllerDelegate?
     var userInContactsSelection: Bool = false
     var userIdSelected:UUID?
@@ -471,6 +472,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
 
         cell.lastCom.text = contactData.C_LastComm == "" ? "Not contacted yet": contactData.C_LastComm
         cell.toFollow.text = contactData.C_ToFollow == "" ? "No status yet": contactData.C_ToFollow
+        //let toDoCount = toDoModel.getFollowUpToDo(contactID: contactData.id)
+        //cell.toDoCount.text = "Pending task :" + String(toDoCount!.count)
+
 
         if contactData.C_Status == "Potential" {
            cell.toFollow.text = "To Follow"

@@ -14,7 +14,7 @@ import Kingfisher
 import MessageUI
 
 class AboutViewController: ViewControllerProtocol,NativeNavbar {
-    let data = AboutViewModel()
+    let viewModel = AboutViewModel()
     let companyLogo:UIImageView = {
         let imV = UIImageView()
         imV.image = UIImage(named: "SI-Logo")
@@ -94,8 +94,8 @@ class AboutViewController: ViewControllerProtocol,NativeNavbar {
         tapGesture2.numberOfTapsRequired = 1
         labelCompanyEmail.addGestureRecognizer(tapGesture2)
         
-        labelCompanyName.text = data.companyName
-        labelCompanyAddr.text = data.companyAddr
+        labelCompanyName.text = viewModel.companyName
+        labelCompanyAddr.text = viewModel.companyAddr
         
         stackView.addArrangedSubview(labelCompanyName)
         stackView.addArrangedSubview(labelCompanyAddr)
@@ -120,7 +120,7 @@ class AboutViewController: ViewControllerProtocol,NativeNavbar {
     func labelWithDiffFont()
     {
         //self.labelCompanyWebsite.attributedText = attributedString1
-        self.labelCompanyWebsite.attributedText = data.customStringValue(string1: "Visit us at\n", string2: data.companyWebsite)
+        self.labelCompanyWebsite.attributedText = viewModel.customStringValue(string1: "Visit us at\n", string2: viewModel.companyWebsite)
         
 //        let attrs3 = [NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.darkGrayColor]
 //        let attrs4 = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : CommonColor.systemBlueColor]
@@ -128,7 +128,7 @@ class AboutViewController: ViewControllerProtocol,NativeNavbar {
 //        let attributedString4 = NSMutableAttributedString(string:data.companyEmail, attributes:attrs4)
         
         //attributedString3.append(attributedString4)
-        self.labelCompanyEmail.attributedText = data.customStringValue(string1: "Have enquiry? just email us at \n", string2: data.companyEmail)
+        self.labelCompanyEmail.attributedText = viewModel.customStringValue(string1: "Have enquiry? just email us at \n", string2: viewModel.companyEmail)
         
     }
     
@@ -164,7 +164,12 @@ class AboutViewController: ViewControllerProtocol,NativeNavbar {
         {
             
             bgView.snp.makeConstraints { (make) in
-                make.top.equalTo(self.view).inset(65)
+                //make.top.equalTo(self.view).inset(65)
+                if #available(iOS 11.0, *) {
+                    make.top.equalTo(view.safeArea.top).inset(UIEdgeInsets.zero)
+                } else {
+                    make.top.equalTo(view).inset(70)
+                }
                 make.left.right.bottom.equalTo(self.view).inset(0)
             }
             

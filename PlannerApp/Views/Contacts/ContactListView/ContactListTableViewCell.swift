@@ -13,8 +13,9 @@ class ContactListTableViewCell: UITableViewCell {
     let imgUser: UIImageView = {
         let img = UIImageView()
         img.backgroundColor = .lightGray
-        img.layer.cornerRadius = 25
+        img.layer.cornerRadius = 30
         img.layer.borderWidth = 0.2
+        img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         
         return img
@@ -68,6 +69,15 @@ class ContactListTableViewCell: UITableViewCell {
         return label
     }()
     
+    let toDoCount: UILabel = {
+        let label = UILabel()
+        label.textColor = #colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        
+        return label
+    }()
+    
     var cellView:  UIView = {
         let view = UIView()
 
@@ -104,7 +114,7 @@ class ContactListTableViewCell: UITableViewCell {
 
         cellView.addSubview(stackView1)
         cellView.addSubview(customerName)
-        //stackView1.addArrangedSubview(customerName)
+        //stackView1.addArrangedSubview(toDoCount)
         stackView1.addArrangedSubview(status)
         stackView1.addArrangedSubview(phoneNum)
         stackView1.addArrangedSubview(email)
@@ -148,7 +158,7 @@ class ContactListTableViewCell: UITableViewCell {
 
             make.left.equalTo(cellView).inset(20)
             //make.top.bottom.equalTo(cellView).inset(30)
-            make.size.equalTo(CGSize(width: 50, height: 50))
+            make.size.equalTo(CGSize(width: 60, height: 60))
            
             make.centerY.equalTo(cellView.snp.centerY)
 

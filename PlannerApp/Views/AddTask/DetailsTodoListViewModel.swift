@@ -17,6 +17,7 @@ class DetailsTodoListViewModel {
     var dateChosen:UNCalendarNotificationTrigger?
     var dateToSendTriggerBefore:UNCalendarNotificationTrigger?
     var addNoteModel: AddNoteModel?
+    var errorMsg = ""
     
     init() {
         
@@ -68,6 +69,11 @@ class DetailsTodoListViewModel {
     func verifyRepeatTime(date: Date) -> Bool {
         
         if let repeatTime = self.addNoteModel?.addNote_repeat {
+            
+            if repeatTime == ""
+            {
+                return false
+            }
             
             let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
             
@@ -202,28 +208,31 @@ class DetailsTodoListViewModel {
     func prepareData() -> NotificationMessage? {
         
         guard setupNotificationDateSettings() && self.dateChosen != nil else {
+            errorMsg = "Alert DateTime not match with alert type"
             return nil
         }
         
         guard let messageTitle = self.addNoteModel?.addNote_taskType,messageTitle != "" else {
+            errorMsg = "Task type cannot empty"
             return nil
         }
         
         guard let messageSubject = self.addNoteModel?.addNote_subject,messageSubject != "" else {
+            errorMsg = "Subject name cannot empty"
             return nil
         }
         
         guard let messageBody = self.addNoteModel?.addNote_notes else {
+            errorMsg = "Notes name cannot empty"
             return nil
         }
         
         guard let customerName = self.addNoteModel?.addNote_customer?.C_Name,customerName != "" else {
+            errorMsg = "Customer name cannot empty"
             return nil
         }
-        
-        guard self.addNoteModel?.addNote_location != nil else {
-            return nil
-        }
+        errorMsg = "true" // mean all * textfield has entry
+
         
         let message = NotificationMessage()
         message.title = messageTitle + " with \(customerName)"
@@ -233,15 +242,15 @@ class DetailsTodoListViewModel {
         return message
     }
     
-    func saveSchedule(flag:String, uuid:String, completion: @escaping ((_ success:Bool) -> Void)) {
+    func saveSchedule(flag:String, uuid:String, completion: @escaping ((_ success:String) -> Void)) {
         guard let messageConstructed = prepareData() else {
-            completion(false)
+            completion(errorMsg)
             return
         }
         
         // 2
         self.setupNotificationInfoSettings(flag:flag, uuid:uuid, message: messageConstructed, completion:{ val in
-            completion(val)
+            completion(self.errorMsg)
             return
         })
     }
@@ -269,6 +278,7 @@ class DetailsTodoListViewModel {
             addNote.addNote_repeat = addNoteMod.addNote_repeat
             addNote.addNote_subject = addNoteMod.addNote_subject
             addNote.addNote_customerId = addNoteMod.addNote_customer?.id
+            addNote.addNote_customerName = (addNoteMod.addNote_customer?.C_Name)!
             addNote.addNote_taskType = addNoteMod.addNote_taskType
             addNote.addNote_notes = addNoteMod.addNote_notes
             addNote.status = "Pending"
@@ -318,6 +328,7 @@ class DetailsTodoListViewModel {
             addNoteModel?.updated_at = Date()
             addNoteModel?.addNote_alertDateTime = data.addNote_alertDateTime;
             addNoteModel?.addNote_customerId = data.addNote_customer?.id
+            addNoteModel?.addNote_customerName = (data.addNote_customer?.C_Name)!
             addNoteModel?.addNote_location = data.addNote_location;
             addNoteModel?.addNote_notes = data.addNote_notes;
             addNoteModel?.addNote_repeat = data.addNote_repeat;

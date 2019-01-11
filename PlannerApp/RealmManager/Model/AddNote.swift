@@ -21,6 +21,7 @@ class AddNote: Model {
     @objc dynamic var addNote_location:LocationModel?
     var addNote_checklist = List<Checklist>()
     @objc dynamic var status:String = ""
+    @objc dynamic var addNote_customerName:String = ""
     
     override func mapping(map: Map) {
         super.mapping(map: map)

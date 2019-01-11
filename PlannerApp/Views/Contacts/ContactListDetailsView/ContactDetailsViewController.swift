@@ -386,12 +386,25 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             {
                 viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!)
                 self.navigationController?.popViewController(animated: false);
+                
+//                viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!) { (val) in
+//                    if val != "true"
+//                    {
+//                        let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: val)
+//                        self.saveButton.isSelected = !self.saveButton.isSelected
+//                        self.present(alert, animated: true, completion: nil);
+//                    }
+//                    else
+//                    {
+//                        self.navigationController?.popViewController(animated: false);
+//                    }
+//                }
             }
             else
             {
                 dismissKeyboard();
                 viewModel.saveContact(completion: { val in
-                    if val {
+                    if val == "true" {
                         let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact again?", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:{ action in
                             self.navigationController?.popViewController(animated: false);
@@ -404,7 +417,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                         self.present(alert, animated: true, completion:nil);
                         
                     } else {
-                        let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: "Contacts not saved. Please check all the empty fields. ")
+                        let alert = UIAlertController.alertControllerWithTitle(title: "Error", message: val)
                         
                         self.saveButton.isSelected = !self.saveButton.isSelected
                         self.present(alert, animated: true, completion: nil);
@@ -584,6 +597,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     print(Defaults[.ContactID]!)
                     print(resultHistoryList);
                     self.tableView.reloadData();
+                    if resultHistoryList.count > 0
+                    {
+                        scrollToFirstRow()
+                    }
             //viewModel.filterContact(isPotential: false, isCustomer: false, isDisqualified: false)
             
                    
@@ -603,6 +620,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
             self.tableView.reloadData();
+            if addNoteList.count > 0
+            {
+                scrollToFirstRow()
+            }
             break
             
         case socialButton :
@@ -618,6 +639,10 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     infoButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     resultSocialList = ContactViewModel.queryContactSocialTable(id: Defaults[.ContactID]!);
+                    tableView.reloadData()
+                    scrollToFirstRow()
+                    
+                    
             break
             
 /*
@@ -650,6 +675,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     infoButton.backgroundColor = .white
+            tableView.reloadData()
             
             
         default :
@@ -664,10 +690,11 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     socialButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     filesButton.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.8745098039, blue: 0.8745098039, alpha: 1)
                     infoButton.backgroundColor = .white
+            tableView.reloadData()
         }
         
-        tableView.reloadData()
-        scrollToFirstRow()
+        //tableView.reloadData()
+        
     }
     
     func scrollToFirstRow() {
@@ -845,6 +872,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 
                 let FBAppLink = "fb://profile/\(getUserFB ?? "Check the username")"
                 let FBWebLink = "http://www.facebook.com/\(getUserFB ?? "Check the username")"
+                //let ffff = "sdfnasjdfksdf"
                 
                 let WhatsappAppLink = "whatsapp://send?phone=\( getUserWhatsapp ?? "Check the username")&text=Hello"
                 let WhatsappWebLink = "whatsapp://send?phone=\( getUserWhatsapp ?? "Check the username")&text=Hello"
@@ -856,10 +884,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 let LinkedInWebLink = "https://www.linkedin.com/in/\(getUserLinkedin ?? "Check the username")/"
              
                             if indexPath.row == 0 { //facebook selected
-                                
                                 if getUserFB != "" {
-                                let appURL = NSURL(string: FBAppLink)!
-                                let webURL = NSURL(string: FBWebLink)!
+                                let appURL = NSURL(string: FBAppLink.replacingOccurrences(of: " ", with: ""))!
+                                let webURL = NSURL(string: FBWebLink.replacingOccurrences(of: " ", with: ""))!
+                                
                                 
                                 if UIApplication.shared.canOpenURL(appURL as URL) {
                                     if #available(iOS 10.0, *) {
@@ -1861,6 +1889,7 @@ extension UIView {
 //        self.sendSubviewToBack(imageViewBackground)
 //    }
 }
+
 
 
 //For Social Link

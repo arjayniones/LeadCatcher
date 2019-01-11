@@ -21,11 +21,13 @@ class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
         
         definesPresentationContext = true
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissView))
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(LogsTableViewCell.self, forCellReuseIdentifier: "cellLog")
         view.addSubview(tableView)
         
         viewModel.notificationToken = viewModel.tasks?.observe { [weak self] (changes: RealmCollectionChange) in
@@ -52,6 +54,11 @@ class NotificationsListViewController: ViewControllerProtocol,NativeNavbar{
         
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
+    }
+    
+    @objc func dismissView()
+    {
+        navigationController?.popViewController(animated: false)
     }
     
     deinit {
@@ -174,8 +181,8 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
+        //cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,reuseIdentifier: "LogsTableViewCell")
         
         guard let data = viewModel.tasks else {
             return cell
@@ -184,15 +191,34 @@ extension NotificationsListViewController: UITableViewDelegate,UITableViewDataSo
         let note: AddNote
         note = data[indexPath.row]
         
-        cell.textLabel!.text = note.addNote_subject
-        cell.imageView?.image = UIImage(named: note.addNote_taskType == "Customer Birthday" ? "cakex1":"meeting-icon")
-        cell.detailTextLabel?.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
-        cell.detailTextLabel?.textColor = .red
+        cell.labelTitle.text = note.addNote_subject
+        cell.iconImage.image = UIImage(named: note.addNote_taskType == "Customer Birthday" ? "cakeIcon":"taskIcon")
+        cell.labelDate.text = convertDateTimeToString(date: note.addNote_alertDateTime!)
+        
+        if note.status == "Follow Up" {
+            cell.iconImage.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        }
+        else if note.status == "Completed" {
+            cell.iconImage.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        }
+        else if note.status == "Discontinue" {
+            cell.iconImage.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }
+        else
+        {
+            cell.iconImage.backgroundColor = CommonColor.turquoiseColor
+        }
+        
+        if note.addNote_taskType == "Customer Birthday" {
+            cell.iconImage.backgroundColor = CommonColor.redColor
+        }
         
         if note.status == "unread" {
             cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+            cell.labelDate.textColor = .red
         } else {
             cell.backgroundColor = .white
+            cell.labelDate.textColor = CommonColor.buttonBlackColor
         }
         
         return cell
