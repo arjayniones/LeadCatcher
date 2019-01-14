@@ -225,7 +225,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         buttonStackView.addArrangedSubview(emailButton)
         topView.addSubview(buttonStackView)
         
-        logButton.setTitle("Logs", for: .normal)
+        logButton.setTitle("Log", for: .normal)
         logButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         logButton.setTitleColor(.black, for: .selected)
         logButton.titleLabel?.font =  .systemFont(ofSize: 11)
@@ -247,7 +247,7 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
         todoButton.roundTop()
         todoButton.addTarget(self, action: #selector(filterPressed(sender:)), for: .touchUpInside)
         
-        socialButton.setTitle("Socials", for: .normal)
+        socialButton.setTitle("Social", for: .normal)
         socialButton.setTitleColor(#colorLiteral(red: 0.3254901961, green: 0.3607843137, blue: 0.4078431373, alpha: 1), for: .normal)
         socialButton.setTitleColor(.black, for: .selected)
         socialButton.titleLabel?.font =  .systemFont(ofSize: 11)
@@ -1103,7 +1103,6 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
             //let data = viewModel.detailRows[indexPath.row]
-           
             
             if  addNoteList[indexPath.row].addNote_taskType == "Appointment"{
                 cell.leftIcon = "taskIcon"

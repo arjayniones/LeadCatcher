@@ -386,6 +386,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             let contactNum = contactData.C_PhoneNo
             let contactName = contactData.C_Name
 
+            self.sendSMS(num: contactNum, name: contactName)
+            
+            /*
             let actionSheet = UIAlertController(title: "Choose options", message: "Send SMS greetings to your lead.", preferredStyle: .actionSheet)
 
 
@@ -403,6 +406,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
             self.present(actionSheet, animated: true, completion: nil)
+                */
 
         }
 

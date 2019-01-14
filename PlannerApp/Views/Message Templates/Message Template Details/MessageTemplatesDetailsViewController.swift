@@ -320,12 +320,12 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
             //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
                 self.sendSMS()
             }
-        let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
-                self.sendWhatsapp()
-        }
+//        let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
+//                self.sendWhatsapp()
+//        }
             actionSheet.addAction(emailAction)
             actionSheet.addAction(smsAction)
-            actionSheet.addAction(whatsappAction)
+            //actionSheet.addAction(whatsappAction)
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         

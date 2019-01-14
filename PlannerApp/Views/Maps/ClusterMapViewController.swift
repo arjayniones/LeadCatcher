@@ -48,7 +48,8 @@ class ClusterMapViewController: ViewControllerProtocol {
             locationManager.requestLocation();
         }
         
-        let data = realmStore.models(query: "deleted_at == nil && status != 'Completed'")
+        let predicate = SettingsViewModel.init().dateFilterForClusterMapView()
+        let data = realmStore.models(query: "deleted_at == nil && status != 'Completed'")?.filter(predicate)
         
         if data!.count > 0
         {

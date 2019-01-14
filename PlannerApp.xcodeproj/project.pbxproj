@@ -128,6 +128,7 @@
 		D60A199A21422DF4008246FE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199921422DF4008246FE /* UserModel.swift */; };
 		D60A199C21423282008246FE /* UIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60A199B21423282008246FE /* UIAlertController+Convenience.swift */; };
 		D60A199E21426253008246FE /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60A199D21426253008246FE /* LocalAuthentication.framework */; };
+		D60C976321EC395400F509DD /* ConstraintsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60C976221EC395300F509DD /* ConstraintsHelper.swift */; };
 		D639EACF2148B7980053894C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D639EACE2148B7980053894C /* UserViewModel.swift */; };
 		D63B910221D49EB500AEB64E /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B910121D49EB500AEB64E /* AboutViewController.swift */; };
 		D63B910421D4A66000AEB64E /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B910321D4A66000AEB64E /* AboutViewModel.swift */; };
@@ -285,6 +286,7 @@
 		D60A199921422DF4008246FE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		D60A199B21423282008246FE /* UIAlertController+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Convenience.swift"; sourceTree = "<group>"; };
 		D60A199D21426253008246FE /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		D60C976221EC395300F509DD /* ConstraintsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsHelper.swift; sourceTree = "<group>"; };
 		D639EACE2148B7980053894C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		D63B910121D49EB500AEB64E /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		D63B910321D4A66000AEB64E /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 		24141FA92193CDD000FB9B2A /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				D60C976221EC395300F509DD /* ConstraintsHelper.swift */,
 				24701A45219A71F800028F43 /* OnboardingInfoViewController.swift */,
 			);
 			path = Onboarding;
@@ -1176,6 +1179,7 @@
 				0CBFA0D221509C3C0028750B /* ContactListViewController.swift in Sources */,
 				24AE1BF321ACD55F00D74186 /* CCZoomAnimatedTransitioning.swift in Sources */,
 				247E7A2521BA5C7F00FBDCAE /* ResourcesAndFilesModel.swift in Sources */,
+				D60C976321EC395400F509DD /* ConstraintsHelper.swift in Sources */,
 				0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */,
 				2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */,
 			);

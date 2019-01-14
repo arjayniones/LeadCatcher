@@ -16,24 +16,24 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
     private static let descriptionFont = UIFont.ofSize(fontSize: 14, withType: .regular)
     
     fileprivate let items = [
-        OnboardingItemInfo(informationImage: UIImage(named:"onboarding-one-icon")!,
+        OnboardingItemInfo(informationImage: UIImage(named:"landing3")!,
                            title: "Agent",
                            description: "We help Agents to organize their tasks by Category and Priority.",
-                           pageIcon: UIImage(named:"onboarding-one-icon")!,
-                           color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
+                           pageIcon: UIImage(named:"landing3")!,
+                           color: .white,
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
-        OnboardingItemInfo(informationImage: UIImage(named:"onboarding-two-icon")!,
+        OnboardingItemInfo(informationImage: UIImage(named:"landing3")!,
                            title: "Business",
                            description: "We have all features which Agents needed to fullfil and maximize his/her Business Management.",
-                           pageIcon: UIImage(named:"onboarding-two-icon")!,
+                           pageIcon: UIImage(named:"landing3")!,
                            color: UIColor(red: 0.40, green: 0.69, blue: 0.71, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
-        OnboardingItemInfo(informationImage: UIImage(named:"onboarding-three-icon")!,
+        OnboardingItemInfo(informationImage: UIImage(named:"landing3")!,
                            title: "Customer",
                            description: "Make the Customers happy and satisfied.",
-                           pageIcon: UIImage(named:"onboarding-three-icon")!,
+                           pageIcon: UIImage(named:"landing3")!,
                            color: UIColor(red: 0.61, green: 0.56, blue: 0.74, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
@@ -129,6 +129,31 @@ extension OnboardingInfoViewController: PaperOnboardingDelegate {
         //item.titleLabel?.backgroundColor = .redColor()
         //item.descriptionLabel?.backgroundColor = .redColor()
         //item.imageView = ...
+        item.backgroundColor = .white
+        let screenSize: CGRect = UIScreen.main.bounds
+        
+        item.imageView?.frame = CGRect(x: 0, y: 185, width: screenSize.width, height: screenSize.height)
+        //item.imageView?.image = UIImage(named: "landing1")
+        item.imageView?.contentMode = .scaleAspectFit
+        item.imageView?.translatesAutoresizingMaskIntoConstraints = true
+        
+        item.informationImageWidthConstraint = item.imageView! >>>- {
+            $0.attribute = NSLayoutConstraint.Attribute.width
+            $0.constant = screenSize.width
+            return
+        }
+        item.informationImageHeightConstraint = item.imageView! >>>- {
+            $0.attribute = NSLayoutConstraint.Attribute.height
+            $0.constant = screenSize.height
+            return
+        }
+        
+        //item.imageView?.backgroundColor = .red
+        //item.imageView?.contentMode = .scaleAspectFit
+        //item.imageView?.clipsToBounds = true
+        //img.contentMode = .scaleAspectFill
+        //img.clipsToBounds = true
+        item.setNeedsUpdateConstraints()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -174,9 +199,9 @@ extension OnboardingInfoViewController: PaperOnboardingDataSource {
     //    func onboardingPageItemSelectedRadius() -> CGFloat {
     //        return 10
     //    }
-    //    func onboardingPageItemColor(at index: Int) -> UIColor {
-    //        return [UIColor.white, UIColor.red, UIColor.green][index]
-    //    }
+        func onboardingPageItemColor(at index: Int) -> UIColor {
+            return [UIColor.darkGray, UIColor.darkGray, UIColor.darkGray][index]
+        }
     
     
 }

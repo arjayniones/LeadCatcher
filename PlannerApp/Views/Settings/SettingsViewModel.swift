@@ -28,6 +28,22 @@ class SettingsViewModel {
         return labelNames
         
     }
+    
+    func dateFilterForClusterMapView()->NSPredicate
+    {
+        
+        let todayStart = Calendar.current.startOfDay(for: Date())
+        let todayEnd: Date = {
+            let components = DateComponents(day: 1, second: -1)
+            return Calendar.current.date(byAdding: components, to: todayStart)!
+        }()
+        
+        let predicate = NSPredicate(format: "addNote_alertDateTime BETWEEN %@ ", [todayStart, todayEnd]);
+        return predicate
+        //let results = realmStoreContact.models().filter(predicate);
+        
+        //return results;
+    }
 }
 
 struct SettingsLabels {
