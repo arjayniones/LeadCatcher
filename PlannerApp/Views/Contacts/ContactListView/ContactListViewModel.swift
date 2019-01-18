@@ -20,7 +20,8 @@ class ContactListViewModel {
     let realmStore = RealmStore<ContactModel>()
     
     init() {
-        contactList = realmStore.models(query: "deleted_at == nil")
+        //contactList = realmStore.models(query: "deleted_at == nil")
+        contactList = realmStore.models(query: "deleted_at == nil", sortingKey: "C_Name", ascending: true)
     }
     
     func searchText(text:String, status:String) {
@@ -32,7 +33,7 @@ class ContactListViewModel {
                 NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil && C_Status == %@", property, text, status)
             }
             let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-            self.filteredContacts = contactList?.filter(predicate)
+            self.filteredContacts = contactList?.filter(predicate).sorted(byKeyPath: "C_Name", ascending: true)
         }
         else
         {
@@ -40,7 +41,7 @@ class ContactListViewModel {
                 NSPredicate(format: "%K CONTAINS %@ && deleted_at == nil", property, text)
             }
             let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-            self.filteredContacts = contactList?.filter(predicate)
+            self.filteredContacts = contactList?.filter(predicate).sorted(byKeyPath: "C_Name", ascending: true)
         }
         
     }
@@ -60,10 +61,9 @@ class ContactListViewModel {
             
         } else if isDisqualified {
             contactList = realmStore.models(query: "C_Status == 'Others' && deleted_at == nil")
-            print(contactList?.count)
             
         } else {
-            contactList = realmStore.models(query: "deleted_at == nil")
+            contactList = realmStore.models(query: "deleted_at == nil")?.sorted(byKeyPath: "C_Name", ascending: true)
         }
     }
     

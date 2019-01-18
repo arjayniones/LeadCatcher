@@ -614,6 +614,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         contactModel.addContact_Whatsapp = model.C_Whatsapp
         contactModel.addContact_Twitter = model.C_Twitter
         contactModel.addContact_Linkedin = model.C_Linkedin
+        contactModel.addContact_from = model.C_From
 
         detailController.setupModel = contactModel
         detailController.editData_YN = true;

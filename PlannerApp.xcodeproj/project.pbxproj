@@ -154,6 +154,7 @@
 		D6715DB5214122CB00957E86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B837B2140B29D00119D9D /* AppDelegate.swift */; };
 		D6B908EC21CB4997001922E0 /* BadgeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B908EB21CB4997001922E0 /* BadgeBarButtonItem.swift */; };
 		D6ECD2FB21C378CE00D76BEA /* HeaderViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */; };
+		D6ED1A2C21EEDD350036D374 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6ED1A2B21EEDD350036D374 /* HelpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -311,6 +312,7 @@
 		D6715DB12141218900957E86 /* HomeNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavController.swift; sourceTree = "<group>"; };
 		D6B908EB21CB4997001922E0 /* BadgeBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeBarButtonItem.swift; sourceTree = "<group>"; };
 		D6ECD2FA21C378CE00D76BEA /* HeaderViewClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderViewClass.swift; sourceTree = "<group>"; };
+		D6ED1A2B21EEDD350036D374 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +494,7 @@
 				0C1E60012181B27800DC8750 /* SocialsTableViewCell.swift */,
 				0C1E60032181B2B900DC8750 /* FilesTableViewCell.swift */,
 				0C1E60052181B2CF00DC8750 /* InfoTableViewCell.swift */,
+				D6ED1A2B21EEDD350036D374 /* HelpViewController.swift */,
 			);
 			path = ContactListDetailsView;
 			sourceTree = "<group>";
@@ -1182,6 +1185,7 @@
 				D60C976321EC395400F509DD /* ConstraintsHelper.swift in Sources */,
 				0CBFA0D82150C1690028750B /* ContactDetailsViewModel.swift in Sources */,
 				2468C4C52182A50D0062D3FF /* Checklist.swift in Sources */,
+				D6ED1A2C21EEDD350036D374 /* HelpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

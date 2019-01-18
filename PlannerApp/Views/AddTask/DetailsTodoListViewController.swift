@@ -411,17 +411,21 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         let data = viewModel.detailRows[indexPath.row]
         if indexPath.section == 0
         {
-            if data.title == "notes".localized {
-                self.openNoteController()
-            } else if data.alertOptions.count != 0 {
-                self.sheetPressed(data: data)
-            } else if data.title == "start_date_time".localized {
-                self.showDateTimePicker()
-            } else if data.title == "customer".localized {
-                self.openContactListViewController()
-            } else if data.title == "location".localized {
-                self.openMapView()
+            if isCellEditing { // if the cell allow editing
+                self.bottomView.isHidden = true;
+                if data.title == "notes".localized {
+                    self.openNoteController()
+                } else if data.alertOptions.count != 0 {
+                    self.sheetPressed(data: data)
+                } else if data.title == "start_date_time".localized {
+                    self.showDateTimePicker()
+                } else if data.title == "customer".localized {
+                    self.openContactListViewController()
+                } else if data.title == "location".localized {
+                    self.openMapView()
+                }
             }
+            
         }
         
     }
@@ -517,10 +521,12 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTodoTableViewCell
         
         if !isCellEditing {
-            cell.contentView.alpha = 0.5;
-            cell.isUserInteractionEnabled = false;
+            //cell.contentView.alpha = 0.5;
+            //cell.isUserInteractionEnabled = false;
+            cell.labelTitle.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         }
         else {
+            cell.labelTitle.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             cell.contentView.alpha = 1.0;
             cell.isUserInteractionEnabled = true;
         }
@@ -544,10 +550,17 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             //cell.selectionStyle = .none
             
             if data.title == "subject".localized {
-                cell.labelTitle.isEnabled = true
+                if !isCellEditing {
+                    cell.labelTitle.isEnabled = false
+                }
+                else{
+                    cell.labelTitle.isEnabled = true
+                }
+                
                 cell.nextIcon.isHidden = true
                 cell.subjectCallback = { val in
                     if !self.clearStatus {
+                        self.bottomView.isHidden = true;
                         self.viewModel.addNoteModel?.addNote_subject = val
                     }
                     
@@ -555,6 +568,14 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
             } else if data.title == "Checklist" {
                 cell.addIcon.isHidden = false
                 cell.nextIcon.isHidden = true
+                
+                if !isCellEditing {
+                    cell.addIcon.isHidden = true
+                }
+                else{
+                    cell.addIcon.isHidden = false
+                }
+                
                 cell.checkListCallback = {
                     self.addCell(tableView: tableView)
                 }
@@ -563,7 +584,7 @@ extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSourc
         
         if indexPath.section == 1 {
             cell.labelTitle.isEnabled = true
-            cell.labelTitle.tag = indexPath.row+1; // used to diff section 0 or section 1, +1 bcos textfield inside section0 all is 0 so in this section tag must +1
+            cell.labelTitle.tag = indexPath.row+1; // used to diffential section 0 or section 1, +1 bcos textfield inside section0 all is 0 so in this section tag must +1
             cell.nextIcon.isHidden = true
             cell.iconImage.isHidden = true
             cell.addIcon.isHidden = true

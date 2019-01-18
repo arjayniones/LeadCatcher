@@ -8,12 +8,19 @@
 
 import UIKit
 
+protocol ContactButtonDelegate {
+    func clickToOpenContactHelpView(index:Int)
+}
+
 class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
     
+    var delegate:ContactButtonDelegate!
     
     fileprivate var didSetupContraints = false
-    fileprivate let iconImage = UIImageView()
+    let iconImage = UIImageView()
     let labelTitle = UITextField()
+    let btnOpenHelp = UIButton()
+    let btnImage = UIImage(named: "information")
     
     let nextIcon:UIImageView = {
         let imageView = UIImageView()
@@ -48,14 +55,26 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
         labelTitle.isEnabled = false
         labelTitle.autocorrectionType = .no;
         
-        contentView.addSubview(labelTitle)
+        btnOpenHelp.isHidden = true
+        btnOpenHelp.setBackgroundImage(btnImage, for: .normal)
+        btnOpenHelp.addTarget(self, action: #selector(openHelpViewAction(_:)), for: .touchUpInside)
         
+        contentView.addSubview(labelTitle)
+        contentView.addSubview(btnOpenHelp)
         contentView.addSubview(nextIcon)
         
         needsUpdateConstraints()
         setNeedsUpdateConstraints()
     }
     
+    @IBAction func openHelpViewAction(_ sender: UIButton) {
+        print("test 1234567")
+        if self.delegate != nil
+        {
+            self.delegate?.clickToOpenContactHelpView(index: sender.tag)
+        }
+        
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -93,7 +112,13 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
             
             labelTitle.snp.makeConstraints { make in
                 make.left.equalTo(iconImage.snp.right).offset(10)
-                make.right.equalTo(nextIcon.snp.left).offset(10)
+                make.right.equalTo(nextIcon.snp.left).offset(-20)
+                make.centerY.equalTo(iconImage.snp.centerY)
+            }
+            
+            btnOpenHelp.snp.makeConstraints { make in
+                make.width.height.equalTo(32)
+                make.right.equalTo(contentView).inset(10)
                 make.centerY.equalTo(iconImage.snp.centerY)
             }
             

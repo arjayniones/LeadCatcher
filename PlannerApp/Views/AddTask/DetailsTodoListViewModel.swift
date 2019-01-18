@@ -31,7 +31,7 @@ class DetailsTodoListViewModel {
         let row2 = AddTodoViewObject()
         row2.icon = "repeat-iconx2"
         row2.title = "alert".localized
-        row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday"]
+        row2.alertOptions = ["3 months before","2 months before","1 month before","Everyday","On Date"]
         self.detailRows.append(row2)
         
         let row3 = AddTodoViewObject()
@@ -47,7 +47,7 @@ class DetailsTodoListViewModel {
         let row5 = AddTodoViewObject()
         row5.icon = "task-iconx2"
         row5.title = "task_type".localized
-        row5.alertOptions = ["Appointment","Customer Birthday"]
+        row5.alertOptions = ["Appointment","Customer Birthday","General"]
         self.detailRows.append(row5)
         
         let row6 = AddTodoViewObject()
@@ -75,7 +75,7 @@ class DetailsTodoListViewModel {
                 return false
             }
             
-            let index = ["3 months before","2 months before","1 month before","Everyday"].index(of: repeatTime)!
+            let index = ["3 months before","2 months before","1 month before","Everyday","On Date"].index(of: repeatTime)!
             
             var intToMinus:Int = -1
             
@@ -100,6 +100,8 @@ class DetailsTodoListViewModel {
                     
                     return true
                 }
+            case 4:
+                return true
             default:
                 return false
             }

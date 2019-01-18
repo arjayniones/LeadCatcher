@@ -385,7 +385,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
             if self.editData_YN
             {
                 viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!)
-                self.navigationController?.popViewController(animated: false);
+                //self.navigationController?.popViewController(animated: false);
+                self.dismiss(animated: false, completion: nil)
                 
 //                viewModel.updateContactList(id: (viewModel.addContactModel?.addContact_id)!) { (val) in
 //                    if val != "true"
@@ -407,7 +408,8 @@ class ContactDetailsViewController: ViewControllerProtocol,LargeNativeNavbar{
                     if val == "true" {
                         let alert = UIAlertController(title: "Success,New Contact has been saved.", message: "Add new contact again?", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "No", style:.cancel, handler:{ action in
-                            self.navigationController?.popViewController(animated: false);
+                            //self.navigationController?.popViewController(animated: false);
+                            self.dismiss(animated: false, completion: nil)
                         }))
                         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                             self.viewModel.addContactModel = AddContactModel()
@@ -828,27 +830,9 @@ extension ContactDetailsViewController: QLPreviewControllerDataSource {
 }
 
 extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-
-//        switch selectedTab {
-//            case "files":
-//                // Setup QuickLook view controller
-//                // QuickPreviewDelegate at the extension part
-//                let previewController = QLPreviewController()
-//
-//                // "Exports" is the folder to keep csv file
-//                previewItem = ContactDetailsViewModel.getDirectoryInNSURL(fileName: "Exports/ToDoInfo.csv")
-//                previewController.dataSource = self
-//                // open csv/excel file
-//                self.present(previewController, animated: true, completion: nil)
-//
-//                break;
-//            default:
-//                print("select nothing");
-//
-//        }
-
+        print(selectedTab)
         switch selectedTab {
             case "files":
                 // Setup QuickLook view controller
@@ -1007,8 +991,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                             break;
             
             
-                            default:
-                            print("select nothing");
+            default:
+            print("select nothing");
         }
         
         let data = viewModel.detailRows[indexPath.row]
@@ -1019,7 +1003,11 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             if saveButton.isSelected {
                 if indexPath.row == 1{
-                    self.showDateTimePicker()
+                    if !disableDataFromPhoneBook(dataFrom: (viewModel.addContactModel?.addContact_from)!)
+                    {
+                        self.showDateTimePicker()
+                    }
+                    
                     view.endEditing(true)
                 }else  if indexPath.row == 5 {
                     //scoring here
@@ -1103,8 +1091,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellLog", for: indexPath) as! LogsTableViewCell
             //let data = viewModel.detailRows[indexPath.row]
-            
-            if  addNoteList[indexPath.row].addNote_taskType == "Appointment"{
+            print(addNoteList[indexPath.row].addNote_taskType)
+            if  addNoteList[indexPath.row].addNote_taskType == "Appointment" || addNoteList[indexPath.row].addNote_taskType == "General"{
                 cell.leftIcon = "taskIcon"
                 
                 if addNoteList[indexPath.row].status == "Follow Up"
@@ -1124,8 +1112,17 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 }
                 else
                 {
-                    cell.iconImage.backgroundColor = CommonColor.turquoiseColor
+                    if addNoteList[indexPath.row].addNote_taskType == "General"
+                    {
+                        cell.iconImage.backgroundColor = CommonColor.purpleColor
+                    }
+                    else
+                    {
+                        cell.iconImage.backgroundColor = CommonColor.turquoiseColor
+                    }
+                    
                 }
+                
                 
             } else if addNoteList[indexPath.row].addNote_taskType == "Customer Birthday"{
                 cell.leftIcon = "cakeIcon"
@@ -1253,17 +1250,30 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         case "info":
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactDetailCell", for: indexPath) as! ContactDetailTableViewCell
             
-            if !isCellEditing_YN {
-                cell.contentView.alpha = 0.5;
-                cell.isUserInteractionEnabled = false;
+            var enableCertainText = true
+            if disableDataFromPhoneBook(dataFrom: viewModel.addContactModel!.addContact_from)
+            {
+                enableCertainText = false // if data from phonebook then need to disable textfield
             }
             else
             {
+                enableCertainText = true // if data from phonebook then need to enable textfield
+            }
+            
+            if !isCellEditing_YN {
+                //cell.contentView.alpha = 0.5;
+                //cell.isUserInteractionEnabled = false;
+                cell.labelTitle.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            }
+            else
+            {
+                cell.labelTitle.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
                 cell.contentView.alpha = 1.0;
                 cell.isUserInteractionEnabled = true;
             }
             
             let data = viewModel.detailRows[indexPath.row]
+            
             cell.leftIcon = data.icon
             cell.labelTitle.text = "";
             self.populateInfoData(cell: cell, index: indexPath, data:data)
@@ -1272,30 +1282,51 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             customSelectionView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = customSelectionView
             cell.labelTitle.keyboardType = .default
+            cell.btnOpenHelp.isHidden = true
+            cell.delegate = self
+            cell.selectionStyle = .none
+            
+            if indexPath.row <= 4 && enableCertainText == false
+            {
+                cell.labelTitle.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            }
+            else
+            {
+                cell.labelTitle.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+                if !isCellEditing_YN {  // bcos if data from phonebook then user edit it oso need to show disable color
+                    cell.labelTitle.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+                }
+                
+            }
+            
             if saveButton.isSelected {
                 cell.isEditing = true
+                
+                
+                
                 if indexPath.row == 0 {
-                    cell.labelTitle.isEnabled = true
+                    
+                    cell.labelTitle.isEnabled = enableCertainText
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_contactName = val
                     }
                 } else if indexPath.row == 2 {
-                    cell.labelTitle.isEnabled = true
+                    cell.labelTitle.isEnabled = enableCertainText
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_address = val
                     }
                 } else if indexPath.row == 3 {
                     cell.labelTitle.keyboardType = .numberPad
-                    cell.labelTitle.isEnabled = true
+                    cell.labelTitle.isEnabled = enableCertainText
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_phoneNum = val
                     }
                 } else if indexPath.row == 4 {
                     cell.labelTitle.keyboardType = .emailAddress
-                    cell.labelTitle.isEnabled = true
+                    cell.labelTitle.isEnabled = enableCertainText
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_email = val
@@ -1303,6 +1334,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 }  else if indexPath.row == 8 {
                     cell.labelTitle.isEnabled = true
                     cell.nextIcon.isHidden = true
+                    cell.btnOpenHelp.isHidden = false
+                    cell.btnOpenHelp.tag = 100
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_Facebook = val
                     }
@@ -1319,8 +1352,10 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         self.viewModel.addContactModel?.addContact_Twitter = val
                     }
                 }  else if indexPath.row == 11 {
+                    cell.btnOpenHelp.tag = 103
                     cell.labelTitle.isEnabled = true
                     cell.nextIcon.isHidden = true
+                    cell.btnOpenHelp.isHidden = false
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_Linkedin = val
                     }
@@ -1358,8 +1393,11 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         self.viewModel.addContactModel?.addContact_email = val
                     }
                 } else if indexPath.row == 8 {
+                    cell.btnOpenHelp.isHidden = false
                     cell.labelTitle.isEnabled = false
                     cell.nextIcon.isHidden = true
+                    cell.btnOpenHelp.isHidden = false
+                    cell.btnOpenHelp.tag = 100
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_Facebook = val
                     }
@@ -1378,6 +1416,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 }  else if indexPath.row == 11 {
                     cell.labelTitle.isEnabled = false
                     cell.nextIcon.isHidden = true
+                    cell.btnOpenHelp.isHidden = false
+                    cell.btnOpenHelp.tag = 103
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_Linkedin = val
                     }
@@ -1398,7 +1438,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             self.populateInfoData(cell: cell, index: indexPath, data:data)
             
 
-            //cell.selectionStyle = .none
+            cell.selectionStyle = .none
 
             let customSelectionView = UIView();
             customSelectionView.backgroundColor = UIColor.clear
@@ -1521,6 +1561,18 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
         }
         
         
+    }
+    
+    func disableDataFromPhoneBook(dataFrom:String)->Bool
+    {
+        if dataFrom == "PhoneBook"
+        {
+            return true // mean data from phonebook
+        }
+        else
+        {
+            return false // mean data manually key in
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -1893,6 +1945,22 @@ extension UIView {
 }
 
 
+extension ContactDetailsViewController:ContactButtonDelegate
+{
+    func clickToOpenContactHelpView(index:Int) {
+        let helpViewController = HelpViewController()
+        if index == 100
+        {
+            helpViewController.imageName = "help"
+        }
+        else if index == 103
+        {
+            helpViewController.imageName = "help2"
+        }
+        
+        self.present(helpViewController, animated: false, completion: nil)
+    }
+}
 
 //For Social Link
 extension UIApplication {

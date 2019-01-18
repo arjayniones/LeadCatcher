@@ -59,8 +59,8 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
         
         pageControl.numberOfPages = 3
         pageControl.backgroundColor = .white
-        pageControl.currentPageIndicatorTintColor = UIColor.red
-        pageControl.pageIndicatorTintColor = UIColor.yellow
+        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.pageIndicatorTintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         bottomView.addSubview(pageControl)
         
         onboarding.delegate = self
@@ -122,7 +122,7 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
                 make.height.equalTo(40)
                 make.centerY.equalToSuperview().inset(-135)
                 //make.centerY.equalToSuperview().inset(-170)
-                make.left.right.equalTo(view).inset(75)
+                make.left.right.equalTo(view).inset(50)
                 //make.top.equalTo(welcomeImg.snp.bottom).offset(20)
             }
             

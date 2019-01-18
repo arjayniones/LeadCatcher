@@ -26,7 +26,12 @@ class ContactViewModel {
         
         for contact in contacts {
             print(contact.identifier)
-            let cName = "\(contact.givenName) \(contact.familyName)";
+            
+            var cName = "\(contact.givenName) \(contact.familyName)";
+            if cName.prefix(1) == " "
+            {
+                cName = contact.familyName
+            }
             let cDOB = contact.birthday?.date as Date?;
             let cPhoneNumber:String = (contact.phoneNumbers.first?.value)?.stringValue ?? "";
             let cEmail = contact.emailAddresses.first?.value;

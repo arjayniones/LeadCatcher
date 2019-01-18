@@ -239,9 +239,17 @@ class ContactDetailsViewModel {
             updateContactModel?.C_Remark = data.addContact_remarks;
             updateContactModel?.C_Status = data.addContact_status;
             updateContactModel?.C_Facebook = data.addContact_Facebook;
-            updateContactModel?.C_Whatsapp = data.addContact_Whatsapp;
+            //updateContactModel?.C_Whatsapp = data.addContact_Whatsapp;
             updateContactModel?.C_Twitter = data.addContact_Twitter;
             updateContactModel?.C_Linkedin = data.addContact_Linkedin;
+            if data.addContact_Whatsapp.prefix(1) == "0"
+            {
+                updateContactModel!.C_Whatsapp = "6\(data.addContact_Whatsapp)"
+            }
+            else
+            {
+                updateContactModel!.C_Whatsapp = data.addContact_Whatsapp
+            }
             //for x in ()!
             //{
             //realmStore.store.delete((addNoteModel?.addNote_checklist)!);
@@ -295,7 +303,14 @@ class ContactDetailsViewModel {
                 addContact.C_LastComm = addContactMod.addContact_lastComm
                 addContact.C_ToFollow = addContactMod.addContact_toFollow
                 addContact.C_Facebook = addContactMod.addContact_Facebook
-                addContact.C_Whatsapp = addContactMod.addContact_Whatsapp
+                if addContactMod.addContact_Whatsapp.prefix(1) == "0"
+                {
+                    addContact.C_Whatsapp = "6\(addContactMod.addContact_Whatsapp)"
+                }
+                else
+                {
+                    addContact.C_Whatsapp = addContactMod.addContact_Whatsapp
+                }
                 addContact.C_Twitter = addContactMod.addContact_Twitter
                 addContact.C_Linkedin = addContactMod.addContact_Linkedin
                 
@@ -342,6 +357,7 @@ class AddContactModel {
     var addContact_Whatsapp: String = ""
     var addContact_Twitter: String = ""
     var addContact_Linkedin: String = ""
+    var addContact_from:String = ""
     
     
 }
