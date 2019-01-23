@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 15/4/17.
 //
-//  Copyright (c) 2018 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ class ImageViewExtensionTests: XCTestCase {
             let value = result.value!
             XCTAssertTrue(value.image.renderEqual(to: testImage))
             XCTAssertTrue(self.imageView.image!.renderEqual(to: testImage))
-            XCTAssertEqual(self.imageView.kf.taskIdentifier, SourceIdentifier.current)
+            XCTAssertEqual(self.imageView.kf.taskIdentifier, Source.Identifier.current)
             
             XCTAssertEqual(value.cacheType, .none)
             XCTAssertTrue(Thread.isMainThread)
@@ -127,7 +127,7 @@ class ImageViewExtensionTests: XCTestCase {
             let value = result.value!
             XCTAssertTrue(value.image.renderEqual(to: testImage))
             XCTAssertTrue(self.imageView.image!.renderEqual(to: testImage))
-            XCTAssertEqual(self.imageView.kf.taskIdentifier, SourceIdentifier.current)
+            XCTAssertEqual(self.imageView.kf.taskIdentifier, Source.Identifier.current)
 
             XCTAssertEqual(value.cacheType, .none)
             XCTAssertTrue(Thread.isMainThread)

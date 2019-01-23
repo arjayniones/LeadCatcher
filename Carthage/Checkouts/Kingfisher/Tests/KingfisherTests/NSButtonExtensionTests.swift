@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 15/4/17.
 //
-//  Copyright (c) 2018 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -76,7 +76,7 @@ class NSButtonExtensionTests: XCTestCase {
             XCTAssertNotNil(image)
             XCTAssertTrue(image!.renderEqual(to: testImage))
             XCTAssertTrue(self.button.image!.renderEqual(to: testImage))
-            XCTAssertEqual(self.button.kf.taskIdentifier, SourceIdentifier.current)
+            XCTAssertEqual(self.button.kf.taskIdentifier, Source.Identifier.current)
             XCTAssertEqual(result.value!.cacheType, .none)
             
             exp.fulfill()
@@ -98,7 +98,7 @@ class NSButtonExtensionTests: XCTestCase {
             XCTAssertNotNil(image)
             XCTAssertTrue(image!.renderEqual(to: testImage))
             XCTAssertTrue(self.button.alternateImage!.renderEqual(to: testImage))
-            XCTAssertEqual(self.button.kf.alternateTaskIdentifier, SourceIdentifier.current)
+            XCTAssertEqual(self.button.kf.alternateTaskIdentifier, Source.Identifier.current)
             XCTAssertEqual(result.value!.cacheType, .none)
             
             exp.fulfill()
