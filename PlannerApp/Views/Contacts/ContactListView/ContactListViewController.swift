@@ -371,7 +371,6 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             contactData = data[indexPath.row]
         }
 
-
         let callAction = UIContextualAction(style: .normal, title: "Call") { (action, view, handler) in
             let contactNum = contactData.C_PhoneNo.replacingOccurrences(of: " ", with: "")
             Defaults[.ContactID] = contactData.id;
@@ -386,9 +385,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             let contactNum = contactData.C_PhoneNo
             let contactName = contactData.C_Name
 
-            self.sendSMS(num: contactNum, name: contactName)
+            //self.sendSMS(num: contactNum, name: contactName)
             
-            /*
+            
             let actionSheet = UIAlertController(title: "Choose options", message: "Send SMS greetings to your lead.", preferredStyle: .actionSheet)
 
 
@@ -406,7 +405,7 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
             self.present(actionSheet, animated: true, completion: nil)
-                */
+            
 
         }
 
@@ -437,9 +436,9 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         }
 
 
-        callAction.backgroundColor = #colorLiteral(red: 0.4078431373, green: 0.4274509804, blue: 0.8784313725, alpha: 1)
-        smsAction.backgroundColor = #colorLiteral(red: 0.9960784314, green: 0.8274509804, blue: 0.1882352941, alpha: 1)
-        emailAction.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.3529411765, blue: 0.1411764706, alpha: 1)
+        callAction.backgroundColor = UIColor(red: 76, green: 217, blue: 100)
+        smsAction.backgroundColor = UIColor(red: 0, green: 122, blue: 255)
+        emailAction.backgroundColor = UIColor(red: 88, green: 86, blue: 214)
         let configuration = UISwipeActionsConfiguration(actions: [callAction,smsAction,emailAction])
         return configuration
     }
@@ -657,8 +656,14 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
                     UIApplication.shared.open(whatsappURL as URL)
                 }
                 else {
-                    let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages. Please install Whatsapp in your phone", delegate: self, cancelButtonTitle: "OK")
-                    errorAlert.show()
+                    
+                    let errorAlert = UIAlertController(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    errorAlert.addAction(okAction)
+                    self.present(errorAlert, animated: false, completion: nil)
+                    
+                    //let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages. Please install Whatsapp in your phone", delegate: self, cancelButtonTitle: "OK")
+                    //errorAlert.show()
 
                 }
             }

@@ -2,16 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "helpInfo.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "375 width-linkedin.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "414 width-linkedin.png",
       "scale" : "3x"
     }
   ],

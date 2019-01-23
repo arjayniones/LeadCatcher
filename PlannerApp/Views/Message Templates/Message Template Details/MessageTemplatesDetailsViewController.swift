@@ -320,12 +320,12 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
             //UIApplication.shared.open(URL(string: "sms:")!, options: [:], completionHandler: nil)
                 self.sendSMS()
             }
-//        let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
-//                self.sendWhatsapp()
-//        }
+        let whatsappAction = UIAlertAction(title: "Whatsapp", style: .default) { (action:UIAlertAction) in
+                self.sendWhatsapp()
+        }
             actionSheet.addAction(emailAction)
             actionSheet.addAction(smsAction)
-            //actionSheet.addAction(whatsappAction)
+            actionSheet.addAction(whatsappAction)
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -382,10 +382,16 @@ class MessageTemplatesDetailsViewController: ViewControllerProtocol, NativeNavba
         let url  = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
         
         if UIApplication.shared.canOpenURL(url! as URL) {
-            UIApplication.shared.openURL(url! as URL)
+            //UIApplication.shared.openURL(url! as URL)
+            UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
         } else {
-            let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages.", delegate: self, cancelButtonTitle: "OK")
-            errorAlert.show()
+            
+            //let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages.", delegate: self, cancelButtonTitle: "OK")
+            let errorAlert = UIAlertController(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            errorAlert.addAction(okAction)
+            self.present(errorAlert, animated: false, completion: nil)
+            //errorAlert.show()
         }
     }
     

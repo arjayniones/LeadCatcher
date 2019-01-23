@@ -163,15 +163,15 @@ extension AppDelegate:CXCallObserverDelegate
 
         }
         if call.isOutgoing == true && call.hasConnected == false {
-            print("azlim Dialing")
+            print("arjay Dialing")
         }
         if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false {
-            print("azlim Incoming")
+            print("arjay Incoming")
         }
 
         if call.hasConnected == true && call.hasEnded == false {
             // user pick up phone call
-            print("azlim Connected")
+            print("arjay Connected")
         }
     }
 }

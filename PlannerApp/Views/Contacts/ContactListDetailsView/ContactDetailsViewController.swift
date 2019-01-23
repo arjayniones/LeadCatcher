@@ -1183,6 +1183,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
                     cell.isEditing = false
                     if indexPath.row == 0 {
+                        cell.btnOpenHelp.isHidden = true
                         cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "facebook-icon"
@@ -1194,6 +1195,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         //cell.labelTitle.text = "Facebook:"
                         
                     } else if indexPath.row == 1 {
+                        cell.btnOpenHelp.isHidden = true
                         cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "whatsapp-icon"
@@ -1205,6 +1207,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         
                        
                     } else if indexPath.row == 2 {
+                        cell.btnOpenHelp.isHidden = true
                         cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "twitter-icon"
@@ -1217,6 +1220,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                 
                         
                     } else if indexPath.row == 3 {
+                        cell.btnOpenHelp.isHidden = true
                         cell.labelTitle.isEnabled = false
                         cell.nextIcon.isHidden = true
                         cell.leftIcon = "linkedin-icon"
@@ -1346,6 +1350,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         self.viewModel.addContactModel?.addContact_Whatsapp = val
                     }
                 }  else if indexPath.row == 10 {
+                    cell.btnOpenHelp.tag = 102
+                    cell.btnOpenHelp.isHidden = false
                     cell.labelTitle.isEnabled = true
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
@@ -1353,9 +1359,9 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                     }
                 }  else if indexPath.row == 11 {
                     cell.btnOpenHelp.tag = 103
+                    cell.btnOpenHelp.isHidden = false
                     cell.labelTitle.isEnabled = true
                     cell.nextIcon.isHidden = true
-                    cell.btnOpenHelp.isHidden = false
                     cell.textFieldsCallback = { val in
                         self.viewModel.addContactModel?.addContact_Linkedin = val
                     }
@@ -1408,6 +1414,8 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
                         self.viewModel.addContactModel?.addContact_Whatsapp = val
                     }
                 }  else if indexPath.row == 10 {
+                    cell.btnOpenHelp.tag = 102
+                    cell.btnOpenHelp.isHidden = false
                     cell.labelTitle.isEnabled = false
                     cell.nextIcon.isHidden = true
                     cell.textFieldsCallback = { val in
@@ -1952,6 +1960,10 @@ extension ContactDetailsViewController:ContactButtonDelegate
         if index == 100
         {
             helpViewController.imageName = "help"
+        }
+        else if index == 102
+        {
+            helpViewController.imageName = "help3"
         }
         else if index == 103
         {

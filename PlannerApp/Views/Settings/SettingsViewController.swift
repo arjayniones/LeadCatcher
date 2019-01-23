@@ -93,7 +93,9 @@ class SettingsViewController: ViewControllerProtocol,UITableViewDelegate,UITable
             self.navigationController?.pushViewController(summaryVC, animated: false)
 
         } else if indexPath.row == 1{
-            self.navigationController?.pushViewController(ClusterMapViewController(), animated: false)
+            let controller = ClusterMapViewController()
+            controller.isFromSetting = true
+            self.navigationController?.pushViewController(controller, animated: false)
         } else if indexPath.row == 2{
              self.getTheContact();
         } else if indexPath.row == 3{

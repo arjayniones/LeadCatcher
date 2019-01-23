@@ -8,15 +8,35 @@
 
 import CoreLocation
 import UIKit
+import RealmSwift
 
 class ClusterMapViewController: ViewControllerProtocol {
+
+    
     
     private var mapView = MapView()
     private var locationManager = CLLocationManager()
     private let realmStore = RealmStore<AddNote>()
     private let closeButton = ActionButton()
+
     var isControllerPresented:Bool = false
+    var isFromSetting:Bool = false
+    let bottomView = UIView();
     
+    let headerDateView = UIView();
+    let buttonHeaderDate = UIButton();
+    let buttonHeaderLeft = UIButton();
+    let buttonHeaderRight = UIButton();
+    var index:Int = 0
+    let calendar = NSCalendar.current
+    var currentDate = Date()
+    
+    let buttonLeft = UIButton();
+    let buttonRight = UIButton();
+    let datePickerView = UIDatePicker();
+    fileprivate let viewModel = TodoListViewModel()
+    fileprivate var clonedData: [AddNote] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -34,7 +54,65 @@ class ClusterMapViewController: ViewControllerProtocol {
         closeButton.isHidden = !isControllerPresented
         closeButton.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
         view.addSubview(closeButton)
-        
+        if isFromSetting == true {
+            headerDateView.backgroundColor = UIColor.white
+            buttonHeaderRight.setImage(UIImage(named: "chevron-right"), for: .normal)
+            buttonHeaderRight.addTarget(self, action: #selector(didNextAction), for: .touchUpInside)
+
+            buttonHeaderLeft.setImage(UIImage(named: "chevron-left"), for: .normal)
+            buttonHeaderLeft.addTarget(self, action: #selector(didBackAction), for: .touchUpInside)
+
+            buttonHeaderDate.setTitle(convertDateTimeToString(date: currentDate,dateFormat: "dd MMM yyyy"), for: .normal)
+            buttonHeaderDate.addTarget(self, action: #selector(didDateAction), for: .touchUpInside)
+            buttonHeaderDate.setTitleColor(UIColor.black, for: .normal);
+            buttonHeaderDate.titleLabel?.font = UIFont.ofSize(fontSize: 20, withType: .regular)
+            headerDateView.addSubview(buttonHeaderDate)
+            headerDateView.addSubview(buttonHeaderLeft)
+            headerDateView.addSubview(buttonHeaderRight)
+
+            view.addSubview(headerDateView)
+
+            // for datepicker
+            bottomView.backgroundColor = UIColor.white;
+            buttonLeft.setTitle("Cancel", for: .normal);
+            buttonRight.setTitle("Done", for: .normal);
+            buttonLeft.setTitleColor(self.view.tintColor, for: .normal);
+            buttonRight.setTitleColor(self.view.tintColor, for: .normal);
+            datePickerView.datePickerMode = .date;
+            datePickerView.timeZone = NSTimeZone.local;
+            buttonRight.addTarget(self, action: #selector(doneButtonClick), for: .touchUpInside);
+            buttonLeft.addTarget(self, action: #selector(cancelButtonClick), for: .touchUpInside);
+            self.view.addSubview(bottomView);
+            self.bottomView.addSubview(datePickerView);
+            self.bottomView.addSubview(buttonLeft);
+            self.bottomView.addSubview(buttonRight);
+            self.bottomView.isHidden = true;
+        }
+
+        viewModel.notificationToken = viewModel.todoListData?.observe { [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .update(_, _, let insertions,  _):
+                
+                _ = insertions.map({
+                    if let note = self?.viewModel.todoListData?[$0] {
+                        self?.clonedData.append(note)
+                        self?.mapView.pin(data: note)
+                    }
+                    
+                })
+            case .initial(_):
+                self?.viewModel.todoListData?.forEach{ (data ) in
+                    self?.mapView.pin(data: data)
+                    
+                    self?.clonedData.append(data)
+                    
+                }
+                self!.updatePin(date: Date())
+                break
+            case .error(_):
+                break
+            }
+        }
         view.updateConstraintsIfNeeded()
         view.needsUpdateConstraints()
     }
@@ -64,6 +142,7 @@ class ClusterMapViewController: ViewControllerProtocol {
         
         
         updateViewConstraints()
+
     }
     
     override func updateViewConstraints() {
@@ -82,7 +161,62 @@ class ClusterMapViewController: ViewControllerProtocol {
                 make.left.right.equalTo(view)
                 make.bottom.equalTo(view).inset(50)
             }
+     
+            if isFromSetting == true {
+            headerDateView.snp.makeConstraints { make in
+                    //make.edges.equalTo(view).inset(UIEdgeInsets.zero)
+                    make.top.equalTo(view.safeArea.top)
+                    make.left.right.equalTo(view)
+                    make.height.equalTo(50)
+                }
+                buttonHeaderLeft.snp.makeConstraints { (make) in
+                    make.top.equalToSuperview()
+                    make.bottom.equalToSuperview()
+                    make.width.equalTo(80)
+                    make.left.equalToSuperview()
+                }
+                buttonHeaderRight.snp.makeConstraints { (make) in
+                    make.top.equalToSuperview()
+                    make.bottom.equalToSuperview()
+                    make.width.equalTo(80)
+                    make.rightMargin.equalTo(0)
+                }
+                buttonHeaderDate.snp.makeConstraints { (make) in
+                    make.top.equalToSuperview()
+                    make.bottom.equalToSuperview()
+                    make.leading.equalTo(0)
+                    make.trailing.equalTo(0)
+                }
+
+                
+            bottomView.snp.makeConstraints { (make) in
+                make.left.right.equalTo(self.view).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
+                make.height.equalTo(210)
+            }
             
+            buttonLeft.snp.makeConstraints { (make) in
+                make.left.equalTo(0);
+                make.top.equalTo(self.bottomView).inset(10);
+                make.width.equalTo(70);
+                make.height.equalTo(36);
+            }
+            
+            buttonRight.snp.makeConstraints { (make) in
+                make.right.equalTo(0);
+                make.top.equalTo(self.bottomView).inset(10);
+                make.width.equalTo(70);
+                make.height.equalTo(36);
+            }
+            
+            datePickerView.snp.makeConstraints { (make) in
+                make.left.right.equalTo(self.bottomView).inset(0);
+                make.bottom.equalTo(self.view).inset(50);
+                make.top.equalTo(self.buttonRight.snp.bottom).offset(5);
+                make.height.equalTo(162);
+                
+            }
+            }
             didSetupConstraints = true
         }
         
@@ -93,7 +227,63 @@ class ClusterMapViewController: ViewControllerProtocol {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @objc func cancelButtonClick()
+    {
+        self.bottomView.isHidden = true;
+    }
+    
+    @objc func doneButtonClick() {
+//        viewModel.addNoteModel?.addNote_alertDateTime = self.datePickerView.date
+        updatePin(date: datePickerView.date)
+        currentDate = datePickerView.date
+        buttonHeaderDate.setTitle(convertDateTimeToString(date: datePickerView.date,dateFormat: "dd MMM yyyy"), for: .normal)
+
+        self.bottomView.isHidden = true;
+    }
+    @objc func didBackAction() {
+        let comps2 = NSDateComponents()
+        comps2.day = index - 1
+        let previousDate = calendar.date(byAdding: comps2 as DateComponents, to: currentDate)
+        currentDate = previousDate!
+        buttonHeaderDate.setTitle(convertDateTimeToString(date: currentDate,dateFormat: "dd MMM yyyy"), for: .normal)
+        updatePin(date: currentDate)
+        
+    }
+    
+    @objc func didNextAction() {
+        let comps2 = NSDateComponents()
+        comps2.day = index + 1
+        let nextDate = calendar.date(byAdding: comps2 as DateComponents, to: currentDate)
+        currentDate = nextDate!
+        buttonHeaderDate.setTitle(convertDateTimeToString(date: currentDate,dateFormat: "dd MMM yyyy"), for: .normal)
+        updatePin(date: currentDate)
+
+    }
+    
+   @objc func didDateAction() {
+        self.bottomView.isHidden = false
+        updatePin(date: currentDate)
+    }
+    
+    func updatePin(date:Date)  {
+        mapView.clearAllPin()
+        viewModel.filteredDates =  clonedData.filter({
+            convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")
+        })
+        
+        for i in 0..<viewModel.filteredDates.count
+        {
+            mapView.pin(data: viewModel.filteredDates[i])
+        }
+        
+        if viewModel.filteredDates.count > 0 {
+            mapView.pointCamera(location: viewModel.filteredDates[0].addNote_location)
+        }
+        
+        
+    }
 }
+
 
 extension ClusterMapViewController:MapViewDelegate
 {
