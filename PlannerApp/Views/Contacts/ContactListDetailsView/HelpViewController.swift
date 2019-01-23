@@ -10,8 +10,8 @@ import UIKit
 
 class HelpViewController:ViewControllerProtocol {
     let backgroundImageView = UIImageView()
-    var closeImage = UIImage()
-    let closeBtn = UIButton()
+    var closeImage = UIImageView()
+    //let closeBtn = UIButton()
     let uiview = UIView()
     var imageName:String = ""
     let naviBarLeftButton = UIButton()
@@ -21,7 +21,21 @@ class HelpViewController:ViewControllerProtocol {
     override func viewDidLoad() {
         self.view.backgroundColor  = .white
         
-        infoImage.image = UIImage(named: "helpInfo")
+        if !UIAccessibility.isReduceTransparencyEnabled {
+            view.backgroundColor = .clear
+
+            let blurEffect = UIBlurEffect(style: .prominent)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //always fill the view
+            blurEffectView.frame = self.view.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+            view.addSubview(blurEffectView) //if you have more UIViews, use an insertSubview API to place it where needed
+        } else {
+            view.backgroundColor = .white
+        }
+        
+        infoImage.image = UIImage(named: "svgInfo")
         titleLabel.text = "Help info"
         titleLabel.textColor = CommonColor.darkGrayColor
         
@@ -31,13 +45,19 @@ class HelpViewController:ViewControllerProtocol {
         backgroundImageView.image = UIImage(named: imageName)
         backgroundImageView.contentMode = .scaleAspectFit
         //view.backgroundColor = UIColor(white: 1, alpha: 0.9)
-        closeImage = UIImage(named: "helpClose")!
+        //closeImage = UIImage(named: "svgClose")!
+        closeImage.image = UIImage(named: "svgClose")
+        let closeTapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissThisView))
+        closeImage.isUserInteractionEnabled = true
+        closeImage.addGestureRecognizer(closeTapGesture);
         
-        closeBtn.setBackgroundImage(closeImage, for: .normal)
-        closeBtn.addTarget(self, action: #selector(dismissThisView), for: .touchUpInside)
+        //closeBtn.setBackgroundImage(closeImage, for: .normal)
+        
+        //closeBtn.addTarget(self, action: #selector(dismissThisView), for: .touchUpInside)
+        
         //backgroundImageView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(scaleImage(_:))))
         //view.addSubview(backgroundImageView)
-        uiview.addSubview(closeBtn)
+        uiview.addSubview(closeImage)
         uiview.layer.cornerRadius = 10
         //uiview.layer.borderWidth = 0.2
         uiview.layer.shadowRadius = 10
@@ -72,6 +92,8 @@ class HelpViewController:ViewControllerProtocol {
 //        naviBarLeftButton.setTitleColor(CommonColor.systemBlueColor, for: .normal)
 //        naviBarLeftButton.addTarget(self, action: #selector(dismissThisView), for: .touchUpInside)
 //        self.view.addSubview(naviBarLeftButton)
+        
+        
         
         view.needsUpdateConstraints()
         view.updateConstraintsIfNeeded()
@@ -124,7 +146,7 @@ class HelpViewController:ViewControllerProtocol {
                 make.width.equalTo(100)
             }
             
-            closeBtn.snp.makeConstraints { (make) in
+            closeImage.snp.makeConstraints { (make) in
                 make.top.equalTo(uiview).inset(10)
                 make.right.equalTo(uiview).inset(10)
                 make.height.width.equalTo(30)
@@ -133,7 +155,7 @@ class HelpViewController:ViewControllerProtocol {
             if imageName == "help3"
             {
                 backgroundImageView.snp.makeConstraints { (make) in
-                    make.top.equalTo(closeBtn.snp.bottom).inset(10)
+                    make.top.equalTo(closeImage.snp.bottom).inset(10)
                     make.left.right.equalTo(uiview).inset(5)
                     make.height.equalTo(216)
                     make.bottom.equalTo(uiview).inset(10)
@@ -142,7 +164,7 @@ class HelpViewController:ViewControllerProtocol {
             else
             {
                 backgroundImageView.snp.makeConstraints { (make) in
-                    make.top.equalTo(closeBtn.snp.bottom).inset(10)
+                    make.top.equalTo(closeImage.snp.bottom).inset(10)
                     make.left.right.equalTo(uiview).inset(5)
                     make.height.equalTo(110)
                     make.bottom.equalTo(uiview).inset(10)

@@ -87,6 +87,7 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
         nameTextField.isHidden = true
         nameTextField.clipsToBounds = true
         nameTextField.textColor = CommonColor.darkGrayColor
+        nameTextField.font = UIFont.systemFont(ofSize: 15)
         nameTextField.placeholder = "How should i address you?"
         //nameTextField.frame = CGRect(x: 70, y: 160, width: 195, height: <#T##Int#>)
         view.addSubview(nameTextField)

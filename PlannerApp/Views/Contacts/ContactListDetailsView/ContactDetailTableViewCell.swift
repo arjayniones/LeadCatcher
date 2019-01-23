@@ -20,7 +20,7 @@ class ContactDetailTableViewCell: UITableViewCell,UITextFieldDelegate {
     let iconImage = UIImageView()
     let labelTitle = UITextField()
     let btnOpenHelp = UIButton()
-    let btnImage = UIImage(named: "information")
+    let btnImage = UIImage(named: "svgInfo")
     
     let nextIcon:UIImageView = {
         let imageView = UIImageView()

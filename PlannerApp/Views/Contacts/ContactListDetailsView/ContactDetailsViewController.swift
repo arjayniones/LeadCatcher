@@ -1969,7 +1969,7 @@ extension ContactDetailsViewController:ContactButtonDelegate
         {
             helpViewController.imageName = "help2"
         }
-        
+        helpViewController.modalPresentationStyle = .overCurrentContext
         self.present(helpViewController, animated: false, completion: nil)
     }
 }
