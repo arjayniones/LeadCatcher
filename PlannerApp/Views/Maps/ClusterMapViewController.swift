@@ -36,6 +36,7 @@ class ClusterMapViewController: ViewControllerProtocol {
     let datePickerView = UIDatePicker();
     fileprivate let viewModel = TodoListViewModel()
     fileprivate var clonedData: [AddNote] = []
+    var selectedDate = Date();
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,12 +126,20 @@ class ClusterMapViewController: ViewControllerProtocol {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation();
         }
+        var dateStart = Calendar.current.startOfDay(for: Date())
+        if !isFromSetting
+        {
+            dateStart = selectedDate
+        }
         
-        let predicate = SettingsViewModel.init().dateFilterForClusterMapView()
+        updatePin(date: dateStart)
+        /*
+        let predicate = SettingsViewModel.init().dateFilterForClusterMapView(date: dateStart)
         let data = realmStore.models(query: "deleted_at == nil && status != 'Completed'")?.filter(predicate)
         
         if data!.count > 0
         {
+            //mapView.clearAllPin()
             for x in data! {
                 mapView.pin(data: x)
             }
@@ -139,6 +148,7 @@ class ClusterMapViewController: ViewControllerProtocol {
                 mapView.pointCamera(location: data!.first?.addNote_location)
             }
         }
+ */
         
         
         updateViewConstraints()

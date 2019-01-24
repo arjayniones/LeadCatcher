@@ -57,6 +57,9 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     var coordinateLong:Double = 0.00
     var coordinateLat:Double = 0.00
     
+    // for clustermapused
+    var selectedDate = Date()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.updateApplicationBadge(count: 0);
@@ -219,7 +222,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
             case .initial:
                 self?.viewModel.todoListData?.forEach{ (data ) in
                     self?.calendarView.select(Date(), scrollToDate: false)
-                    self?.mapView.pin(data: data)
+                    //self?.mapView.pin(data: data)
                     
                     self?.clonedData.append(data)
                     
@@ -287,10 +290,14 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
                 })
                 
                 _ = insertions.map({
-                    //self?.calendarView.select(self?.viewModel.todoListData?[$0].addNote_alertDateTime)
+                    
                     if let note = self?.viewModel.todoListData?[$0] {
                         self?.clonedData.append(note)
-                        self?.mapView.pin(data: note)
+                        if note.addNote_alertDateTime == Date()
+                        {
+                            self?.mapView.pin(data: note)
+                        }
+                        
                     }
                 })
                 
@@ -368,6 +375,7 @@ class HomeViewControllerV2: ViewControllerProtocol,NoNavbar,FSCalendarDelegateAp
     @objc func showMap() {
         let controller = ClusterMapViewController()
         controller.isControllerPresented = true
+        controller.selectedDate = selectedDate
         controller.cc_setZoomTransition(originalView: mapView)
         self.present(controller, animated: true, completion: nil)
     }
@@ -625,6 +633,8 @@ extension HomeViewControllerV2: FSCalendarDataSource,FSCalendarDelegate {
 //    }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
+        selectedDate = convertDateTimeStringToDate(date: convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy"), dateFormat: "dd MMM yyyy")
         
         viewModel.filteredDates = clonedData.filter({
             convertDateTimeToString(date: $0.addNote_alertDateTime!,dateFormat: "dd MMM yyyy") == convertDateTimeToString(date: date,dateFormat: "dd MMM yyyy")

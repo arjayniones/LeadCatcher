@@ -409,6 +409,7 @@ extension DetailsTodoListViewController:ContactListViewControllerDelegate {
 extension DetailsTodoListViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.detailRows[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: false)   // solve click cell pop out delay issue
         if indexPath.section == 0
         {
             if isCellEditing { // if the cell allow editing

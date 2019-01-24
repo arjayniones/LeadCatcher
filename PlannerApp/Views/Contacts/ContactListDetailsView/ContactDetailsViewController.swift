@@ -832,7 +832,8 @@ extension ContactDetailsViewController: QLPreviewControllerDataSource {
 extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(selectedTab)
+        //print(selectedTab)
+         tableView.deselectRow(at: indexPath, animated: false) // solve click cell pop out delay issue
         switch selectedTab {
             case "files":
                 // Setup QuickLook view controller
@@ -1305,7 +1306,7 @@ extension ContactDetailsViewController:UITableViewDelegate,UITableViewDataSource
             
             if saveButton.isSelected {
                 cell.isEditing = true
-                
+        
                 
                 
                 if indexPath.row == 0 {

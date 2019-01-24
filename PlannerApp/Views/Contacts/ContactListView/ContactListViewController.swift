@@ -461,7 +461,10 @@ class ContactListViewController: ViewControllerProtocol,UITableViewDelegate,UITa
         
         if (data.count) > 0
         {
-            if let userId = userIdSelected,userId == data[indexPath.row].id {
+//            print(data[indexPath.row].C_Name)
+//            print("selected id : \(userIdSelected), data id : \(data[indexPath.row].id)")
+            
+            if let userId = userIdSelected,userId == contactData.id {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
