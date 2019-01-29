@@ -89,6 +89,8 @@ class OnboardingInfoViewController: ViewControllerProtocol ,UITextFieldDelegate{
         nameTextField.textColor = CommonColor.darkGrayColor
         nameTextField.font = UIFont.systemFont(ofSize: 15)
         nameTextField.placeholder = "How should i address you?"
+        nameTextField.autocorrectionType = .no
+        nameTextField.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(textFieldShouldReturn(_:)))
         //nameTextField.frame = CGRect(x: 70, y: 160, width: 195, height: <#T##Int#>)
         view.addSubview(nameTextField)
         
@@ -227,7 +229,7 @@ extension OnboardingInfoViewController: PaperOnboardingDelegate {
         item.setNeedsUpdateConstraints()
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if let name = textField.text {
             if name.count >= 4 && name.count <= 8{
